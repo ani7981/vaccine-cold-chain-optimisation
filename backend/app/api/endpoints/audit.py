@@ -9,7 +9,9 @@ router = APIRouter()
 @router.get("/")
 def get_audit_history(db: Session = Depends(get_db)):
     events = db.query(AuditEvent).order_by(AuditEvent.timestamp.asc()).all()
-    return events
+    return [{"id": e.id, "timestamp": e.timestamp, "event_type": e.event_type, "entity_type": e.entity_type,
+             "entity_id": e.entity_id, "actor": e.actor, "payload": e.payload, "previous_hash": e.previous_hash,
+             "hash": e.hash} for e in events]
 
 @router.post("/verify")
 def verify_audit_chain(db: Session = Depends(get_db)):

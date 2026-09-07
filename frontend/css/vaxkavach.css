@@ -1,36 +1,65 @@
+/* ==========================================================================
+   VaxKavach Canonical Design System Stylesheet
+   Design Specification: vaxkavach_design.md v1.0
+   Palette: CHARCOAL + WARM CREAM + MUTED SEMANTIC COLOURS
+   ========================================================================== */
+
 :root {
-  --vk-bg: #0B0C0D;
-  --vk-surface: #111214;
-  --vk-surface-2: #17191B;
-  --vk-surface-3: #1E2022;
-  --vk-surface-4: #24272A;
-  --vk-border: #2B2E31;
-  --vk-border-soft: #202326;
-  --vk-cream: #F0ECE4;
-  --vk-cream-soft: #D5D0C7;
-  --vk-muted: #9E9B95;
+  /* Canonical Base Tokens */
+  --vk-bg: #171614;
+  --vk-surface: #1E1D1A;
+  --vk-surface-2: #25231F;
+  --vk-surface-3: #2C2A25;
+  --vk-surface-4: #363430;
+
+  /* Typography & Neutral Accents */
+  --vk-cream: #F0E8D9;
+  --vk-cream-soft: #D8D0C2;
+  --vk-cream-muted: #A69F94;
+  --vk-text-muted: #A69F94;
   --vk-subtle: #777570;
-  --vk-healthy: #6F7F6D;
-  --vk-attention: #987E55;
-  --vk-problem: #8F605A;
-  --vk-info: #64777B;
+
+  /* Borders & Dividers */
+  --vk-border: #3A3731;
+  --vk-border-soft: #302E29;
+
+  /* Muted Clinical Semantics (Never Neon, Never Saturated) */
+  --vk-healthy: #71816F;
+  --vk-attention: #A4875C;
+  --vk-problem: #99655D;
+  --vk-info: #667A7D;
+
+  /* Primary & Secondary Interactivity */
+  --vk-primary: #E8DFD0;
+  --vk-primary-text: #211F1B;
+  --vk-secondary: #25231F;
+  --vk-secondary-text: #E8DFD0;
 }
 
-body {
+/* Base Body Styles */
+html, body {
   background-color: var(--vk-bg) !important;
   color: var(--vk-cream) !important;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Neutralize brown/tan/sepia background styles while keeping Stitch layout */
+/* Tabular numbers for all telemetry and metrics */
+.tabular-nums, [data-telemetry], .dyn-temp, .font-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Neutralize divergent background colors across older Stitch templates */
 [style*="background-color: rgb(23, 22, 20)"],
 [style*="background-color: rgb(26, 25, 22)"],
 [style*="background-color: #0d0f13"],
 [style*="background-color: #0e1014"],
-[style*="background-color: #171614"],
+[style*="background-color: #0c0e12"],
 [style*="background-color: #0C0E12"],
-[style*="background-color: #111317"] {
+[style*="background-color: #0B0C0D"],
+[style*="background-color: #111317"],
+[style*="background-color: #121417"] {
   background-color: var(--vk-bg) !important;
 }
 
@@ -38,22 +67,29 @@ body {
 [style*="background-color: rgb(37, 35, 31)"],
 [style*="background-color: #16181e"],
 [style*="background-color: #1a1d24"],
-[style*="background-color: #1E1D1A"],
 [style*="background-color: #14171D"],
-[style*="background-color: #1A1E26"] {
+[style*="background-color: #1A1E26"],
+[style*="background-color: #16181D"],
+[style*="background-color: #111214"] {
   background-color: var(--vk-surface) !important;
 }
 
 [style*="background-color: #25231F"],
-[style*="background-color: #1F2228"] {
+[style*="background-color: #1F2228"],
+[style*="background-color: #1E2022"],
+[style*="background-color: #181B22"],
+[style*="background-color: #1C1E24"] {
   background-color: var(--vk-surface-2) !important;
 }
 
+/* Harmonize text colors to warm cream and muted beige */
 [style*="color: rgb(240, 232, 217)"],
 [style*="color: #ede7dd"],
-[style*="color: #F0E8D9"],
 [style*="color: #F5EEDB"],
-[style*="color: #EDE5D4"] {
+[style*="color: #EDE5D4"],
+[style*="color: #e2e2e8"],
+[style*="color: #ffffff"],
+[style*="color: #F0ECE4"] {
   color: var(--vk-cream) !important;
 }
 
@@ -62,8 +98,11 @@ body {
 [style*="color: #8E8A80"],
 [style*="color: #A8A398"],
 [style*="color: #8d94a1"],
-[style*="color: #8c94a0"] {
-  color: var(--vk-muted) !important;
+[style*="color: #8c94a0"],
+[style*="color: #9E9B95"],
+[style*="color: #a0a5ad"],
+[style*="color: #8b909a"] {
+  color: var(--vk-text-muted) !important;
 }
 
 /* Border overrides */
@@ -73,11 +112,204 @@ body {
 [style*="border-color: #302E29"],
 [style*="border-color: #262C36"],
 [style*="border-color: #222732"],
-[style*="border-color: #1F2228"] {
+[style*="border-color: #1F2228"],
+[style*="border-color: #282a2e"],
+[style*="border-color: #2B2E31"] {
   border-color: var(--vk-border) !important;
 }
 
-/* Scrollbar */
+/* Neutralize neon lime, electric cyan, and purple from legacy Material/Stitch artifacts */
+[class*="bg-primary-container"], [class*="bg-[#ccf13c]"], [class*="bg-[#b0d41a]"] {
+  background-color: var(--vk-surface-3) !important;
+  color: var(--vk-cream) !important;
+}
+[class*="text-primary-container"], [class*="text-[#ccf13c]"], [class*="text-[#b0d41a]"] {
+  color: var(--vk-cream) !important;
+}
+[class*="text-on-primary-container"] {
+  color: var(--vk-cream) !important;
+}
+[class*="bg-tertiary-container"], [class*="bg-[#e9ddff]"], [class*="bg-[#7342dd]"] {
+  background-color: var(--vk-surface-2) !important;
+  color: var(--vk-cream) !important;
+}
+[class*="text-tertiary-container"], [class*="text-[#7342dd]"], [class*="text-[#5516be]"] {
+  color: var(--vk-cream-soft) !important;
+}
+[class*="bg-secondary-container"], [class*="bg-[#00a6e0]"] {
+  background-color: var(--vk-surface-2) !important;
+  color: var(--vk-cream) !important;
+}
+[class*="text-secondary-container"], [class*="text-[#00a6e0]"], [class*="text-[#7bd0ff]"] {
+  color: var(--vk-info) !important;
+}
+[class*="bg-error"], [class*="bg-[#f87171]"], [class*="bg-[#ef4444]"] {
+  background-color: var(--vk-problem) !important;
+}
+[class*="text-error"], [class*="text-[#f87171]"], [class*="text-[#ef4444]"] {
+  color: var(--vk-problem) !important;
+}
+[class*="bg-[#4ade80]"], [class*="bg-[#22c55e]"] {
+  background-color: var(--vk-healthy) !important;
+}
+[class*="text-[#4ade80]"], [class*="text-[#22c55e]"] {
+  color: var(--vk-healthy) !important;
+}
+
+/* Canonical Semantic Overrides */
+[style*="#f59e0b"], [style*="#F59E0B"], [style*="#e5a93c"], [style*="#B8863A"], [style*="#C4A46E"], [style*="#d9be8b"],
+[class*="text-[#f59e0b]"], [class*="text-[#e5a93c]"], [class*="text-[#B8863A]"], [class*="text-[#C4A46E]"] {
+  color: var(--vk-attention) !important;
+}
+[style*="#f59e0b"], [style*="#F59E0B"], [class*="bg-[#f59e0b]"], [class*="bg-[#B8863A]"] {
+  background-color: var(--vk-attention) !important;
+}
+
+[style*="#60a5fa"], [style*="#93c5fd"], [class*="text-[#60a5fa]"], [class*="text-[#93c5fd]"] {
+  color: var(--vk-info) !important;
+}
+
+[style*="#4ade80"], [style*="#4E8752"], [style*="#9bb89b"], [style*="#8BA888"], [style*="#71816F"],
+[class*="text-[#4ade80]"], [class*="text-[#4E8752]"], [class*="text-[#9bb89b]"], [class*="text-[#8BA888]"] {
+  color: var(--vk-healthy) !important;
+}
+
+[style*="#f87171"], [style*="#B34A42"], [style*="#D99B9B"], [style*="#d99b9b"], [style*="#99655D"],
+[class*="text-[#f87171]"], [class*="text-[#B34A42]"], [class*="text-[#D99B9B]"], [class*="text-[#d99b9b]"] {
+  color: var(--vk-problem) !important;
+}
+
+/* Animated Keyframes: Calm, Organic, Trustworthy */
+@keyframes vkPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.92);
+  }
+}
+
+@keyframes vkFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes vkModalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes vkToastIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes vkDrawerSlide {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation utilities */
+.animate-pulse, .pulse-dot {
+  animation: vkPulse 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+main {
+  animation: vkFadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#inspector-drawer {
+  animation: vkDrawerSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Micro-interactions: Cards & Tables */
+article, [data-interactive-card], .journey-card, tbody tr {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+article:hover, [data-interactive-card]:hover {
+  border-color: var(--vk-border) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+}
+
+/* Button Micro-interactions */
+button {
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--vk-cream-soft);
+  outline-offset: 2px;
+}
+
+/* Primary Button Styling */
+.vk-btn-primary {
+  background-color: var(--vk-primary) !important;
+  color: var(--vk-primary-text) !important;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.vk-btn-primary:hover {
+  background-color: #F5EEDB !important;
+  box-shadow: 0 4px 12px rgba(232, 223, 208, 0.2);
+}
+
+/* Secondary Button Styling */
+.vk-btn-secondary {
+  background-color: var(--vk-secondary) !important;
+  color: var(--vk-secondary-text) !important;
+  border: 1px solid var(--vk-border) !important;
+  border-radius: 10px;
+  padding: 8px 16px;
+}
+.vk-btn-secondary:hover {
+  background-color: var(--vk-surface-3) !important;
+  border-color: var(--vk-cream-muted) !important;
+}
+
+/* Sidebar Active States */
+aside a[aria-current="page"],
+aside a.active-nav-link {
+  background-color: var(--vk-surface-3) !important;
+  color: var(--vk-cream) !important;
+  border-color: var(--vk-border) !important;
+}
+
+/* Custom Tactical Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -88,4 +320,7 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--vk-border);
   border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vk-cream-muted);
 }

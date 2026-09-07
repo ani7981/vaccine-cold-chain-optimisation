@@ -15,5 +15,5 @@ def get_global_metrics(db: Session = Depends(get_db)):
         "active_shipments": active_shipments,
         "total_problems_open": total_problems,
         "critical_problems_open": critical_problems,
-        "fleet_utilization": 85.0 # mock for now
+        "fleet_utilization": None
     }

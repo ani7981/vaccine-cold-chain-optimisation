@@ -2,7 +2,8 @@ let ws = null;
 
 export function connectWebSocket(onMessage) {
   if (ws) ws.close();
-  ws = new WebSocket('ws://localhost:8001/api/ws');
+  const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  ws = new WebSocket(`${protocol}//${location.hostname}:8001/api/ws`);
   
   ws.onmessage = (event) => {
     try {

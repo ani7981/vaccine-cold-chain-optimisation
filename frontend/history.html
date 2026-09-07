@@ -123,17 +123,16 @@
 <a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="/problems.html" title="Problems Queue">
 <span class="material-symbols-outlined text-[22px]">notification_important</span>
 </a>
-<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="/history.html" title="Telemetry History">
-<span class="material-symbols-outlined text-[22px]">query_stats</span>
+<a class="w-12 h-12 rounded-xl flex items-center justify-center bg-vk-surface-3 border border-vk-border text-vk-cream" href="/history.html" title="Telemetry History">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">query_stats</span>
 </a>
 <a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="/fleet.html" title="Fleet Operations">
 <span class="material-symbols-outlined text-[22px]">commute</span>
 </a>
-<!-- ACTIVE ITEM: Technical -->
-<a class="w-12 h-12 rounded-xl flex items-center justify-center bg-vk-surface-3 border border-vk-border text-vk-cream" href="/technical.html" title="Technical &amp; Verification">
-<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="/technical.html" title="Technical &amp; Verification">
+<span class="material-symbols-outlined text-[22px]">terminal</span>
 </a>
-<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="#" title="Audit Config">
+<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="/settings.html" title="Audit Config">
 <span class="material-symbols-outlined text-[22px]">tune</span>
 </a>
 </div>
@@ -535,10 +534,10 @@
 <span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Tamper-Evident Ledger</span>
 <span class="font-headline-sm text-headline-sm text-vk-cream">Cryptographic Event Chain</span>
 </div>
-<div class="flex items-center gap-xs px-sm py-xs rounded bg-vk-surface-2 border border-vk-border text-vk-healthy font-label-caps text-label-caps uppercase">
-<span class="material-symbols-outlined text-[14px]">lock</span>
-                Chain Intact
-              </div>
+<div class="flex items-center gap-sm flex-wrap">
+<button id="btn-verify-audit" class="px-md py-xs rounded-lg bg-[#E8DFD0] text-[#211F1B] font-label-sm text-label-sm font-semibold flex items-center gap-xs shadow-sm hover:bg-[#F5EEDB] transition-all" type="button"><span class="material-symbols-outlined text-[16px]">verified</span>Verify Ledger Integrity</button>
+<button id="btn-export-audit" class="px-md py-xs rounded-lg bg-vk-surface-2 border border-vk-border text-vk-cream font-label-sm text-label-sm hover:bg-vk-surface-3 flex items-center gap-xs transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">download</span>Export CSV</button>
+</div>
 </div>
 <p class="font-body-sm text-body-sm text-vk-text-muted">
               Every operational state transition is cryptographically sealed as a sequential hash chain. Any retrospective mutation breaks downstream parity and halts validation.

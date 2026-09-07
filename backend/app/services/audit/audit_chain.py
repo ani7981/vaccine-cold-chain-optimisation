@@ -1,6 +1,7 @@
 import hashlib
 import json
-from datetime import datetime
+import uuid
+from datetime import datetime, timezone
 
 class AuditChain:
     GENESIS_HASH = "0000000000000000000000000000000000000000000000000000000000000000"
@@ -49,3 +50,25 @@ class AuditChain:
             current_expected_hash = calculated
             
         return {"valid": True, "verified_records": len(events)}
+
+
+def append_audit_event(db, event_type: str, entity_type: str, entity_id: str, actor: str, payload: dict):
+    """Append one server-authoritative event to the hash chain in the active transaction."""
+    from app.models.all import AuditEvent
+    from datetime import timedelta
+    now = datetime.now(timezone.utc)
+    previous = db.query(AuditEvent).order_by(AuditEvent.timestamp.desc(), AuditEvent.id.desc()).first()
+    if previous and previous.timestamp >= now:
+        timestamp = previous.timestamp + timedelta(milliseconds=50)
+    else:
+        timestamp = now
+    previous_hash = previous.hash if previous else AuditChain.GENESIS_HASH
+    event = AuditEvent(
+        id=f"audit_{uuid.uuid4().hex[:12]}", timestamp=timestamp, event_type=event_type,
+        entity_type=entity_type, entity_id=entity_id, actor=actor, payload=payload,
+        previous_hash=previous_hash,
+        hash=AuditChain.compute_hash(previous_hash, timestamp, event_type, entity_type, entity_id, payload),
+    )
+    db.add(event)
+    db.flush()
+    return event

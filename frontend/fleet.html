@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
   tailwind.config = {
     darkMode: "class",
@@ -88,17 +88,17 @@
           "3xl": "40px"
         },
         fontFamily: {
-          "body-lg": ["Hanken Grotesk"],
-          "body-sm": ["Hanken Grotesk"],
-          "display-lg-mobile": ["Hanken Grotesk"],
-          "headline-lg": ["Hanken Grotesk"],
-          "headline-md": ["Hanken Grotesk"],
-          "headline-lg-mobile": ["Hanken Grotesk"],
-          "headline-sm": ["Hanken Grotesk"],
-          "display-lg": ["Hanken Grotesk"],
+          "body-lg": ["Plus Jakarta Sans"],
+          "body-sm": ["Plus Jakarta Sans"],
+          "display-lg-mobile": ["Plus Jakarta Sans"],
+          "headline-lg": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"],
+          "headline-lg-mobile": ["Plus Jakarta Sans"],
+          "headline-sm": ["Plus Jakarta Sans"],
+          "display-lg": ["Plus Jakarta Sans"],
           "label-md": ["JetBrains Mono"],
           "label-sm": ["JetBrains Mono"],
-          "body-md": ["Hanken Grotesk"],
+          "body-md": ["Plus Jakarta Sans"],
           "label-lg": ["JetBrains Mono"],
           "label-caps": ["JetBrains Mono"],
           "telemetry-stat": ["JetBrains Mono"],
@@ -130,20 +130,20 @@
 <!-- PERSISTENT LEFT SIDEBAR RAIL -->
 <aside class="w-dock-w shrink-0 flex flex-col justify-between items-center py-xl bg-[#111317] border-r border-[#282a2e] min-h-[calc(100vh-80px)]">
 <div class="flex flex-col items-center gap-md w-full px-sm">
-<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="Overview" type="button">
+<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="Overview" onclick="location.href='/overview.html'" type="button">
 <span class="material-symbols-outlined text-[20px]">grid_view</span>
 </button>
-<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="Shipments" type="button">
+<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="Shipments" onclick="location.href='/shipments.html'" type="button">
 <span class="material-symbols-outlined text-[20px]">inventory_2</span>
 </button>
-<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="Live Map" type="button">
+<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="Live Map" onclick="location.href='/map.html'" type="button">
 <span class="material-symbols-outlined text-[20px]">map</span>
 </button>
-<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all relative" title="Problems" type="button">
+<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all relative" title="Problems" onclick="location.href='/problems.html'" type="button">
 <span class="material-symbols-outlined text-[20px]">warning</span>
 <span class="w-2 h-2 rounded-full absolute top-2 right-2 bg-[#987E55]"></span>
 </button>
-<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="History" type="button">
+<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="History" onclick="location.href='/history.html'" type="button">
 <span class="material-symbols-outlined text-[20px]">browse_activity</span>
 </button>
 <!-- Fleet Navigation Active Tab with neutral dark background and subtle cream accent -->
@@ -154,7 +154,7 @@
 <button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="Technical Specs" type="button">
 <span class="material-symbols-outlined text-[20px]">memory</span>
 </button>
-<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="Settings" type="button">
+<button class="w-11 h-11 rounded-xl flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#1a1c20] transition-all" title="Settings" onclick="location.href='/settings.html'" type="button">
 <span class="material-symbols-outlined text-[20px]">tune</span>
 </button>
 </div>
@@ -498,7 +498,7 @@
 <span class="font-label-caps text-label-caps uppercase tracking-wider text-[#9A9890]">INSPECTION TELEMETRY</span>
 <span class="w-2 h-2 rounded-full bg-[#987E55]"></span>
 </div>
-<a class="font-label-caps text-label-caps uppercase font-bold hover:underline flex items-center gap-xs text-[#F0ECE4]" href="#">
+<a class="font-label-caps text-label-caps uppercase font-bold hover:underline flex items-center gap-xs text-[#F0ECE4]" href="/shipment.html?id=VK-1042">
                   <span class="dyn-shipment-code">VK-1042</span> Manifest
                   <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
 </a>
@@ -603,7 +603,7 @@
 <div class="flex flex-col gap-xs">
 <div class="flex items-center justify-between">
 <span class="font-label-caps text-label-caps uppercase tracking-wider text-[#9A9890]">Position Context</span>
-<a class="font-label-caps text-label-caps font-medium hover:underline text-[#64777B]" href="#">
+<a class="font-label-caps text-label-caps font-medium hover:underline text-[#64777B]" href="/map.html">
                   Open in Live Map →
                 </a>
 </div>

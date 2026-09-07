@@ -1,5 +1,6 @@
 import asyncio
 import random
+import uuid
 from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 from app.models.all import Simulation, Shipment, TelemetryReading, TransitEvent, Vehicle
@@ -105,7 +106,7 @@ class SimulationEngine:
                 
                 # Save reading
                 reading = TelemetryReading(
-                    id=f"reading_{tick}",
+                    id=f"reading_{uuid.uuid4().hex[:12]}",
                     shipment_id=shipment.id,
                     timestamp=datetime.now(timezone.utc),
                     temperature=temp,
@@ -192,10 +193,6 @@ class SimulationEngine:
                             )
                             db.add(rec)
                             
-                        # Audit Trail
-                        last_audit = db.query(AuditEvent).order_by(AuditEvent.timestamp.desc()).first()
-                        prev_hash = last_audit.hash if last_audit else AuditChain.GENESIS_HASH
-                        
                         audit_payload = {
                             "severity": new_prob.severity,
                             "type": new_prob.problem_type,
@@ -203,20 +200,8 @@ class SimulationEngine:
                             "lon": lon,
                             "temp": temp
                         }
-                        new_hash = AuditChain.compute_hash(prev_hash, new_prob.detected_at, "PROBLEM_DETECTED", "SHIPMENT", shipment.id, audit_payload)
-                        
-                        audit_event = AuditEvent(
-                            id=f"audit_{tick}",
-                            timestamp=new_prob.detected_at,
-                            event_type="PROBLEM_DETECTED",
-                            entity_type="SHIPMENT",
-                            entity_id=shipment.id,
-                            actor="SYSTEM_DETECTION_ENGINE",
-                            payload=audit_payload,
-                            previous_hash=prev_hash,
-                            hash=new_hash
-                        )
-                        db.add(audit_event)
+                        from app.services.audit.audit_chain import append_audit_event
+                        append_audit_event(db, "PROBLEM_DETECTED", "SHIPMENT", shipment.id, "SYSTEM_DETECTION_ENGINE", audit_payload)
                 
                 db.commit()
                 
