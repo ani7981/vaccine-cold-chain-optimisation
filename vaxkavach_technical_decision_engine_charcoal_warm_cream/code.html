@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;background-color:#171614;color:#F0E8D9;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.tabular-nums{font-variant-numeric:tabular-nums;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "vk-bg": "#171614",
+          "vk-surface": "#1E1D1A",
+          "vk-surface-2": "#25231F",
+          "vk-surface-3": "#2C2A25",
+          "vk-border": "#3A3731",
+          "vk-border-soft": "#302E29",
+          "vk-cream": "#F0E8D9",
+          "vk-cream-soft": "#D8D0C2",
+          "vk-text-muted": "#A69F94",
+          "vk-healthy": "#71816F",
+          "vk-attention": "#A4875C",
+          "vk-problem": "#99655D",
+          "vk-info": "#667A7D",
+          "surface-container-lowest": "#171614",
+          "surface-container-low": "#1E1D1A",
+          "surface-container": "#25231F",
+          "surface-container-high": "#2C2A25",
+          "surface-container-highest": "#363432",
+          "on-surface": "#F0E8D9",
+          "on-surface-variant": "#A69F94",
+          "primary": "#F0E8D9",
+          "on-primary": "#211F1B",
+          "primary-container": "#E8DFD0",
+          "on-primary-container": "#211F1B"
+        },
+        borderRadius: {
+          DEFAULT: "0.25rem",
+          lg: "0.5rem",
+          xl: "0.75rem",
+          full: "9999px"
+        },
+        spacing: {
+          "3xl": "40px",
+          "container-pad": "20px",
+          "xl": "24px",
+          "base": "16px",
+          "dock-w": "72px",
+          "lg": "20px",
+          "xs": "4px",
+          "md": "12px",
+          "gutter": "16px",
+          "2xl": "32px",
+          "sm": "8px"
+        },
+        fontFamily: {
+          "body-md": ["Plus Jakarta Sans"],
+          "headline-sm": ["Plus Jakarta Sans"],
+          "body-sm": ["Plus Jakarta Sans"],
+          "label-caps": ["Plus Jakarta Sans"],
+          "body-lg": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"],
+          "headline-lg": ["Plus Jakarta Sans"],
+          "telemetry-stat": ["Plus Jakarta Sans"],
+          "label-sm": ["Plus Jakarta Sans"],
+          "telemetry-lg": ["Plus Jakarta Sans"],
+          "headline-xl": ["Plus Jakarta Sans"]
+        },
+        fontSize: {
+          "body-md": ["13px", {lineHeight: "20px", letterSpacing: "0em", fontWeight: "400"}],
+          "headline-sm": ["15px", {lineHeight: "22px", letterSpacing: "0em", fontWeight: "600"}],
+          "body-sm": ["12px", {lineHeight: "18px", letterSpacing: "0em", fontWeight: "400"}],
+          "label-caps": ["11px", {lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700"}],
+          "body-lg": ["15px", {lineHeight: "24px", letterSpacing: "0em", fontWeight: "400"}],
+          "headline-md": ["18px", {lineHeight: "26px", letterSpacing: "-0.01em", fontWeight: "600"}],
+          "headline-lg": ["24px", {lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "700"}],
+          "telemetry-stat": ["20px", {lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "700"}],
+          "label-sm": ["11px", {lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "500"}],
+          "telemetry-lg": ["28px", {lineHeight: "34px", letterSpacing: "-0.02em", fontWeight: "700"}],
+          "headline-xl": ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700"}]
+        }
+      }
+    }
+  };
+</script></head><body class="bg-vk-bg font-body-md text-vk-cream antialiased selection:bg-vk-cream-soft selection:text-vk-surface"><header class="fixed top-0 w-full z-50 bg-vk-bg/90 backdrop-blur-xl border-b border-vk-border"><div class="h-20 w-full px-container-pad flex items-center justify-between gap-md"><div class="flex items-center gap-base"><div class="flex items-center gap-sm"><div class="w-10 h-10 rounded-xl bg-vk-surface border border-vk-border flex items-center justify-center"><span class="material-symbols-outlined text-vk-cream text-[24px]">shield_with_heart</span></div><div class="flex flex-col"><span class="font-headline-md text-headline-md tracking-tight text-vk-cream leading-none">VaxKavach</span><span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted leading-none mt-xs">India Telemetry Arc</span></div></div><div class="hidden xl:flex items-center gap-xs px-sm py-xs rounded-full bg-vk-surface border border-vk-border"><div class="w-2 h-2 rounded-full bg-vk-attention animate-pulse"></div><span class="font-label-caps text-label-caps text-vk-cream uppercase tracking-wider">SIMULATED DATA — DEMO MODE</span></div></div><nav class="hidden lg:flex items-center gap-lg"><a class="font-body-sm text-body-sm text-vk-text-muted hover:text-vk-cream transition-colors" data-path="overview" href="#">Overview</a><a class="font-body-sm text-body-sm text-vk-text-muted hover:text-vk-cream transition-colors" data-path="shipments" href="#">Shipments</a><a class="font-body-sm text-body-sm text-vk-text-muted hover:text-vk-cream transition-colors" data-path="live-map" href="#">Map</a><a class="font-body-sm text-body-sm text-vk-text-muted hover:text-vk-cream transition-colors" data-path="problems-queue" href="#">Problems</a><a class="font-body-sm text-body-sm text-vk-text-muted hover:text-vk-cream transition-colors" data-path="telemetry-history" href="#">History</a><a class="font-body-sm text-body-sm text-vk-text-muted hover:text-vk-cream transition-colors" data-path="fleet-operations" href="#">Fleet</a><a aria-current="page" class="transition-colors text-vk-cream font-semibold border-b border-vk-cream/50 pb-0.5" data-path="technical-specs" href="#">Technical</a></nav><div class="flex items-center gap-md"><div class="hidden sm:flex items-center gap-sm"><button class="px-base py-sm rounded-full bg-vk-surface border border-vk-border text-vk-cream font-body-sm text-body-sm hover:bg-vk-surface-2 transition-colors" type="button">How It Works</button><button class="px-base py-sm rounded-full bg-vk-cream text-[#211F1B] font-headline-sm text-headline-sm hover:bg-vk-cream-soft transition-colors font-semibold" type="button">Explore the Demo</button></div><div class="w-8 h-8 rounded-full bg-vk-surface border border-vk-border flex items-center justify-center"><span class="material-symbols-outlined text-vk-cream text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-vk-bg min-h-screen"><div class="flex flex-col w-full">
+<!-- Sub-navigation Bar for Verification State -->
+<section class="w-full bg-vk-bg border-b border-vk-border py-sm px-container-pad">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-md">
+<div class="flex items-center gap-sm flex-wrap">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Active Environment:</span>
+<span class="inline-flex items-center gap-xs px-sm py-xs rounded-full bg-vk-surface border border-vk-border text-vk-cream font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-vk-healthy"></span>
+          Simulation Node: Alpha-7
+        </span>
+<span class="inline-flex items-center gap-xs px-sm py-xs rounded-full bg-vk-surface border border-vk-border text-vk-cream font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-vk-healthy"></span>
+          SHA-256 Ingestion Stream
+        </span>
+<span class="inline-flex items-center gap-xs px-sm py-xs rounded-full bg-vk-surface border border-vk-border text-vk-cream font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-vk-info"></span>
+          Policy: WHO-PQS / TR961
+        </span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-wider px-sm py-xs rounded bg-vk-surface border border-vk-border text-vk-attention">
+          DEMO AUDIT ENVIRONMENT · NO MUTATIONS PERMITTED
+        </span>
+</div>
+</div>
+</section>
+<!-- Technical Console Workspace -->
+<div class="w-full px-container-pad py-lg flex flex-col xl:flex-row gap-lg">
+<!-- LEFT SIDEBAR: Minimal Tactical Rail (Dock-style) -->
+<aside class="w-full xl:w-dock-w shrink-0 flex xl:flex-col items-center justify-between xl:justify-start gap-md bg-vk-surface border border-vk-border p-sm rounded-xl">
+<div class="flex xl:flex-col items-center gap-sm w-full">
+<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="#" title="Overview">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+</a>
+<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="#" title="Shipments">
+<span class="material-symbols-outlined text-[22px]">local_shipping</span>
+</a>
+<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="#" title="Live Map">
+<span class="material-symbols-outlined text-[22px]">map</span>
+</a>
+<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="#" title="Problems Queue">
+<span class="material-symbols-outlined text-[22px]">notification_important</span>
+</a>
+<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="#" title="Telemetry History">
+<span class="material-symbols-outlined text-[22px]">query_stats</span>
+</a>
+<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="#" title="Fleet Operations">
+<span class="material-symbols-outlined text-[22px]">commute</span>
+</a>
+<!-- ACTIVE ITEM: Technical -->
+<a class="w-12 h-12 rounded-xl flex items-center justify-center bg-vk-surface-3 border border-vk-border text-vk-cream" href="#" title="Technical &amp; Verification">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</a>
+<a class="w-12 h-12 rounded-xl flex items-center justify-center text-vk-text-muted hover:bg-vk-surface-2 hover:text-vk-cream transition-colors" href="#" title="Audit Config">
+<span class="material-symbols-outlined text-[22px]">tune</span>
+</a>
+</div>
+<div class="hidden xl:flex flex-col items-center gap-xs mt-auto pt-lg w-full">
+<span class="material-symbols-outlined text-vk-text-muted text-[18px]">verified</span>
+<span class="font-label-caps text-[9px] uppercase tracking-tighter text-vk-text-muted text-center leading-tight">ISO<br/>PQS</span>
+</div>
+</aside>
+<!-- MAIN CONSOLE SPLIT: 2 Columns -->
+<div class="flex-1 flex flex-col gap-lg min-w-0">
+<!-- Screen Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md bg-vk-surface border border-vk-border p-xl rounded-xl">
+<div class="flex flex-col gap-xs max-w-2xl">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-vk-info text-[20px]">policy</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-vk-text-muted">Deterministic Proof Engine</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl tracking-tight text-vk-cream">Technical &amp; Decision Engine</h1>
+<p class="font-body-md text-body-md text-vk-text-muted">
+            Live telemetry ingestion, deterministic rule evaluation, and cryptographic audit records. Inspect complete sensor-to-action rationale without black-box opacity.
+          </p>
+</div>
+<div class="flex flex-wrap items-center gap-xs">
+<div class="px-md py-xs rounded bg-vk-surface-2 border border-vk-border flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-vk-healthy"></span>
+<span class="font-label-sm text-label-sm text-vk-cream">Simulation: Active</span>
+</div>
+<div class="px-md py-xs rounded bg-vk-surface-2 border border-vk-border flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-vk-healthy"></span>
+<span class="font-label-sm text-label-sm text-vk-cream">Ingest: Validated</span>
+</div>
+<div class="px-md py-xs rounded bg-vk-surface-2 border border-vk-border flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-vk-healthy"></span>
+<span class="font-label-sm text-label-sm text-vk-cream">DAG: Evaluating</span>
+</div>
+<div class="px-md py-xs rounded bg-vk-surface-2 border border-vk-border flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-vk-info"></span>
+<span class="font-label-sm text-label-sm text-vk-cream">SHA-256 Ledger: Sealed</span>
+</div>
+</div>
+</div>
+<!-- Content Split Grid (2 Columns) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- LEFT COLUMN: Data Ingestion & Physical Evidence (6 cols) -->
+<div class="lg:col-span-6 flex flex-col gap-lg min-w-0">
+<!-- Card 1: Shipment Selector & Live Ingestion Stream -->
+<div class="bg-vk-surface border border-vk-border rounded-xl p-xl flex flex-col gap-base shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-sm">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Active Consignment Context</span>
+<span class="font-headline-sm text-headline-sm text-vk-cream">VK-1042 · Rotavirus / Measles-Rubella</span>
+</div>
+<div class="inline-flex items-center gap-xs px-md py-xs rounded-full bg-vk-surface-2 border border-vk-border text-vk-attention text-body-sm font-body-sm">
+<span class="material-symbols-outlined text-[16px]">alt_route</span>
+                Chennai Hub → Vellore Central
+              </div>
+</div>
+<!-- Ingestion Stream Telemetry Table -->
+<div class="flex flex-col gap-xs mt-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Real-Time Ingestion Buffer (50 Hz downsampled to 10s)</span>
+<span class="font-body-sm text-body-sm text-vk-text-muted">Buffer: 5 Records</span>
+</div>
+<div class="w-full overflow-x-auto rounded-lg bg-vk-bg border border-vk-border">
+<table class="w-full text-left font-body-sm text-body-sm tabular-nums">
+<thead class="bg-vk-surface-2 text-vk-text-muted font-label-caps text-[10px] uppercase tracking-wider border-b border-vk-border">
+<tr>
+<th class="py-sm px-md font-semibold">Time (IST)</th>
+<th class="py-sm px-md font-semibold text-right">Temp</th>
+<th class="py-sm px-md font-semibold">GPS Coordinates</th>
+<th class="py-sm px-md font-semibold">Seal Status</th>
+<th class="py-sm px-md font-semibold text-right">Amb Temp</th>
+<th class="py-sm px-md font-semibold text-right">Drift</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-vk-border text-vk-cream">
+<tr class="hover:bg-vk-surface/60 transition-colors">
+<td class="py-sm px-md font-medium text-vk-cream">14:31:32</td>
+<td class="py-sm px-md text-right font-semibold text-vk-problem">9.4°C</td>
+<td class="py-sm px-md font-mono text-[11px] text-vk-text-muted">12.9684°N, 79.9482°E</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center gap-xs px-xs py-0.5 rounded bg-vk-surface-2 border border-vk-border text-vk-healthy text-[10px] font-medium">
+                          Sealed
+                        </span>
+</td>
+<td class="py-sm px-md text-right text-vk-text-muted">34.0°C</td>
+<td class="py-sm px-md text-right font-medium text-vk-problem">+1.4°C Excursion</td>
+</tr>
+<tr class="hover:bg-vk-surface/60 transition-colors">
+<td class="py-sm px-md font-medium text-vk-cream">14:31:22</td>
+<td class="py-sm px-md text-right font-semibold text-vk-problem">9.4°C</td>
+<td class="py-sm px-md font-mono text-[11px] text-vk-text-muted">12.9678°N, 79.9475°E</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center gap-xs px-xs py-0.5 rounded bg-vk-surface-2 border border-vk-border text-vk-healthy text-[10px] font-medium">
+                          Sealed
+                        </span>
+</td>
+<td class="py-sm px-md text-right text-vk-text-muted">34.0°C</td>
+<td class="py-sm px-md text-right font-medium text-vk-problem">+1.4°C Excursion</td>
+</tr>
+<tr class="hover:bg-vk-surface/60 transition-colors">
+<td class="py-sm px-md font-medium text-vk-cream">14:31:12</td>
+<td class="py-sm px-md text-right font-semibold text-vk-problem">9.3°C</td>
+<td class="py-sm px-md font-mono text-[11px] text-vk-text-muted">12.9669°N, 79.9468°E</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center gap-xs px-xs py-0.5 rounded bg-vk-surface-2 border border-vk-border text-vk-healthy text-[10px] font-medium">
+                          Sealed
+                        </span>
+</td>
+<td class="py-sm px-md text-right text-vk-text-muted">33.9°C</td>
+<td class="py-sm px-md text-right font-medium text-vk-problem">+1.3°C Excursion</td>
+</tr>
+<tr class="hover:bg-vk-surface/60 transition-colors">
+<td class="py-sm px-md font-medium text-vk-cream">14:31:02</td>
+<td class="py-sm px-md text-right font-semibold text-vk-problem">9.3°C</td>
+<td class="py-sm px-md font-mono text-[11px] text-vk-text-muted">12.9661°N, 79.9460°E</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center gap-xs px-xs py-0.5 rounded bg-vk-surface-2 border border-vk-border text-vk-healthy text-[10px] font-medium">
+                          Sealed
+                        </span>
+</td>
+<td class="py-sm px-md text-right text-vk-text-muted">33.8°C</td>
+<td class="py-sm px-md text-right font-medium text-vk-problem">+1.3°C Excursion</td>
+</tr>
+<tr class="hover:bg-vk-surface/60 transition-colors">
+<td class="py-sm px-md font-medium text-vk-cream">14:30:52</td>
+<td class="py-sm px-md text-right font-semibold text-vk-problem">9.2°C</td>
+<td class="py-sm px-md font-mono text-[11px] text-vk-text-muted">12.9652°N, 79.9451°E</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center gap-xs px-xs py-0.5 rounded bg-vk-surface-2 border border-vk-border text-vk-healthy text-[10px] font-medium">
+                          Sealed
+                        </span>
+</td>
+<td class="py-sm px-md text-right text-vk-text-muted">33.8°C</td>
+<td class="py-sm px-md text-right font-medium text-vk-problem">+1.2°C Excursion</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Mathematical Modeling: MKT (Haynes Formula) -->
+<div class="p-md rounded-lg bg-vk-surface-2 border border-vk-border flex flex-col gap-xs">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-vk-cream">Mean Kinetic Temperature (MKT)</span>
+<span class="font-telemetry-stat text-telemetry-stat text-vk-attention tabular-nums">7.2°C</span>
+</div>
+<p class="font-body-sm text-body-sm text-vk-text-muted leading-relaxed">
+                Calculated over trailing 4-hour window using Haynes Equation with activation energy ΔH = 83.14 kJ/mol. MKT synthesizes thermal degradation rate kinetics, validating that vaccine antigen potency remains intact prior to critical threshold crossing.
+              </p>
+<div class="flex items-center gap-md pt-xs text-vk-text-muted font-label-caps text-[10px]">
+<span class="tabular-nums">Biological Margin Left: 48 mins</span>
+<span class="">•</span>
+<span class="">Formula Model: WHO-TRS-961 Annex 9</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Multi-Signal Correlation Matrix -->
+<div class="bg-vk-surface border border-vk-border rounded-xl p-xl flex flex-col gap-base shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Physical State Correlation</span>
+<span class="font-headline-sm text-headline-sm text-vk-cream">Observed Telemetry vs. System Inference</span>
+</div>
+<span class="material-symbols-outlined text-vk-info text-[20px]">hub</span>
+</div>
+<!-- Side-by-side: Observed vs Inferred -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Physical Observed -->
+<div class="p-md rounded-lg bg-vk-surface-2 border border-vk-border flex flex-col gap-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-info flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">sensors</span> Observed Physical Inputs
+                </span>
+<div class="flex flex-col gap-xs font-body-sm text-body-sm tabular-nums">
+<div class="flex justify-between py-xs border-b border-vk-border">
+<span class="text-vk-text-muted">Payload Temp:</span>
+<span class="font-semibold text-vk-problem">9.4°C (&gt;8.0°C)</span>
+</div>
+<div class="flex justify-between py-xs border-b border-vk-border">
+<span class="text-vk-text-muted">Kinematics:</span>
+<span class="font-semibold text-vk-cream">58 km/h (Transit)</span>
+</div>
+<div class="flex justify-between py-xs border-b border-vk-border">
+<span class="text-vk-text-muted">Door Lock Sensor:</span>
+<span class="font-semibold text-vk-healthy">Sealed &amp; Latched</span>
+</div>
+<div class="flex justify-between py-xs border-b border-vk-border">
+<span class="text-vk-text-muted">Ambient Air:</span>
+<span class="font-semibold text-vk-cream">34.0°C</span>
+</div>
+<div class="flex justify-between py-xs">
+<span class="text-vk-text-muted">Reefer Diagnostics:</span>
+<span class="font-mono text-[11px] text-vk-attention">Error Code E-44</span>
+</div>
+</div>
+</div>
+<!-- System Inferred Rationale -->
+<div class="p-md rounded-lg bg-vk-surface-2 border border-vk-border flex flex-col gap-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-attention flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">psychology</span> Engine Deductive Synthesis
+                </span>
+<p class="font-body-sm text-body-sm text-vk-cream leading-relaxed">
+                  Cargo temperature is rising while the vehicle is at cruising speed and cargo bay doors remain hermetically sealed. Multi-sensor correlation rejects external ambient draft infiltration; confidence score 0.94 attributes root anomaly to <strong class="text-vk-cream">Reefer Compressor Thermal Bypass</strong>.
+                </p>
+<div class="mt-auto p-xs rounded bg-vk-surface-3 border border-vk-border text-[11px] text-vk-text-muted italic">
+                  Note: Mechanical anomaly correlation indicated; physical inspection at depot required for definitive teardown verification.
+                </div>
+</div>
+</div>
+</div>
+<!-- Card 3: Collapsible Technical Specifications (Accordions) -->
+<div class="bg-vk-surface border border-vk-border rounded-xl p-xl flex flex-col gap-sm shadow-sm">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Technical Specifications &amp; Reference Architecture</span>
+<!-- Accordion Item 1 -->
+<details class="group rounded-lg bg-vk-surface-2 border border-vk-border overflow-hidden">
+<summary class="flex items-center justify-between p-md cursor-pointer list-none text-vk-cream hover:text-vk-cream-soft">
+<span class="font-headline-sm text-headline-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px] text-vk-info">data_object</span>
+                  Data Model &amp; Sensor Schema (JSON Schema v7.0)
+                </span>
+<span class="material-symbols-outlined text-vk-text-muted group-open:rotate-180 transition-transform text-[20px]">expand_more</span>
+</summary>
+<div class="px-md pb-md pt-xs font-mono text-[11px] text-vk-text-muted overflow-x-auto">
+<pre class="bg-vk-bg border border-vk-border p-md rounded leading-snug"><code><span class="text-vk-cream">{</span>
+  <span class="text-vk-info">"$schema"</span>: <span class="text-vk-attention">"http://json-schema.org/draft-07/schema#"</span>,
+  <span class="text-vk-info">"title"</span>: <span class="text-vk-attention">"ColdChainTelemetryPacket"</span>,
+  <span class="text-vk-info">"type"</span>: <span class="text-vk-attention">"object"</span>,
+  <span class="text-vk-info">"required"</span>: [<span class="text-vk-attention">"shipment_id"</span>, <span class="text-vk-attention">"timestamp_utc"</span>, <span class="text-vk-attention">"temp_celsius"</span>, <span class="text-vk-attention">"seal_intact"</span>],
+  <span class="text-vk-info">"properties"</span>: {
+    <span class="text-vk-info">"shipment_id"</span>: { <span class="text-vk-info">"type"</span>: <span class="text-vk-attention">"string"</span>, <span class="text-vk-info">"pattern"</span>: <span class="text-vk-attention">"^VK-[0-9]{4}$"</span> },
+    <span class="text-vk-info">"temp_celsius"</span>: { <span class="text-vk-info">"type"</span>: <span class="text-vk-attention">"number"</span>, <span class="text-vk-info">"minimum"</span>: -80.0, <span class="text-vk-info">"maximum"</span>: 50.0 },
+    <span class="text-vk-info">"seal_intact"</span>: { <span class="text-vk-info">"type"</span>: <span class="text-vk-attention">"boolean"</span> },
+    <span class="text-vk-info">"reefer_telemetry"</span>: {
+      <span class="text-vk-info">"type"</span>: <span class="text-vk-attention">"object"</span>,
+      <span class="text-vk-info">"properties"</span>: {
+        <span class="text-vk-info">"compressor_rpm"</span>: { <span class="text-vk-info">"type"</span>: <span class="text-vk-attention">"integer"</span> },
+        <span class="text-vk-info">"diag_code"</span>: { <span class="text-vk-info">"type"</span>: <span class="text-vk-attention">"string"</span> }
+      }
+    }
+  }
+<span class="text-vk-cream">}</span></code></pre>
+</div>
+</details>
+<!-- Accordion Item 2 -->
+<details class="group rounded-lg bg-vk-surface-2 border border-vk-border overflow-hidden">
+<summary class="flex items-center justify-between p-md cursor-pointer list-none text-vk-cream hover:text-vk-cream-soft">
+<span class="font-headline-sm text-headline-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px] text-vk-healthy">health_and_safety</span>
+                  WHO-PQS E006 / TR 961 Validation Thresholds
+                </span>
+<span class="material-symbols-outlined text-vk-text-muted group-open:rotate-180 transition-transform text-[20px]">expand_more</span>
+</summary>
+<div class="px-md pb-md pt-xs font-body-sm text-body-sm text-vk-text-muted flex flex-col gap-xs">
+<p class="">Standard compliance rules enforced directly inside deterministic state evaluator:</p>
+<div class="grid grid-cols-2 gap-sm pt-xs tabular-nums">
+<div class="bg-vk-bg border border-vk-border p-sm rounded">
+<span class="text-vk-cream font-semibold">Tier 1 Target Window:</span>
+<p class="text-[12px] mt-xs">+2.0°C to +8.0°C for WHO cold-chain vaccine classifications.</p>
+</div>
+<div class="bg-vk-bg border border-vk-border p-sm rounded">
+<span class="text-vk-cream font-semibold">Max Excursion Tolerance:</span>
+<p class="text-[12px] mt-xs">Strict zero-excursion margin above +10.0°C; 20m warning at &gt;8.0°C.</p>
+</div>
+</div>
+</div>
+</details>
+<!-- Accordion Item 3 -->
+<details class="group rounded-lg bg-vk-surface-2 border border-vk-border overflow-hidden">
+<summary class="flex items-center justify-between p-md cursor-pointer list-none text-vk-cream hover:text-vk-cream-soft">
+<span class="font-headline-sm text-headline-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px] text-vk-attention">schema</span>
+                  Rule Engine DAG Execution Graph
+                </span>
+<span class="material-symbols-outlined text-vk-text-muted group-open:rotate-180 transition-transform text-[20px]">expand_more</span>
+</summary>
+<div class="px-md pb-md pt-xs font-body-sm text-body-sm text-vk-text-muted flex flex-col gap-xs">
+<p class="">Directed Acyclic Graph (DAG) executes asynchronously on edge gateways with instant validation fail-safes. Zero non-deterministic heuristics allowed in triage path.</p>
+<div class="bg-vk-bg border border-vk-border p-sm rounded font-mono text-[11px] text-vk-cream">
+                  StreamInput → CRC_Check → IngestionFilter → ThresholdComparator → DurationIntegrator → ActionDispatcher
+                </div>
+</div>
+</details>
+</div>
+</div>
+<!-- RIGHT COLUMN: Deterministic Rules, Evidence & Cryptography (6 cols) -->
+<div class="lg:col-span-6 flex flex-col gap-lg min-w-0">
+<!-- Card 4: Deterministic Rule Evaluation -->
+<div class="bg-vk-surface border border-vk-border rounded-xl p-xl flex flex-col gap-base shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Deterministic Logic Evaluation</span>
+<span class="font-headline-sm text-headline-sm text-vk-cream">Rule Evaluation State</span>
+</div>
+<span class="inline-flex items-center gap-xs px-sm py-xs rounded bg-vk-problem/20 border border-vk-problem/40 text-vk-cream font-label-caps text-label-caps uppercase tracking-wider">
+                Status: Triggered
+              </span>
+</div>
+<!-- Rule Definition Block -->
+<div class="p-md rounded-lg bg-vk-surface-2 border border-vk-border flex flex-col gap-sm">
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-vk-text-muted uppercase">Evaluated Policy ID</span>
+<span class="font-mono text-body-sm font-semibold text-vk-cream">RULE_MKT_TEMP_EXCURSION_04B</span>
+<span class="text-body-sm text-vk-text-muted">Sustained High Temperature Cold-Chain Protocol</span>
+</div>
+<div class="flex items-center gap-sm text-[12px] text-vk-text-muted tabular-nums">
+<span class="">Standard Envelope: <strong class="text-vk-cream font-semibold">2.0°C – 8.0°C</strong></span>
+<span class="">•</span>
+<span class="">Standard: WHO-PQS E006</span>
+</div>
+</div>
+<!-- Boolean Trigger Conditions Table -->
+<div class="flex flex-col gap-xs">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Evaluated Boolean Predicates</span>
+<div class="flex flex-col gap-xs font-body-sm text-body-sm tabular-nums">
+<div class="p-sm rounded bg-vk-surface-2 border border-vk-border flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-vk-healthy text-[18px]">check_circle</span>
+<span class="font-mono text-[12px] text-vk-cream">Predicate 1: bay_temp &gt; 8.0°C</span>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-mono text-[11px] text-vk-text-muted">Val: 9.4°C</span>
+<span class="font-label-caps text-label-caps uppercase text-vk-healthy font-semibold">TRUE</span>
+</div>
+</div>
+<div class="p-sm rounded bg-vk-surface-2 border border-vk-border flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-vk-healthy text-[18px]">check_circle</span>
+<span class="font-mono text-[12px] text-vk-cream">Predicate 2: continuous_duration &gt;= 5m</span>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-mono text-[11px] text-vk-text-muted">Val: 11 mins</span>
+<span class="font-label-caps text-label-caps uppercase text-vk-healthy font-semibold">TRUE</span>
+</div>
+</div>
+<div class="p-sm rounded bg-vk-surface-2 border border-vk-border flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-vk-healthy text-[18px]">check_circle</span>
+<span class="font-mono text-[12px] text-vk-cream">Predicate 3: door_latch_status == SEALED</span>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-mono text-[11px] text-vk-text-muted">Val: SEALED</span>
+<span class="font-label-caps text-label-caps uppercase text-vk-healthy font-semibold">TRUE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Step Evaluation Chain Flow -->
+<div class="flex flex-col gap-xs pt-xs">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Deterministic Step Progression</span>
+<div class="p-md rounded-lg bg-vk-bg border border-vk-border flex flex-wrap items-center gap-xs text-[11px] font-mono text-vk-text-muted tabular-nums">
+<span class="text-vk-cream">Telemetry Ingest</span>
+<span class="text-vk-text-muted">→</span>
+<span class="text-vk-cream">Safety Check</span>
+<span class="text-vk-text-muted">→</span>
+<span class="text-vk-problem font-semibold">&gt; 8.0°C Alert</span>
+<span class="text-vk-text-muted">→</span>
+<span class="text-vk-problem font-semibold">Window (11m &gt;= 5m)</span>
+<span class="text-vk-text-muted">→</span>
+<span class="text-vk-cream">Queue PR-1042</span>
+<span class="text-vk-text-muted">→</span>
+<span class="text-vk-healthy font-semibold">Dispatch Directive</span>
+</div>
+</div>
+</div>
+<!-- Card 5: Recommendation Engine Output -->
+<div class="bg-vk-surface border border-vk-border rounded-xl p-xl flex flex-col gap-base shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Synthesized Directive</span>
+<span class="font-headline-sm text-headline-sm text-vk-cream">Automated Remediation Action</span>
+</div>
+<span class="material-symbols-outlined text-vk-healthy text-[20px]">assignment_turned_in</span>
+</div>
+<!-- Directive Statement Box -->
+<div class="p-md rounded-lg bg-vk-surface-2 border border-vk-border flex flex-col gap-sm">
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-vk-attention text-[20px] mt-0.5">priority_high</span>
+<div class="flex flex-col gap-xs">
+<span class="font-headline-sm text-headline-sm text-vk-cream">
+                    Instruct Driver to inspect reefer unit and reroute to nearest accredited facility.
+                  </span>
+<span class="font-body-sm text-body-sm text-vk-text-muted tabular-nums">
+                    Target Facility: <strong class="text-vk-cream">Vellore Sub-District Depot</strong> (14.2 km · Est. Transit: 18m)
+                  </span>
+</div>
+</div>
+</div>
+<!-- Input Justification Subtext -->
+<div class="p-md rounded-lg bg-vk-surface-2 border border-vk-border flex flex-col gap-xs">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Optimization Rationale</span>
+<p class="font-body-sm text-body-sm text-vk-text-muted leading-relaxed tabular-nums">
+                Thermal excursion duration (11 minutes) exceeded Tier-1 biological stability buffer. Proximity geospatial index confirmed Vellore Sub-District Cold Depot as the closest WHO-PQS accredited facility featuring available refrigerated vault capacity (84% available volume).
+              </p>
+</div>
+</div>
+<!-- Card 6: Cryptographic Audit Chain & Verified Records -->
+<div class="bg-vk-surface border border-vk-border rounded-xl p-xl flex flex-col gap-base shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Tamper-Evident Ledger</span>
+<span class="font-headline-sm text-headline-sm text-vk-cream">Cryptographic Event Chain</span>
+</div>
+<div class="flex items-center gap-xs px-sm py-xs rounded bg-vk-surface-2 border border-vk-border text-vk-healthy font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                Chain Intact
+              </div>
+</div>
+<p class="font-body-sm text-body-sm text-vk-text-muted">
+              Every operational state transition is cryptographically sealed as a sequential hash chain. Any retrospective mutation breaks downstream parity and halts validation.
+            </p>
+<!-- Linked Hash Records -->
+<div class="flex flex-col gap-xs">
+<!-- Record 0104 -->
+<div class="p-md rounded-lg bg-vk-surface-2 border border-vk-border flex flex-col gap-xs tabular-nums">
+<div class="flex items-center justify-between flex-wrap gap-xs">
+<div class="flex items-center gap-sm">
+<span class="font-mono text-body-sm font-bold text-vk-cream">#0104</span>
+<span class="font-mono text-[11px] px-xs py-0.5 rounded bg-vk-surface-3 border border-vk-border text-vk-problem">RULE_TRIGGERED</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="font-body-sm text-body-sm text-vk-text-muted">10:49:12 IST</span>
+<span class="font-label-caps text-[10px] text-vk-healthy uppercase font-semibold">Verified</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-xs font-mono text-[11px] text-vk-text-muted pt-xs">
+<div class="">Prev: <span class="text-vk-cream">8f2a9910...61b0</span></div>
+<div class="">Hash: <span class="text-vk-cream">c19de334...e4a2</span></div>
+</div>
+</div>
+<!-- Record 0105 -->
+<div class="p-md rounded-lg bg-vk-surface-2 border border-vk-border flex flex-col gap-xs tabular-nums">
+<div class="flex items-center justify-between flex-wrap gap-xs">
+<div class="flex items-center gap-sm">
+<span class="font-mono text-body-sm font-bold text-vk-cream">#0105</span>
+<span class="font-mono text-[11px] px-xs py-0.5 rounded bg-vk-surface-3 border border-vk-border text-vk-attention">DISPATCH_RECOMMENDATION</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="font-body-sm text-body-sm text-vk-text-muted">10:50:04 IST</span>
+<span class="font-label-caps text-[10px] text-vk-healthy uppercase font-semibold">Verified</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-xs font-mono text-[11px] text-vk-text-muted pt-xs">
+<div class="">Prev: <span class="text-vk-cream">c19de334...e4a2</span></div>
+<div class="">Hash: <span class="text-vk-cream">d481b402...99bc</span></div>
+</div>
+</div>
+<!-- Record 0106 -->
+<div class="p-md rounded-lg bg-vk-surface-2 border border-vk-border flex flex-col gap-xs tabular-nums">
+<div class="flex items-center justify-between flex-wrap gap-xs">
+<div class="flex items-center gap-sm">
+<span class="font-mono text-body-sm font-bold text-vk-cream">#0106</span>
+<span class="font-mono text-[11px] px-xs py-0.5 rounded bg-vk-surface-3 border border-vk-border text-vk-healthy">OPERATOR_ACK</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="font-body-sm text-body-sm text-vk-text-muted">10:55:18 IST</span>
+<span class="font-label-caps text-[10px] text-vk-healthy uppercase font-semibold">Verified</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-xs font-mono text-[11px] text-vk-text-muted pt-xs">
+<div class="">Prev: <span class="text-vk-cream">d481b402...99bc</span></div>
+<div class="">Hash: <span class="text-vk-cream">e732ff88...31f9</span></div>
+</div>
+</div>
+</div>
+<!-- Raw Event Inspector for Record #0104 -->
+<div class="flex flex-col gap-xs pt-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Payload Inspector (Record #0104)</span>
+<span class="font-mono text-[11px] text-vk-text-muted">application/json</span>
+</div>
+<div class="p-md rounded-lg bg-vk-bg border border-vk-border font-mono text-[11px] text-vk-cream overflow-x-auto leading-relaxed tabular-nums">
+<pre><code><span class="text-vk-cream">{</span>
+  <span class="text-vk-info">"shipment_id"</span>: <span class="text-vk-attention">"VK-1042"</span>,
+  <span class="text-vk-info">"event"</span>: <span class="text-vk-attention">"temperature_reading"</span>,
+  <span class="text-vk-info">"timestamp"</span>: <span class="text-vk-attention">"2026-09-08T14:31:32+05:30"</span>,
+  <span class="text-vk-info">"temperature_c"</span>: <span class="text-vk-problem">9.4</span>,
+  <span class="text-vk-info">"sensor_id"</span>: <span class="text-vk-attention">"TEMP-1042-A"</span>,
+  <span class="text-vk-info">"kinematics"</span>: {
+    <span class="text-vk-info">"speed_kmh"</span>: <span class="text-vk-cream">58</span>,
+    <span class="text-vk-info">"corridor"</span>: <span class="text-vk-attention">"NH-48"</span>
+  },
+  <span class="text-vk-info">"hash_status"</span>: <span class="text-vk-healthy">"VALID"</span>,
+  <span class="text-vk-info">"chain_record"</span>: <span class="text-vk-attention">"0104"</span>
+<span class="text-vk-cream">}</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div></main><footer class="w-full bg-vk-surface border-t border-vk-border py-3xl"><div class="w-full px-container-pad flex flex-col md:flex-row items-center justify-between gap-lg"><div class="flex items-center gap-sm"><div class="w-8 h-8 rounded-lg bg-vk-surface-2 border border-vk-border flex items-center justify-center"><span class="material-symbols-outlined text-vk-cream text-[20px]">verified_user</span></div><span class="font-headline-sm text-headline-sm text-vk-cream">VaxKavach Autonomous Logistics</span></div><div class="flex items-center gap-base"><span class="font-label-caps text-label-caps text-vk-text-muted uppercase tracking-wider">ISO 9001 / WHO-PQS COMPLIANT</span><span class="font-body-sm text-body-sm text-vk-text-muted">© 2025 VaxKavach Operations Network. All rights reserved.</span></div></div></footer>
+</body></html>

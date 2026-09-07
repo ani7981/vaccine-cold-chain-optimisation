@@ -1,0 +1,34 @@
+/* Base resets and scrollbars from Stitch designs */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #111214;
+}
+::-webkit-scrollbar-thumb {
+  background: #2B2E31;
+  border-radius: 4px;
+}
+
+/* Animations */
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.92); }
+}
+.pulse-dot {
+  animation: pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Map specific styles */
+.rsm-geography {
+  outline: none;
+}
+.rsm-geography:hover {
+  fill: #17191B !important;
+}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VaxKavach - Operations Overview</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            charcoal: {
+              950: '#0c0e12',
+              900: '#121418',
+              850: '#171a20',
+              800: '#1e222a',
+              700: '#282d37',
+              600: '#39404e',
+            },
+            cream: {
+              50: '#faf8f4',
+              100: '#f5eedb',
+              200: '#e8dcbf',
+              300: '#d7c79e',
+              muted: '#b8afa0',
+            },
+            vax: {
+              ok: '#2e7d52',
+              okMuted: 'rgba(46, 125, 82, 0.18)',
+              okBorder: '#398b5e',
+              amber: '#c98a2c',
+              amberMuted: 'rgba(201, 138, 44, 0.18)',
+              brick: '#b44a44',
+              brickMuted: 'rgba(180, 74, 68, 0.18)',
+              brickBorder: '#cf5a53',
+              slate: '#5c708a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #0d0f13;
+      color: #ede7dd;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121418;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #252a34;
+      border-radius: 4px;
+    }
+    .surface-card {
+      background: #16181e;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .surface-card-subtle {
+      background: #1a1d24;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .pulse-dot {
+      animation: pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulseSubtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.55; transform: scale(0.92); }
+    }
+  </style>
+  <link rel="stylesheet" href="/css/vaxkavach.css">
+</head>
+<body class="h-full antialiased text-[#ede7dd] flex overflow-hidden" style="background-color: #0c0e12; color: #F0ECE4; font-family: 'Plus Jakarta Sans', sans-serif; font-variant-numeric: tabular-nums;">
+<!-- AUTHENTIC FLOATING SIDEBAR (from Reference Mockups) -->
+<aside class="w-[84px] h-full flex flex-col items-center justify-between py-6 px-3 bg-[#0d0f13] border-r border-[#1e222a] z-40 shrink-0" style="background-color: #0e1014; border-right: 1px solid #1e2024;">
+<!-- Top Brand Pill -->
+<div class="flex flex-col items-center space-y-6 w-full">
+<button class="w-12 h-12 rounded-2xl bg-[#1e2229] border border-[#2d333e] flex items-center justify-center text-cream-100 hover:bg-[#252a33] transition-colors shadow-sm" style="background-color: #1a1c20; border: 1px solid #282a2e; color: #F0ECE4;" title="VaxKavach Core">
+<!-- Iconic 4-point cross emblem from references -->
+<svg class="w-6 h-6 text-cream-100" fill="currentColor" viewbox="0 0 24 24">
+<path d="M10.5 3h3v6h6v3h-6v6h-3v-6h-6v-3h6V3z"></path>
+</svg>
+</button>
+<!-- Navigation Icons -->
+<nav class="flex flex-col items-center space-y-3 w-full">
+<!-- Overview (Active) -->
+<button class="w-11 h-11 rounded-2xl bg-cream-100 text-charcoal-950 flex items-center justify-center shadow transition-transform hover:scale-[1.02]" style="background-color: #24272A; color: #F0ECE4;" title="Overview (Active)">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Shipments -->
+<button class="w-11 h-11 rounded-2xl text-[#8d94a1] hover:text-cream-100 hover:bg-[#1a1e26] flex items-center justify-center transition-colors" title="Shipments">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Live Map -->
+<button class="w-11 h-11 rounded-2xl text-[#8d94a1] hover:text-cream-100 hover:bg-[#1a1e26] flex items-center justify-center transition-colors" title="Network Map">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Problems / Alerts -->
+<div class="relative">
+<button class="w-11 h-11 rounded-2xl text-[#8d94a1] hover:text-cream-100 hover:bg-[#1a1e26] flex items-center justify-center transition-colors" title="Active Problems">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-vax-brick ring-2 ring-[#0d0f13]" style="background-color: #8F605A; box-shadow: 0 0 0 2px #0e1014;"></span>
+</div>
+<!-- History -->
+<button class="w-11 h-11 rounded-2xl text-[#8d94a1] hover:text-cream-100 hover:bg-[#1a1e26] flex items-center justify-center transition-colors" title="Audit History">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Fleet -->
+<button class="w-11 h-11 rounded-2xl text-[#8d94a1] hover:text-cream-100 hover:bg-[#1a1e26] flex items-center justify-center transition-colors" title="Fleet Vehicles">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Technical -->
+<button class="w-11 h-11 rounded-2xl text-[#8d94a1] hover:text-cream-100 hover:bg-[#1a1e26] flex items-center justify-center transition-colors" title="Technical Deep Dive">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</nav>
+</div>
+<!-- Bottom Controls & Demo Tag -->
+<div class="flex flex-col items-center space-y-4 w-full">
+<div class="w-8 h-8 rounded-xl bg-[#171a21] border border-[#232731] flex items-center justify-center text-[#7d8491]" title="Help &amp; Compliance">
+<span class="text-xs font-semibold">?</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-[#1b2029] border border-[#2a303e] flex items-center justify-center text-xs text-cream-200 font-medium" title="Dispatcher: L. Nguyen">
+        LN
+      </div>
+</div>
+</aside>
+<!-- MAIN VIEW CONTAINER -->
+<div class="flex-1 flex flex-col h-full overflow-hidden bg-[#0e1014]" style="background-color: #111317;">
+<!-- TOP HEADER -->
+<header class="h-16 px-8 border-b border-[#1b1f27] bg-[#121418] flex items-center justify-between shrink-0" style="background-color: #16181e; border-bottom: 1px solid #232731;">
+<div class="flex items-center space-x-4">
+<div>
+<div class="flex items-center space-x-2">
+<h1 class="text-lg font-semibold tracking-tight text-cream-100">Overview</h1>
+<span class="text-xs px-2 py-0.5 rounded bg-[#1c2028] text-cream-muted font-normal border border-[#282d38]">Operations Core</span>
+</div>
+<p class="text-xs text-[#8c94a0] font-normal">Live view of vaccine shipments currently moving through the network.</p>
+</div>
+</div>
+<div class="flex items-center space-x-6"><div class="text-right"><div class="text-xs font-medium tracking-tight" style="color: #F0E8D9;">08 Sep 2026 · 14:32 IST</div><div class="flex items-center justify-end space-x-1.5 mt-0.5"><span class="w-1.5 h-1.5 rounded-full" style="background-color: #71816F;"></span><span class="text-[10px] font-semibold uppercase tracking-wider" style="color: #71816F;">Live Stream</span></div></div><div class="px-3 py-1 rounded-full flex items-center space-x-2" style="background-color: rgb(37, 35, 31); border: 1px solid rgb(58, 55, 49);"><span class="w-1.5 h-1.5 rounded-full" style="background-color: #A69F94;"></span><span class="text-[11px] font-semibold uppercase tracking-wider" style="color: #A69F94;">SIMULATED TELEMETRY — DEMO MODE</span></div></div>
+</header>
+<!-- CONTENT SCROLL VIEW -->
+<main class="flex-1 overflow-y-auto px-8 py-6 space-y-6"><section class="rounded-2xl p-6" style="background-color: #1a1c20; border: 1px solid #282a2e;"><div class="flex flex-col md:flex-row md:items-center justify-between gap-6"><div><div class="text-[11px] uppercase tracking-widest font-semibold mb-1" style="color: #9E9B95;">Network Health State</div><div class="flex items-baseline space-x-3"><span class="text-3xl font-bold tracking-tight" style="color: #F0ECE4;">12 shipments moving</span><span class="text-xs" style="color: #9E9B95;">• 1 excursion detected requiring response</span></div></div><div class="flex items-center gap-3"><div class="flex items-center space-x-3 px-5 py-3 rounded-xl" style="background-color: #1e2024; border: 1px solid #282a2e;"><div class="w-2.5 h-2.5 rounded-full" style="background-color: #6F7F6D;"></div><div><div class="text-2xl font-bold tracking-tight leading-none" style="color: #F0ECE4;">9</div><div class="text-xs font-medium mt-1" style="color: #6F7F6D;">Healthy</div></div></div><div class="flex items-center space-x-3 px-5 py-3 rounded-xl" style="background-color: #1e2024; border: 1px solid #282a2e;"><div class="w-2.5 h-2.5 rounded-full" style="background-color: #987E55;"></div><div><div class="text-2xl font-bold tracking-tight leading-none" style="color: #F0ECE4;">2</div><div class="text-xs font-medium mt-1" style="color: #987E55;">Attention</div></div></div><div class="flex items-center space-x-3 px-5 py-3 rounded-xl" style="background-color: #1e2024; border: 1px solid #8F605A;"><div class="w-2.5 h-2.5 rounded-full" style="background-color: #8F605A;"></div><div><div class="text-2xl font-bold tracking-tight leading-none" style="color: #F0ECE4;">1</div><div class="text-xs font-medium mt-1" style="color: #8F605A;">Problem</div></div></div></div></div></section><section class="rounded-2xl p-6 relative overflow-hidden" style="background-color: #1a1c20; border-width: 1px 1px 1px 4px; border-style: solid; border-color: #282a2e #282a2e #282a2e #8F605A;"><div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6"><div class="space-y-4 max-w-3xl"><div class="flex items-center space-x-3"><span class="inline-flex items-center px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase" style="background-color: rgba(143, 96, 90, 0.18); color: #C49A94; border: 1px solid rgba(143, 96, 90, 0.45);">Temperature Excursion</span><span class="text-base font-semibold" style="color: #F0ECE4;">Shipment <span class="dyn-shipment-code">VK-1042</span></span><span style="color: #9E9B95;">·</span><span class="text-xs" style="color: #9E9B95;">Chennai Regional Vaccine Store → Vellore District Hospital</span></div><div class="grid grid-cols-2 sm:grid-cols-4 gap-6 py-1"><div><div class="text-[11px] uppercase tracking-wider" style="color: #9E9B95;">Current Status</div><div class="text-sm font-medium mt-1 flex items-center space-x-1.5" style="color: #C49A94;"><span class="w-2 h-2 rounded-full" style="background-color: #8F605A;"></span><span>Above Ceiling</span></div></div><div><div class="text-[11px] uppercase tracking-wider" style="color: #9E9B95;">Current Temp</div><div class="text-2xl font-bold mt-0.5" style="color: #F0ECE4;"><span class="dyn-temp">9.4°C</span></div></div><div><div class="text-[11px] uppercase tracking-wider" style="color: #9E9B95;">Safe Range</div><div class="text-sm font-medium mt-1" style="color: #9E9B95;">2°C — 8°C</div></div><div><div class="text-[11px] uppercase tracking-wider" style="color: #9E9B95;">Duration</div><div class="text-sm font-medium mt-1" style="color: #F0ECE4;">11 min above ceiling</div></div></div><div class="p-3.5 rounded-xl space-y-1.5" style="background-color: #1e2024; border: 1px solid #282a2e;"><p class="text-xs" style="color: #9E9B95;"><span class="font-medium" style="color: #F0ECE4;">Explanation:</span> Temperature rose above the 8.0°C ceiling at 14:21 near Sriperumbudur and has persisted for 11 minutes.</p><p class="text-xs" style="color: #9E9B95;"><span class="font-medium" style="color: #F0ECE4;">Recommended Action:</span> Dispatch secondary cooling protocol and route to Vellore Sub-District Depot backup cold storage.</p></div></div><div class="flex sm:flex-col items-center sm:items-stretch gap-3 shrink-0 w-full sm:w-auto"><button class="flex-1 sm:flex-none px-5 py-2.5 rounded-xl font-semibold text-xs tracking-tight transition-colors flex items-center justify-center space-x-1.5 shadow-sm" style="background-color: #F0ECE4; color: #111214;"><span>Resolve Incident</span><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><button class="flex-1 sm:flex-none px-4 py-2 rounded-xl font-medium text-xs transition-colors text-center" style="background-color: #1e2024; color: #9E9B95; border: 1px solid #282a2e;">Open Telemetry Log</button></div></div></section><div class="grid grid-cols-1 xl:grid-cols-12 gap-6"><section class="xl:col-span-7 rounded-2xl p-6 flex flex-col justify-between" style="background-color: #1a1c20; border: 1px solid #282a2e;"><div><div class="flex items-center justify-between pb-4" style="border-bottom: 1px solid #232731;"><div><h2 class="text-base font-semibold" style="color: #F0ECE4;">Active Corridors</h2><p class="text-xs" style="color: #9E9B95;">Live cold-chain transit status across interstate corridors.</p></div><span class="text-xs font-medium px-2.5 py-1 rounded-lg" style="color: #9E9B95; background-color: #1e2024; border: 1px solid #282a2e;">Showing 5 of 12</span></div><div class="mt-2 divide-y" style="border-color: #232731;"><div class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer" style="border-color: #232731;"><div class="flex items-center space-x-3 min-w-[120px]"><div class="w-2 h-2 rounded-full shrink-0" style="background-color: #8F605A;"></div><div><div class="text-xs font-bold" style="color: #F0ECE4;"><span class="dyn-shipment-code">VK-1042</span></div><div class="text-[11px]" style="color: #9E9B95;">Tata Ultra Reefer</div></div></div><div class="flex-1 min-w-[150px]"><div class="text-xs font-medium" style="color: #F0ECE4;">Chennai → Vellore</div><div class="text-[11px]" style="color: #9E9B95;">Near Sriperumbudur (Km 38)</div></div><div class="text-right min-w-[80px]"><div class="text-xs font-bold" style="color: #C49A94;"><span class="dyn-temp">9.4°C</span></div><div class="text-[10px]" style="color: #9E9B95;">Ceiling 8.0°C</div></div><div class="min-w-[100px] text-center"><span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: rgba(143, 96, 90, 0.2); color: #C49A94; border: 1px solid rgba(143, 96, 90, 0.4);">Problem</span></div><div class="text-right min-w-[65px] text-[11px]" style="color: #9E9B95;">14:31</div></div><div class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer" style="border-color: #232731;"><div class="flex items-center space-x-3 min-w-[120px]"><div class="w-2 h-2 rounded-full shrink-0" style="background-color: #6F7F6D;"></div><div><div class="text-xs font-bold" style="color: #F0ECE4;">VK-1039</div><div class="text-[11px]" style="color: #9E9B95;">Eicher Pro 3015</div></div></div><div class="flex-1 min-w-[150px]"><div class="text-xs font-medium" style="color: #F0ECE4;">Bengaluru → Hyderabad</div><div class="text-[11px]" style="color: #9E9B95;">Hosur Gateway</div></div><div class="text-right min-w-[80px]"><div class="text-xs font-semibold" style="color: #F0ECE4;">5.1°C</div><div class="text-[10px]" style="color: #6F7F6D;">Optimal</div></div><div class="min-w-[100px] text-center"><span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: rgba(111, 127, 109, 0.2); color: #A8B8A6; border: 1px solid rgba(111, 127, 109, 0.4);">Healthy</span></div><div class="text-right min-w-[65px] text-[11px]" style="color: #9E9B95;">14:30</div></div><div class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer" style="border-color: #232731;"><div class="flex items-center space-x-3 min-w-[120px]"><div class="w-2 h-2 rounded-full shrink-0" style="background-color: #6F7F6D;"></div><div><div class="text-xs font-bold" style="color: #F0ECE4;">VK-1045</div><div class="text-[11px]" style="color: #9E9B95;">Ashok Leyland Reefer</div></div></div><div class="flex-1 min-w-[150px]"><div class="text-xs font-medium" style="color: #F0ECE4;">Mumbai → Ahmedabad</div><div class="text-[11px]" style="color: #9E9B95;">Surat South Bypass</div></div><div class="text-right min-w-[80px]"><div class="text-xs font-semibold" style="color: #F0ECE4;">4.8°C</div><div class="text-[10px]" style="color: #6F7F6D;">Optimal</div></div><div class="min-w-[100px] text-center"><span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: rgba(111, 127, 109, 0.2); color: #A8B8A6; border: 1px solid rgba(111, 127, 109, 0.4);">Healthy</span></div><div class="text-right min-w-[65px] text-[11px]" style="color: #9E9B95;">14:29</div></div><div class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer" style="border-color: #232731;"><div class="flex items-center space-x-3 min-w-[120px]"><div class="w-2 h-2 rounded-full shrink-0" style="background-color: #987E55;"></div><div><div class="text-xs font-bold" style="color: #F0ECE4;">VK-1047</div><div class="text-[11px]" style="color: #9E9B95;">BharatBenz 1217C</div></div></div><div class="flex-1 min-w-[150px]"><div class="text-xs font-medium" style="color: #F0ECE4;">Delhi → Patna</div><div class="text-[11px]" style="color: #9E9B95;">Agra Expressway Toll</div></div><div class="text-right min-w-[80px]"><div class="text-xs font-semibold" style="color: #F0ECE4;">7.2°C</div><div class="text-[10px]" style="color: #987E55;">Approaching 8°C</div></div><div class="min-w-[100px] text-center"><span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: rgba(152, 126, 85, 0.2); color: #D4B98E; border: 1px solid rgba(152, 126, 85, 0.4);">Attention</span></div><div class="text-right min-w-[65px] text-[11px]" style="color: #9E9B95;">14:27</div></div><div class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer" style="border-color: #232731;"><div class="flex items-center space-x-3 min-w-[120px]"><div class="w-2 h-2 rounded-full shrink-0" style="background-color: #6F7F6D;"></div><div><div class="text-xs font-bold" style="color: #F0ECE4;">VK-1051</div><div class="text-[11px]" style="color: #9E9B95;">Tata 407 Insulated</div></div></div><div class="flex-1 min-w-[150px]"><div class="text-xs font-medium" style="color: #F0ECE4;">Kolkata → Patna</div><div class="text-[11px]" style="color: #9E9B95;">Durgapur Industrial Belt</div></div><div class="text-right min-w-[80px]"><div class="text-xs font-semibold" style="color: #F0ECE4;">5.7°C</div><div class="text-[10px]" style="color: #6F7F6D;">Optimal</div></div><div class="min-w-[100px] text-center"><span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: rgba(111, 127, 109, 0.2); color: #A8B8A6; border: 1px solid rgba(111, 127, 109, 0.4);">Healthy</span></div><div class="text-right min-w-[65px] text-[11px]" style="color: #9E9B95;">14:26</div></div></div></div><div class="pt-4 mt-2 flex items-center justify-between" style="border-top: 1px solid #232731;"><span class="text-xs" style="color: #9E9B95;">Showing high-priority shipments in transit</span><button class="text-xs font-semibold flex items-center space-x-1 transition-colors" style="color: #F0ECE4;"><span>View all 12 active shipments</span><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div></section><div class="xl:col-span-5 space-y-6"><section class="rounded-2xl p-6" style="background-color: #1a1c20; border: 1px solid #282a2e;"><div class="flex items-center justify-between mb-3"><div><h2 class="text-base font-semibold" style="color: #F0ECE4;">Network Topology</h2><p class="text-xs" style="color: #9E9B95;">Active corridor monitoring.</p></div><button class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-1" style="background-color: #1e2024; color: #F0ECE4; border: 1px solid #282a2e;"><span>Open Live Map</span><span style="color: #9E9B95;">→</span></button></div><div class="w-full h-52 rounded-xl relative overflow-hidden flex items-center justify-center" style="background-color: #111317; border: 1px solid #232731;"><svg class="w-full h-full p-4" fill="none" viewbox="0 0 400 240"><line stroke="#1e2024" stroke-dasharray="3 3" stroke-width="1" x1="20" x2="380" y1="60" y2="60"></line><line stroke="#1e2024" stroke-dasharray="3 3" stroke-width="1" x1="20" x2="380" y1="120" y2="120"></line><line stroke="#1e2024" stroke-dasharray="3 3" stroke-width="1" x1="20" x2="380" y1="180" y2="180"></line><line stroke="#1e2024" stroke-dasharray="3 3" stroke-width="1" x1="100" x2="100" y1="20" y2="220"></line><line stroke="#1e2024" stroke-dasharray="3 3" stroke-width="1" x1="200" x2="200" y1="20" y2="220"></line><line stroke="#1e2024" stroke-dasharray="3 3" stroke-width="1" x1="300" x2="300" y1="20" y2="220"></line><path d="M120 70 L 260 95" stroke="#282a2e" stroke-linecap="round" stroke-width="2"></path><circle cx="120" cy="70" fill="#484740" r="3.5"></circle><circle cx="260" cy="95" fill="#484740" r="3.5"></circle><circle cx="170" cy="79" fill="#987E55" r="4.5"></circle><text fill="#D4B98E" font-family="Plus Jakarta Sans" font-size="9" x="175" y="76">VK-1047</text><path d="M300 135 L 260 95" stroke="#282a2e" stroke-linecap="round" stroke-width="2"></path><circle cx="300" cy="135" fill="#484740" r="3.5"></circle><circle cx="282" cy="116" fill="#6F7F6D" r="4"></circle><path d="M85 140 L 95 105" stroke="#282a2e" stroke-linecap="round" stroke-width="2"></path><circle cx="85" cy="140" fill="#484740" r="3.5"></circle><circle cx="95" cy="105" fill="#484740" r="3.5"></circle><circle cx="90" cy="122" fill="#6F7F6D" r="4"></circle><path d="M145 195 L 165 155" stroke="#282a2e" stroke-linecap="round" stroke-width="2"></path><circle cx="145" cy="195" fill="#484740" r="3.5"></circle><circle cx="165" cy="155" fill="#484740" r="3.5"></circle><circle cx="151" cy="182" fill="#6F7F6D" r="4"></circle><path d="M210 195 L 175 198" stroke="#8F605A" stroke-dasharray="2 2" stroke-linecap="round" stroke-width="2.5"></path><circle cx="210" cy="195" fill="#484740" r="4"></circle><text fill="#9E9B95" font-size="8" x="215" y="198">Chennai</text><circle cx="175" cy="198" fill="#484740" r="4"></circle><text fill="#9E9B95" font-size="8" x="145" y="210">Vellore</text><circle cx="192" cy="196" fill="#8F605A" fill-opacity="0.2" r="6"></circle><circle cx="192" cy="196" fill="#8F605A" r="4" stroke="#E6E2DA" stroke-width="1.5"></circle><text fill="#C49A94" font-family="Plus Jakarta Sans" font-size="9" font-weight="600" x="170" y="185"><span class="dyn-shipment-code">VK-1042</span> (<span class="dyn-temp">9.4°C</span>)</text></svg><div class="absolute bottom-2.5 left-3 px-2.5 py-1 rounded-md flex items-center space-x-3 text-[10px]" style="background-color: rgba(26, 28, 32, 0.95); border: 1px solid #282a2e;"><div class="flex items-center space-x-1" style="color: #9E9B95;"><span class="w-2 h-2 rounded-full" style="background-color: #6F7F6D;"></span><span>Healthy</span></div><div class="flex items-center space-x-1" style="color: #9E9B95;"><span class="w-2 h-2 rounded-full" style="background-color: #987E55;"></span><span>Attention</span></div><div class="flex items-center space-x-1" style="color: #9E9B95;"><span class="w-2 h-2 rounded-full" style="background-color: #8F605A;"></span><span>Problem</span></div></div></div></section><section class="rounded-2xl p-6" style="background-color: #1a1c20; border: 1px solid #282a2e;"><div class="flex items-center justify-between pb-3" style="border-bottom: 1px solid #232731;"><div><h2 class="text-base font-semibold" style="color: #F0ECE4;">What changed</h2><p class="text-xs" style="color: #9E9B95;">Recent cold-chain alerts and milestones.</p></div><span class="text-[11px]" style="color: #9E9B95;">Last 30 mins</span></div><div class="space-y-3.5 mt-3 text-xs"><div class="flex items-start space-x-3"><span class="text-[11px] font-mono font-medium shrink-0 pt-0.5" style="color: #9E9B95;">14:31</span><div class="flex-1"><p class="leading-snug" style="color: #F0ECE4;"><span class="font-semibold" style="color: #C49A94;"><span class="dyn-shipment-code">VK-1042</span></span> temperature remains above 8°C ceiling.</p><p class="text-[11px] mt-0.5" style="color: #9E9B95;">Reading logged at <span class="dyn-temp">9.4°C</span> (Sriperumbudur sensor ping)</p></div></div><div class="flex items-start space-x-3"><span class="text-[11px] font-mono font-medium shrink-0 pt-0.5" style="color: #9E9B95;">14:30</span><div class="flex-1"><p class="leading-snug" style="color: #F0ECE4;">Recommended action generated for <span class="font-semibold" style="color: #F0ECE4;"><span class="dyn-shipment-code">VK-1042</span></span>.</p><p class="text-[11px] mt-0.5" style="color: #9E9B95;">Vellore Sub-District Depot ILR pre-chill protocol queued</p></div></div><div class="flex items-start space-x-3"><span class="text-[11px] font-mono font-medium shrink-0 pt-0.5" style="color: #9E9B95;">14:27</span><div class="flex-1"><p class="leading-snug" style="color: #F0ECE4;"><span class="font-semibold" style="color: #D4B98E;">VK-1047</span> temperature approaching upper limit.</p><p class="text-[11px] mt-0.5" style="color: #9E9B95;">Current: 7.2°C along Agra Expressway</p></div></div><div class="flex items-start space-x-3"><span class="text-[11px] font-mono font-medium shrink-0 pt-0.5" style="color: #9E9B95;">14:22</span><div class="flex-1"><p class="leading-snug" style="color: #F0ECE4;"><span class="font-semibold" style="color: #F0ECE4;">VK-1039</span> entered Bengaluru → Hyderabad route.</p><p class="text-[11px] mt-0.5" style="color: #9E9B95;">Normal pre-trip seal confirmed at 5.1°C</p></div></div></div></section></div></div></main>
+<!-- CALM OPERATIONAL FOOTER STATUS -->
+<footer class="h-10 px-8 bg-[#101216] border-t border-[#1a1e26] flex items-center justify-between text-xs text-[#707886] shrink-0" style="background-color: #111317; border-top: 1px solid #232731; color: #9E9B95;">
+<div class="flex items-center space-x-4"><span class="">VaxKavach Operational Core v2.4</span><span class="">•</span><span class="">Deterministic Decision System</span><span class="">•</span><span class="" style="color: #6F7F6D; font-weight: 500;">MKT Audit Sealed</span></div>
+<div>
+<span class="">Simulated pan-India cold-chain stream active</span>
+</div>
+</footer>
+</div>
+
+  <script type="module" src="/js/api.js"></script>
+  <script type="module" src="/js/websocket.js"></script>
+  <script type="module" src="/js/app.js"></script>
+</body></html>

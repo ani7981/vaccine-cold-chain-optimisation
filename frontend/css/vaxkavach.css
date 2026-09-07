@@ -1,0 +1,91 @@
+:root {
+  --vk-bg: #0B0C0D;
+  --vk-surface: #111214;
+  --vk-surface-2: #17191B;
+  --vk-surface-3: #1E2022;
+  --vk-surface-4: #24272A;
+  --vk-border: #2B2E31;
+  --vk-border-soft: #202326;
+  --vk-cream: #F0ECE4;
+  --vk-cream-soft: #D5D0C7;
+  --vk-muted: #9E9B95;
+  --vk-subtle: #777570;
+  --vk-healthy: #6F7F6D;
+  --vk-attention: #987E55;
+  --vk-problem: #8F605A;
+  --vk-info: #64777B;
+}
+
+body {
+  background-color: var(--vk-bg) !important;
+  color: var(--vk-cream) !important;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Neutralize brown/tan/sepia background styles while keeping Stitch layout */
+[style*="background-color: rgb(23, 22, 20)"],
+[style*="background-color: rgb(26, 25, 22)"],
+[style*="background-color: #0d0f13"],
+[style*="background-color: #0e1014"],
+[style*="background-color: #171614"],
+[style*="background-color: #0C0E12"],
+[style*="background-color: #111317"] {
+  background-color: var(--vk-bg) !important;
+}
+
+[style*="background-color: rgb(30, 29, 26)"],
+[style*="background-color: rgb(37, 35, 31)"],
+[style*="background-color: #16181e"],
+[style*="background-color: #1a1d24"],
+[style*="background-color: #1E1D1A"],
+[style*="background-color: #14171D"],
+[style*="background-color: #1A1E26"] {
+  background-color: var(--vk-surface) !important;
+}
+
+[style*="background-color: #25231F"],
+[style*="background-color: #1F2228"] {
+  background-color: var(--vk-surface-2) !important;
+}
+
+[style*="color: rgb(240, 232, 217)"],
+[style*="color: #ede7dd"],
+[style*="color: #F0E8D9"],
+[style*="color: #F5EEDB"],
+[style*="color: #EDE5D4"] {
+  color: var(--vk-cream) !important;
+}
+
+[style*="color: rgb(166, 159, 148)"],
+[style*="color: #A69F94"],
+[style*="color: #8E8A80"],
+[style*="color: #A8A398"],
+[style*="color: #8d94a1"],
+[style*="color: #8c94a0"] {
+  color: var(--vk-muted) !important;
+}
+
+/* Border overrides */
+[style*="border-color: rgb(48, 46, 41)"],
+[style*="border-color: rgb(58, 55, 49)"],
+[style*="border-color: #3A3731"],
+[style*="border-color: #302E29"],
+[style*="border-color: #262C36"],
+[style*="border-color: #222732"],
+[style*="border-color: #1F2228"] {
+  border-color: var(--vk-border) !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--vk-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--vk-border);
+  border-radius: 4px;
+}

@@ -1,0 +1,694 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>VaxKavach - Shipment Details (VK-1042)</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background": "#0c0e12",
+            "surface": "#111317",
+            "surface-container": "#14171d",
+            "surface-container-high": "#1a1e26",
+            "surface-container-highest": "#222733",
+            "primary": "#EDE5D4",
+            "primary-hover": "#f5eedb",
+            "on-primary": "#111317",
+            "cream-muted": "#c5c9af",
+            "text-muted": "#8b909a",
+            "text-body": "#a0a5ad",
+            "alert-rose": "#d99b9b",
+            "alert-rose-bg": "rgba(217, 155, 155, 0.12)",
+            "safe-sage": "#9bb89b",
+            "safe-sage-bg": "rgba(155, 184, 155, 0.12)",
+            "warning-amber": "#d9be8b"
+          },
+          fontFamily: {
+            sans: ["'Plus Jakarta Sans'", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        background-color: #0c0e12;
+        color: #EDE5D4;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-[#0c0e12] text-[#EDE5D4] font-sans antialiased flex flex-row min-h-screen w-full selection:bg-[#EDE5D4] selection:text-[#111317]">
+<!-- PERSISTENT LEFT SIDEBAR (Exactly 72px sticky) -->
+<aside aria-label="Primary Navigation" class="w-[72px] min-w-[72px] max-w-[72px] h-screen sticky top-0 bg-[#111317] border-r border-white/[0.06] flex flex-col justify-between items-center py-5 z-50 shrink-0 select-none box-border">
+<div class="flex flex-col items-center w-full">
+<!-- Top Logo Button -->
+<a class="w-[42px] h-[42px] rounded-xl bg-[#EDE5D4]/[0.12] text-[#EDE5D4] hover:bg-[#EDE5D4]/20 flex items-center justify-center mb-6 transition-colors shadow-sm" href="#" title="VaxKavach Autonomous Logistics">
+<span class="material-symbols-outlined text-[24px]">shield_with_heart</span>
+</a>
+<div class="w-8 h-[1px] bg-white/[0.06] mb-5"></div>
+<!-- Nav Items Stack -->
+<nav class="flex flex-col items-center gap-3 w-full px-2">
+<!-- Overview -->
+<a class="w-10 h-10 rounded-xl flex items-center justify-center text-[#8b909a] hover:text-[#f5eedb] hover:bg-[#1a1e26] transition-all" href="#" title="Overview">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</a>
+<!-- Shipments (ACTIVE: warm cream circle capsule) -->
+<a aria-current="page" class="w-10 h-10 rounded-full flex items-center justify-center bg-[#EDE5D4] text-[#111317] shadow-sm transition-all" href="#" title="Shipments">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</a>
+<!-- Live Map -->
+<a class="w-10 h-10 rounded-xl flex items-center justify-center text-[#8b909a] hover:text-[#f5eedb] hover:bg-[#1a1e26] transition-all" href="#" title="Live Map">
+<span class="material-symbols-outlined text-[20px]">explore</span>
+</a>
+<!-- Problems Queue -->
+<a class="w-10 h-10 rounded-xl flex items-center justify-center text-[#8b909a] hover:text-[#d99b9b] hover:bg-[#1a1e26] transition-all relative" href="#" title="Problems Queue">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+<span class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[#d99b9b]"></span>
+</a>
+<!-- History -->
+<a class="w-10 h-10 rounded-xl flex items-center justify-center text-[#8b909a] hover:text-[#f5eedb] hover:bg-[#1a1e26] transition-all" href="#" title="Telemetry History">
+<span class="material-symbols-outlined text-[20px]">history</span>
+</a>
+<!-- Fleet -->
+<a class="w-10 h-10 rounded-xl flex items-center justify-center text-[#8b909a] hover:text-[#f5eedb] hover:bg-[#1a1e26] transition-all" href="#" title="Fleet Operations">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+</a>
+<!-- Technical -->
+<a class="w-10 h-10 rounded-xl flex items-center justify-center text-[#8b909a] hover:text-[#f5eedb] hover:bg-[#1a1e26] transition-all" href="#" title="Technical Specs">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Navigation Elements -->
+<div class="flex flex-col items-center gap-3 w-full px-2">
+<a class="w-9 h-9 rounded-xl flex items-center justify-center text-[#8b909a] hover:text-[#f5eedb] hover:bg-[#1a1e26] transition-all" href="#" title="Help &amp; Documentation">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</a>
+<a class="w-9 h-9 rounded-xl flex items-center justify-center text-[#8b909a] hover:text-[#f5eedb] hover:bg-[#1a1e26] transition-all" href="#" title="System Settings">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</a>
+<div class="mt-1 flex items-center justify-center w-8 h-8 rounded-full bg-[#16181e]" title="Core Telemetry Online">
+<div class="w-2 h-2 rounded-full bg-[#9bb89b] shadow-[0_0_6px_rgba(155,184,155,0.6)]"></div>
+</div>
+</div>
+</aside>
+<!-- MAIN CONTENT CONTAINER (Full flexible viewport width right of sidebar) -->
+<div class="flex-1 min-w-0 w-[calc(100%-72px)] flex flex-col min-h-screen bg-[#0c0e12]">
+<!-- TOP APPLICATION BAR (Inside Main Container) -->
+<header class="w-full h-20 sticky top-0 z-40 bg-[#0c0e12]/85 backdrop-blur-xl border-b border-white/[0.05] px-8 flex items-center justify-between gap-4">
+<!-- Left Branding + Badge -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-[#16181e] border border-white/[0.06] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#ede5d4] text-[22px]">shield_with_heart</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[17px] font-bold tracking-tight text-[#f5eedb] leading-none">VaxKavach</span>
+<span class="text-[10px] font-semibold uppercase tracking-wider text-[#8b909a] leading-none mt-1">India Telemetry Arc</span>
+</div>
+</div>
+<div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-[#16181e] border border-white/[0.04]">
+<div class="w-2 h-2 rounded-full bg-[#ede5d4] animate-pulse"></div>
+<span class="text-[11px] font-semibold text-[#ede5d4] uppercase tracking-wider">Simulated Data — Demo Mode</span>
+</div>
+</div>
+<!-- Center Sub-nav Links -->
+<nav class="hidden lg:flex items-center gap-7 text-[13px]">
+<a class="text-[#8b909a] hover:text-[#ede5d4] transition-colors" href="#">Overview</a>
+<a class="text-[#ede5d4] font-semibold border-b-2 border-[#ede5d4] pb-0.5" href="#">Shipments</a>
+<a class="text-[#8b909a] hover:text-[#ede5d4] transition-colors" href="#">Map</a>
+<a class="text-[#8b909a] hover:text-[#ede5d4] transition-colors" href="#">Problems</a>
+<a class="text-[#8b909a] hover:text-[#ede5d4] transition-colors" href="#">History</a>
+<a class="text-[#8b909a] hover:text-[#ede5d4] transition-colors" href="#">Fleet</a>
+<a class="text-[#8b909a] hover:text-[#ede5d4] transition-colors" href="#">Technical</a>
+</nav>
+<!-- Right Action CTA + Profile Avatar -->
+<div class="flex items-center gap-3.5">
+<button class="hidden sm:inline-flex px-4 py-2 rounded-full bg-[#1a1e26] text-[#a0a5ad] hover:text-[#ede5d4] text-[13px] font-medium transition-colors" type="button">
+          How It Works
+        </button>
+<button class="px-4 py-2 rounded-full bg-[#ede5d4] text-[#111317] hover:bg-[#f5eedb] font-semibold text-[13px] transition-colors shadow-sm" type="button">
+          Explore the Demo
+        </button>
+<div class="w-8 h-8 rounded-full bg-[#EDE5D4] flex items-center justify-center text-[#111317] font-semibold text-sm shadow-sm" title="Operator Profile">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+</div>
+</header>
+<!-- MAIN VIEW AREA -->
+<main class="flex-1 w-full px-8 py-6 max-w-[1560px] mx-auto flex flex-col gap-6">
+<!-- BREADCRUMB & SHIPMENT SUB-HEADER -->
+<section class="w-full flex flex-col gap-4 pb-2">
+<div class="flex items-center justify-between flex-wrap gap-3">
+<a class="group inline-flex items-center gap-2 text-[13px] text-[#a0a5ad] hover:text-[#f5eedb] transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px] transition-transform group-hover:-translate-x-1">arrow_back</span>
+<span>Shipments</span>
+</a>
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#16181e] border border-white/[0.05] text-[#a0a5ad] text-[11px] font-medium">
+<span class="inline-block w-2 h-2 rounded-full bg-[#9bb89b]"></span>
+<span>Telemetry Link: 99.4% RSSI</span>
+</span>
+<span class="text-[12px] text-[#8b909a]">Updated 14:31 IST</span>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-3 flex-wrap">
+<h1 class="text-3xl font-bold tracking-tight text-[#f5eedb]">VK-1042</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[rgba(217,155,155,0.12)] text-[#d99b9b] border border-[#d99b9b]/20 text-[11px] font-bold tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-[#d99b9b]"></span>
+                PROBLEM DETECTED
+              </span>
+<span class="text-[12px] text-[#8b909a] font-medium">WHO-PQS Critical Cold Chain</span>
+</div>
+<div class="flex items-center gap-2 text-[13px] text-[#EDE5D4]/90 flex-wrap">
+<span class="font-medium">Chennai Regional Vaccine Store</span>
+<span class="text-[#8b909a]">→</span>
+<span class="font-medium">Vellore District Hospital</span>
+<span class="text-[#8b909a]">·</span>
+<span class="text-[#a0a5ad]">Currently near Sriperumbudur · Km 74.2 · NH-48</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#16181e] hover:bg-[#1a1e26] border border-white/[0.06] text-[#ede5d4] text-[13px] font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-[#a0a5ad]">share</span>
+<span>Dispatch Handover</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#ede5d4] hover:bg-[#f5eedb] text-[#111317] text-[13px] font-bold transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+<span>Escalate to Dispatch</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SHIPMENT DASHBOARD 2-COLUMN DESKTOP GRID -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start w-full">
+<!-- LEFT COLUMN (~65% width: 8 cols on xl / 7 cols on lg) -->
+<div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-6">
+<!-- SECTION 1 — CURRENT STATE HERO -->
+<section class="rounded-xl bg-[#14171d] border border-white/[0.05] p-6 shadow-sm">
+<div class="flex items-center justify-between pb-3">
+<span class="text-[11px] font-bold tracking-wider uppercase text-[#8b909a]">Current State · Payload Compartment #1</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[rgba(217,155,155,0.12)] text-[#d99b9b] border border-[#d99b9b]/20 text-[11px] font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-[#d99b9b] animate-pulse"></span>
+                Above safe range for 11 min
+              </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pt-2">
+<div class="md:col-span-6 flex flex-col">
+<div class="flex items-baseline gap-3">
+<span class="text-[64px] font-semibold leading-none tracking-tight text-[#f5eedb]">9.4°C</span>
+<span class="text-[14px] text-[#d99b9b] font-medium flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+                    +1.4°C drift
+                  </span>
+</div>
+<div class="mt-4 flex items-center gap-3 text-[12px] text-[#a0a5ad] flex-wrap">
+<span class="inline-flex items-center gap-1.5 text-[#9bb89b] font-medium">
+<span class="w-2 h-2 rounded-sm bg-[#9bb89b]"></span>
+                    Target Envelope: 2°C — 8°C
+                  </span>
+<span class="text-[#8b909a]">·</span>
+<span class="text-[#d99b9b]">Margin Exceeded</span>
+</div>
+</div>
+<div class="md:col-span-6">
+<div class="p-3.5 rounded-lg bg-[#1a1e26] border border-white/[0.04] text-[12px] text-[#a0a5ad] leading-relaxed">
+                  The shipment temperature has remained above the upper threshold limit (<span class="text-[#f5eedb] font-medium">8.0°C</span>) continuously since passing the Sriperumbudur corridor (Km 74.2). Thermal decay curve projects 10.1°C within 18 minutes without mitigation.
+                </div>
+</div>
+</div>
+<!-- Horizontal Safe Range Bar -->
+<div class="mt-6 pt-5 border-t border-white/[0.04] flex flex-col gap-2">
+<div class="flex items-center justify-between text-[11px] text-[#8b909a]">
+<span>0°C (Freezing limit)</span>
+<span class="text-[#9bb89b] font-medium">Validated Cold Zone (2.0°C – 8.0°C)</span>
+<span class="text-[#d99b9b] font-medium">Current: 9.4°C</span>
+<span>12°C</span>
+</div>
+<div class="h-2 w-full rounded-full bg-[#1a1e26] relative overflow-hidden">
+<!-- Safe Band -->
+<div class="absolute top-0 bottom-0 left-[16.6%] right-[33.3%] bg-[#9bb89b]/25 rounded-sm"></div>
+<!-- 8.0°C Limit Mark -->
+<div class="absolute top-0 bottom-0 left-[66.6%] w-0.5 bg-[#d9be8b]"></div>
+<!-- Trace Track -->
+<div class="absolute top-0 bottom-0 left-0 w-[78.3%] bg-[#ede5d4]/40 rounded-l-full"></div>
+<!-- Current Position Indicator -->
+<div class="absolute top-0 bottom-0 left-[78.3%] w-2.5 -ml-1 rounded-full bg-[#f5eedb] shadow-sm"></div>
+</div>
+</div>
+</section>
+<!-- SECTION 2 — RECOMMENDED ACTION -->
+<section class="rounded-xl bg-[#171a22] border border-white/[0.06] p-6 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#d9be8b]"></span>
+<span class="text-[11px] font-bold uppercase tracking-wider text-[#d9be8b]">Protocol Trigger · Step 1 of 2</span>
+</div>
+<span class="text-[11px] font-medium text-[#8b909a]">Priority Alpha</span>
+</div>
+<div class="mt-3 flex flex-col gap-2">
+<h2 class="text-[18px] font-semibold text-[#f5eedb]">Recommended action</h2>
+<p class="text-[15px] font-medium text-[#ede5d4] leading-snug">
+                Check the refrigeration unit and prepare to move the shipment to the nearest validated cold storage.
+              </p>
+<p class="text-[13px] text-[#a0a5ad] leading-relaxed">
+                The internal core temperature has hovered above 8.0°C for 11 consecutive minutes. Autonomous reefer telematics flag an auxiliary compressor loop fault on Unit #2. <strong class="text-[#f5eedb] font-medium">Vellore Sub-District Depot</strong> is 14 km away (approx 16 min transit time).
+              </p>
+</div>
+<div class="mt-5 pt-4 border-t border-white/[0.04] flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<button class="px-5 py-2.5 rounded-lg bg-[#ede5d4] text-[#111317] hover:bg-[#f5eedb] transition-all text-[13px] font-bold shadow-sm active:scale-[0.99]" type="button">
+                  Acknowledge Problem
+                </button>
+<button class="px-4 py-2.5 rounded-lg bg-[#1f232c] text-[#f5eedb] hover:bg-[#282d38] transition-colors text-[13px] font-medium" type="button">
+                  Open Problem Details
+                </button>
+</div>
+<a class="inline-flex items-center gap-1.5 text-[13px] text-[#d9be8b] hover:text-[#f5eedb] transition-colors font-medium" href="#">
+<span>Dispatch Driver Directive</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- SECTION 3 — JOURNEY TIMELINE -->
+<section class="rounded-xl bg-[#14171d] border border-white/[0.05] p-6 shadow-sm">
+<div class="flex items-center justify-between pb-4">
+<div class="flex items-center gap-2">
+<span class="text-[15px] font-semibold text-[#f5eedb]">Journey</span>
+<span class="text-[12px] text-[#8b909a]">· 7 Checkpoints logged</span>
+</div>
+<span class="text-[11px] text-[#a0a5ad]">Total Distance: 138 km</span>
+</div>
+<!-- Horizontal Journey Steps -->
+<div class="pt-2 overflow-x-auto">
+<div class="min-w-[660px] flex flex-col gap-5">
+<div class="relative flex items-center justify-between">
+<!-- Lines -->
+<div class="absolute left-3 right-[18%] top-1/2 -translate-y-1/2 h-[2px] bg-[#2a2f3a]"></div>
+<div class="absolute left-[45%] right-[18%] top-1/2 -translate-y-1/2 h-[2px] bg-[#d99b9b]/40"></div>
+<div class="absolute right-0 w-[18%] top-1/2 -translate-y-1/2 h-[2px] border-t-2 border-dashed border-[#8b909a]/30"></div>
+<!-- Step 1 -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-[#1a1e26] border border-white/[0.08] flex items-center justify-center text-[#9bb89b]">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-[#1a1e26] border border-white/[0.08] flex items-center justify-center text-[#9bb89b]">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-[#1a1e26] border border-white/[0.08] flex items-center justify-center text-[#9bb89b]">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-[#1a1e26] border border-[#d9be8b]/40 flex items-center justify-center text-[#d9be8b]">
+<span class="w-2 h-2 rounded-full bg-[#d9be8b]"></span>
+</div>
+</div>
+<!-- Step 5 -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-[#1a1e26] border border-[#d99b9b]/40 flex items-center justify-center text-[#d99b9b]">
+<span class="w-2.5 h-2.5 rounded-full bg-[#d99b9b]"></span>
+</div>
+</div>
+<!-- Step 6 (Active) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-7 h-7 rounded-full bg-[#ede5d4] flex items-center justify-center text-[#111317] shadow-sm">
+<span class="material-symbols-outlined text-[16px] font-bold">priority_high</span>
+</div>
+</div>
+<!-- Step 7 (Projected) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-[#14171d] border border-dashed border-[#8b909a]/40 flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-[#8b909a]/50"></span>
+</div>
+</div>
+</div>
+<!-- Step Metadata -->
+<div class="grid grid-cols-7 gap-2 text-left">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold uppercase text-[#8b909a]">10:24</span>
+<span class="text-[#f5eedb] text-[12px] font-medium leading-tight mt-0.5">Departed Depot</span>
+<span class="text-[11px] text-[#8b909a] mt-0.5">Chennai GHS</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold uppercase text-[#8b909a]">10:31</span>
+<span class="text-[#9bb89b] text-[12px] font-medium leading-tight mt-0.5">Temp Normal</span>
+<span class="text-[11px] text-[#8b909a] mt-0.5">4.8°C stable</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold uppercase text-[#8b909a]">10:42</span>
+<span class="text-[#a0a5ad] text-[12px] font-medium leading-tight mt-0.5">Temp Rising</span>
+<span class="text-[11px] text-[#8b909a] mt-0.5">6.8°C logged</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold uppercase text-[#d9be8b]">10:48</span>
+<span class="text-[#d9be8b] text-[12px] font-medium leading-tight mt-0.5">Crossed 8.0°C</span>
+<span class="text-[11px] text-[#8b909a] mt-0.5">Upper limit</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold uppercase text-[#d99b9b]">10:49</span>
+<span class="text-[#d99b9b] text-[12px] font-medium leading-tight mt-0.5">Problem Alert</span>
+<span class="text-[11px] text-[#8b909a] mt-0.5">8.4°C breach</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold uppercase text-[#f5eedb]">10:50</span>
+<span class="text-[#f5eedb] text-[12px] font-semibold leading-tight mt-0.5">Action Active</span>
+<span class="text-[11px] text-[#a0a5ad] mt-0.5">Reroute Prep</span>
+</div>
+<div class="flex flex-col opacity-60">
+<span class="text-[10px] font-bold uppercase text-[#8b909a]">11:02</span>
+<span class="text-[#a0a5ad] text-[12px] leading-tight mt-0.5">Projected Reroute</span>
+<span class="text-[11px] text-[#8b909a] mt-0.5">Vellore Sub-Depot</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 4 — TEMPERATURE GRAPH (LAST 60 MINUTES) -->
+<section class="rounded-xl bg-[#14171d] border border-white/[0.05] p-6 shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 gap-2">
+<div>
+<h3 class="text-[15px] font-semibold text-[#f5eedb]">Temperature · Last 60 minutes</h3>
+<p class="text-[12px] text-[#8b909a]">Continuous calibrated sensor readout (Probe Alpha #1)</p>
+</div>
+<div class="flex items-center gap-4 text-[11px] flex-wrap">
+<span class="flex items-center gap-1.5 text-[#9bb89b]">
+<span class="w-3 h-1 bg-[#9bb89b]/40 rounded-sm"></span>
+                  Safe Envelope (2°C – 8°C)
+                </span>
+<span class="flex items-center gap-1.5 text-[#d99b9b]">
+<span class="w-3 h-0.5 border-t border-dashed border-[#d99b9b]"></span>
+                  8.0°C Ceiling
+                </span>
+<span class="flex items-center gap-1.5 text-[#ede5d4]">
+<span class="w-3 h-1 bg-[#ede5d4] rounded-full"></span>
+                  Actual Trace
+                </span>
+</div>
+</div>
+<!-- Temperature SVG Chart -->
+<div class="w-full h-64 relative bg-[#0f1217] rounded-lg p-3 border border-white/[0.04]">
+<svg aria-label="Temperature history chart" class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 800 240">
+<defs>
+<linearGradient id="safeZoneGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#9bb89b" stop-opacity="0.08"></stop>
+<stop offset="100%" stop-color="#9bb89b" stop-opacity="0.02"></stop>
+</linearGradient>
+<linearGradient id="traceGrad" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#9bb89b"></stop>
+<stop offset="55%" stop-color="#d9be8b"></stop>
+<stop offset="75%" stop-color="#d99b9b"></stop>
+<stop offset="100%" stop-color="#ede5d4"></stop>
+</linearGradient>
+</defs>
+<!-- Grid Horizontal Lines -->
+<line stroke="#ffffff" stroke-opacity="0.04" stroke-width="1" x1="40" x2="780" y1="24" y2="24"></line>
+<!-- 8°C Ceiling Line -->
+<line stroke="#d99b9b" stroke-dasharray="4 4" stroke-opacity="0.4" stroke-width="1.2" x1="40" x2="780" y1="64" y2="64"></line>
+<line stroke="#ffffff" stroke-opacity="0.04" stroke-width="1" x1="40" x2="780" y1="104" y2="104"></line>
+<line stroke="#ffffff" stroke-opacity="0.04" stroke-width="1" x1="40" x2="780" y1="144" y2="144"></line>
+<!-- 2°C Floor Line -->
+<line stroke="#9bb89b" stroke-dasharray="4 4" stroke-opacity="0.25" stroke-width="1" x1="40" x2="780" y1="184" y2="184"></line>
+<line stroke="#ffffff" stroke-opacity="0.04" stroke-width="1" x1="40" x2="780" y1="224" y2="224"></line>
+<!-- Safe Zone Rect -->
+<rect fill="url(#safeZoneGrad)" height="120" width="740" x="40" y="64"></rect>
+<!-- Y-Axis Labels -->
+<text fill="#8b909a" font-family="Plus Jakarta Sans" font-size="10" text-anchor="end" x="32" y="27">10°</text>
+<text fill="#d99b9b" font-family="Plus Jakarta Sans" font-size="10" font-weight="600" text-anchor="end" x="32" y="67">8°</text>
+<text fill="#8b909a" font-family="Plus Jakarta Sans" font-size="10" text-anchor="end" x="32" y="107">6°</text>
+<text fill="#8b909a" font-family="Plus Jakarta Sans" font-size="10" text-anchor="end" x="32" y="147">4°</text>
+<text fill="#9bb89b" font-family="Plus Jakarta Sans" font-size="10" text-anchor="end" x="32" y="187">2°</text>
+<text fill="#8b909a" font-family="Plus Jakarta Sans" font-size="10" text-anchor="end" x="32" y="227">0°</text>
+<!-- Main Smooth Spline -->
+<path d="M 50 132 C 140 132, 170 141, 230 139 C 310 136, 350 128, 410 122 C 470 116, 490 98, 540 82 C 580 70, 610 64, 650 54 C 700 42, 725 38, 760 36" fill="none" stroke="url(#traceGrad)" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Breach Marker at 8°C crossing -->
+<circle cx="616" cy="64" fill="#14171d" r="4.5" stroke="#d99b9b" stroke-width="2"></circle>
+<!-- Current End Point at 9.4°C -->
+<circle cx="760" cy="36" fill="#f5eedb" r="5" stroke="#14171d" stroke-width="2.5"></circle>
+</svg>
+<!-- Floating Timestamp Badge -->
+<div class="absolute right-6 top-4 px-3 py-1.5 rounded-lg bg-[#1a1e26]/90 border border-white/[0.06] backdrop-blur-md shadow-md flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#ede5d4]"></span>
+<span class="text-[11px] font-bold text-[#f5eedb]">14:31 IST · 9.4°C</span>
+<span class="text-[11px] text-[#d99b9b] font-medium">(Breached 14:20)</span>
+</div>
+</div>
+<!-- X-Axis Timestamps -->
+<div class="mt-2.5 flex items-center justify-between text-[11px] text-[#8b909a] px-4 font-medium">
+<span>13:30</span>
+<span>13:45</span>
+<span>14:00</span>
+<span>14:15</span>
+<span class="text-[#d9be8b]">14:20 (Threshold)</span>
+<span class="text-[#f5eedb]">14:31 (Now)</span>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN (~35% width: 4 cols on xl / 5 cols on lg) -->
+<div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-6">
+<!-- SECTION 5 — OTHER LIVE DATA (4-GRID CHIPS) -->
+<section class="grid grid-cols-2 gap-3">
+<!-- Sector -->
+<div class="rounded-xl bg-[#14171d] border border-white/[0.05] p-4 flex flex-col justify-between shadow-sm">
+<span class="text-[10px] font-bold uppercase tracking-wider text-[#8b909a]">Current Sector</span>
+<div class="mt-2">
+<span class="text-[15px] font-semibold text-[#f5eedb] block">Sriperumbudur</span>
+<span class="text-[12px] text-[#8b909a]">Km 74.2 · NH-48</span>
+</div>
+</div>
+<!-- Ambient Ext -->
+<div class="rounded-xl bg-[#14171d] border border-white/[0.05] p-4 flex flex-col justify-between shadow-sm">
+<span class="text-[10px] font-bold uppercase tracking-wider text-[#8b909a]">Ambient Ext.</span>
+<div class="mt-2 flex items-baseline gap-1.5">
+<span class="text-[15px] font-semibold text-[#d9be8b]">38.2°C</span>
+<span class="text-[11px] text-[#8b909a]">Heat Index High</span>
+</div>
+</div>
+<!-- Door Sensor -->
+<div class="rounded-xl bg-[#14171d] border border-white/[0.05] p-4 flex flex-col justify-between shadow-sm">
+<span class="text-[10px] font-bold uppercase tracking-wider text-[#8b909a]">Door Sensor</span>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#9bb89b]"></span>
+<span class="text-[15px] font-semibold text-[#f5eedb]">Closed</span>
+<span class="text-[12px] text-[#8b909a]">(Sealed)</span>
+</div>
+</div>
+<!-- Transit ETA -->
+<div class="rounded-xl bg-[#14171d] border border-white/[0.05] p-4 flex flex-col justify-between shadow-sm">
+<span class="text-[10px] font-bold uppercase tracking-wider text-[#8b909a]">Transit ETA</span>
+<div class="mt-2 flex items-baseline gap-1.5">
+<span class="text-[15px] font-semibold text-[#f5eedb]">11:47 IST</span>
+<span class="text-[11px] text-[#d9be8b] font-medium">+12m delay</span>
+</div>
+</div>
+</section>
+<!-- SECTION 8 — ROUTE CORRIDOR MAP PREVIEW -->
+<section class="rounded-xl bg-[#14171d] border border-white/[0.05] p-5 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="text-[15px] font-semibold text-[#f5eedb]">Route Corridor</span>
+<span class="text-[11px] text-[#a0a5ad]">Live GPS Anchor</span>
+</div>
+<div class="relative w-full h-44 rounded-lg overflow-hidden bg-[#0a0c0f] border border-white/[0.04]">
+<div class="w-full h-full bg-cover bg-center opacity-70" data-location="Sriperumbudur, Tamil Nadu, India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA71gVY5IpBS7_09VEKKD32uIxsl9e2RIv8Zh4kD82O60579JCglrg6FQ8kvaVGKRKJcmS9SLCrImZTOoyYeQXczouwgGwV5ADsfcLuf-JbDoDegE-QJGc8pJu6IHMnX8zdys8KJFO99YHcBQiHr9_KXOtYs_GLgnR-mMu9UK6jNY4J5O60wCRDihmHLB8JUyfGkkcnwk_IpEUxLhreLbqmAx-wrNiDdhkp0DiLzgLpkKx-1Fm_qkO4rw');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#0c0e12] via-transparent to-transparent"></div>
+<div class="absolute inset-0 p-3 flex flex-col justify-between pointer-events-none">
+<div class="self-start px-2.5 py-1 rounded bg-[#111317]/85 backdrop-blur-sm text-[11px] font-medium text-[#f5eedb] border border-white/[0.06]">
+                  Chennai Apex ➔ Vellore Hub
+                </div>
+<div class="self-center flex flex-col items-center">
+<div class="relative flex items-center justify-center">
+<div class="w-8 h-8 rounded-full bg-[#d99b9b]/20 animate-ping absolute"></div>
+<div class="w-5 h-5 rounded-full bg-[#111317] flex items-center justify-center border border-[#d99b9b]">
+<div class="w-2 h-2 rounded-full bg-[#d99b9b]"></div>
+</div>
+</div>
+<span class="mt-1 px-2 py-0.5 rounded bg-[#111317]/90 text-[11px] font-semibold text-[#f5eedb]">
+                    VK-1042 (Km 74.2)
+                  </span>
+</div>
+<div class="self-end px-2 py-0.5 rounded bg-[#111317]/80 text-[10px] text-[#a0a5ad]">
+                  Sub-Depot: 14 km ahead
+                </div>
+</div>
+</div>
+<a class="inline-flex items-center justify-between w-full px-3.5 py-2.5 rounded-lg bg-[#1a1e26] hover:bg-[#222733] border border-white/[0.04] text-[#f5eedb] text-[13px] font-medium transition-colors" href="#">
+<span>Open Interactive Map View</span>
+<span class="material-symbols-outlined text-[16px] text-[#a0a5ad]">launch</span>
+</a>
+</section>
+<!-- SECTION 7 — SENSOR DIAGNOSTICS & SYSTEM HEALTH -->
+<section class="rounded-xl bg-[#14171d] border border-white/[0.05] p-5 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between pb-1">
+<span class="text-[15px] font-semibold text-[#f5eedb]">Sensor Diagnostics</span>
+<span class="text-[11px] text-[#9bb89b] font-medium">Mesh Active</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Probe 1 -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-[#1a1e26] text-[13px]">
+<div class="flex items-center gap-2.5">
+<span class="w-2 h-2 rounded-full bg-[#9bb89b]"></span>
+<span class="text-[#ede5d4]">Compartment Probe #1 (Upper)</span>
+</div>
+<span class="text-[#8b909a] text-[11px]">Online · 10s ago</span>
+</div>
+<!-- Probe 2 -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-[#1a1e26] text-[13px]">
+<div class="flex items-center gap-2.5">
+<span class="w-2 h-2 rounded-full bg-[#9bb89b]"></span>
+<span class="text-[#ede5d4]">Compartment Probe #2 (Floor)</span>
+</div>
+<span class="text-[#8b909a] text-[11px]">Online · 10s ago</span>
+</div>
+<!-- Compressor -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-[#1a1e26] text-[13px]">
+<div class="flex items-center gap-2.5">
+<span class="w-2 h-2 rounded-full bg-[#d99b9b]"></span>
+<span class="text-[#ede5d4]">Reefer Aux Compressor #2</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-[rgba(217,155,155,0.15)] text-[#d99b9b] text-[11px] font-semibold">Circuit Fault</span>
+</div>
+<!-- Telematics -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-[#1a1e26] text-[13px]">
+<div class="flex items-center gap-2.5">
+<span class="w-2 h-2 rounded-full bg-[#9bb89b]"></span>
+<span class="text-[#ede5d4]">NavTel Dual GNSS &amp; IMU</span>
+</div>
+<span class="text-[#8b909a] text-[11px]">Online · 12s ago</span>
+</div>
+</div>
+</section>
+<!-- SECTION 6 — SHIPMENT MANIFEST -->
+<section class="rounded-xl bg-[#14171d] border border-white/[0.05] p-5 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between pb-1">
+<span class="text-[15px] font-semibold text-[#f5eedb]">Shipment Manifest</span>
+<span class="text-[10px] font-bold uppercase tracking-wider text-[#8b909a]">ISO-9001 WHO-PQS</span>
+</div>
+<div class="flex flex-col divide-y divide-white/[0.04] text-[13px]">
+<div class="py-2.5 flex items-center justify-between">
+<span class="text-[#8b909a]">Shipment ID</span>
+<span class="text-[#f5eedb] font-bold">VK-1042</span>
+</div>
+<div class="py-2.5 flex flex-col gap-0.5">
+<span class="text-[#8b909a]">Consignment</span>
+<span class="text-[#f5eedb] font-medium">8,400 vials Rotavirus + Measles-Rubella</span>
+<span class="text-[11px] text-[#8b909a]">WHO-PQS E003 Monovalent Freeze-Sensitive</span>
+</div>
+<div class="py-2.5 flex items-center justify-between">
+<span class="text-[#8b909a]">Origin Facility</span>
+<span class="text-[#ede5d4] text-right">Chennai Reg. Store (Depot 4)</span>
+</div>
+<div class="py-2.5 flex items-center justify-between">
+<span class="text-[#8b909a]">Destination</span>
+<span class="text-[#ede5d4] text-right">Vellore District Hospital</span>
+</div>
+<div class="py-2.5 flex items-center justify-between">
+<span class="text-[#8b909a]">Departure Time</span>
+<span class="text-[#ede5d4]">08 Sep 2026 · 10:24 IST</span>
+</div>
+<div class="py-2.5 flex items-center justify-between">
+<span class="text-[#8b909a]">Vehicle</span>
+<span class="text-[#ede5d4]">Ashok Leyland 407 · TN-4821-HX</span>
+</div>
+<div class="py-2.5 flex items-center justify-between">
+<span class="text-[#8b909a]">Primary Carrier</span>
+<span class="text-[#ede5d4]">TN Medical Services Logistics</span>
+</div>
+</div>
+</section>
+<!-- SECTION 9 — RECENT EVENTS LOG -->
+<section class="rounded-xl bg-[#14171d] border border-white/[0.05] p-5 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between pb-1">
+<span class="text-[15px] font-semibold text-[#f5eedb]">Recent events</span>
+<span class="text-[11px] text-[#8b909a]">Auto-logged (Audit Trail)</span>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-start gap-3">
+<span class="text-[11px] font-bold text-[#8b909a] mt-0.5 w-10 shrink-0">14:31</span>
+<div class="flex flex-col">
+<span class="text-[13px] text-[#f5eedb] leading-tight font-medium">Temperature confirmed at 9.4°C</span>
+<span class="text-[11px] text-[#d99b9b]">+1.4°C excursion over safety ceiling</span>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="text-[11px] font-bold text-[#8b909a] mt-0.5 w-10 shrink-0">14:30</span>
+<div class="flex flex-col">
+<span class="text-[13px] text-[#ede5d4] leading-tight font-medium">Cold-storage reroute recommendation active</span>
+<span class="text-[11px] text-[#8b909a]">Vellore Sub-District Depot flagged as primary</span>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="text-[11px] font-bold text-[#8b909a] mt-0.5 w-10 shrink-0">14:27</span>
+<div class="flex flex-col">
+<span class="text-[13px] text-[#ede5d4] leading-tight font-medium">Temperature reached 9.1°C</span>
+<span class="text-[11px] text-[#d9be8b]">Reefer telemetry logged Unit #2 auxiliary circuit fault</span>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="text-[11px] font-bold text-[#8b909a] mt-0.5 w-10 shrink-0">14:22</span>
+<div class="flex flex-col">
+<span class="text-[13px] text-[#ede5d4] leading-tight font-medium">Temperature crossed 8.0°C ceiling</span>
+<span class="text-[11px] text-[#8b909a]">Autonomous tracking timer started</span>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="text-[11px] font-bold text-[#8b909a] mt-0.5 w-10 shrink-0">14:18</span>
+<div class="flex flex-col">
+<span class="text-[13px] text-[#a0a5ad] leading-tight">Rear cargo door sensor verified sealed</span>
+<span class="text-[11px] text-[#8b909a]">Tamper wire integrity check verified</span>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="text-[11px] font-bold text-[#8b909a] mt-0.5 w-10 shrink-0">14:10</span>
+<div class="flex flex-col">
+<span class="text-[13px] text-[#a0a5ad] leading-tight">Checkpoint scan verified at Sriperumbudur Toll</span>
+<span class="text-[11px] text-[#8b909a]">RFID Tag #8841 validated</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- GLOBAL FOOTER -->
+<footer class="w-full bg-[#111317] border-t border-white/[0.04] py-8 px-8 mt-auto">
+<div class="max-w-[1560px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#1a1e26] border border-white/[0.06] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#f5eedb] text-[18px]">verified_user</span>
+</div>
+<span class="text-[14px] font-semibold text-[#ede5d4]">VaxKavach Autonomous Logistics</span>
+</div>
+<div class="flex items-center gap-6 flex-wrap">
+<span class="text-[11px] font-bold uppercase tracking-wider text-[#8b909a]">ISO 9001 / WHO-PQS COMPLIANT</span>
+<span class="text-[12px] text-[#8b909a]">© 2025 VaxKavach Operations Network. All rights reserved.</span>
+</div>
+</div>
+</footer>
+</div>
+</body></html>
