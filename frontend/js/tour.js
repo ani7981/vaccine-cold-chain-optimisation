@@ -1,98 +1,130 @@
 /**
  * VaxKavach Demo Tour — driver.js v1 integration
- * Provides a guided walkthrough of the operations desk.
+ * CSS is injected via <link> tag so it works both in Vite dev and standalone.
  */
 
-import 'driver.js/dist/driver.css';
 import { driver } from 'driver.js';
+
+// Inject driver.js CSS once, safely
+function ensureDriverCSS() {
+  if (document.getElementById('driver-css')) return;
+  const link = document.createElement('link');
+  link.id = 'driver-css';
+  link.rel = 'stylesheet';
+  // Try local first (Vite dev), fall back gracefully
+  link.href = '/node_modules/driver.js/dist/driver.css';
+  link.onerror = () => {
+    // CDN fallback
+    link.href = 'https://cdn.jsdelivr.net/npm/driver.js@1.3.5/dist/driver.css';
+  };
+  document.head.appendChild(link);
+}
 
 // ─── Tour step definitions per page ─────────────────────────────────────────
 
 const OVERVIEW_STEPS = [
   {
-    element: '[data-tour="brand"]',
     popover: {
-      title: 'VaxKavach Operations Desk',
-      description: 'This is the command centre for India\'s simulated vaccine cold-chain network — watching, detecting, and recommending corrective action 24/7.',
-    }
-  },
-  {
-    element: '[data-tour="network-health"]',
-    popover: {
-      title: 'Live Network Health',
-      description: 'Fleet-wide status at a glance. Green = healthy corridors. Amber = attention required. Red = active temperature excursion.',
-    }
-  },
-  {
-    element: '[data-tour="incident-card"]',
-    popover: {
-      title: 'Active Incident — VK-1042',
-      description: 'Shipment VK-1042 (Chennai → Vellore) has a developing thermal excursion. The system has already correlated 5 contributing signals.',
-    }
-  },
-  {
-    element: '[data-tour="mkt-card"]',
-    popover: {
-      title: 'Haynes Arrhenius MKT',
-      description: 'Mean Kinetic Temperature is calculated from the full temperature history — not just the current reading. This gives a cumulative thermal-stress picture.',
-    }
-  },
-  {
-    element: '[data-tour="corridors-table"]',
-    popover: {
-      title: 'Active Corridors Matrix',
-      description: 'All live transit corridors with real-time status. Click any row to drill into that shipment\'s telemetry.',
+      title: '👋 Welcome to VaxKavach',
+      description: 'This is the live operations desk for India\'s simulated vaccine cold-chain network. Let\'s walk through the key controls.',
+      side: 'bottom',
+      align: 'start',
     }
   },
   {
     element: '[data-tour="nav-rail"]',
     popover: {
       title: 'Tactical Navigation Rail',
-      description: 'Jump between Shipments, Map, Problems, History, Fleet, and Technical views. Everything is one click away.',
+      description: 'Jump between Shipments, Live Map, Problems Queue, History, Fleet, and Technical views. One click from anywhere.',
+      side: 'right',
+    }
+  },
+  {
+    element: '[data-tour="brand"]',
+    popover: {
+      title: 'VaxKavach System Identity',
+      description: 'The VaxKavach shield marks this as an autonomous pharmaceutical cold-chain operations desk — not a generic dashboard.',
+      side: 'right',
+    }
+  },
+  {
+    element: '#btn-walkthrough-tour',
+    popover: {
+      title: 'Demo Tour Button',
+      description: 'You clicked this to start the tour! You can restart it any time from here, or append ?tour=true to any URL.',
+      side: 'bottom',
+    }
+  },
+  {
+    element: 'main section:first-child',
+    popover: {
+      title: 'Live Network Health',
+      description: 'Fleet-wide status at a glance — 12 shipments, 9 healthy, 2 needing attention, 1 active temperature excursion.',
+      side: 'bottom',
+    }
+  },
+  {
+    element: 'main section:nth-child(2)',
+    popover: {
+      title: 'Active Incident — VK-1042',
+      description: 'Shipment VK-1042 (Chennai → Vellore) has a developing thermal excursion. 5 correlated signals triggered this alert.',
+      side: 'top',
     }
   },
   {
     element: '#vk-theme-toggle',
     popover: {
-      title: 'Light / Dark Mode',
-      description: 'Switch between the clinical dark theme and the lighter ivory mode. Your preference is saved automatically.',
+      title: '☀️ Light / Dark Mode',
+      description: 'Click to switch between the clinical dark theme and the ivory light mode. Your preference is saved automatically.',
+      side: 'left',
     }
   }
 ];
 
 const PROBLEMS_STEPS = [
   {
-    element: '[data-tour="problem-queue"]',
     popover: {
-      title: 'Problems Triage Queue',
-      description: 'All active and recent temperature excursions surface here, sorted by severity. Click any card to open the full investigation.',
+      title: '⚠️ Problems Queue',
+      description: 'All active temperature excursions surface here, sorted by severity. Each card shows evidence, signals, MKT impact and recommended action.',
+      side: 'bottom',
     }
   },
   {
-    element: '[data-tour="problem-card"]',
+    element: 'main section, main .bg-\\[\\#1E1D1A\\], article',
     popover: {
-      title: 'Incident Card — PR-1042',
-      description: 'Each card shows: what happened, which signals triggered it, thermal impact (MKT), and the recommended corrective action.',
+      title: 'Incident Cards',
+      description: 'Click any card to open the full investigation — temperature trace, GPS history, door state, and the reroute recommendation.',
+      side: 'right',
     }
   }
 ];
 
 const SHIPMENTS_STEPS = [
   {
-    element: '[data-tour="shipment-list"]',
     popover: {
-      title: 'Active Shipment Directory',
-      description: 'Every shipment moving through the network right now. Filter by status, corridor, or search by ID.',
+      title: '📦 Shipments Directory',
+      description: 'Every vaccine shipment currently moving through the network. Filter by status, corridor or search by ID.',
+      side: 'bottom',
     }
   }
 ];
 
 const MAP_STEPS = [
   {
-    element: '[data-tour="map-canvas"]',
     popover: {
-      title: 'Live Logistics Map',
-      description: 'Real-time GPS positions, corridor overlays, and nearest-depot reroute recommendations — plotted directly on India\'s logistics network.',
+      title: '🗺️ Live Logistics Map',
+      description: 'Real-time GPS positions, corridor overlays, and nearest-depot reroute recommendations plotted on India\'s logistics network.',
+      side: 'bottom',
+    }
+  }
+];
+
+const GENERIC_STEPS = [
+  {
+    popover: {
+      title: '👋 VaxKavach Operations',
+      description: 'For the full walkthrough, visit the Overview page and click "Walkthrough Tour", or open /overview.html?tour=true',
+      side: 'bottom',
     }
   }
 ];
@@ -108,9 +140,12 @@ function getStepsForPage() {
     'shipments.html': SHIPMENTS_STEPS,
     'map.html': MAP_STEPS,
   };
-  // Filter out steps whose element doesn't exist on the current page
-  const steps = map[page] || OVERVIEW_STEPS;
-  return steps.filter(s => !s.element || document.querySelector(s.element));
+  const steps = map[page] || GENERIC_STEPS;
+  // Filter out steps whose element doesn't exist on this page
+  return steps.filter(s => {
+    if (!s.element) return true;
+    return !!document.querySelector(s.element);
+  });
 }
 
 // ─── Public API ──────────────────────────────────────────────────────────────
@@ -118,41 +153,36 @@ function getStepsForPage() {
 let driverInstance = null;
 
 export function startDemoTour() {
+  ensureDriverCSS();
+
   const steps = getStepsForPage();
-  if (steps.length === 0) {
-    // Redirect to overview if no steps for this page
-    window.location.href = '/overview.html?tour=true';
-    return;
+
+  if (driverInstance) {
+    try { driverInstance.destroy(); } catch (_) {}
   }
 
   driverInstance = driver({
     popoverClass: 'vk-tour-popover',
     showProgress: true,
-    progressText: 'Step {{current}} of {{total}}',
+    progressText: '{{current}} / {{total}}',
     nextBtnText: 'Next →',
     prevBtnText: '← Back',
-    doneBtnText: 'Done',
+    doneBtnText: '✓ Done',
     animate: true,
-    overlayOpacity: 0.6,
+    overlayOpacity: 0.55,
     smoothScroll: true,
+    allowClose: true,
     steps,
-    onDestroyStarted: () => {
-      driverInstance?.destroy();
-    }
   });
 
   driverInstance.drive();
 }
 
 // Auto-start if ?tour=true in URL
-if (new URLSearchParams(location.search).get('tour') === 'true') {
-  // Wait for DOM + app data to load
-  const tryStart = () => {
-    if (document.readyState === 'complete') {
-      setTimeout(startDemoTour, 800);
-    } else {
-      window.addEventListener('load', () => setTimeout(startDemoTour, 800), { once: true });
-    }
-  };
-  tryStart();
+if (typeof window !== 'undefined' && new URLSearchParams(location.search).get('tour') === 'true') {
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', () => setTimeout(startDemoTour, 1000));
+  } else {
+    setTimeout(startDemoTour, 1000);
+  }
 }

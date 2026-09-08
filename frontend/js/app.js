@@ -37,20 +37,55 @@ function updateThemeToggleIcon() {
   if (!btn) return;
   const isLight = document.documentElement.classList.contains('light');
   btn.innerHTML = isLight
-    ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`
-    : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
-  btn.title = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+    ? `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`
+    : `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+  btn.title = isLight ? '☀️ Switch to Dark Mode' : '🌙 Switch to Light Mode';
 }
+
 
 function injectThemeToggle() {
   if (document.getElementById('vk-theme-toggle')) return;
   const btn = document.createElement('button');
   btn.id = 'vk-theme-toggle';
   btn.setAttribute('aria-label', 'Toggle light/dark mode');
+  btn.setAttribute('title', 'Toggle Light / Dark Mode');
   btn.onclick = toggleTheme;
+
+  // Ensure the button always sits on top of everything
+  btn.style.cssText = [
+    'position: fixed',
+    'bottom: 56px',
+    'right: 16px',
+    'z-index: 99999',
+    'width: 38px',
+    'height: 38px',
+    'border-radius: 50%',
+    'background: #25231F',
+    'border: 1px solid #3A3731',
+    'color: #A69F94',
+    'display: flex',
+    'align-items: center',
+    'justify-content: center',
+    'cursor: pointer',
+    'transition: all 0.2s ease',
+    'box-shadow: 0 2px 12px rgba(0,0,0,0.4)',
+  ].join(';');
+
+  btn.onmouseenter = () => {
+    btn.style.background = '#363430';
+    btn.style.color = '#F0E8D9';
+    btn.style.transform = 'scale(1.1)';
+  };
+  btn.onmouseleave = () => {
+    btn.style.background = '#25231F';
+    btn.style.color = '#A69F94';
+    btn.style.transform = 'scale(1)';
+  };
+
   document.body.appendChild(btn);
   updateThemeToggleIcon();
 }
+
 
 // Apply theme immediately to avoid FOUC
 initTheme();
@@ -1067,17 +1102,38 @@ async function boot() {
   injectThemeToggle();
   bindGlobalActions();
 
-  // Wire "Walkthrough Tour" / "Start Tour" / "?tour" buttons
+  // Wire tour button by ID (direct, reliable)
+  const tourBtn = document.getElementById('btn-walkthrough-tour');
+  if (tourBtn) {
+    tourBtn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      startDemoTour();
+    });
+    // Also handle hover state
+    tourBtn.addEventListener('mouseenter', () => {
+      tourBtn.style.color = '#F0E8D9';
+      tourBtn.style.borderColor = '#A69F94';
+    });
+    tourBtn.addEventListener('mouseleave', () => {
+      tourBtn.style.color = '#A69F94';
+      tourBtn.style.borderColor = '#282a2e';
+    });
+  }
+
+  // Also wire by text for any other "tour" buttons/links
   document.querySelectorAll('button, a').forEach(el => {
-    const text = (el.textContent || '').trim();
-    if (/walkthrough\s*tour|start\s*tour|demo\s*tour/i.test(text)) {
+    if (el.id === 'btn-walkthrough-tour') return; // already wired above
+    // Use innerText to avoid SVG path noise
+    const text = (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim();
+    if (/walkthrough tour|start tour|demo tour/i.test(text)) {
       el.addEventListener('click', e => { e.preventDefault(); startDemoTour(); });
     }
   });
 
   // Wire ?tour=true URL param
   if (new URLSearchParams(location.search).get('tour') === 'true') {
-    setTimeout(startDemoTour, 900);
+    setTimeout(startDemoTour, 1200);
   }
 
   try {
