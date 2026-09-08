@@ -80,36 +80,12 @@
     }
   };
 </script>  <link rel="stylesheet" href="/css/vaxkavach.css">
-</head><body class="bg-vk-bg font-body-md text-vk-cream antialiased selection:bg-vk-cream-soft selection:text-vk-surface"><main class="w-full flex-1 flex flex-col min-h-0"><div class="flex flex-col w-full">
-<!-- Sub-navigation Bar for Verification State -->
-<section class="w-full bg-vk-bg border-b border-vk-border py-sm px-container-pad">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-md">
-<div class="flex items-center gap-sm flex-wrap">
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Active Environment:</span>
-<span class="inline-flex items-center gap-xs px-sm py-xs rounded-full bg-vk-surface border border-vk-border text-vk-cream font-body-sm text-body-sm">
-<span class="w-1.5 h-1.5 rounded-full bg-vk-healthy"></span>
-          Simulation Node: Alpha-7
-        </span>
-<span class="inline-flex items-center gap-xs px-sm py-xs rounded-full bg-vk-surface border border-vk-border text-vk-cream font-body-sm text-body-sm">
-<span class="w-1.5 h-1.5 rounded-full bg-vk-healthy"></span>
-          SHA-256 Ingestion Stream
-        </span>
-<span class="inline-flex items-center gap-xs px-sm py-xs rounded-full bg-vk-surface border border-vk-border text-vk-cream font-body-sm text-body-sm">
-<span class="w-1.5 h-1.5 rounded-full bg-vk-info"></span>
-          Policy: WHO-PQS / TR961
-        </span>
-</div>
-<div class="flex items-center gap-sm">
-<span class="font-label-caps text-label-caps uppercase tracking-wider px-sm py-xs rounded bg-vk-surface border border-vk-border text-vk-attention">
-          DEMO AUDIT ENVIRONMENT · NO MUTATIONS PERMITTED
-        </span>
-</div>
-</div>
-</section>
-<!-- Technical Console Workspace -->
-<div class="w-full px-container-pad py-lg flex flex-col xl:flex-row gap-lg">
+</head>
+<body class="h-full flex flex-col font-sans antialiased text-[#F4EFE6] bg-[#0D0E11] overflow-x-hidden select-none">
+<!-- BEGIN: ApplicationLayout -->
+<div class="flex-1 flex overflow-hidden min-h-screen">
 <!-- LEFT SIDEBAR: Minimal Tactical Rail (Dock-style) -->
-<aside class="w-[72px] flex-shrink-0 bg-[#0D0E11] border-r border-[#2A2C35] flex flex-col items-center justify-between py-4 z-40" style="background-color: var(--vk-surface); border-right: 1px solid var(--vk-border);">
+<aside class="w-[72px] flex-shrink-0 bg-[#0D0E11] border-r border-[#2A2C35] flex flex-col items-center justify-between py-4 z-40 min-h-screen sticky top-0" style="background-color: var(--vk-surface); border-right: 1px solid var(--vk-border);">
 <div class="flex flex-col items-center space-y-6 w-full">
 <a class="w-10 h-10 rounded-lg bg-[#16171D] border border-[#2A2C35] flex items-center justify-center text-[#F4EFE6] hover:border-[#8C8E99] transition-colors" href="/landing.html" title="VaxKavach Home">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24">
@@ -136,10 +112,13 @@
 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
 </a>
 <a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#8C8E99] hover:text-[#F4EFE6] hover:bg-[#16171D] transition-colors" href="/fleet.html" title="Reefer Fleet">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><rect height="13" width="15" x="1" y="3"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><rect height="13" width="15" x="1" y="3"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
 </a>
 <a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#8C8E99] hover:text-[#F4EFE6] hover:bg-[#16171D] transition-colors" href="/technical.html" title="Telemetry & Diagnostics">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><line x1="4" x2="4" y1="21" y2="14"></line><line x1="4" x2="4" y1="10" y2="3"></line><line x1="12" x2="12" y1="21" y2="12"></line><line x1="12" x2="12" y1="8" y2="3"></line><line x1="20" x2="20" y1="21" y2="16"></line><line x1="20" x2="20" y1="12" y2="3"></line></svg>
+</a>
+<a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#8C8E99] hover:text-[#F4EFE6] hover:bg-[#16171D] transition-colors" href="/settings.html" title="Settings">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
 </a>
 </nav>
 </div>
@@ -148,13 +127,39 @@
 <span class="w-1.5 h-1.5 rounded-full bg-[#829A80] mb-1"></span>
 <span class="text-[9px] font-mono tracking-wider text-[#8C8E99] uppercase">LNK</span>
 </div>
-<a class="w-8 h-8 rounded-lg flex items-center justify-center text-[#8C8E99] hover:text-[#F4EFE6] hover:bg-[#16171D] transition-colors" href="/settings.html" title="Settings">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-</a>
 </div>
 </aside>
-<!-- MAIN CONSOLE SPLIT: 2 Columns -->
-<div class="flex-1 flex flex-col gap-lg min-w-0">
+
+<!-- MAIN CONTENT WORKSPACE -->
+<div class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-[#0D0E11]">
+<!-- Sub-navigation Bar for Verification State -->
+<section class="w-full bg-[#0D0E11] border-b border-[#2A2C35] py-2 px-6 flex-shrink-0">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-mono text-[11px] uppercase tracking-wider text-[#8C8E99]">Active Environment:</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#16171D] border border-[#2A2C35] text-[#F4EFE6] text-[12px]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#6BBF89]"></span>
+Simulation Node: Alpha-7
+</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#16171D] border border-[#2A2C35] text-[#F4EFE6] text-[12px]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#6BBF89]"></span>
+SHA-256 Ingestion Stream
+</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#16171D] border border-[#2A2C35] text-[#F4EFE6] text-[12px]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#667A7D]"></span>
+Policy: WHO-PQS / TR961
+</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono text-[11px] uppercase tracking-wider px-2.5 py-1 rounded bg-[#16171D] border border-[#2A2C35] text-[#E5B869]">
+DEMO AUDIT ENVIRONMENT · NO MUTATIONS PERMITTED
+</span>
+</div>
+</div>
+</section>
+
+<!-- Technical Console Workspace -->
+<div class="w-full p-6 flex flex-col gap-6">
 <!-- Screen Header Section -->
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-md bg-vk-surface border border-vk-border p-xl rounded-xl">
 <div class="flex flex-col gap-xs max-w-2xl">
@@ -634,7 +639,8 @@
 </div>
 </div>
 </div>
-</div></div></main>
+</div>
+</div>
 
   <script type="module" src="/js/api.js"></script>
   <script type="module" src="/js/websocket.js"></script>

@@ -1,8 +1,0 @@
-{
-  "main": "../dist/hints.cjs",
-  "module": "../dist/hints.mjs",
-  "types": "../dist/hints.d.ts",
-  "sideEffects": [
-    "**/*.css"
-  ]
-}
