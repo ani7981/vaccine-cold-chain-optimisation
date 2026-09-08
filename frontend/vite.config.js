@@ -35,7 +35,7 @@ export default defineConfig({
           if (pathname.startsWith('/@') || pathname.startsWith('/node_modules') || pathname.startsWith('/api')) {
             return next();
           }
-          if (pathname === '/') {
+          if (pathname === '/' || pathname === '/index' || pathname === '/index.html') {
             req.url = '/landing.html' + parsedUrl.search;
           } else if (pathname === '/problems' || pathname === '/problems/') {
             req.url = '/problems.html' + parsedUrl.search;

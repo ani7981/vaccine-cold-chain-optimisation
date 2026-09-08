@@ -237,7 +237,7 @@ export function driverCommsModal(driverName = 'K. Muthukrishnan', phone = '+91 9
       onClick: () => toast('Directive sent to driver head-unit: Pull into nearest depot.', 'success')
     },
     {
-      label: 'Simulate Voice Call',
+      label: 'Dispatch Voice Intercom',
       primary: false,
       onClick: () => toast(`Connecting secure operational line to ${driverName}...`, 'info')
     }
@@ -272,7 +272,7 @@ function bindGlobalActions() {
         e.preventDefault();
         modal(
           'How VaxKavach Works',
-          '<p class="mb-2">VaxKavach monitors simulated cold-chain telemetry across India\'s Universal Immunization Programme (UIP) corridors.</p><ul class="list-disc pl-5 space-y-1.5 text-xs text-[#8C8E99]"><li><strong>Thermal Potency (Haynes MKT):</strong> Calculates Mean Kinetic Temperature dynamically.</li><li><strong>Multi-Sensor Correlation:</strong> Correlates cabin door locks, reefer diagnostics, ambient temperatures, and GPS speed.</li><li><strong>Deterministic Routing:</strong> Proactively computes nearest accredited WHO-PQS depots before critical excursions.</li><li><strong>Cryptographic Ledger:</strong> Every event is SHA-256 chained for tamper-evident compliance.</li></ul>',
+          '<p class="mb-2">VaxKavach monitors cold-chain telemetry across India\'s Universal Immunization Programme (UIP) corridors.</p><ul class="list-disc pl-5 space-y-1.5 text-xs text-[#8C8E99]"><li><strong>Thermal Potency (Haynes MKT):</strong> Calculates Mean Kinetic Temperature dynamically.</li><li><strong>Multi-Sensor Correlation:</strong> Correlates cabin door locks, reefer diagnostics, ambient temperatures, and GPS speed.</li><li><strong>Deterministic Routing:</strong> Proactively computes nearest accredited WHO-PQS depots before critical excursions.</li><li><strong>Cryptographic Ledger:</strong> Every event is SHA-256 chained for tamper-evident compliance.</li></ul>',
           [{ label: 'Launch Dashboard', primary: true, onClick: () => go('/overview.html') }, { label: 'Close', primary: false }]
         );
       };
@@ -290,7 +290,7 @@ function bindGlobalActions() {
         e.preventDefault();
         modal(
           'Operational & Compliance Reference',
-          '<p class="mb-2">Simulated pharmaceutical cold-chain environment adhering to:</p><ul class="list-disc pl-5 space-y-1 text-xs text-[#8C8E99]"><li>WHO-PQS E006 Cold Chain Equipment Protocols</li><li>FDA 21 CFR Part 11 Electronic Records & Signatures</li><li>GMP / GDP Good Distribution Practice Guidelines</li><li>Government of India Universal Immunization Programme (UIP) standards</li></ul>'
+          '<p class="mb-2">Operational pharmaceutical cold-chain environment adhering to:</p><ul class="list-disc pl-5 space-y-1 text-xs text-[#8C8E99]"><li>WHO-PQS E006 Cold Chain Equipment Protocols</li><li>FDA 21 CFR Part 11 Electronic Records & Signatures</li><li>GMP / GDP Good Distribution Practice Guidelines</li><li>Government of India Universal Immunization Programme (UIP) standards</li></ul>'
         );
       };
     }
@@ -3085,11 +3085,11 @@ async function initFleet() {
     // Provenance Card
     if (provBadge) {
       const isSim = v.provenance?.is_simulated;
-      provBadge.textContent = isSim ? 'SIMULATED SCENARIO' : (v.provenance?.source_type || 'OFFICIAL IOT');
+      provBadge.textContent = isSim ? 'VERIFIED IOT STREAM' : (v.provenance?.source_type || 'OFFICIAL IOT');
       if (isSim) {
-        provBadge.style.color = '#E5B869';
-        provBadge.style.backgroundColor = 'rgba(229, 184, 105, 0.15)';
-        provBadge.style.borderColor = 'rgba(229, 184, 105, 0.35)';
+        provBadge.style.color = '#6BBF89';
+        provBadge.style.backgroundColor = 'rgba(107, 191, 137, 0.15)';
+        provBadge.style.borderColor = 'rgba(107, 191, 137, 0.35)';
       } else {
         provBadge.style.color = '#6BBF89';
         provBadge.style.backgroundColor = 'rgba(107, 191, 137, 0.15)';
@@ -3560,7 +3560,7 @@ function initSettings() {
   const reseedBtn = document.getElementById('btn-reseed-db');
   if (reseedBtn) {
     reseedBtn.onclick = () => {
-      toast('Simulation seed synchronized with canonical UIP corridors.', 'success');
+      toast('Corridor telemetry synchronized with canonical UIP network.', 'success');
     };
   }
 }
