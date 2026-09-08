@@ -1,8 +1,27 @@
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   server: {
     port: 5173
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        index: resolve(import.meta.dirname, 'index.html'),
+        landing: resolve(import.meta.dirname, 'landing.html'),
+        overview: resolve(import.meta.dirname, 'overview.html'),
+        shipments: resolve(import.meta.dirname, 'shipments.html'),
+        shipment: resolve(import.meta.dirname, 'shipment.html'),
+        map: resolve(import.meta.dirname, 'map.html'),
+        problems: resolve(import.meta.dirname, 'problems.html'),
+        problem: resolve(import.meta.dirname, 'problem.html'),
+        history: resolve(import.meta.dirname, 'history.html'),
+        fleet: resolve(import.meta.dirname, 'fleet.html'),
+        technical: resolve(import.meta.dirname, 'technical.html'),
+        settings: resolve(import.meta.dirname, 'settings.html'),
+      }
+    }
   },
   plugins: [
     {
@@ -15,16 +34,18 @@ export default defineConfig({
           
           if (pathname === '/') {
             req.url = '/landing.html' + parsedUrl.search;
+          } else if (pathname === '/problems' || pathname === '/problems/') {
+            req.url = '/problems.html' + parsedUrl.search;
+          } else if (pathname === '/shipments' || pathname === '/shipments/') {
+            req.url = '/shipments.html' + parsedUrl.search;
+          } else if (pathname.startsWith('/shipments/') && pathname.split('/')[2]) {
+            const id = pathname.split('/')[2];
+            req.url = `/shipment.html?id=${id}`;
+          } else if (pathname.startsWith('/problems/') && pathname.split('/')[2]) {
+            const id = pathname.split('/')[2];
+            req.url = `/problem.html?id=${id}`;
           } else if (!pathname.includes('.')) {
-            if (pathname.startsWith('/shipments/')) {
-              const id = pathname.split('/')[2];
-              req.url = `/shipment.html?id=${id}`;
-            } else if (pathname.startsWith('/problems/')) {
-              const id = pathname.split('/')[2];
-              req.url = `/problem.html?id=${id}`;
-            } else {
-              req.url = `${pathname}.html` + parsedUrl.search;
-            }
+            req.url = `${pathname}.html` + parsedUrl.search;
           }
           next();
         });

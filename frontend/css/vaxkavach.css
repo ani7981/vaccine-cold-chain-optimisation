@@ -324,3 +324,242 @@ aside a.active-nav-link {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--vk-cream-muted);
 }
+
+/* ==========================================================================
+   LIGHT MODE THEME TOKENS
+   Toggle class .light on <html> to activate
+   ========================================================================== */
+
+html.light,
+html.light body {
+  --vk-bg: #F4F1EA;
+  --vk-surface: #FFFFFF;
+  --vk-surface-2: #EDE8DE;
+  --vk-surface-3: #E3DDD3;
+  --vk-surface-4: #D9D2C8;
+
+  --vk-cream: #17191C;
+  --vk-cream-soft: #2E3035;
+  --vk-cream-muted: #4A4E56;
+  --vk-text-muted: #5C626C;
+  --vk-subtle: #8A8D93;
+
+  --vk-border: #D0C9BC;
+  --vk-border-soft: #DDD8CE;
+
+  --vk-healthy: #3F6E45;
+  --vk-attention: #8C6724;
+  --vk-problem: #9E3C34;
+  --vk-info: #456578;
+
+  --vk-primary: #211F1B;
+  --vk-primary-text: #F4F1EA;
+  --vk-secondary: #EDE8DE;
+  --vk-secondary-text: #211F1B;
+
+  background-color: var(--vk-bg) !important;
+  color: var(--vk-cream) !important;
+}
+
+/* Override hard-coded inline bg/color values in light mode */
+html.light [class*="bg-\[#171614\]"],
+html.light [class*="bg-\[#1E1D1A\]"],
+html.light [class*="bg-\[#16181D\]"],
+html.light [class*="bg-\[#25231F\]"],
+html.light [class*="bg-\[#0C0E12\]"] {
+  background-color: var(--vk-surface) !important;
+}
+
+html.light [class*="text-\[#F0E8D9\]"],
+html.light [class*="text-\[#EDE5D4\]"],
+html.light [class*="text-\[#F0ECE4\]"] {
+  color: var(--vk-cream) !important;
+}
+
+html.light [class*="text-\[#A69F94\]"],
+html.light [class*="text-\[#A6A49F\]"] {
+  color: var(--vk-text-muted) !important;
+}
+
+html.light [class*="border-\[#3A3731\]"],
+html.light [class*="border-\[#302E29\]"] {
+  border-color: var(--vk-border) !important;
+}
+
+html.light aside {
+  background-color: var(--vk-surface) !important;
+  border-color: var(--vk-border) !important;
+}
+
+html.light header,
+html.light footer {
+  background-color: var(--vk-surface) !important;
+  border-color: var(--vk-border) !important;
+}
+
+html.light article,
+html.light [data-interactive-card] {
+  background-color: var(--vk-surface) !important;
+  border-color: var(--vk-border) !important;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: var(--vk-surface-2);
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: var(--vk-border);
+}
+
+/* ==========================================================================
+   THEME TOGGLE BUTTON
+   ========================================================================== */
+
+#vk-theme-toggle {
+  position: fixed;
+  bottom: 52px;
+  right: 14px;
+  z-index: 9999;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--vk-surface-2);
+  border: 1px solid var(--vk-border);
+  color: var(--vk-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+#vk-theme-toggle:hover {
+  transform: scale(1.1);
+  background-color: var(--vk-surface-3);
+}
+#vk-theme-toggle svg {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   DRIVER.JS TOUR POPOVERS — VaxKavach Clinical Style
+   ========================================================================== */
+
+.driver-popover.vk-tour-popover {
+  background-color: var(--vk-surface, #1E1D1A);
+  border: 1px solid var(--vk-border, #3A3731);
+  border-radius: 12px;
+  color: var(--vk-cream, #F0E8D9);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+  max-width: 320px;
+  padding: 16px;
+}
+
+.driver-popover.vk-tour-popover .driver-popover-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--vk-cream, #F0E8D9);
+  margin-bottom: 6px;
+}
+
+.driver-popover.vk-tour-popover .driver-popover-description {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--vk-text-muted, #A69F94);
+}
+
+.driver-popover.vk-tour-popover .driver-popover-progress-text {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--vk-subtle, #777570);
+  letter-spacing: 0.06em;
+}
+
+.driver-popover.vk-tour-popover .driver-popover-footer {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.driver-popover.vk-tour-popover .driver-popover-prev-btn,
+.driver-popover.vk-tour-popover .driver-popover-next-btn {
+  background-color: var(--vk-surface-3, #2C2A25);
+  border: 1px solid var(--vk-border, #3A3731);
+  color: var(--vk-cream, #F0E8D9);
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.driver-popover.vk-tour-popover .driver-popover-next-btn {
+  background-color: var(--vk-primary, #E8DFD0);
+  color: var(--vk-primary-text, #211F1B);
+  border-color: transparent;
+}
+
+.driver-popover.vk-tour-popover .driver-popover-prev-btn:hover {
+  background-color: var(--vk-surface-4, #363430);
+}
+.driver-popover.vk-tour-popover .driver-popover-next-btn:hover {
+  filter: brightness(1.06);
+}
+
+.driver-popover.vk-tour-popover .driver-popover-close-btn {
+  color: var(--vk-text-muted, #A69F94);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.driver-popover.vk-tour-popover .driver-popover-close-btn:hover {
+  color: var(--vk-cream, #F0E8D9);
+}
+
+/* Light mode overrides for driver popovers */
+html.light .driver-popover.vk-tour-popover {
+  background-color: #FFFFFF;
+  border-color: var(--vk-border, #D0C9BC);
+  color: var(--vk-cream, #17191C);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+}
+html.light .driver-popover.vk-tour-popover .driver-popover-title {
+  color: #17191C;
+}
+html.light .driver-popover.vk-tour-popover .driver-popover-description {
+  color: #5C626C;
+}
+html.light .driver-popover.vk-tour-popover .driver-popover-prev-btn {
+  background-color: var(--vk-surface-2, #EDE8DE);
+  border-color: var(--vk-border, #D0C9BC);
+  color: #17191C;
+}
+
+/* driver.js overlay */
+.driver-overlay {
+  background: rgba(0,0,0,0.6) !important;
+}
+html.light .driver-overlay {
+  background: rgba(0,0,0,0.35) !important;
+}
+
+/* ==========================================================================
+   PAGE ENTRY ANIMATION (replaces opacity:0 FOUC trick)
+   ========================================================================== */
+
+@keyframes vkPageIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+body {
+  animation: vkPageIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
