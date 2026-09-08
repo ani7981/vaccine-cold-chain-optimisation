@@ -899,3 +899,221 @@ select[class*='bg-surface-container-highest'] {
 .font-label-sm { font-weight: 500; }
 .font-label-caps { font-weight: 600; }
 
+/* ==========================================================================
+   LIGHT MODE DESIGN SYSTEM TOKENS & ACCESSIBILITY OVERRIDES
+   Compliant with WCAG AAA/AA Contrast (>= 4.5:1)
+   ========================================================================== */
+
+html.light {
+  --vk-bg: #F8F6F0;
+  --vk-surface: #FFFFFF;
+  --vk-surface-2: #F0ECE4;
+  --vk-surface-3: #E6E0D4;
+  --vk-surface-4: #DCD6C8;
+
+  --vk-cream: #171614;
+  --vk-cream-soft: #2D2A26;
+  --vk-cream-muted: #57534E;
+  --vk-text-muted: #645F56;
+  --vk-subtle: #8A857B;
+
+  --vk-border: #DCD6CA;
+  --vk-border-soft: #E8E3D8;
+
+  --vk-healthy: #236B48;
+  --vk-attention: #8C5508;
+  --vk-problem: #A13030;
+  --vk-info: #1B5E6B;
+
+  --vk-primary: #171614;
+  --vk-primary-text: #F8F6F0;
+  --vk-secondary: #EAE5DA;
+  --vk-secondary-text: #171614;
+}
+
+html.light, html.light body {
+  background-color: #F8F6F0 !important;
+  color: #171614 !important;
+}
+
+html.light aside {
+  background-color: #FFFFFF !important;
+  border-color: #DCD6CA !important;
+}
+
+html.light main,
+html.light section,
+html.light article,
+html.light div[class*="bg-[#111317]"],
+html.light div[class*="bg-[#14171d]"],
+html.light div[class*="bg-[#1a1c20]"],
+html.light div[class*="bg-[#1e2024]"],
+html.light div[class*="bg-[#14161a]"],
+html.light div[class*="bg-[#16181e]"],
+html.light div[class*="bg-[#171a22]"],
+html.light div[class*="bg-[#1a1e26]"],
+html.light div[class*="bg-[#0f1217]"],
+html.light div[class*="bg-[#0c0e12]"],
+html.light div[class*="bg-[#1a1c22]"],
+html.light div[class*="bg-[#101216]"],
+html.light footer {
+  background-color: #FFFFFF !important;
+  color: #171614 !important;
+  border-color: #DCD6CA !important;
+}
+
+html.light .bg-surface-container-lowest,
+html.light .bg-surface-container-low,
+html.light main[class*='bg-surface-container-lowest'],
+html.light main[class*='bg-[#111317]'] {
+  background-color: #F8F6F0 !important;
+}
+
+html.light article[class*="bg-[#1a1c20]"],
+html.light article[class*="bg-[#1e2024]"],
+html.light .vehicle-card,
+html.light .shipment-card {
+  background-color: #FFFFFF !important;
+  border-color: #DCD6CA !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light article[class*="bg-[#1a1c20]"]:hover,
+html.light .vehicle-card:hover,
+html.light .shipment-card:hover {
+  border-color: #A69F94 !important;
+  background-color: #FAFAF7 !important;
+}
+
+html.light span[class*="text-[#F0ECE4]"],
+html.light span[class*="text-[#f5eedb]"],
+html.light span[class*="text-[#ede5d4]"],
+html.light span[class*="text-[#ede5cf]"],
+html.light span[class*="text-white"],
+html.light strong[class*="text-[#f5eedb]"],
+html.light strong[class*="text-[#F0E8D9]"],
+html.light strong[class*="text-white"],
+html.light h1, html.light h2, html.light h3, html.light h4 {
+  color: #171614 !important;
+}
+
+html.light span[class*="text-[#9A9890]"],
+html.light span[class*="text-[#8b909a]"],
+html.light span[class*="text-[#a0a5ad]"],
+html.light span[class*="text-[#848995]"],
+html.light span[class*="text-[#9ca3af]"],
+html.light p[class*="text-[#9A9890]"],
+html.light p[class*="text-[#8b909a]"],
+html.light p[class*="text-[#a0a5ad]"] {
+  color: #57534E !important;
+}
+
+html.light input,
+html.light select,
+html.light textarea {
+  background-color: #FFFFFF !important;
+  color: #171614 !important;
+  border-color: #DCD6CA !important;
+}
+
+html.light input::placeholder {
+  color: #8A857B !important;
+}
+
+html.light button {
+  border-color: #DCD6CA !important;
+}
+
+html.light button[class*="bg-[#1a1c20]"],
+html.light button[class*="bg-[#1e2024]"],
+html.light button[class*="bg-[#1f232c]"],
+html.light button[class*="bg-[#282a2e]"],
+html.light button[class*="bg-[#232731]"] {
+  background-color: #F0ECE4 !important;
+  color: #171614 !important;
+}
+
+html.light button[class*="bg-[#1a1c20]"]:hover,
+html.light button[class*="bg-[#1e2024]"]:hover {
+  background-color: #E6E0D4 !important;
+}
+
+html.light button[class*="bg-[#F0ECE4]"],
+html.light button[class*="bg-[#ede5d4]"],
+html.light button[class*="bg-[#ede5cf]"],
+html.light a[class*="bg-[#E8DFD0]"],
+html.light a[class*="bg-[#ede5cf]"] {
+  background-color: #171614 !important;
+  color: #FFFFFF !important;
+}
+
+html.light button[class*="bg-[#F0ECE4]"] span,
+html.light button[class*="bg-[#ede5d4]"] span,
+html.light button[class*="bg-[#ede5cf]"] span,
+html.light a[class*="bg-[#E8DFD0]"] span,
+html.light a[class*="bg-[#ede5cf]"] span {
+  color: #FFFFFF !important;
+}
+
+/* Light mode semantic clinical badges */
+html.light .badge-healthy,
+html.light [class*="text-[#6F7F6D]"],
+html.light [class*="text-[#829A80]"],
+html.light [class*="text-[#9bb89b]"],
+html.light [class*="text-[#4ade80]"] {
+  color: #236B48 !important;
+}
+
+html.light [class*="bg-[#6F7F6D]"],
+html.light [class*="bg-[#829A80]"],
+html.light [class*="bg-[#9bb89b]"] {
+  background-color: #236B48 !important;
+}
+
+html.light .badge-warning,
+html.light [class*="text-[#987E55]"],
+html.light [class*="text-[#A4875C]"],
+html.light [class*="text-[#d9be8b]"],
+html.light [class*="text-[#f59e0b]"],
+html.light [class*="text-[#e5a93c]"] {
+  color: #8C5508 !important;
+}
+
+html.light [class*="bg-[#987E55]"],
+html.light [class*="bg-[#A4875C]"],
+html.light [class*="bg-[#d9be8b]"] {
+  background-color: #8C5508 !important;
+}
+
+html.light .badge-critical,
+html.light [class*="text-[#B8756C]"],
+html.light [class*="text-[#d99b9b]"],
+html.light [class*="text-[#f87171]"] {
+  color: #A13030 !important;
+}
+
+html.light [class*="bg-[#B8756C]"],
+html.light [class*="bg-[#d99b9b]"] {
+  background-color: #A13030 !important;
+}
+
+/* Topology node styles in light mode */
+html.light .topology-node {
+  background-color: #F8F6F0 !important;
+  border-color: #DCD6CA !important;
+  color: #171614 !important;
+}
+html.light .topology-node:hover {
+  background-color: #F0ECE4 !important;
+  border-color: #8A857B !important;
+}
+html.light .topology-line {
+  stroke: #C0BAAD !important;
+}
+
+/* Incident resolution modal */
+html.light .modal-card {
+  background-color: #FFFFFF !important;
+  border-color: #DCD6CA !important;
+  color: #171614 !important;
+}

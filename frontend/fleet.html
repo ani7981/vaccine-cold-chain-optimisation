@@ -178,24 +178,31 @@
 <div class="flex flex-col lg:flex-row lg:items-center justify-between pb-xl gap-base border-b border-[#282a2e] mb-lg">
 <div class="flex flex-col gap-xs">
 <div class="flex items-center gap-md flex-wrap">
-<span class="font-headline-lg text-headline-lg tracking-tight text-[#F0ECE4]">Fleet</span>
+<span id="fleet-total-count" class="font-headline-lg text-headline-lg tracking-tight text-[#F0ECE4]">Fleet (12)</span>
 <div class="px-md py-xs rounded-full bg-[#1a1c20] border border-[#282a2e] flex items-center gap-sm">
-<span class="w-2 h-2 rounded-full bg-[#6F7F6D]"></span>
-<span class="font-label-caps text-label-caps tracking-wider text-[#F0ECE4]">
-                12 vehicles · <span class="text-[#6F7F6D]">11 healthy</span> · <span class="text-[#987E55]">1 needs attention</span>
+<span class="w-2 h-2 rounded-full bg-[#6F7F6D] animate-pulse"></span>
+<span id="fleet-health-summary" class="font-label-caps text-label-caps tracking-wider text-[#F0ECE4]">
+  <span id="fleet-healthy-count" class="text-[#6F7F6D]">9 healthy</span> · 
+  <span id="fleet-warning-count" class="text-[#987E55]">1 warning</span> · 
+  <span id="fleet-critical-count" class="text-[#B8756C]">1 critical</span> · 
+  <span id="fleet-offline-count" class="text-[#9A9890]">1 offline</span>
 </span>
 </div>
 </div>
-<span class="font-body-md text-body-md text-[#9A9890]">
-            Vehicles and monitoring equipment supporting active vaccine shipments across national corridors.
-          </span>
+<span id="fleet-sub-count" class="font-body-md text-body-md text-[#9A9890]">
+  Showing 12 of 12 national cold chain reefers · Real-time continuous thermal monitoring.
+</span>
 </div>
-<div class="flex items-center gap-sm self-start lg:self-auto">
+<div class="flex items-center gap-sm self-start lg:self-auto flex-wrap">
+<button id="btn-theme-toggle" class="px-md py-xs rounded-full bg-[#1a1c20] border border-[#282a2e] text-[#9A9890] hover:text-[#F0ECE4] transition-colors flex items-center gap-1.5" title="Toggle Light/Dark Mode" type="button">
+<span class="material-symbols-outlined text-[16px]">light_mode</span>
+<span class="text-[11px] font-semibold">Theme</span>
+</button>
 <div class="px-md py-xs rounded-full bg-[#1a1c20] border border-[#282a2e] flex items-center gap-xs">
 <span class="material-symbols-outlined text-[15px] text-[#64777B]">sync</span>
-<span class="font-label-sm text-label-sm text-[#9A9890]">Updated 14:31 IST · Synced 10s ago</span>
+<span id="fleet-sync-label" class="font-label-sm text-label-sm text-[#9A9890]">Live Stream Active · Synced</span>
 </div>
-<button class="p-xs rounded-lg bg-[#1a1c20] border border-[#282a2e] text-[#9A9890] hover:text-[#F0ECE4] transition-colors" title="Force Refresh" type="button">
+<button id="btn-fleet-force-refresh" class="p-xs rounded-lg bg-[#1a1c20] border border-[#282a2e] text-[#9A9890] hover:text-[#F0ECE4] transition-colors" title="Force Refresh" type="button">
 <span class="material-symbols-outlined text-[18px]">refresh</span>
 </button>
 </div>
@@ -209,289 +216,39 @@
 <!-- Search bar -->
 <div class="relative w-full">
 <span class="material-symbols-outlined absolute left-base top-1/2 -translate-y-1/2 text-[18px] text-[#9A9890]">search</span>
-<input id="fleet-search-input" class="w-full bg-[#1a1c20] border border-[#282a2e] rounded-xl pl-10 pr-base py-sm font-body-sm text-body-sm text-[#F0ECE4] placeholder:text-[#9A9890] focus:outline-none focus:border-[#333539]" placeholder="Search vehicle, shipment or location..." type="text"/>
+<input id="fleet-search-input" class="w-full bg-[#1a1c20] border border-[#282a2e] rounded-xl pl-10 pr-base py-sm font-body-sm text-body-sm text-[#F0ECE4] placeholder:text-[#9A9890] focus:outline-none focus:border-[#333539]" placeholder="Search vehicle VIN, driver, shipment, or corridor..." type="text"/>
 </div>
 <!-- Operational Status Filter Tabs -->
 <div class="flex flex-wrap items-center gap-xs">
-<button class="px-md py-xs rounded-full font-label-sm text-label-sm transition-colors bg-[#1e2024] text-[#F0ECE4] border border-[#333539]" type="button">
-                All (12)
-              </button>
-<button class="px-md py-xs rounded-full bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] font-label-sm text-label-sm text-[#9A9890] hover:text-[#F0ECE4] transition-colors" type="button">
-                Healthy (11)
-              </button>
-<button class="px-md py-xs rounded-full bg-[#1a1c20] border border-[#987E55]/40 hover:bg-[#1e2024] font-label-sm text-label-sm flex items-center gap-xs text-[#987E55] transition-colors" type="button">
-<span class="w-1.5 h-1.5 rounded-full bg-[#987E55]"></span>
-                Needs Attention (1)
-              </button>
-<button class="px-md py-xs rounded-full bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] font-label-sm text-label-sm text-[#9A9890] transition-colors" type="button">
-                Problem (0)
-              </button>
-<button class="px-md py-xs rounded-full bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] font-label-sm text-label-sm text-[#9A9890] transition-colors" type="button">
-                Offline (0)
-              </button>
+<button id="fleet-tab-all" data-filter="ALL" class="fleet-filter-btn px-md py-xs rounded-full font-label-sm text-label-sm transition-colors bg-[#E8DFD0] text-[#211F1B] border border-[#E8DFD0] font-semibold" type="button">
+  All (<span class="dyn-cnt-all">12</span>)
+</button>
+<button id="fleet-tab-healthy" data-filter="HEALTHY" class="fleet-filter-btn px-md py-xs rounded-full bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] font-label-sm text-label-sm text-[#9A9890] hover:text-[#F0ECE4] transition-colors flex items-center gap-xs" type="button">
+  <span class="w-1.5 h-1.5 rounded-full bg-[#6F7F6D]"></span>
+  Healthy (<span class="dyn-cnt-healthy">9</span>)
+</button>
+<button id="fleet-tab-warning" data-filter="WARNING" class="fleet-filter-btn px-md py-xs rounded-full bg-[#1a1c20] border border-[#987E55]/40 hover:bg-[#1e2024] font-label-sm text-label-sm flex items-center gap-xs text-[#987E55] transition-colors" type="button">
+  <span class="w-1.5 h-1.5 rounded-full bg-[#987E55]"></span>
+  Warning (<span class="dyn-cnt-warning">1</span>)
+</button>
+<button id="fleet-tab-critical" data-filter="CRITICAL" class="fleet-filter-btn px-md py-xs rounded-full bg-[#1a1c20] border border-[#B8756C]/40 hover:bg-[#1e2024] font-label-sm text-label-sm flex items-center gap-xs text-[#B8756C] transition-colors" type="button">
+  <span class="w-1.5 h-1.5 rounded-full bg-[#B8756C]"></span>
+  Critical (<span class="dyn-cnt-critical">1</span>)
+</button>
+<button id="fleet-tab-offline" data-filter="OFFLINE" class="fleet-filter-btn px-md py-xs rounded-full bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] font-label-sm text-label-sm text-[#9A9890] transition-colors flex items-center gap-xs" type="button">
+  <span class="w-1.5 h-1.5 rounded-full bg-[#555]"></span>
+  Offline (<span class="dyn-cnt-offline">1</span>)
+</button>
 </div>
 <!-- Secondary Sensor / Corridor Filtering Rail -->
-<div class="flex flex-wrap items-center gap-sm">
-<div class="flex items-center gap-xs bg-[#1a1c20] border border-[#282a2e] px-sm py-xs rounded-lg">
-<span class="font-label-caps text-label-caps text-[#9A9890]">CORRIDOR:</span>
-<span class="font-body-sm text-body-sm cursor-pointer text-[#F0ECE4]">All National Corridors</span>
-<span class="material-symbols-outlined text-[14px] text-[#9A9890]">expand_more</span>
+<div class="flex flex-wrap items-center justify-between text-xs text-[#9A9890] pt-1">
+  <span id="fleet-filter-indicator">Showing 12 of 12 Vehicles</span>
+  <span class="font-mono text-[11px]">NABL / WHO-PQS Telemetry</span>
 </div>
-<div class="flex items-center gap-xs bg-[#1a1c20] border border-[#282a2e] px-sm py-xs rounded-lg">
-<span class="font-label-caps text-label-caps text-[#9A9890]">SENSOR:</span>
-<span class="font-body-sm text-body-sm cursor-pointer text-[#F0ECE4]">Dual Probes + GPS</span>
-<span class="material-symbols-outlined text-[14px] text-[#9A9890]">expand_more</span>
 </div>
-<div class="flex items-center gap-xs bg-[#1a1c20] border border-[#282a2e] px-sm py-xs rounded-lg">
-<span class="font-label-caps text-label-caps text-[#9A9890]">REEFER UNIT:</span>
-<span class="font-body-sm text-body-sm cursor-pointer text-[#F0ECE4]">Any Equipment</span>
-<span class="material-symbols-outlined text-[14px] text-[#9A9890]">expand_more</span>
-</div>
-</div>
-</div>
-<!-- LIST OF FLEET VEHICLES -->
-<div class="flex flex-col gap-md">
-<!-- VEHICLE 1: PRIMARY DEMO VEHICLE (TN-XX-1234) - SELECTED & ACTIVE WATCH -->
-<article class="p-lg rounded-2xl bg-[#1a1c20] border border-[#333539] relative overflow-hidden transition-all shadow-md cursor-pointer hover:border-[#987E55]/60">
-<!-- Left subtle alert accent marker -->
-<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#987E55]"></div>
-<div class="flex flex-col gap-md pl-xs">
-<!-- Top Row: ID, Badges, Shipment ID -->
-<div class="flex items-start justify-between gap-base flex-wrap">
-<div class="flex items-center gap-md">
-<div class="w-10 h-10 rounded-xl bg-[#1e2024] border border-[#282a2e] flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px] text-[#987E55]">local_shipping</span>
-</div>
-<div>
-<div class="flex items-center gap-sm">
-<span class="font-headline-md text-headline-md font-bold tracking-tight text-[#F0ECE4]">TN-XX-1234</span>
-<span class="px-xs py-0.5 rounded font-label-caps text-label-caps uppercase bg-[#987E55]/20 text-[#987E55] border border-[#987E55]/30">
-                          Selected
-                        </span>
-</div>
-<span class="font-body-sm text-body-sm block text-[#9A9890]">Tata Prima 2830.K · Cold Carrier 400</span>
-</div>
-</div>
-<div class="flex flex-col items-end gap-xs">
-<div class="flex items-center gap-xs px-sm py-xs rounded-full bg-[#987E55]/15 border border-[#987E55]/30">
-<span class="w-2 h-2 rounded-full bg-[#987E55]"></span>
-<span class="font-label-caps text-label-caps uppercase tracking-wider font-semibold text-[#987E55]">Needs attention</span>
-</div>
-<span class="font-label-sm text-label-sm text-[#9A9890]">Reefer inspection advised</span>
-</div>
-</div>
-<!-- Middle Row: Route, Cargo & Location -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-base pt-xs pb-xs">
-<div class="flex flex-col gap-xs">
-<span class="font-label-caps text-label-caps uppercase text-[#9A9890]">SHIPMENT MANIFEST</span>
-<div class="flex items-baseline gap-xs">
-<span class="font-headline-sm text-headline-sm text-[#F0ECE4]"><span class="dyn-shipment-code">VK-1042</span></span>
-<span class="font-body-sm text-body-sm text-[#9A9890]">· Rotavirus &amp; MR (14.2k doses)</span>
-</div>
-<span class="font-body-sm text-body-sm text-[#64777B]">Chennai Regional Depot → Vellore Hub</span>
-</div>
-<div class="flex flex-col gap-xs">
-<span class="font-label-caps text-label-caps uppercase text-[#9A9890]">REAL-TIME TELEMETRY</span>
-<div class="flex items-center gap-md">
-<div>
-<span class="font-label-caps text-label-caps block text-[#9A9890]">CARGO TEMP</span>
-<span class="font-headline-sm text-headline-sm font-bold text-[#987E55]"><span class="dyn-temp">9.4°C</span></span>
-<span class="font-body-sm text-body-sm text-[#987E55]">(+1.4° drift)</span>
-</div>
-<div class="h-6 w-px bg-[#282a2e]"></div>
-<div>
-<span class="font-label-caps text-label-caps block text-[#9A9890]">POSITION</span>
-<span class="font-body-sm text-body-sm font-medium text-[#F0ECE4]">Sriperumbudur</span>
-<span class="font-body-sm text-body-sm block text-[#9A9890]">Km 74.2 · NH-48</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Telemetry Sensors Row -->
-<div class="pt-sm flex items-center justify-between flex-wrap gap-sm bg-[#1e2024] border border-[#282a2e] p-sm rounded-xl">
-<div class="flex items-center gap-md flex-wrap">
-<div class="flex items-center gap-xs">
-<span class="material-symbols-outlined text-[15px] text-[#6F7F6D]">device_thermostat</span>
-<span class="font-body-sm text-body-sm text-[#F0ECE4]">Dual Probes: <span class="text-[#6F7F6D] font-medium">Online</span></span>
-</div>
-<div class="flex items-center gap-xs">
-<span class="material-symbols-outlined text-[15px] text-[#6F7F6D]">navigation</span>
-<span class="font-body-sm text-body-sm text-[#F0ECE4]">GPS: <span class="text-[#6F7F6D] font-medium">58 km/h</span></span>
-</div>
-<div class="flex items-center gap-xs">
-<span class="material-symbols-outlined text-[15px] text-[#6F7F6D]">lock</span>
-<span class="font-body-sm text-body-sm text-[#F0ECE4]">Door: <span class="text-[#6F7F6D] font-medium">Sealed</span></span>
-</div>
-</div>
-<span class="font-label-caps text-label-caps text-[#987E55]">Compressor strain flagged</span>
-</div>
-</div>
-</article>
-<!-- VEHICLE 2: KA-XX-4521 -->
-<article class="p-lg rounded-2xl bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] transition-all cursor-pointer">
-<div class="flex flex-col gap-sm">
-<div class="flex items-start justify-between gap-base">
-<div class="flex items-center gap-md">
-<div class="w-9 h-9 rounded-xl bg-[#1e2024] border border-[#282a2e] flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px] text-[#6F7F6D]">local_shipping</span>
-</div>
-<div>
-<div class="flex items-center gap-sm">
-<span class="font-headline-sm text-headline-sm font-semibold text-[#F0ECE4]">KA-XX-4521</span>
-<span class="font-label-caps text-label-caps text-[#9A9890]">VK-1039</span>
-</div>
-<span class="font-body-sm text-body-sm text-[#9A9890]">Bengaluru Depot → Hyderabad · Hosur bypass</span>
-</div>
-</div>
-<div class="flex items-center gap-sm">
-<div class="text-right">
-<span class="font-headline-sm text-headline-sm font-semibold block text-[#6F7F6D]">4.2°C</span>
-<span class="font-label-caps text-label-caps text-[#9A9890]">WHO-PQS Safe</span>
-</div>
-<div class="w-2.5 h-2.5 rounded-full bg-[#6F7F6D]"></div>
-</div>
-</div>
-<div class="flex items-center justify-between pt-xs text-[#9A9890] font-body-sm text-body-sm">
-<span>Reefer: Normal cycle · 18,000 Rabies Doses</span>
-<div class="flex items-center gap-md">
-<span class="flex items-center gap-xs text-[#6F7F6D]"><span class="material-symbols-outlined text-[14px]">sensors</span> Online</span>
-<span class="flex items-center gap-xs text-[#6F7F6D]"><span class="material-symbols-outlined text-[14px]">door_front</span> Latched</span>
-</div>
-</div>
-</div>
-</article>
-<!-- VEHICLE 3: MH-XX-8821 -->
-<article class="p-lg rounded-2xl bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] transition-all cursor-pointer">
-<div class="flex flex-col gap-sm">
-<div class="flex items-start justify-between gap-base">
-<div class="flex items-center gap-md">
-<div class="w-9 h-9 rounded-xl bg-[#1e2024] border border-[#282a2e] flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px] text-[#6F7F6D]">local_shipping</span>
-</div>
-<div>
-<div class="flex items-center gap-sm">
-<span class="font-headline-sm text-headline-sm font-semibold text-[#F0ECE4]">MH-XX-8821</span>
-<span class="font-label-caps text-label-caps text-[#9A9890]">VK-1045</span>
-</div>
-<span class="font-body-sm text-body-sm text-[#9A9890]">Mumbai Apex → Ahmedabad · Surat corridor</span>
-</div>
-</div>
-<div class="flex items-center gap-sm">
-<div class="text-right">
-<span class="font-headline-sm text-headline-sm font-semibold block text-[#6F7F6D]">3.8°C</span>
-<span class="font-label-caps text-label-caps text-[#9A9890]">Optimal</span>
-</div>
-<div class="w-2.5 h-2.5 rounded-full bg-[#6F7F6D]"></div>
-</div>
-</div>
-<div class="flex items-center justify-between pt-xs text-[#9A9890] font-body-sm text-body-sm">
-<span>Reefer: Carrier Transicold 350 · BCG Vaccine</span>
-<div class="flex items-center gap-md">
-<span class="flex items-center gap-xs text-[#6F7F6D]"><span class="material-symbols-outlined text-[14px]">sensors</span> Online</span>
-<span class="flex items-center gap-xs text-[#6F7F6D]"><span class="material-symbols-outlined text-[14px]">door_front</span> Latched</span>
-</div>
-</div>
-</div>
-</article>
-<!-- VEHICLE 4: DL-XX-9012 -->
-<article class="p-lg rounded-2xl bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] transition-all cursor-pointer">
-<div class="flex flex-col gap-sm">
-<div class="flex items-start justify-between gap-base">
-<div class="flex items-center gap-md">
-<div class="w-9 h-9 rounded-xl bg-[#1e2024] border border-[#282a2e] flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px] text-[#6F7F6D]">local_shipping</span>
-</div>
-<div>
-<div class="flex items-center gap-sm">
-<span class="font-headline-sm text-headline-sm font-semibold text-[#F0ECE4]">DL-XX-9012</span>
-<span class="font-label-caps text-label-caps text-[#9A9890]">VK-1047</span>
-</div>
-<span class="font-body-sm text-body-sm text-[#9A9890]">Delhi Apex → Patna Depot · Yamuna Expy</span>
-</div>
-</div>
-<div class="flex items-center gap-sm">
-<div class="text-right">
-<span class="font-headline-sm text-headline-sm font-semibold block text-[#F0ECE4]">7.7°C</span>
-<span class="font-label-caps text-label-caps text-[#987E55]">Ambient 41.2°C</span>
-</div>
-<div class="w-2.5 h-2.5 rounded-full bg-[#6F7F6D]"></div>
-</div>
-</div>
-<div class="flex items-center justify-between pt-xs text-[#9A9890] font-body-sm text-body-sm">
-<span>Elevated Duty Cycle · Heavy Heat Load</span>
-<div class="flex items-center gap-md">
-<span class="flex items-center gap-xs text-[#6F7F6D]"><span class="material-symbols-outlined text-[14px]">sensors</span> Online</span>
-<span class="flex items-center gap-xs text-[#6F7F6D]"><span class="material-symbols-outlined text-[14px]">door_front</span> Latched</span>
-</div>
-</div>
-</div>
-</article>
-<!-- VEHICLE 5: TS-XX-3309 -->
-<article class="p-lg rounded-2xl bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] transition-all cursor-pointer">
-<div class="flex flex-col gap-sm">
-<div class="flex items-start justify-between gap-base">
-<div class="flex items-center gap-md">
-<div class="w-9 h-9 rounded-xl bg-[#1e2024] border border-[#282a2e] flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px] text-[#6F7F6D]">local_shipping</span>
-</div>
-<div>
-<div class="flex items-center gap-sm">
-<span class="font-headline-sm text-headline-sm font-semibold text-[#F0ECE4]">TS-XX-3309</span>
-<span class="font-label-caps text-label-caps text-[#9A9890]">VK-1033</span>
-</div>
-<span class="font-body-sm text-body-sm text-[#9A9890]">Hyderabad → Vijayawada · Suryapet Bypass</span>
-</div>
-</div>
-<div class="flex items-center gap-sm">
-<div class="text-right">
-<span class="font-headline-sm text-headline-sm font-semibold block text-[#6F7F6D]">5.1°C</span>
-<span class="font-label-caps text-label-caps text-[#9A9890]">Safe Range</span>
-</div>
-<div class="w-2.5 h-2.5 rounded-full bg-[#6F7F6D]"></div>
-</div>
-</div>
-<div class="flex items-center justify-between pt-xs text-[#9A9890] font-body-sm text-body-sm">
-<span>Normal cycle · Polio Oral Vaccine (bOPV)</span>
-<div class="flex items-center gap-md">
-<span class="flex items-center gap-xs text-[#6F7F6D]"><span class="material-symbols-outlined text-[14px]">sensors</span> Online</span>
-<span class="flex items-center gap-xs text-[#6F7F6D]"><span class="material-symbols-outlined text-[14px]">door_front</span> Latched</span>
-</div>
-</div>
-</div>
-</article>
-<!-- VEHICLE 6: GJ-XX-7741 -->
-<article class="p-lg rounded-2xl bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] transition-all cursor-pointer">
-<div class="flex flex-col gap-sm">
-<div class="flex items-start justify-between gap-base">
-<div class="flex items-center gap-md">
-<div class="w-9 h-9 rounded-xl bg-[#1e2024] border border-[#282a2e] flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px] text-[#6F7F6D]">local_shipping</span>
-</div>
-<div>
-<div class="flex items-center gap-sm">
-<span class="font-headline-sm text-headline-sm font-semibold text-[#F0ECE4]">GJ-XX-7741</span>
-<span class="font-label-caps text-label-caps text-[#9A9890]">VK-1028</span>
-</div>
-<span class="font-body-sm text-body-sm text-[#9A9890]">Ahmedabad → Pune · Vadodara Segment</span>
-</div>
-</div>
-<div class="flex items-center gap-sm">
-<div class="text-right">
-<span class="font-headline-sm text-headline-sm font-semibold block text-[#6F7F6D]">4.5°C</span>
-<span class="font-label-caps text-label-caps text-[#9A9890]">Optimal</span>
-</div>
-<div class="w-2.5 h-2.5 rounded-full bg-[#6F7F6D]"></div>
-</div>
-</div>
-<div class="flex items-center justify-between pt-xs text-[#9A9890] font-body-sm text-body-sm">
-<span>Normal cycle · Pentavalent 10-dose vials</span>
-<div class="flex items-center gap-md">
-<span class="flex items-center gap-xs text-[#6F7F6D]"><span class="material-symbols-outlined text-[14px]">sensors</span> Online</span>
-<span class="flex items-center gap-xs text-[#6F7F6D]"><span class="material-symbols-outlined text-[14px]">door_front</span> Latched</span>
-</div>
-</div>
-</div>
-</article>
+<!-- DYNAMIC LIST OF FLEET VEHICLES -->
+<div id="fleet-vehicle-list" class="flex flex-col gap-md">
+  <!-- Vehicle cards populated dynamically by initFleet() -->
 </div>
 </div>
 <!-- RIGHT COLUMN: SELECTED VEHICLE INSPECTION DRAWER (5 of 12 columns on desktop) -->
@@ -502,34 +259,78 @@
 <div class="flex items-center justify-between gap-base">
 <div class="flex items-center gap-xs">
 <span class="font-label-caps text-label-caps uppercase tracking-wider text-[#9A9890]">INSPECTION TELEMETRY</span>
-<span class="w-2 h-2 rounded-full bg-[#987E55]"></span>
+<span id="fleet-status-dot" class="w-2 h-2 rounded-full bg-[#987E55]"></span>
 </div>
 <a id="fleet-manifest-link" class="font-label-caps text-label-caps uppercase font-bold hover:underline flex items-center gap-xs text-[#F0ECE4]" href="/shipment.html?id=VK-1042">
-                  <span class="dyn-shipment-code">VK-1042</span> Manifest
-                  <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+  <span class="dyn-shipment-code">VK-1042</span> Manifest
+  <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
 </a>
 </div>
 <div>
 <span id="fleet-vin-title" class="font-headline-lg text-headline-lg font-bold block text-[#F0ECE4]">TN-XX-1234</span>
 <span id="fleet-vehicle-sub" class="font-body-sm text-body-sm text-[#9A9890]">
-                  Reefer Transport Rig · Tata Prima 2830.K / Cold Carrier 400
-                </span>
+  Reefer Transport Rig · Tata Prima 2830.K / Cold Carrier 400
+</span>
 </div>
-<div class="flex items-center gap-xs pt-xs">
+<div class="flex items-center gap-xs pt-xs flex-wrap">
 <span class="material-symbols-outlined text-[16px] text-[#64777B]">route</span>
 <span id="fleet-route-text" class="font-body-sm text-body-sm text-[#F0ECE4]">Route: Chennai → Vellore</span>
 <span id="fleet-loc-sub" class="font-body-sm text-body-sm text-[#9A9890]">(Currently near Sriperumbudur)</span>
 </div>
 </div>
+
+<!-- INTERACTIVE VEHICLE TOPOLOGY VISUALIZER -->
+<div id="fleet-topology-container" class="p-md rounded-xl bg-[#1e2024] border border-[#282a2e] flex flex-col gap-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase font-bold tracking-wider text-[#F0ECE4] flex items-center gap-1.5">
+  <span class="material-symbols-outlined text-[16px] text-[#E8DFD0]">account_tree</span>
+  Vehicle Topology Graph
+</span>
+<span class="text-[10px] text-[#9A9890]">Click any node to inspect</span>
+</div>
+<div class="grid grid-cols-3 sm:grid-cols-6 gap-1 pt-1 text-center" id="fleet-topology-nodes">
+  <!-- Rendered via JavaScript: Vehicle -> Shipment -> Vaccine -> Route -> Sensor -> Incident -->
+</div>
+<div id="fleet-topology-detail-card" class="p-sm rounded-lg bg-[#111317] border border-[#282a2e] text-xs flex flex-col gap-1">
+  <span class="font-bold text-[#F0ECE4] flex items-center gap-1" id="topo-detail-title">
+    <span class="material-symbols-outlined text-[14px] text-[#829A80]">info</span> Node Overview
+  </span>
+  <span class="text-[#9A9890]" id="topo-detail-body">Click any node above to inspect its real-time telemetry, specifications, and regulatory assurance status.</span>
+</div>
+</div>
+
+<!-- PREDICTIVE AI & EXPLAINABLE RISK BANNER -->
+<div id="fleet-predictive-banner" class="p-md rounded-xl bg-[#231E18] border border-[#987E55]/40 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase font-bold text-[#987E55] flex items-center gap-1">
+  <span class="material-symbols-outlined text-[16px]">psychology</span>
+  Explainable AI Predictive Risk
+</span>
+<span id="fleet-predictive-badge" class="px-xs py-0.5 rounded font-label-caps text-label-caps font-semibold bg-[#987E55]/20 text-[#987E55] border border-[#987E55]/40">
+  WARNING
+</span>
+</div>
+<div class="text-xs text-[#F0ECE4] font-medium" id="fleet-predictive-headline">
+  Thermal RoC suggests breach in ~14 min
+</div>
+<p class="text-[11px] text-[#9A9890] leading-relaxed" id="fleet-predictive-explanation">
+  Rate of change (+0.48°C/10min) under ambient heat (+38.5°C) and partial condenser loop strain.
+</p>
+<div class="p-2 rounded bg-[#171614] text-[11px] text-[#E8DFD0] flex items-start gap-1.5" id="fleet-predictive-action-box">
+  <span class="material-symbols-outlined text-[14px] text-[#A4875C] mt-0.5">crisis_alert</span>
+  <span id="fleet-predictive-action">Action: Divert to Vellore Sub-Depot ILR Room (14 km away).</span>
+</div>
+</div>
+
 <!-- PRIMARY REFRIGERATION TELEMETRY CARD -->
 <div class="p-lg rounded-xl bg-[#1e2024] border border-[#282a2e] flex flex-col gap-base">
 <div class="flex items-center justify-between">
 <span class="font-label-caps text-label-caps uppercase font-bold tracking-wider text-[#F0ECE4]">
-                  Refrigeration Telemetry
-                </span>
-<span class="px-sm py-xs rounded-full font-label-caps text-label-caps font-semibold bg-[#987E55]/15 border border-[#987E55]/30 text-[#987E55]">
-                  Needs inspection
-                </span>
+  Refrigeration Telemetry
+</span>
+<span id="fleet-reefer-badge" class="px-sm py-xs rounded-full font-label-caps text-label-caps font-semibold bg-[#987E55]/15 border border-[#987E55]/30 text-[#987E55]">
+  Needs inspection
+</span>
 </div>
 <!-- Temperature Metrics Array -->
 <div class="grid grid-cols-2 gap-md pt-xs">
@@ -538,14 +339,14 @@
 <div class="flex items-baseline gap-xs">
 <span class="font-telemetry-lg text-telemetry-lg font-bold text-[#987E55]"><span class="dyn-temp">9.4°C</span></span>
 </div>
-<span class="font-label-sm text-label-sm text-[#9A9890]">Safe threshold: 2.0°C – 8.0°C</span>
+<span class="font-label-sm text-label-sm text-[#9A9890]">Safe range: 2.0°C – 8.0°C</span>
 </div>
 <div class="p-md rounded-xl bg-[#111317] border border-[#282a2e] flex flex-col gap-xs">
 <span class="font-label-caps text-label-caps text-[#9A9890]">OUTSIDE AMBIENT</span>
 <div class="flex items-baseline gap-xs">
-<span class="font-telemetry-lg text-telemetry-lg font-bold text-[#F0ECE4]">34.0°C</span>
+<span id="fleet-ambient-temp" class="font-telemetry-lg text-telemetry-lg font-bold text-[#F0ECE4]">38.5°C</span>
 </div>
-<span class="font-label-sm text-label-sm text-[#9A9890]">High solar radiant index</span>
+<span class="font-label-sm text-label-sm text-[#9A9890]">IMD Meteorological Data</span>
 </div>
 </div>
 <!-- Door status strip -->
@@ -553,117 +354,99 @@
 <div class="flex items-center gap-sm">
 <span class="material-symbols-outlined text-[18px] text-[#6F7F6D]">lock</span>
 <div class="flex flex-col">
-<span class="font-body-sm text-body-sm font-semibold text-[#F0ECE4]">Door Status: Closed</span>
-<span class="font-label-sm text-label-sm text-[#9A9890]">Latched 2h 44m ago (Hall-effect verified)</span>
+<span id="fleet-door-text" class="font-body-sm text-body-sm font-semibold text-[#F0ECE4]">Door Status: Closed</span>
+<span id="fleet-door-sub" class="font-label-sm text-label-sm text-[#9A9890]">Hall-effect sensor verified sealed</span>
 </div>
 </div>
 <span class="px-xs py-0.5 rounded font-label-caps text-label-caps bg-[#6F7F6D]/15 border border-[#6F7F6D]/30 text-[#6F7F6D]">
-                  SEALED
-                </span>
-</div>
-<!-- Plain English Clinical Telemetry Diagnosis -->
-<div class="p-md rounded-xl bg-[#0c0e12] border border-[#282a2e] flex items-start gap-sm">
-<span class="material-symbols-outlined text-[18px] shrink-0 mt-0.5 text-[#987E55]">info</span>
-<p class="font-body-sm text-body-sm leading-relaxed text-[#9A9890]">
-                  The vehicle is moving with the door closed, but internal cargo temperature remains above the certified range. Primary compressor cycle indicates thermal strain.
-                </p>
+  SEALED
+</span>
 </div>
 </div>
-<!-- HARDWARE DIAGNOSTICS MATRIX -->
-<div class="flex flex-col gap-sm">
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-[#9A9890]">
-                Sensor Diagnostics &amp; Gateway Health
-              </span>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-sm">
-<div class="p-sm rounded-xl bg-[#1e2024] border border-[#282a2e] flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-body-sm text-body-sm font-medium text-[#F0ECE4]">Bay Probe TS-04</span>
-<span class="font-label-sm text-label-sm text-[#9A9890]">Primary RTD Sensor</span>
-</div>
-<span class="font-label-caps text-label-caps px-xs py-0.5 rounded bg-[#111317] border border-[#6F7F6D]/40 text-[#6F7F6D]">ONLINE</span>
-</div>
-<div class="p-sm rounded-xl bg-[#1e2024] border border-[#282a2e] flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-body-sm text-body-sm font-medium text-[#F0ECE4]">Aux Probe TS-02</span>
-<span class="font-label-sm text-label-sm text-[#9A9890]">4.9°C Backup Bay</span>
-</div>
-<span class="font-label-caps text-label-caps px-xs py-0.5 rounded bg-[#111317] border border-[#6F7F6D]/40 text-[#6F7F6D]">ONLINE</span>
-</div>
-<div class="p-sm rounded-xl bg-[#1e2024] border border-[#282a2e] flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-body-sm text-body-sm font-medium text-[#F0ECE4]">Kinematic GNSS</span>
-<span class="font-label-sm text-label-sm text-[#9A9890]">58 km/h · 268° W</span>
-</div>
-<span class="font-label-caps text-label-caps px-xs py-0.5 rounded bg-[#111317] border border-[#6F7F6D]/40 text-[#6F7F6D]">ONLINE</span>
-</div>
-<div class="p-sm rounded-xl bg-[#1e2024] border border-[#282a2e] flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-body-sm text-body-sm font-medium text-[#F0ECE4]">Modbus Gateway</span>
-<span class="font-label-sm text-label-sm text-[#987E55]">Code E-44 flagged</span>
-</div>
-<span class="font-label-caps text-label-caps px-xs py-0.5 rounded bg-[#111317] border border-[#987E55]/40 text-[#987E55]">FLAG</span>
-</div>
-</div>
-</div>
-<!-- SCHEMATIC MINI-MAP PREVIEW -->
-<div class="flex flex-col gap-xs">
+
+<!-- INCIDENT RESOLUTION & AUDIT WORKFLOW PANEL -->
+<div id="fleet-incident-panel" class="p-lg rounded-xl bg-[#1e2024] border border-[#282a2e] flex flex-col gap-base">
 <div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-[#9A9890]">Position Context</span>
-<a class="font-label-caps text-label-caps font-medium hover:underline text-[#64777B]" href="/map.html">
-                  Open in Live Map →
-                </a>
+<span class="font-label-caps text-label-caps uppercase font-bold tracking-wider text-[#F0ECE4] flex items-center gap-1.5">
+  <span class="material-symbols-outlined text-[16px] text-[#B8756C]">warning</span>
+  Incident Lifecycle
+</span>
+<span id="fleet-incident-state-badge" class="px-sm py-xs rounded-full font-label-caps text-label-caps font-semibold bg-[#B8756C]/15 border border-[#B8756C]/30 text-[#B8756C]">
+  ACTION REQUIRED
+</span>
 </div>
-<!-- Location Map Element with subtle dark route line overlay -->
-<div class="w-full h-40 bg-cover bg-center rounded-xl relative overflow-hidden bg-[#111317] border border-[#282a2e]" data-location="Sriperumbudur, Tamil Nadu, India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYgkuYxlcOHHZtgnfGvf3LPGNDescvMw7xbwOgVZV5dsP0IRw4QEINfg4CwyktAZHG-620L4iSDTIk1G_QF3aW5CJ-oXvHGo336r_g649SiH1XnO3g9AE34IeUG1QxyKOgMdXe2XLbXPLx6wKnfY77y76fuBSVuk8Jblmp9nJadPfFUZsVjCeKJSs31oMjVL4zxnE6VsthUTks8iVUnsPih9jZQ1h375jDyk-7dJvBD1pUnqsiaC_08w');">
-<!-- Subtle route line SVG overlay -->
-<svg class="absolute inset-0 w-full h-full pointer-events-none opacity-45" xmlns="http://www.w3.org/2000/svg">
-<path d="M 40 120 Q 150 90 240 75 T 420 50" fill="none" stroke="#987E55" stroke-dasharray="4 4" stroke-width="2.5"></path>
-</svg>
-<!-- Tactical Map Scrim / Overlays -->
-<div class="absolute inset-0 bg-[#0c0e12]/80 backdrop-blur-[1px] p-md flex flex-col justify-between">
+
+<!-- 4-Stage Stepper: Open -> Investigating -> Action Required -> Resolved -->
+<div class="flex items-center justify-between relative pt-1 pb-1">
+<div class="absolute left-3 right-3 top-1/2 -translate-y-1/2 h-0.5 bg-[#282a2e]"></div>
+<div id="step-open" class="z-10 flex flex-col items-center gap-1">
+  <div class="w-6 h-6 rounded-full bg-[#111317] border-2 border-[#829A80] text-[#829A80] flex items-center justify-center text-[10px] font-bold">1</div>
+  <span class="text-[9px] text-[#9A9890] uppercase font-semibold">Open</span>
+</div>
+<div id="step-investigating" class="z-10 flex flex-col items-center gap-1">
+  <div class="w-6 h-6 rounded-full bg-[#111317] border-2 border-[#A4875C] text-[#A4875C] flex items-center justify-center text-[10px] font-bold">2</div>
+  <span class="text-[9px] text-[#9A9890] uppercase font-semibold">Investigate</span>
+</div>
+<div id="step-action" class="z-10 flex flex-col items-center gap-1">
+  <div class="w-6 h-6 rounded-full bg-[#B8756C] border-2 border-[#B8756C] text-white flex items-center justify-center text-[10px] font-bold">3</div>
+  <span class="text-[9px] text-[#B8756C] uppercase font-semibold">Action</span>
+</div>
+<div id="step-resolved" class="z-10 flex flex-col items-center gap-1">
+  <div class="w-6 h-6 rounded-full bg-[#111317] border-2 border-[#282a2e] text-[#9A9890] flex items-center justify-center text-[10px] font-bold">4</div>
+  <span class="text-[9px] text-[#9A9890] uppercase font-semibold">Resolved</span>
+</div>
+</div>
+
+<div class="flex flex-col gap-1 text-xs text-[#9A9890]" id="fleet-incident-details">
+  <div><strong>Incident Code:</strong> <span id="fleet-inc-code" class="text-[#F0ECE4] font-mono">PR-1042</span></div>
+  <div><strong>Detected:</strong> <span id="fleet-inc-time" class="text-[#F0ECE4]">Today, 10:48 IST</span></div>
+  <div><strong>Root Cause Reason:</strong> <span id="fleet-inc-reason" class="text-[#F0ECE4]">Auxiliary condenser failure under ambient heat</span></div>
+</div>
+
+<!-- Incident Actions -->
+<div class="flex flex-wrap items-center gap-2 pt-1" id="fleet-incident-actions">
+  <button id="btn-fleet-investigate" class="flex-1 py-1.5 px-3 rounded-lg bg-[#111317] hover:bg-[#1a1c20] border border-[#282a2e] text-xs text-[#F0ECE4] font-medium transition-colors" type="button">
+    Investigating
+  </button>
+  <button id="btn-fleet-action-req" class="flex-1 py-1.5 px-3 rounded-lg bg-[#111317] hover:bg-[#1a1c20] border border-[#282a2e] text-xs text-[#A4875C] font-medium transition-colors" type="button">
+    Action Required
+  </button>
+  <button id="btn-fleet-resolve" class="w-full py-2 px-3 rounded-lg bg-[#829A80] hover:bg-[#6F7F6D] text-black font-semibold text-xs transition-colors flex items-center justify-center gap-1.5" type="button">
+    <span class="material-symbols-outlined text-[16px]">check_circle</span> Resolve Incident & Log Audit
+  </button>
+</div>
+
+<!-- Audit History Dropdown Toggle -->
+<div class="pt-1 border-t border-[#282a2e]">
+  <button id="btn-fleet-toggle-history" class="text-[11px] text-[#9A9890] hover:text-[#F0ECE4] flex items-center justify-between w-full font-mono" type="button">
+    <span>View Cryptographic Audit Trail</span>
+    <span class="material-symbols-outlined text-[14px]">expand_more</span>
+  </button>
+  <div id="fleet-incident-history-log" class="hidden mt-2 p-2 rounded bg-[#111317] text-[10px] font-mono flex flex-col gap-1.5 max-h-36 overflow-y-auto">
+    <!-- Log items injected via JS -->
+  </div>
+</div>
+</div>
+
+<!-- DATA PROVENANCE CARD -->
+<div id="fleet-provenance-card" class="p-md rounded-xl bg-[#1e2024] border border-[#282a2e] flex flex-col gap-2">
 <div class="flex items-center justify-between">
-<span class="px-sm py-xs rounded bg-[#1e2024]/90 border border-[#282a2e] font-label-caps text-[10px] text-[#F0ECE4]">
-                      NH-48 CORRIDOR KM 74.2
-                    </span>
-<span class="font-label-caps text-[10px] uppercase text-[#9A9890]">
-                      ETA HUB: 52 MIN
-                    </span>
+<span class="font-label-caps text-label-caps uppercase font-bold tracking-wider text-[#F0ECE4] flex items-center gap-1">
+  <span class="material-symbols-outlined text-[16px] text-[#6F7F6D]">verified</span>
+  Data Provenance & Trust
+</span>
+<span id="fleet-prov-badge" class="px-xs py-0.5 rounded font-label-caps text-label-caps font-semibold bg-[#6F7F6D]/20 text-[#6F7F6D] border border-[#6F7F6D]/30">
+  OFFICIAL IOT
+</span>
 </div>
-<!-- Location Pin Micro-Hud -->
-<div class="self-center flex flex-col items-center">
-<div class="px-sm py-0.5 rounded-full bg-[#1e2024] border border-[#282a2e] shadow-lg flex items-center gap-xs">
-<span class="w-2 h-2 rounded-full bg-[#987E55]"></span>
-<span class="font-label-caps text-[11px] text-[#F0ECE4]">TN-XX-1234</span>
-</div>
-<span class="material-symbols-outlined text-[20px] -mt-1 text-[#987E55]">arrow_drop_down</span>
-</div>
-<div class="flex items-center justify-between text-[11px] text-[#9A9890]">
-<span>Depot: Chennai South</span>
-<span>Destination: Vellore Cold Room</span>
+<div class="grid grid-cols-2 gap-2 text-[11px] text-[#9A9890]">
+  <div>Hardware Authority: <span class="text-[#F0ECE4] block font-medium">NCCVMRC / Ministry</span></div>
+  <div>Calibration: <span class="text-[#6F7F6D] block font-medium">NABL ISO-17025</span></div>
+  <div>Routing Vector: <span class="text-[#F0ECE4] block font-medium">ORS NH Network</span></div>
+  <div>Ledger Integrity: <span class="text-[#F0ECE4] block font-medium">SHA-256 Chained</span></div>
 </div>
 </div>
-</div>
-</div>
-<!-- SCHEDULED RIG MAINTENANCE -->
-<div class="p-md rounded-xl bg-[#1e2024] border border-[#282a2e] flex flex-col gap-xs">
-<div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps uppercase text-[#9A9890]">EQUIPMENT MAINTENANCE</span>
-<span class="font-label-sm text-label-sm text-[#6F7F6D]">PQS Valid</span>
-</div>
-<div class="flex items-center justify-between font-body-sm text-body-sm pt-xs text-[#9A9890]">
-<span>Last certified inspection:</span>
-<span class="text-[#F0ECE4]">02-09-2026 (WHO-PQS checklist)</span>
-</div>
-<div class="flex items-center justify-between font-body-sm text-body-sm text-[#9A9890]">
-<span>Next scheduled overhaul:</span>
-<span class="text-[#F0ECE4]">16-09-2026</span>
-</div>
-<div class="pt-xs">
-<span class="font-body-sm text-body-sm italic text-[#987E55]">
-                  Maintenance advice: Inspection recommended upon depot arrival.
-                </span>
-</div>
-</div>
+
 <!-- ACTION BUTTONS -->
 <div class="flex flex-col sm:flex-row items-center gap-sm pt-xs">
 <button id="btn-fleet-open-shipment" class="w-full sm:flex-1 py-sm px-base rounded-xl font-headline-sm text-headline-sm font-semibold transition-all hover:opacity-95 shadow-sm text-center bg-[#F0ECE4] text-[#111214] flex items-center justify-center gap-xs" type="button">
@@ -681,6 +464,79 @@
 </div>
 </div>
 </div>
+</div>
+<!-- INCIDENT RESOLUTION MODAL -->
+<div id="fleet-resolution-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="w-full max-w-lg rounded-2xl bg-[#1a1c20] border border-[#282a2e] p-6 shadow-2xl flex flex-col gap-4 text-[#F0ECE4] modal-card">
+    <div class="flex items-center justify-between pb-3 border-b border-[#282a2e]">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-[#829A80] text-[22px]">verified</span>
+        <h3 class="font-headline-sm text-headline-sm font-bold text-[#F0ECE4]">Resolve Incident &amp; Append Audit</h3>
+      </div>
+      <button id="btn-close-resolve-modal" class="w-8 h-8 rounded-lg flex items-center justify-center text-[#9A9890] hover:text-[#F0ECE4] hover:bg-[#282a2e] transition-colors" type="button" aria-label="Close">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-3 text-xs">
+      <div class="p-3 rounded-xl bg-[#111317] border border-[#282a2e] flex items-center justify-between">
+        <div>
+          <span class="text-[10px] uppercase font-mono tracking-wider text-[#9A9890] block">Target Incident</span>
+          <strong class="font-mono text-sm text-[#F0ECE4]" id="modal-target-inc-code">PR-1042</strong>
+        </div>
+        <div class="text-right">
+          <span class="text-[10px] uppercase font-mono tracking-wider text-[#9A9890] block">Assigned Vehicle</span>
+          <span class="font-mono text-sm text-[#F0ECE4]" id="modal-target-vin">TN-4821-HX</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-label-caps text-label-caps text-[#9A9890] uppercase" for="modal-input-reason">Resolution Reason *</label>
+        <select id="modal-input-reason" class="w-full bg-[#111317] border border-[#282a2e] rounded-lg px-3 py-2 text-xs text-[#F0ECE4] focus:outline-none focus:border-[#829A80]">
+          <option value="Auxiliary condenser airflow restriction resolved">Auxiliary condenser airflow restriction resolved</option>
+          <option value="Compressor power wiring harness re-seated and verified">Compressor power wiring harness re-seated and verified</option>
+          <option value="Transferred payload to backup temperature-controlled unit">Transferred payload to backup temperature-controlled unit</option>
+          <option value="Refrigerant top-up and sensor probe recalibrated (NABL)">Refrigerant top-up and sensor probe recalibrated (NABL)</option>
+          <option value="Cold chain compartment door gasket seal resealed &amp; locked">Cold chain compartment door gasket seal resealed &amp; locked</option>
+          <option value="Sensor transient telemetry glitch verified false alarm">Sensor transient telemetry glitch verified false alarm</option>
+          <option value="Other">Other / Custom Corrective Protocol</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-label-caps text-label-caps text-[#9A9890] uppercase" for="modal-input-action">Corrective Action Taken *</label>
+        <textarea id="modal-input-action" rows="2" class="w-full bg-[#111317] border border-[#282a2e] rounded-lg px-3 py-2 text-xs text-[#F0ECE4] focus:outline-none focus:border-[#829A80]" placeholder="Describe the physical / operational intervention performed..."></textarea>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="font-label-caps text-label-caps text-[#9A9890] uppercase" for="modal-input-notes">Operational Notes &amp; Temperature Check</label>
+        <textarea id="modal-input-notes" rows="2" class="w-full bg-[#111317] border border-[#282a2e] rounded-lg px-3 py-2 text-xs text-[#F0ECE4] focus:outline-none focus:border-[#829A80]" placeholder="e.g. Compartment temperature restabilized to +4.2°C at Vellore inspection bay."></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="font-label-caps text-label-caps text-[#9A9890] uppercase" for="modal-input-user">Authorized Operator</label>
+          <input id="modal-input-user" type="text" value="Dr. R. Sharma (HQ Fleet Officer)" class="w-full bg-[#111317] border border-[#282a2e] rounded-lg px-3 py-2 text-xs text-[#F0ECE4] focus:outline-none focus:border-[#829A80]">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="font-label-caps text-label-caps text-[#9A9890] uppercase">Audit Ledger Status</label>
+          <div class="h-[34px] px-3 rounded-lg bg-[#111317] border border-[#282a2e] flex items-center text-[11px] font-mono text-[#829A80] gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span> SHA-256 Chained
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-end gap-2 pt-3 border-t border-[#282a2e]">
+      <button id="btn-modal-cancel" type="button" class="px-4 py-2 rounded-xl bg-[#111317] hover:bg-[#1e2024] border border-[#282a2e] text-xs text-[#9A9890] hover:text-[#F0ECE4] transition-colors font-medium">
+        Cancel
+      </button>
+      <button id="btn-modal-confirm-resolve" type="button" class="px-4 py-2 rounded-xl bg-[#829A80] hover:bg-[#6F7F6D] text-black text-xs font-bold transition-all flex items-center gap-1.5 shadow-md">
+        <span class="material-symbols-outlined text-[16px]">check_circle</span>
+        Confirm Resolution &amp; Append to Ledger
+      </button>
+    </div>
+  </div>
 </div>
 </section>
 </div>

@@ -135,7 +135,7 @@
                 <div class="px-3 py-1.5 rounded-xl bg-[#282a2e]/90 border border-[#333539]/40 flex items-center gap-3 shadow-sm">
                   <div class="flex flex-col">
                     <span class="text-[10px] font-mono text-[#A69F94] uppercase tracking-wider">Fleet Payload</span>
-                    <span class="text-xs font-bold font-mono text-[#F0E8D9]">12 active <span class="text-[#A69F94] font-normal">· 38 total</span></span>
+                    <span class="text-xs font-bold font-mono text-[#F0E8D9]" id="shipments-fleet-payload"><span class="dyn-active-shipments">11</span> active <span class="text-[#A69F94] font-normal">· <span class="dyn-total-shipments">12</span> total</span></span>
                   </div>
                   <div class="w-px h-6 bg-[#333539]"></div>
                   <div class="flex items-center gap-2">
@@ -178,18 +178,18 @@
               <!-- Secondary Filter Chips Bar -->
               <div class="flex flex-wrap items-center justify-between gap-2 pt-0.5">
                 <div class="flex flex-wrap items-center gap-1.5">
-                  <button class="px-2.5 py-0.5 rounded-full bg-[#F5EEDB] text-[#111317] text-xs transition-all shadow-sm font-semibold" type="button">All (38)</button>
-                  <button class="px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]" type="button">
+                  <button class="shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#F5EEDB] text-[#111317] text-xs transition-all shadow-sm font-semibold" id="btn-shipment-filter-all" data-status="ALL" type="button">All (<span class="dyn-shipments-all">12</span>)</button>
+                  <button class="shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]" id="btn-shipment-filter-okay" data-status="OKAY" type="button">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
-                    <span>Okay (32)</span>
+                    <span>Okay (<span class="dyn-shipments-okay">10</span>)</span>
                   </button>
-                  <button class="px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]" type="button">
+                  <button class="shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]" id="btn-shipment-filter-attention" data-status="ATTENTION" type="button">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#A4875C]"></span>
-                    <span>Need attention (4)</span>
+                    <span>Need attention (<span class="dyn-shipments-attention">1</span>)</span>
                   </button>
-                  <button class="px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]" type="button">
+                  <button class="shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]" id="btn-shipment-filter-problem" data-status="PROBLEM" type="button">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#B8756C]"></span>
-                    <span>Problem (2)</span>
+                    <span>Problem (<span class="dyn-shipments-problem">1</span>)</span>
                   </button>
                   <div class="hidden md:block w-px h-3.5 bg-[#333539] mx-1"></div>
                   <button class="hidden md:flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#1a1c20] text-[#A69F94] hover:text-[#F0E8D9] text-xs border border-[#333539] transition-colors" type="button">
@@ -205,7 +205,7 @@
                     <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                   </button>
                 </div>
-                <button class="text-[#A69F94] hover:text-[#F0E8D9] text-[10px] font-mono uppercase tracking-wider transition-colors ml-auto sm:ml-0" type="button">
+                <button class="text-[#A69F94] hover:text-[#F0E8D9] text-[10px] font-mono uppercase tracking-wider transition-colors ml-auto sm:ml-0" id="btn-shipments-clear-filters" type="button">
                   Clear filters
                 </button>
               </div>
@@ -218,354 +218,15 @@
             
             <!-- Left: Shipment List (Cards / Rows) — Thinned footprint -->
             <div class="flex-1 min-w-0 w-full flex flex-col gap-2">
+              <div class="flex items-center justify-between text-xs text-[#A69F94] pb-1 px-1">
+                <span id="shipments-filter-indicator">Showing 12 of 12 active shipments</span>
+                <span class="font-mono text-[11px]">NABL / Universal Immunisation Programme</span>
+              </div>
               
-              <!-- Row 1: VK-1042 (DEMO INCIDENT — SELECTED & HIGHLIGHTED) -->
-              <article class="group cursor-pointer rounded-xl bg-[#181B22] px-3.5 py-2.5 transition-all duration-200 border-l-4 border-l-[#B8756C] border-t border-r border-b border-[#333539] shadow-sm hover:bg-[#1E222A]" id="shipment-row-vk1042" onclick="selectShipment('VK-1042')">
-                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
-                  <!-- Identifier & Rig -->
-                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
-                    <div class="w-8 h-8 rounded-lg bg-[#28181A] text-[#B8756C] flex items-center justify-center shrink-0 border border-[#B8756C]/30">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                    </div>
-                    <div class="flex flex-col min-w-0">
-                      <div class="flex items-center gap-1.5">
-                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight"><span class="dyn-shipment-code">VK-1042</span></span>
-                        <span class="px-1.5 py-0.2 rounded bg-[#2A1617] text-[#B8756C] text-[9px] font-mono font-bold uppercase">
-                          Breach
-                        </span>
-                      </div>
-                      <span class="text-[11px] text-[#A69F94] truncate">Tata Ultra · TN-4821-HX</span>
-                    </div>
-                  </div>
-
-                  <!-- Route & GPS -->
-                  <div class="flex flex-col min-w-0 flex-1 px-1">
-                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
-                      <span class="truncate">Chennai Regional Store</span>
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                      <span class="truncate text-[#A69F94]">Vellore DH</span>
-                    </div>
-                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
-                      <svg class="w-3 h-3 text-[#B8756C] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-                      <span class="truncate">Near Sriperumbudur (Km 74.2) · NH 48</span>
-                    </div>
-                  </div>
-
-                  <!-- Thermal Telemetry -->
-                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
-                    <div class="flex items-center gap-0.5">
-                      <span class="font-mono text-base font-bold text-[#B8756C]"><span class="dyn-temp">9.4°C</span></span>
-                      <svg class="w-3.5 h-3.5 text-[#B8756C]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-                    </div>
-                    <span class="text-[9px] font-mono text-[#B8756C] uppercase tracking-wider">+1.4° drift</span>
-                  </div>
-
-                  <!-- Status Tag -->
-                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#2A1617] text-[#B8756C] text-[10px] font-mono font-bold uppercase">
-                      <span class="w-1.5 h-1.5 rounded-full bg-[#B8756C] animate-ping"></span>
-                      Problem
-                    </span>
-                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:31 IST</span>
-                  </div>
-
-                  <!-- Inspect CTA -->
-                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#F5EEDB] text-[#111317] text-xs hover:bg-[#E2D9C5] transition-colors shrink-0 shadow-sm font-semibold" type="button">
-                    <span>Inspect</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                  </button>
-                </div>
-              </article>
-
-              <!-- Row 2: VK-1047 (NEED ATTENTION) -->
-              <article class="group cursor-pointer rounded-xl bg-[#1e2024] px-3.5 py-2.5 transition-all duration-200 border border-[#333539] hover:bg-[#282a2e]" onclick="selectShipment('VK-1047')">
-                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
-                  <!-- Identifier & Rig -->
-                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
-                    <div class="w-8 h-8 rounded-lg bg-[#282116] text-[#A4875C] flex items-center justify-center shrink-0 border border-[#A4875C]/30">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path></svg>
-                    </div>
-                    <div class="flex flex-col min-w-0">
-                      <div class="flex items-center gap-1.5">
-                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">VK-1047</span>
-                        <span class="px-1.5 py-0.2 rounded bg-[#282116] text-[#A4875C] text-[9px] font-mono font-bold uppercase">
-                          Attn
-                        </span>
-                      </div>
-                      <span class="text-[11px] text-[#A69F94] truncate">BharatBenz 1217C · DL-01-AB-3301</span>
-                    </div>
-                  </div>
-
-                  <!-- Route & GPS -->
-                  <div class="flex flex-col min-w-0 flex-1 px-1">
-                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
-                      <span class="truncate">Delhi Regional Store</span>
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                      <span class="truncate text-[#A69F94]">Patna Medical Depot</span>
-                    </div>
-                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-                      <span class="truncate">Agra Expressway Toll (Km 198)</span>
-                    </div>
-                  </div>
-
-                  <!-- Thermal Telemetry -->
-                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
-                    <div class="flex items-center gap-0.5">
-                      <span class="font-mono text-base font-bold text-[#A4875C]">7.2°C</span>
-                      <svg class="w-3.5 h-3.5 text-[#A4875C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                    </div>
-                    <span class="text-[9px] font-mono text-[#A69F94] uppercase tracking-wider">Ceiling near</span>
-                  </div>
-
-                  <!-- Status Tag -->
-                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#282116] text-[#A4875C] text-[10px] font-mono font-bold uppercase">
-                      <span class="w-1.5 h-1.5 rounded-full bg-[#A4875C]"></span>
-                      Attention
-                    </span>
-                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:27 IST</span>
-                  </div>
-
-                  <!-- Inspect CTA -->
-                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors shrink-0 border border-[#333539] font-medium" type="button">
-                    <span>Inspect</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                  </button>
-                </div>
-              </article>
-
-              <!-- Row 3: VK-1039 (OKAY) -->
-              <article class="group cursor-pointer rounded-xl bg-[#1e2024] px-3.5 py-2.5 transition-all duration-200 border border-[#333539] hover:bg-[#282a2e]" onclick="selectShipment('VK-1039')">
-                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
-                  <!-- Identifier & Rig -->
-                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
-                    <div class="w-8 h-8 rounded-lg bg-[#162518] text-[#829A80] flex items-center justify-center shrink-0 border border-[#829A80]/30">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    </div>
-                    <div class="flex flex-col min-w-0">
-                      <div class="flex items-center gap-1.5">
-                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">VK-1039</span>
-                        <span class="px-1.5 py-0.2 rounded bg-[#162518] text-[#829A80] text-[9px] font-mono font-bold uppercase">
-                          Safe
-                        </span>
-                      </div>
-                      <span class="text-[11px] text-[#A69F94] truncate">Eicher Pro 3015 · KA-04-E-8820</span>
-                    </div>
-                  </div>
-
-                  <!-- Route & GPS -->
-                  <div class="flex flex-col min-w-0 flex-1 px-1">
-                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
-                      <span class="truncate">Bengaluru Vaccine Store</span>
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                      <span class="truncate text-[#A69F94]">Hyderabad DC</span>
-                    </div>
-                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-                      <span class="truncate">Hosur Gateway (Km 42) · NH 44</span>
-                    </div>
-                  </div>
-
-                  <!-- Thermal Telemetry -->
-                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
-                    <div class="flex items-center gap-0.5">
-                      <span class="font-mono text-base font-bold text-[#829A80]">5.1°C</span>
-                      <svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <span class="text-[9px] font-mono text-[#A69F94] uppercase tracking-wider">Optimal</span>
-                  </div>
-
-                  <!-- Status Tag -->
-                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#162518] text-[#829A80] text-[10px] font-mono font-bold uppercase">
-                      <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
-                      Okay
-                    </span>
-                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:30 IST</span>
-                  </div>
-
-                  <!-- Inspect CTA -->
-                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors shrink-0 border border-[#333539] font-medium" type="button">
-                    <span>Inspect</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                  </button>
-                </div>
-              </article>
-
-              <!-- Row 4: VK-1045 (OKAY) -->
-              <article class="group cursor-pointer rounded-xl bg-[#1e2024] px-3.5 py-2.5 transition-all duration-200 border border-[#333539] hover:bg-[#282a2e]" onclick="selectShipment('VK-1045')">
-                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
-                  <!-- Identifier & Rig -->
-                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
-                    <div class="w-8 h-8 rounded-lg bg-[#162518] text-[#829A80] flex items-center justify-center shrink-0 border border-[#829A80]/30">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    </div>
-                    <div class="flex flex-col min-w-0">
-                      <div class="flex items-center gap-1.5">
-                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">VK-1045</span>
-                        <span class="px-1.5 py-0.2 rounded bg-[#162518] text-[#829A80] text-[9px] font-mono font-bold uppercase">
-                          Safe
-                        </span>
-                      </div>
-                      <span class="text-[11px] text-[#A69F94] truncate">Ashok Leyland · MH-04-KF-1092</span>
-                    </div>
-                  </div>
-
-                  <!-- Route & GPS -->
-                  <div class="flex flex-col min-w-0 flex-1 px-1">
-                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
-                      <span class="truncate">Mumbai Regional Store</span>
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                      <span class="truncate text-[#A69F94]">Ahmedabad Depot</span>
-                    </div>
-                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-                      <span class="truncate">Surat South Bypass (Km 265)</span>
-                    </div>
-                  </div>
-
-                  <!-- Thermal Telemetry -->
-                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
-                    <div class="flex items-center gap-0.5">
-                      <span class="font-mono text-base font-bold text-[#829A80]">4.8°C</span>
-                      <svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <span class="text-[9px] font-mono text-[#A69F94] uppercase tracking-wider">Optimal</span>
-                  </div>
-
-                  <!-- Status Tag -->
-                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#162518] text-[#829A80] text-[10px] font-mono font-bold uppercase">
-                      <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
-                      Okay
-                    </span>
-                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:29 IST</span>
-                  </div>
-
-                  <!-- Inspect CTA -->
-                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors shrink-0 border border-[#333539] font-medium" type="button">
-                    <span>Inspect</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                  </button>
-                </div>
-              </article>
-
-              <!-- Row 5: VK-1051 (OKAY) -->
-              <article class="group cursor-pointer rounded-xl bg-[#1e2024] px-3.5 py-2.5 transition-all duration-200 border border-[#333539] hover:bg-[#282a2e]" onclick="selectShipment('VK-1051')">
-                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
-                  <!-- Identifier & Rig -->
-                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
-                    <div class="w-8 h-8 rounded-lg bg-[#162518] text-[#829A80] flex items-center justify-center shrink-0 border border-[#829A80]/30">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    </div>
-                    <div class="flex flex-col min-w-0">
-                      <div class="flex items-center gap-1.5">
-                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">VK-1051</span>
-                        <span class="px-1.5 py-0.2 rounded bg-[#162518] text-[#829A80] text-[9px] font-mono font-bold uppercase">
-                          Safe
-                        </span>
-                      </div>
-                      <span class="text-[11px] text-[#A69F94] truncate">Tata 407 · WB-22-C-5514</span>
-                    </div>
-                  </div>
-
-                  <!-- Route & GPS -->
-                  <div class="flex flex-col min-w-0 flex-1 px-1">
-                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
-                      <span class="truncate">Kolkata Store</span>
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                      <span class="truncate text-[#A69F94]">Patna Vaccine Store</span>
-                    </div>
-                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-                      <span class="truncate">Durgapur Industrial Belt (Km 162)</span>
-                    </div>
-                  </div>
-
-                  <!-- Thermal Telemetry -->
-                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
-                    <div class="flex items-center gap-0.5">
-                      <span class="font-mono text-base font-bold text-[#829A80]">5.7°C</span>
-                      <svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <span class="text-[9px] font-mono text-[#A69F94] uppercase tracking-wider">Optimal</span>
-                  </div>
-
-                  <!-- Status Tag -->
-                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#162518] text-[#829A80] text-[10px] font-mono font-bold uppercase">
-                      <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
-                      Okay
-                    </span>
-                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:26 IST</span>
-                  </div>
-
-                  <!-- Inspect CTA -->
-                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors shrink-0 border border-[#333539] font-medium" type="button">
-                    <span>Inspect</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                  </button>
-                </div>
-              </article>
-
-              <!-- Row 6: VK-1033 (OKAY) -->
-              <article class="group cursor-pointer rounded-xl bg-[#1e2024] px-3.5 py-2.5 transition-all duration-200 border border-[#333539] hover:bg-[#282a2e]" onclick="selectShipment('VK-1033')">
-                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
-                  <!-- Identifier & Rig -->
-                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
-                    <div class="w-8 h-8 rounded-lg bg-[#162518] text-[#829A80] flex items-center justify-center shrink-0 border border-[#829A80]/30">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                    </div>
-                    <div class="flex flex-col min-w-0">
-                      <div class="flex items-center gap-1.5">
-                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">VK-1033</span>
-                        <span class="px-1.5 py-0.2 rounded bg-[#162518] text-[#829A80] text-[9px] font-mono font-bold uppercase">
-                          Safe
-                        </span>
-                      </div>
-                      <span class="text-[11px] text-[#A69F94] truncate">Force Trax · KL-07-CD-9011</span>
-                    </div>
-                  </div>
-
-                  <!-- Route & GPS -->
-                  <div class="flex flex-col min-w-0 flex-1 px-1">
-                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
-                      <span class="truncate">Kochi Regional Depot</span>
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                      <span class="truncate text-[#A69F94]">Thiruvananthapuram</span>
-                    </div>
-                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
-                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-                      <span class="truncate">Alappuzha Bypass (Km 64)</span>
-                    </div>
-                  </div>
-
-                  <!-- Thermal Telemetry -->
-                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
-                    <div class="flex items-center gap-0.5">
-                      <span class="font-mono text-base font-bold text-[#829A80]">4.2°C</span>
-                      <svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <span class="text-[9px] font-mono text-[#A69F94] uppercase tracking-wider">Optimal</span>
-                  </div>
-
-                  <!-- Status Tag -->
-                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#162518] text-[#829A80] text-[10px] font-mono font-bold uppercase">
-                      <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
-                      Okay
-                    </span>
-                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:21 IST</span>
-                  </div>
-
-                  <!-- Inspect CTA -->
-                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors shrink-0 border border-[#333539] font-medium" type="button">
-                    <span>Inspect</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                  </button>
-                </div>
-              </article>
+              <!-- Container for all 12 dynamic shipments -->
+              <div id="shipments-list-container" class="flex flex-col gap-2 w-full">
+                <!-- Dynamically populated with all 12 shipments by initShipments() -->
+              </div>
             </div>
 
             <!-- Right / Inspector Panel: VK-1042 LIVE TELEMETRY DRAWER — Thinned footprint (320px) -->
@@ -575,11 +236,11 @@
               <div class="flex items-start justify-between gap-2 border-b border-[#333539]/40 pb-2">
                 <div class="flex flex-col">
                   <div class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-[#B8756C] animate-pulse"></span>
-                    <span class="text-[10px] font-mono uppercase font-bold tracking-wider text-[#B8756C]">Incident Inspection</span>
+                    <span class="w-2 h-2 rounded-full bg-[#B8756C] animate-pulse" id="inspector-badge-dot"></span>
+                    <span class="text-[10px] font-mono uppercase font-bold tracking-wider text-[#B8756C]" id="inspector-badge-text">Incident Inspection</span>
                   </div>
                   <h2 class="text-xl font-bold font-mono text-[#F0E8D9] tracking-tight mt-0.5" id="inspector-id"><span class="dyn-shipment-code">VK-1042</span></h2>
-                  <span class="text-xs text-[#A69F94]">Consignment IND-VR-2026-X8</span>
+                  <span class="text-xs text-[#A69F94]" id="inspector-consignment">Consignment BATCH-IND-VR-2026-09</span>
                 </div>
                 <div class="flex items-center gap-1">
                   <button class="w-7 h-7 rounded-lg bg-[#1a1c20] flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] transition-colors border border-[#333539]" title="Print Manifest" type="button">
@@ -599,10 +260,10 @@
                 </div>
                 <div class="flex items-baseline justify-between">
                   <div class="flex items-baseline gap-1">
-                    <span class="font-mono text-xl font-bold text-[#B8756C]"><span class="dyn-temp">9.4°C</span></span>
-                    <span class="text-[10px] font-mono text-[#B8756C] font-medium">(+1.4° Excursion)</span>
+                    <span class="font-mono text-xl font-bold text-[#B8756C]"><span class="dyn-temp" id="inspector-temp-display">9.4°C</span></span>
+                    <span class="text-[10px] font-mono text-[#B8756C] font-medium" id="inspector-temp-delta">(+1.4° Excursion)</span>
                   </div>
-                  <span class="px-2 py-0.5 rounded bg-[#2A1617] text-[#B8756C] text-[10px] font-mono uppercase font-bold">
+                  <span class="px-2 py-0.5 rounded bg-[#2A1617] text-[#B8756C] text-[10px] font-mono uppercase font-bold" id="inspector-status-pill">
                     11m Critical
                   </span>
                 </div>
@@ -611,23 +272,23 @@
                 <div class="w-full pt-1">
                   <div class="h-10 w-full relative">
                     <div class="absolute inset-x-0 top-1/3 border-b border-dashed border-[#B8756C]/40 z-0"></div>
-                    <span class="absolute right-0 top-0 text-[8px] text-[#B8756C] font-mono">+8.0°C Max</span>
-                    <svg class="w-full h-full overflow-visible relative z-10" preserveAspectRatio="none" viewBox="0 0 380 40">
+                    <span class="absolute right-0 top-0 text-[8px] text-[#B8756C] font-mono" id="inspector-ceiling-label">+8.0°C Max</span>
+                    <svg class="w-full h-full overflow-visible relative z-10" preserveAspectRatio="none" viewBox="0 0 380 40" id="inspector-sparkline-svg">
                       <defs>
                         <linearGradient id="tempGradient" x1="0" x2="0" y1="0" y2="1">
-                          <stop offset="0%" stop-color="#B8756C" stop-opacity="0.35"></stop>
+                          <stop id="spark-grad-stop" offset="0%" stop-color="#B8756C" stop-opacity="0.35"></stop>
                           <stop offset="70%" stop-color="#B8756C" stop-opacity="0.0"></stop>
                         </linearGradient>
                       </defs>
-                      <path d="M 0 30 L 50 28 L 110 25 L 170 23 L 220 18 L 280 12 L 330 7 L 380 4 L 380 40 L 0 40 Z" fill="url(#tempGradient)"></path>
-                      <path d="M 0 30 L 50 28 L 110 25 L 170 23 L 220 18 L 280 12 L 330 7 L 380 4" fill="none" stroke="#B8756C" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                      <circle cx="380" cy="4" fill="#EDE5D8" r="3"></circle>
+                      <path id="spark-area-path" d="M 0 30 L 50 28 L 110 25 L 170 23 L 220 18 L 280 12 L 330 7 L 380 4 L 380 40 L 0 40 Z" fill="url(#tempGradient)"></path>
+                      <path id="spark-line-path" d="M 0 30 L 50 28 L 110 25 L 170 23 L 220 18 L 280 12 L 330 7 L 380 4" fill="none" stroke="#B8756C" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                      <circle id="spark-dot" cx="380" cy="4" fill="#EDE5D8" r="3"></circle>
                     </svg>
                   </div>
                   <div class="flex justify-between text-[#A69F94] text-[9px] font-mono mt-0.5">
-                    <span>13:30 (5.2°C)</span>
-                    <span>14:00 (6.8°C)</span>
-                    <span class="text-[#B8756C]">14:31 (<span class="dyn-temp">9.4°C</span>)</span>
+                    <span id="inspector-spark-start">13:30 (5.2°C)</span>
+                    <span id="inspector-spark-mid">14:00 (6.8°C)</span>
+                    <span class="text-[#B8756C]" id="inspector-spark-end">14:31 (<span class="dyn-temp">9.4°C</span>)</span>
                   </div>
                 </div>
               </div>
@@ -638,13 +299,13 @@
                 <div class="grid grid-cols-2 gap-2">
                   <div class="rounded-lg bg-[#181B22] p-2 border border-[#333539]">
                     <span class="text-[10px] font-mono text-[#A69F94] block">Dose Volume</span>
-                    <p class="text-xs font-bold font-mono text-[#F0E8D9] mt-0.5">8,400 Doses</p>
-                    <span class="text-[10px] text-[#A69F94] block truncate">WHO-PQS Monovalent</span>
+                    <p class="text-xs font-bold font-mono text-[#F0E8D9] mt-0.5" id="inspector-doses">8,400 Doses</p>
+                    <span class="text-[10px] text-[#A69F94] block truncate" id="inspector-doses-sub">WHO-PQS Monovalent</span>
                   </div>
                   <div class="rounded-lg bg-[#181B22] p-2 border border-[#333539]">
                     <span class="text-[10px] font-mono text-[#A69F94] block">Vaccine Type</span>
-                    <p class="text-xs font-bold font-mono text-[#F0E8D9] mt-0.5 truncate">Rotavirus + Pentavalent</p>
-                    <span class="text-[10px] text-[#A69F94] block truncate">Batch #IND-VR-2026</span>
+                    <p class="text-xs font-bold font-mono text-[#F0E8D9] mt-0.5 truncate" id="inspector-vaccine">Rotavirus + Pentavalent</p>
+                    <span class="text-[10px] text-[#A69F94] block truncate" id="inspector-batch">Batch #IND-VR-2026</span>
                   </div>
                 </div>
               </div>
@@ -657,25 +318,25 @@
                 </div>
                 <div class="flex items-center justify-between py-0.5 border-b border-[#333539]/30 text-xs">
                   <span class="text-[#A69F94]">Compressor</span>
-                  <span class="text-[11px] font-mono text-[#B8756C] font-semibold">RPM 940 (Fault)</span>
+                  <span class="text-[11px] font-mono text-[#B8756C] font-semibold" id="inspector-compressor">RPM 940 (Fault)</span>
                 </div>
                 <div class="flex items-center justify-between py-0.5 border-b border-[#333539]/30 text-xs">
                   <span class="text-[#A69F94]">Ambient Temp</span>
-                  <span class="text-[11px] font-mono text-[#F0E8D9] font-semibold">+38.5°C Direct</span>
+                  <span class="text-[11px] font-mono text-[#F0E8D9] font-semibold" id="inspector-ambient">+38.5°C Direct</span>
                 </div>
                 <div class="flex items-center justify-between py-0.5 text-xs">
                   <span class="text-[#A69F94]">Assigned Carrier</span>
-                  <span class="text-[11px] text-[#F0E8D9] truncate">K. Muthukrishnan</span>
+                  <span class="text-[11px] text-[#F0E8D9] truncate" id="inspector-carrier">K. Muthukrishnan</span>
                 </div>
               </div>
 
               <!-- Active Algorithmic Recommendation -->
-              <div class="rounded-lg bg-[#231E18] p-2 border-l-4 border-l-[#A4875C] flex flex-col gap-0.5">
-                <div class="flex items-center gap-1 text-[#A4875C]">
+              <div class="rounded-lg bg-[#231E18] p-2 border-l-4 border-l-[#A4875C] flex flex-col gap-0.5" id="inspector-rec-container">
+                <div class="flex items-center gap-1 text-[#A4875C]" id="inspector-rec-header">
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"></circle><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path><circle cx="18" cy="5" r="3"></circle></svg>
-                  <span class="text-[10px] font-mono uppercase font-bold tracking-wider">Automated Directive</span>
+                  <span class="text-[10px] font-mono uppercase font-bold tracking-wider" id="inspector-rec-tag">Automated Directive</span>
                 </div>
-                <p class="text-[11px] text-[#F0E8D9] leading-relaxed">
+                <p class="text-[11px] text-[#F0E8D9] leading-relaxed" id="inspector-rec-text">
                   Divert immediately to <strong class="text-[#F0E8D9] font-bold">Vellore Sub-District Depot</strong> (14 km, 18 min ETA) before thermal buffer collapses.
                 </p>
               </div>
@@ -707,8 +368,8 @@
           <!-- 6. FOOTER & PAGINATION -->
           <footer class="w-full px-4 sm:px-6 py-2.5 border-t border-[#333539]/30 bg-[#1a1c20]/40 flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto flex-shrink-0">
             <div class="flex items-center gap-2">
-              <span class="text-xs text-[#A69F94] font-mono">
-                Showing <strong class="text-[#F0E8D9] font-semibold">1–6</strong> of <strong class="text-[#F0E8D9] font-semibold">38</strong> shipments (12 active in-transit, 26 scheduled)
+              <span class="text-xs text-[#A69F94] font-mono" id="shipments-footer-count">
+                Showing <strong class="text-[#F0E8D9] font-semibold dyn-total-shipments">12</strong> of <strong class="text-[#F0E8D9] font-semibold dyn-total-shipments">12</strong> active shipments (11 in-transit, 1 resolved)
               </span>
             </div>
 
@@ -726,12 +387,14 @@
     </div>
 
     <script>
-      function selectShipment(id) {
-        const inspectorId = document.getElementById('inspector-id');
-        if (inspectorId) {
-          inspectorId.textContent = id;
+      // Proxy listener in case clicked prior to module boot
+      window.selectShipment = function(id) {
+        if (window._vaxkavachSelectShipment) {
+          window._vaxkavachSelectShipment(id);
+        } else {
+          window._pendingShipmentSelect = id;
         }
-      }
+      };
 
       // Quick shortcut listener for Command/Ctrl+K search focus
       window.addEventListener('keydown', (e) => {

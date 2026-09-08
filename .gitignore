@@ -25,3 +25,10 @@ react-bits-main.zip
 India_State.shp
 India_State.shx
 .impeccable/
+
+# Secrets and local user store
+.env
+*.env
+backend/.env
+telegram_users.json
+backend/telegram_users.json

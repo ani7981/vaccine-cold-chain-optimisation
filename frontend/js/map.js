@@ -544,6 +544,34 @@ export function initLiveTelemetryMap() {
     }
   });
 
+  // Expose live real-time telemetry hook for WebSockets
+  window.vaxkavachUpdateReefer = function(payload) {
+    if (!payload || !payload.shipment_code) return;
+    const r = REEFERS.find(x => x.code === payload.shipment_code);
+    if (r) {
+      if (payload.temperature !== undefined) r.temp = payload.temperature;
+      if (payload.lat && payload.lon) r.coords = [payload.lat, payload.lon];
+      if (payload.speed !== undefined) r.speed = `${Math.round(payload.speed)} km/h`;
+      if (payload.problem_status) {
+        if (payload.problem_status.severity === 'CRITICAL' || payload.problem_status.severity === 'HIGH') {
+          r.status = 'problem';
+        } else if (payload.problem_status.severity === 'MEDIUM') {
+          r.status = 'attention';
+        } else {
+          r.status = 'okay';
+        }
+      }
+      const marker = reeferMarkers[r.code];
+      if (marker) {
+        marker.setLatLng(r.coords);
+        marker.setIcon(createReeferIcon(r));
+      }
+      if (currentSelectedReefer && currentSelectedReefer.code === r.code) {
+        updateDrawer(r);
+      }
+    }
+  };
+
   // --------------------------------------------------------------------------
   // Corridor & Status Filtering
   // --------------------------------------------------------------------------

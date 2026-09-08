@@ -103,33 +103,33 @@
 <section class="rounded-xl bg-[#14171d] p-6 shadow-sm">
 <div class="flex items-center justify-between pb-4">
 <span class="text-label-caps font-label-caps tracking-wider uppercase text-[#8b909a]">Current State · Payload Compartment #1</span>
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[rgba(217,155,155,0.12)] text-[#d99b9b] text-label-sm font-label-sm">
+<span id="ship-safe-range-status" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[rgba(217,155,155,0.12)] text-[#d99b9b] text-label-sm font-label-sm">
 <span class="w-1.5 h-1.5 rounded-full bg-[#d99b9b] animate-pulse"></span>
-              Above safe range for 11 min
-            </span>
+  Above safe range for 18 min
+</span>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pt-2">
 <div class="md:col-span-6 flex flex-col">
 <div class="flex items-baseline gap-3">
 <span class="font-headline-xl text-[64px] leading-none tracking-tight text-[#f5eedb] font-medium"><span class="dyn-temp">9.4°C</span></span>
-<span class="text-body-md font-body-md text-[#d99b9b] flex items-center gap-0.5">
+<span id="ship-temp-drift" class="text-body-md font-body-md text-[#d99b9b] flex items-center gap-0.5">
 <span class="material-symbols-outlined text-[16px]">arrow_upward</span>
-                  +1.4°C drift
-                </span>
+  +1.4°C drift
+</span>
 </div>
 <div class="mt-3 flex items-center gap-3 text-body-sm font-body-sm text-[#a0a5ad]">
 <span class="inline-flex items-center gap-1.5 text-[#9bb89b]">
 <span class="w-2 h-2 rounded-sm bg-[#9bb89b]"></span>
-                  Target Envelope: 2°C — 8°C
-                </span>
+  Target Envelope: 2.0°C — 8.0°C
+</span>
 <span class="text-[#8b909a]">·</span>
-<span>Margin Exceeded</span>
+<span id="ship-envelope-margin" class="text-[#d99b9b]">Margin Exceeded</span>
 </div>
 </div>
 <div class="md:col-span-6 flex flex-col justify-end">
-<div class="p-3.5 rounded-lg bg-[#1a1e26] text-body-sm font-body-sm text-[#a0a5ad] leading-relaxed">
-                The shipment temperature has remained above the upper threshold limit (<span class="text-[#f5eedb]">8.0°C</span>) continuously since passing the Sriperumbudur corridor (Km 74.2). Thermal decay curve projects 10.1°C within 18 minutes without mitigation.
-              </div>
+<div id="ship-condition-summary" class="p-3.5 rounded-lg bg-[#1a1e26] text-body-sm font-body-sm text-[#a0a5ad] leading-relaxed">
+  The shipment temperature has remained above the upper threshold limit (<span class="text-[#f5eedb]">8.0°C</span>) continuously since passing the Sriperumbudur corridor (Km 74.2). Thermal decay curve projects 10.1°C within 18 minutes without mitigation.
+</div>
 </div>
 </div>
 <!-- Safe range bar visual -->
@@ -150,33 +150,70 @@
 <div class="absolute top-0 bottom-0 left-[78.3%] w-2 -ml-1 rounded-full bg-[#f5eedb] shadow-sm"></div>
 </div>
 </div>
+
+<!-- Detailed Min / Max / Avg / Current & Excursion Metrics Band -->
+<div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+  <div class="p-2.5 rounded-lg bg-[#1a1e26] border border-white/[0.04] flex flex-col">
+    <span class="text-[10px] text-[#8b909a] uppercase font-bold">MIN TEMP</span>
+    <span id="ship-min-temp" class="text-sm font-bold text-[#f5eedb] mt-0.5">4.1°C</span>
+    <span class="text-[10px] text-[#9bb89b]">In-Envelope</span>
+  </div>
+  <div class="p-2.5 rounded-lg bg-[#1a1e26] border border-white/[0.04] flex flex-col">
+    <span class="text-[10px] text-[#8b909a] uppercase font-bold">MAX TEMP</span>
+    <span id="ship-max-temp" class="text-sm font-bold text-[#d99b9b] mt-0.5">9.4°C</span>
+    <span class="text-[10px] text-[#d99b9b]">Excursion Peak</span>
+  </div>
+  <div class="p-2.5 rounded-lg bg-[#1a1e26] border border-white/[0.04] flex flex-col">
+    <span class="text-[10px] text-[#8b909a] uppercase font-bold">AVG TRIP TEMP</span>
+    <span id="ship-avg-temp" class="text-sm font-bold text-[#f5eedb] mt-0.5">6.2°C</span>
+    <span class="text-[10px] text-[#8b909a]">Nominal Mean</span>
+  </div>
+  <div class="p-2.5 rounded-lg bg-[#1a1e26] border border-white/[0.04] flex flex-col">
+    <span class="text-[10px] text-[#8b909a] uppercase font-bold">EXCURSIONS</span>
+    <span id="ship-excursions-stat" class="text-sm font-bold text-[#d9be8b] mt-0.5">1 event · 18.5m</span>
+    <span class="text-[10px] text-[#d9be8b]">Above +8.0°C</span>
+  </div>
+</div>
 </section>
-<!-- SECTION 2 — RECOMMENDED ACTION -->
+
+<!-- SECTION 2 — RECOMMENDED ACTION & EXPLAINABLE AI -->
 <section class="rounded-xl bg-[#171a22] p-6 shadow-sm border border-white/[0.05]">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
 <span class="w-2 h-2 rounded-full bg-[#d9be8b]"></span>
-<span class="text-label-caps font-label-caps tracking-wider uppercase text-[#d9be8b]">Protocol Trigger · Step 1 of 2</span>
+<span class="text-label-caps font-label-caps tracking-wider uppercase text-[#d9be8b]">Explainable AI · Decision Directive</span>
 </div>
-<span class="text-label-sm font-label-sm text-[#8b909a]">Priority Alpha</span>
+<span id="ship-priority-badge" class="text-label-sm font-label-sm text-[#d9be8b] font-semibold">Priority Alpha</span>
 </div>
-<div class="mt-3 flex flex-col gap-2">
-<h2 class="text-headline-md font-headline-md text-[#f5eedb]">Recommended action</h2>
-<p class="text-body-lg font-body-lg text-[#ede5d4] font-medium leading-snug">
-              Check the refrigeration unit and prepare to move the shipment to the nearest validated cold storage.
-            </p>
-<p class="text-body-md font-body-md text-[#a0a5ad] leading-relaxed">
-              The internal core temperature has hovered above 8.0°C for 11 consecutive minutes. Autonomous reefer telematics flag an auxiliary compressor loop fault on Unit #2. <strong class="text-[#f5eedb] font-normal">Vellore Sub-District Depot</strong> is 14 km away (approx 16 min transit time).
-            </p>
+
+<!-- Explainable AI Anomaly Detection Card -->
+<div class="mt-3 p-3 rounded-lg bg-[#231E18] border border-[#987E55]/40 flex flex-col gap-1.5">
+  <div class="flex items-center justify-between">
+    <span class="font-label-caps text-label-caps uppercase font-bold text-[#987E55] flex items-center gap-1">
+      <span class="material-symbols-outlined text-[16px]">psychology</span>
+      Predictive Risk & Root Cause Explanation
+    </span>
+    <span id="ship-predictive-risk-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#B8756C]/20 text-[#B8756C] border border-[#B8756C]/40">
+      CRITICAL
+    </span>
+  </div>
+  <p id="ship-predictive-why" class="text-xs text-[#f5eedb] leading-relaxed font-medium">
+    Active thermal breach detected (+9.4°C > +8.0°C). Auxiliary compressor circuit fault logged under extreme ambient heat (+38.5°C).
+  </p>
+  <div class="p-2 rounded bg-[#171614] text-[11px] text-[#E8DFD0] flex items-start gap-1.5">
+    <span class="material-symbols-outlined text-[14px] text-[#A4875C] mt-0.5">crisis_alert</span>
+    <span id="ship-predictive-rec">Immediate diversion to Vellore Sub-District Depot (14 km away · ~16 min transit time).</span>
+  </div>
 </div>
-<div class="mt-5 pt-4 border-t border-white/[0.04] flex flex-wrap items-center justify-between gap-3">
+
+<div class="mt-4 pt-4 border-t border-white/[0.04] flex flex-wrap items-center justify-between gap-3">
 <div class="flex items-center gap-3">
-<button class="px-5 py-2.5 rounded-lg bg-[#ede5d4] text-[#111317] hover:bg-[#f5eedb] transition-all text-headline-sm font-headline-sm shadow-sm active:scale-[0.99]" type="button">
-                Acknowledge Problem
-              </button>
-<button class="px-4 py-2.5 rounded-lg bg-[#1f232c] text-[#f5eedb] hover:bg-[#282d38] transition-colors text-body-md font-body-md" type="button">
-                Open Problem Details
-              </button>
+<button id="btn-acknowledge-problem" class="px-5 py-2.5 rounded-lg bg-[#ede5d4] text-[#111317] hover:bg-[#f5eedb] transition-all text-headline-sm font-headline-sm shadow-sm active:scale-[0.99]" type="button">
+  Acknowledge Problem
+</button>
+<button id="btn-open-problem" class="px-4 py-2.5 rounded-lg bg-[#1f232c] text-[#f5eedb] hover:bg-[#282d38] transition-colors text-body-md font-body-md" type="button">
+  Open Problem Details
+</button>
 </div>
 <a class="inline-flex items-center gap-1.5 text-body-sm font-body-sm text-[#d9be8b] hover:text-[#f5eedb] transition-colors" href="#directive" id="btn-dispatch-directive">
 <span>Dispatch Driver Directive</span>
@@ -512,42 +549,86 @@
 </div>
 </div>
 </section>
-<!-- SECTION 6 — SHIPMENT INFORMATION -->
+<!-- SECTION 6 — VACCINE PAYLOAD & INTEGRATION -->
 <section class="rounded-xl bg-[#14171d] p-5 shadow-sm flex flex-col gap-3">
 <div class="flex items-center justify-between pb-1">
-<span class="text-headline-sm font-headline-sm text-[#f5eedb]">Shipment Manifest</span>
-<span class="text-label-caps font-label-caps text-[#8b909a]">ISO-9001 WHO-PQS</span>
+<span class="text-headline-sm font-headline-sm text-[#f5eedb]">Vaccine Contents & Rig</span>
+<span class="text-label-caps font-label-caps text-[#6F7F6D] flex items-center gap-1">
+  <span class="material-symbols-outlined text-[14px]">verified</span> CDSCO / WHO-PQS
+</span>
 </div>
 <div class="flex flex-col divide-y divide-white/[0.04] text-body-sm font-body-sm">
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Shipment ID</span>
+<span class="text-[#8b909a]">Shipment Code</span>
 <span class="text-[#f5eedb] font-medium font-headline-sm"><span class="dyn-shipment-code">VK-1042</span></span>
 </div>
 <div class="py-2 flex flex-col gap-0.5">
-<span class="text-[#8b909a]">Consignment</span>
-<span class="text-[#f5eedb] font-medium">8,400 vials Rotavirus + Measles-Rubella</span>
-<span class="text-[11px] text-[#8b909a]">WHO-PQS E003 Monovalent Freeze-Sensitive</span>
+<span class="text-[#8b909a]">Vaccine Biological Product</span>
+<span id="ship-vaccine-name" class="text-[#f5eedb] font-medium">Rotavirus Oral Vaccine (PQS E004)</span>
+<span id="ship-vaccine-mfr" class="text-[11px] text-[#8b909a]">Bharat Biotech International Ltd.</span>
 </div>
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Origin Facility</span>
-<span class="text-[#ede5d4] text-right">Chennai Reg. Store (Depot 4)</span>
+<span class="text-[#8b909a]">Quantity / Total Doses</span>
+<span id="ship-vaccine-doses" class="text-[#ede5d4] font-medium">8,400 doses (840 vials)</span>
 </div>
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Destination</span>
-<span class="text-[#ede5d4] text-right">Vellore District Hospital</span>
+<span class="text-[#8b909a]">Required Temp Range</span>
+<span id="ship-vaccine-range" class="text-[#9bb89b] font-semibold">+2.0°C to +8.0°C</span>
 </div>
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Departure Time</span>
-<span class="text-[#ede5d4]">08 Sep 2026 · 10:24 IST</span>
+<span class="text-[#8b909a]">Batch & Expiry</span>
+<span class="text-[#ede5d4]"><span id="ship-vaccine-batch">BB-ROTA-8841</span> · Exp: <span id="ship-vaccine-exp">31 Dec 2026</span></span>
 </div>
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Vehicle</span>
-<span class="text-[#ede5d4]">Ashok Leyland 407 · TN-4821-HX</span>
+<span class="text-[#8b909a]">Payload Risk Status</span>
+<span id="ship-vaccine-risk" class="font-bold text-[#d99b9b]">CRITICAL (Excursion)</span>
 </div>
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Primary Carrier</span>
-<span class="text-[#ede5d4]">TN Medical Services Logistics</span>
+<span class="text-[#8b909a]">Assigned Reefer Rig</span>
+<span id="ship-vehicle-info" class="text-[#ede5d4] text-right font-mono">TN-XX-1234 · Tata Prima 2830.K</span>
 </div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-[#8b909a]">Commercial Driver</span>
+<span id="ship-driver-info" class="text-[#ede5d4] text-right">K. Muthukrishnan (+91 94441 20982)</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-[#8b909a]">Real-time Position</span>
+<span id="ship-location-text" class="text-[#ede5d4] text-right">Sriperumbudur · Km 74.2 · NH-48</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-[#8b909a]">Corridor & ETA</span>
+<span id="ship-eta-text" class="text-[#ede5d4] text-right">Chennai CWS → Vellore Hub · 52 min</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-[#8b909a]">Last Telemetry Ping</span>
+<span id="ship-last-ping" class="text-[#9bb89b] text-right">12s ago · RSSI -68 dBm</span>
+</div>
+</div>
+</section>
+
+<!-- SECTION 7 — DATA PROVENANCE & SYSTEM TRUST -->
+<section class="rounded-xl bg-[#14171d] p-5 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between pb-1">
+<span class="text-headline-sm font-headline-sm text-[#f5eedb]">Data Provenance & Trust</span>
+<span id="ship-prov-badge" class="px-2 py-0.5 rounded text-label-caps font-label-caps bg-[#9bb89b]/15 text-[#9bb89b] border border-[#9bb89b]/30">VERIFIED OFFICIAL IOT</span>
+</div>
+<div class="flex flex-col gap-2 text-xs text-[#8b909a]">
+  <div class="p-2.5 rounded bg-[#1a1e26] flex items-center justify-between">
+    <span>Telemetry Sensor:</span>
+    <span class="text-[#f5eedb] font-medium">Primary Probe TS-04 (Dual PT100)</span>
+  </div>
+  <div class="p-2.5 rounded bg-[#1a1e26] flex items-center justify-between">
+    <span>External Meteorological Data:</span>
+    <span class="text-[#f5eedb] font-medium">India Meteorological Dept (IMD API)</span>
+  </div>
+  <div class="p-2.5 rounded bg-[#1a1e26] flex items-center justify-between">
+    <span>Corridor Routing Vector:</span>
+    <span class="text-[#f5eedb] font-medium">OpenRouteService (ORS) Highway Network</span>
+  </div>
+  <div class="p-2.5 rounded bg-[#1a1e26] flex items-center justify-between">
+    <span>Audit Ledger:</span>
+    <span class="text-[#9bb89b] font-medium">SHA-256 Cryptographically Chained</span>
+  </div>
 </div>
 </section>
 <!-- SECTION 9 — RECENT EVENTS LOG -->

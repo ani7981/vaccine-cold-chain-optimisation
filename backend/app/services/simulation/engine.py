@@ -204,7 +204,25 @@ class SimulationEngine:
                         append_audit_event(db, "PROBLEM_DETECTED", "SHIPMENT", shipment.id, "SYSTEM_DETECTION_ENGINE", audit_payload)
                 
                 db.commit()
-                
+
+                # Telegram: push critical alert to supervisors (non-blocking)
+                if eval_result["has_problem"] and eval_result["severity"] == "CRITICAL" and not existing_prob:
+                    try:
+                        from app.services.notifications.telegram import notify_critical_alert
+                        problem_data = {
+                            "id": new_prob.id,
+                            "problem_code": new_prob.problem_code,
+                            "shipment_id": shipment.id,
+                            "shipment_code": shipment.shipment_code,
+                            "problem_type": new_prob.problem_type,
+                            "severity": new_prob.severity,
+                            "evidence": new_prob.evidence or {},
+                        }
+                        import asyncio
+                        asyncio.create_task(notify_critical_alert(problem_data))
+                    except Exception:
+                        pass  # Never let Telegram errors break simulation
+
                 # Broadcast
                 await manager.broadcast({
                     "type": "TELEMETRY_UPDATE",
