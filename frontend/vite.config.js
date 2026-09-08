@@ -32,6 +32,9 @@ export default defineConfig({
           const parsedUrl = new URL(req.url, 'http://localhost:5173');
           let pathname = parsedUrl.pathname;
           
+          if (pathname.startsWith('/@') || pathname.startsWith('/node_modules') || pathname.startsWith('/api')) {
+            return next();
+          }
           if (pathname === '/') {
             req.url = '/landing.html' + parsedUrl.search;
           } else if (pathname === '/problems' || pathname === '/problems/') {
@@ -44,6 +47,10 @@ export default defineConfig({
           } else if (pathname.startsWith('/problems/') && pathname.split('/')[2]) {
             const id = pathname.split('/')[2];
             req.url = `/problem.html?id=${id}`;
+          } else if (pathname === '/problem-detail' || pathname === '/problem-detail.html') {
+            req.url = '/problem.html' + parsedUrl.search;
+          } else if (pathname === '/shipment-detail' || pathname === '/shipment-detail.html') {
+            req.url = '/shipment.html' + parsedUrl.search;
           } else if (!pathname.includes('.')) {
             req.url = `${pathname}.html` + parsedUrl.search;
           }

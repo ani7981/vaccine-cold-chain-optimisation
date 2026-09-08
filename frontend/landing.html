@@ -1,1 +1,159 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VaxKavach — Every degree, accounted for.</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/landing.css"></head><body><canvas id="cinema" aria-hidden="true"></canvas><div class="grain"></div><header class="topbar"><a class="brand" href="/landing.html"><i></i><span>VaxKavach<small>India Telemetry Arc</small></span></a><nav><a href="/overview.html">Overview</a><a href="/shipments.html">Shipments</a><a href="/map.html">Map</a><a href="/problems.html">Problems</a></nav><div class="top-actions"><button id="how">How it works</button><a class="button" href="/overview.html">Explore the demo</a></div></header><main id="story"><section class="scene hero"><div class="copy"><p class="eyebrow">Simulated pharmaceutical logistics intelligence</p><h1>Every degree,<br>accounted for.</h1><p>VaxKavach watches vaccines as they travel, spots problems early, and helps teams know what to do next.</p><a class="button" href="/overview.html">Launch HUD <span>↗</span></a></div><p class="scroll">Scroll to follow the cold chain <b>↓</b></p></section><section class="scene right"><div class="copy"><p class="eyebrow">01 — The biological payload</p><h2>Protection begins<br>with the vial.</h2><p>Glass, formulation, stopper, seal. Every component depends on a controlled thermal environment.</p></div></section><section class="scene left"><div class="copy"><p class="eyebrow">02 — The cold chain</p><h2>Contained.<br>Measured.</h2><p>An insulated shipper creates a physical buffer. Instrumentation makes that protection visible.</p><div class="instrument"><span>Compartment temperature</span><strong id="thermal-readout">4.2°C</strong><i><b></b></i><small>2°C</small><small>8°C</small></div></div></section><section class="scene right"><div class="copy"><p class="eyebrow">03 — Chennai → Vellore</p><h2>Movement changes<br>the equation.</h2><p>A refrigerated vehicle carries the shipment through real road conditions, heat and time.</p></div></section><section class="scene left warning"><div class="copy"><p class="eyebrow">04 — Deterministic detection</p><h2>Too warm.<br>Not unnoticed.</h2><p>Temperature, location, door state, ambient conditions and transit signals are evaluated together.</p><div class="signal-list"><span>Temperature <b>rising</b></span><span>Ambient heat <b>high</b></span><span>Refrigeration <b>degrading</b></span></div></div></section><section class="scene right"><div class="copy"><p class="eyebrow">05 — A connected response</p><h2>It watches.<br>It spots.<br>It helps.</h2><p>VaxKavach presents an operational recommendation: divert to the nearest suitable cold-storage depot.</p><div class="route-card"><span>Recommended action</span><strong>Reroute via Kanchipuram</strong><small>Simulated operational intelligence · operator decision required</small></div></div></section><section class="scene finale"><div class="copy center"><p class="eyebrow">India-scale cold-chain confidence</p><h2>Watch. Spot. Act.</h2><p>Know what is happening. Know where it is. Know when something is wrong. Know what to do next.</p><a class="button" href="/overview.html">Launch HUD <span>↗</span></a></div></section></main><dialog id="how-dialog"><button class="close" aria-label="Close">×</button><p class="eyebrow">How VaxKavach works</p><h2>Physical movement, operational clarity.</h2><p>VaxKavach brings simulated temperature, GPS, door, ambient and transit signals into one deterministic operating view. It calculates Temperature Impact, identifies combined risk, recommends an action and preserves an auditable history.</p></dialog><noscript><div class="fallback"><b>VaxKavach</b><h1>Every degree, accounted for.</h1><a href="/overview.html">Launch HUD</a></div></noscript><script type="module" src="/landing.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VaxKavach — Every degree, accounted for.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/landing.css">
+</head>
+<body>
+  <canvas id="cinema" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a class="brand" href="/landing.html">
+      <i></i>
+      <span>VaxKavach<small>India Telemetry Arc</small></span>
+    </a>
+    <nav aria-label="Main Navigation">
+      <a href="/overview.html">Overview</a>
+      <a href="/shipments.html">Shipments</a>
+      <a href="/fleet.html">Fleet</a>
+      <a href="/map.html">Map</a>
+      <a href="/problems.html">Problems</a>
+    </nav>
+    <div class="top-actions">
+      <button id="how" type="button" aria-haspopup="dialog">How it works</button>
+      <a class="button" href="/overview.html">Launch HUD</a>
+    </div>
+  </header>
+
+  <main id="story">
+    <!-- Hero Scene -->
+    <section class="scene hero" aria-label="Introduction">
+      <div class="copy">
+        <span class="eyebrow">Universal Immunization Logistics</span>
+        <h1>Every degree,<br>accounted for.</h1>
+        <p>VaxKavach watches vaccines as they travel across India, detects thermal risks deterministically, and recommends immediate corrective reroutes.</p>
+        <div class="hero-actions">
+          <a class="button" href="/overview.html">Explore Live Fleet <span>↗</span></a>
+          <a class="button secondary" href="/shipments.html">Track Consignments</a>
+        </div>
+      </div>
+      <p class="scroll">Scroll to follow the cold chain <b>↓</b></p>
+    </section>
+
+    <!-- Scene 1: Payload -->
+    <section class="scene right" aria-label="Biological Payload">
+      <div class="copy">
+        <span class="eyebrow">The Biological Payload</span>
+        <h2>Protection begins<br>with the vial.</h2>
+        <p>Glass, formulation, stopper, seal. From Rotavirus to Covaxin, every dose requires continuous thermal stability within strict clinical limits.</p>
+      </div>
+    </section>
+
+    <!-- Scene 2: Cold Chain Enclosure -->
+    <section class="scene left" aria-label="Cold Chain Shippers">
+      <div class="copy">
+        <span class="eyebrow">Cold Chain Shielding</span>
+        <h2>Contained.<br>Measured.</h2>
+        <p>Vacuum-insulated phase change shippers maintain thermal inertia. Calibrated digital probes transmit chamber temperature every 30 seconds.</p>
+        <div class="instrument" aria-label="Compartment Probe">
+          <span>Chamber Temperature</span>
+          <strong id="thermal-readout">4.2°C</strong>
+          <i><b></b></i>
+          <div class="instrument-limits">
+            <small>2.0°C Min</small>
+            <small>8.0°C Max</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 3: Transit Highway Corridor -->
+    <section class="scene right" aria-label="Transit Corridor">
+      <div class="copy">
+        <span class="eyebrow">Transit Corridor</span>
+        <h2>Movement changes<br>the equation.</h2>
+        <p>Consignment CN-8821 departs Chennai State Depot toward Vellore Medical College along NH48. Ambient temperatures reach 39.4°C on asphalt.</p>
+      </div>
+    </section>
+
+    <!-- Scene 4: Anomaly Detection -->
+    <section class="scene left warning" aria-label="Anomaly Detection">
+      <div class="copy">
+        <span class="eyebrow">Deterministic Detection</span>
+        <h2>Too warm.<br>Not unnoticed.</h2>
+        <p>Refrigeration degradation elevates chamber temperature beyond +8.0°C. Multi-sensor telemetry triggers an immediate critical excursion alert.</p>
+        <div class="signal-list">
+          <span>Chamber Temp <b>8.9°C (High)</b></span>
+          <span>Ambient Asphalt <b>39.4°C</b></span>
+          <span>Compressor RPM <b>720 (Fault)</b></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 5: Automated Reroute -->
+    <section class="scene right" aria-label="Operational Reroute">
+      <div class="copy">
+        <span class="eyebrow">Automated Response</span>
+        <h2>Watch. Spot.<br>Protect.</h2>
+        <p>VaxKavach calculates Mean Kinetic Temperature impact and produces a safe reroute to the nearest cold-storage facility before potency is lost.</p>
+        <div class="route-card">
+          <span>Preservation Directive</span>
+          <strong>Emergency Divert · Kanchipuram Sub-Depot</strong>
+          <small>ETA 22 min · Capacity Verified · 2.0°C–8.0°C Pre-Cooled Bay</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- Finale -->
+    <section class="scene finale" aria-label="Nationwide Overview">
+      <div class="copy center">
+        <span class="eyebrow">Nationwide Cold Chain Confidence</span>
+        <h2>Watch. Spot. Act.</h2>
+        <p>Complete operational visibility from central state depots to primary health centres. Zero blind spots. Auditable proof of potency.</p>
+        <a class="button" href="/overview.html">Launch Full Operations HUD <span>↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Continuous Floating Telemetry HUD -->
+  <div id="live-telemetry-hud" aria-live="polite" role="region" aria-label="Chamber Telemetry">
+    <div class="hud-header">
+      <span class="hud-label">Live Chamber Telemetry</span>
+      <span class="hud-badge" id="hud-badge">Nominal</span>
+    </div>
+    <div class="hud-temp-row">
+      <strong id="hud-temp">4.2°C</strong>
+      <span class="hud-delta" id="hud-delta">Safe Buffer</span>
+    </div>
+    <div class="hud-bar"><b id="hud-bar-fill"></b></div>
+    <div class="hud-footer">
+      <span id="hud-status">Safe Range (2.0°C – 8.0°C)</span>
+      <span id="hud-mkt">MKT: 4.1°C</span>
+    </div>
+  </div>
+
+  <dialog id="how-dialog" role="dialog" aria-labelledby="how-dialog-title">
+    <button class="close" type="button" aria-label="Close dialog">×</button>
+    <span class="eyebrow">Architecture Overview</span>
+    <h2 id="how-dialog-title">Physical movement, operational clarity.</h2>
+    <p>VaxKavach aggregates chamber temperature probes, GPS coordinates, door proximity switches, ambient asphalt thermistors, and road vibration sensors into a single deterministic state engine.</p>
+    <p>When degradation is sensed, it models remaining vaccine thermal stability (Mean Kinetic Temperature), identifies safe diversion depots along the corridor, and provides operations teams with an immediate, verifiable action plan.</p>
+  </dialog>
+
+  <noscript>
+    <div class="fallback">
+      <b>VaxKavach</b>
+      <h1>Every degree, accounted for.</h1>
+      <p>Continuous thermal surveillance for vaccine logistics.</p>
+      <a href="/overview.html">Launch HUD</a>
+    </div>
+  </noscript>
+
+  <script type="module" src="/landing.js"></script>
+</body>
+</html>

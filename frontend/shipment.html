@@ -1,6 +1,49 @@
-<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<!DOCTYPE html><html class="dark" lang="en"><head><title>VaxKavach — Shipment Telemetry Detail</title><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-primary":"#2a3500","tertiary-container":"#e9ddff","tertiary-fixed":"#e9ddff","on-tertiary-container":"#7342dd","surface-variant":"#333539","on-tertiary":"#3c0091","on-primary-fixed":"#171e00","primary-fixed-dim":"#b0d41a","on-primary-fixed-variant":"#3e4c00","error":"#ffb4ab","primary":"#ffffff","surface-container-highest":"#333539","surface-container":"#1e2024","surface":"#111317","on-error-container":"#ffdad6","on-tertiary-fixed":"#23005c","on-surface-variant":"#c5c9af","on-surface":"#e2e2e8","on-secondary-fixed":"#001e2c","on-secondary-container":"#00374d","inverse-on-surface":"#2f3035","secondary-fixed":"#c4e7ff","on-tertiary-fixed-variant":"#5516be","error-container":"#93000a","on-secondary":"#00354a","inverse-primary":"#536600","tertiary":"#ffffff","tertiary-fixed-dim":"#d0bcff","secondary-container":"#00a6e0","secondary-fixed-dim":"#7bd0ff","on-primary-container":"#586c00","background":"#111317","surface-dim":"#111317","on-secondary-fixed-variant":"#004c69","outline":"#8f937b","surface-container-high":"#282a2e","surface-container-low":"#1a1c20","on-background":"#e2e2e8","on-error":"#690005","inverse-surface":"#e2e2e8","primary-fixed":"#ccf13c","surface-container-lowest":"#0c0e12","primary-container":"#ccf13c","outline-variant":"#454935","surface-tint":"#b0d41a","secondary":"#7bd0ff","surface-bright":"#37393e"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"3xl":"40px","container-pad":"20px","xl":"24px","base":"16px","dock-w":"72px","lg":"20px","xs":"4px","md":"12px","gutter":"16px","2xl":"32px","sm":"8px"},fontFamily:{"body-md":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"label-caps":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"telemetry-stat":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"telemetry-lg":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"]},fontSize:{"body-md":["13px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}],"headline-sm":["15px",{lineHeight:"22px",letterSpacing:"0em",fontWeight:"600"}],"body-sm":["12px",{lineHeight:"18px",letterSpacing:"0em",fontWeight:"400"}],"label-caps":["11px",{lineHeight:"16px",letterSpacing:"0.06em",fontWeight:"700"}],"body-lg":["15px",{lineHeight:"24px",letterSpacing:"0em",fontWeight:"400"}],"headline-md":["18px",{lineHeight:"26px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"700"}],"telemetry-stat":["20px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"700"}],"label-sm":["11px",{lineHeight:"16px",letterSpacing:"0.01em",fontWeight:"500"}],"telemetry-lg":["28px",{lineHeight:"34px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-xl":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}]}}}};</script>  <link rel="stylesheet" href="/css/vaxkavach.css">
-</head><body class="bg-surface-container-lowest font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 bg-surface-container-lowest/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.6)]"><div class="h-20 w-full px-container-pad flex items-center justify-between gap-md"><div class="flex items-center gap-base"><div class="flex items-center gap-sm"><div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center"><span class="material-symbols-outlined text-[#f5eedb] text-[24px]">shield_with_heart</span></div><div class="flex flex-col"><span class="font-headline-md text-headline-md tracking-tight text-primary leading-none">VaxKavach</span><span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant leading-none mt-xs">India Telemetry Arc</span></div></div><div class="hidden xl:flex items-center gap-xs px-sm py-xs rounded-full bg-surface-container-low"><div class="w-2 h-2 rounded-full bg-[#ede5d4] animate-pulse"></div><span class="font-label-caps text-label-caps text-[#ede5d4] uppercase tracking-wider">SIMULATED DATA — DEMO MODE</span></div></div><nav class="hidden lg:flex items-center gap-lg" data-active-classes="text-primary-fixed font-semibold"><a aria-current="page" class="transition-colors text-[#f5eedb] font-semibold" data-path="overview" href="/overview.html">Overview</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="shipments" href="/shipments.html">Shipments</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="live-map" href="/map.html">Map</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="problems-queue" href="/problems.html">Problems</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="telemetry-history" href="/history.html">History</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="fleet-operations" href="/fleet.html">Fleet</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="technical-specs" href="/technical.html">Technical</a></nav><div class="flex items-center gap-md"><div class="hidden sm:flex items-center gap-sm"><button class="px-base py-sm rounded-full bg-surface-container-high text-on-surface font-body-sm text-body-sm hover:bg-surface-variant hover:text-on-surface transition-colors" type="button">How It Works</button><button class="px-base py-sm rounded-full bg-[#ede5d4] text-[#111317] font-headline-sm text-headline-sm hover:bg-[#f5eedb] transition-colors shadow-sm" type="button">Explore the Demo</button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface-container-lowest min-h-screen"><div class="flex flex-col w-full">
+</head><body class="bg-surface-container-lowest font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><div class="flex h-screen w-full overflow-hidden bg-[#111317] text-[#EDE5D4]"><aside class="w-[72px] flex-shrink-0 bg-[#171614] border-r border-[#3A3731] flex flex-col items-center justify-between py-4 z-40" style="background-color: var(--vk-surface); border-right: 1px solid var(--vk-border);">
+<div class="flex flex-col items-center space-y-6 w-full">
+<a class="w-10 h-10 rounded-lg bg-[#1E1D1A] border border-[#3A3731] flex items-center justify-center text-[#F0E8D9] hover:border-[#A69F94] transition-colors" href="/landing.html" title="VaxKavach Home">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+<path d="M12 8v4"></path>
+<path d="M12 16h.01"></path>
+</svg>
+</a>
+<nav aria-label="Main Navigation" class="flex flex-col items-center space-y-2.5 w-full px-2">
+<a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/overview.html" title="Overview">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><rect height="7" rx="1.5" width="7" x="3" y="3"></rect><rect height="7" rx="1.5" width="7" x="14" y="3"></rect><rect height="7" rx="1.5" width="7" x="14" y="14"></rect><rect height="7" rx="1.5" width="7" x="3" y="14"></rect></svg>
+</a>
+<a aria-current="page" class="relative w-10 h-10 rounded-lg bg-[#E8DFD0] text-[#211F1B] flex items-center justify-center font-semibold shadow-sm transition-all" href="/shipments.html" title="Shipments">
+<span class="absolute -left-2 top-1/2 -translate-y-1/2 w-1.5 h-5 bg-[#E8DFD0] rounded-r-full"></span>
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
+</a>
+<a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/map.html" title="Live Map">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+</a>
+<a class="relative w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/problems.html" title="Problems Operational Queue">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#B8756C]"></span></a>
+<a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/history.html" title="Telemetry History">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+</a>
+<a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/fleet.html" title="Reefer Fleet">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><rect height="13" width="15" x="1" y="3"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+</a>
+<a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/technical.html" title="Telemetry & Diagnostics">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><line x1="4" x2="4" y1="21" y2="14"></line><line x1="4" x2="4" y1="10" y2="3"></line><line x1="12" x2="12" y1="21" y2="12"></line><line x1="12" x2="12" y1="8" y2="3"></line><line x1="20" x2="20" y1="21" y2="16"></line><line x1="20" x2="20" y1="12" y2="3"></line></svg>
+</a>
+</nav>
+</div>
+<div class="flex flex-col items-center space-y-3 w-full pb-1">
+<div class="flex flex-col items-center cursor-default" title="Telemetry Link: Nominal">
+<span class="w-1.5 h-1.5 rounded-full bg-[#829A80] mb-1"></span>
+<span class="text-[9px] font-mono tracking-wider text-[#A69F94] uppercase">LNK</span>
+</div>
+<a class="w-8 h-8 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/settings.html" title="Settings">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+</a>
+</div>
+</aside><div class="flex-1 flex flex-col h-full overflow-y-auto min-w-0 bg-[#111317]">
 <!-- Minimal Ambient Backdrop Light -->
 <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
 <div class="absolute -top-40 left-1/4 w-[600px] h-[600px] rounded-full bg-surface-container-high/20 blur-[140px]"></div>
@@ -60,33 +103,33 @@
 <section class="rounded-xl bg-[#14171d] p-6 shadow-sm">
 <div class="flex items-center justify-between pb-4">
 <span class="text-label-caps font-label-caps tracking-wider uppercase text-[#8b909a]">Current State · Payload Compartment #1</span>
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[rgba(217,155,155,0.12)] text-[#d99b9b] text-label-sm font-label-sm">
+<span id="ship-safe-range-status" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[rgba(217,155,155,0.12)] text-[#d99b9b] text-label-sm font-label-sm">
 <span class="w-1.5 h-1.5 rounded-full bg-[#d99b9b] animate-pulse"></span>
-              Above safe range for 11 min
-            </span>
+  Above safe range for 18 min
+</span>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pt-2">
 <div class="md:col-span-6 flex flex-col">
 <div class="flex items-baseline gap-3">
 <span class="font-headline-xl text-[64px] leading-none tracking-tight text-[#f5eedb] font-medium"><span class="dyn-temp">9.4°C</span></span>
-<span class="text-body-md font-body-md text-[#d99b9b] flex items-center gap-0.5">
+<span id="ship-temp-drift" class="text-body-md font-body-md text-[#d99b9b] flex items-center gap-0.5">
 <span class="material-symbols-outlined text-[16px]">arrow_upward</span>
-                  +1.4°C drift
-                </span>
+  +1.4°C drift
+</span>
 </div>
 <div class="mt-3 flex items-center gap-3 text-body-sm font-body-sm text-[#a0a5ad]">
 <span class="inline-flex items-center gap-1.5 text-[#9bb89b]">
 <span class="w-2 h-2 rounded-sm bg-[#9bb89b]"></span>
-                  Target Envelope: 2°C — 8°C
-                </span>
+  Target Envelope: 2.0°C — 8.0°C
+</span>
 <span class="text-[#8b909a]">·</span>
-<span>Margin Exceeded</span>
+<span id="ship-envelope-margin" class="text-[#d99b9b]">Margin Exceeded</span>
 </div>
 </div>
 <div class="md:col-span-6 flex flex-col justify-end">
-<div class="p-3.5 rounded-lg bg-[#1a1e26] text-body-sm font-body-sm text-[#a0a5ad] leading-relaxed">
-                The shipment temperature has remained above the upper threshold limit (<span class="text-[#f5eedb]">8.0°C</span>) continuously since passing the Sriperumbudur corridor (Km 74.2). Thermal decay curve projects 10.1°C within 18 minutes without mitigation.
-              </div>
+<div id="ship-condition-summary" class="p-3.5 rounded-lg bg-[#1a1e26] text-body-sm font-body-sm text-[#a0a5ad] leading-relaxed">
+  The shipment temperature has remained above the upper threshold limit (<span class="text-[#f5eedb]">8.0°C</span>) continuously since passing the Sriperumbudur corridor (Km 74.2). Thermal decay curve projects 10.1°C within 18 minutes without mitigation.
+</div>
 </div>
 </div>
 <!-- Safe range bar visual -->
@@ -107,33 +150,70 @@
 <div class="absolute top-0 bottom-0 left-[78.3%] w-2 -ml-1 rounded-full bg-[#f5eedb] shadow-sm"></div>
 </div>
 </div>
+
+<!-- Detailed Min / Max / Avg / Current & Excursion Metrics Band -->
+<div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+  <div class="p-2.5 rounded-lg bg-[#1a1e26] border border-white/[0.04] flex flex-col">
+    <span class="text-[10px] text-[#8b909a] uppercase font-bold">MIN TEMP</span>
+    <span id="ship-min-temp" class="text-sm font-bold text-[#f5eedb] mt-0.5">4.1°C</span>
+    <span class="text-[10px] text-[#9bb89b]">In-Envelope</span>
+  </div>
+  <div class="p-2.5 rounded-lg bg-[#1a1e26] border border-white/[0.04] flex flex-col">
+    <span class="text-[10px] text-[#8b909a] uppercase font-bold">MAX TEMP</span>
+    <span id="ship-max-temp" class="text-sm font-bold text-[#d99b9b] mt-0.5">9.4°C</span>
+    <span class="text-[10px] text-[#d99b9b]">Excursion Peak</span>
+  </div>
+  <div class="p-2.5 rounded-lg bg-[#1a1e26] border border-white/[0.04] flex flex-col">
+    <span class="text-[10px] text-[#8b909a] uppercase font-bold">AVG TRIP TEMP</span>
+    <span id="ship-avg-temp" class="text-sm font-bold text-[#f5eedb] mt-0.5">6.2°C</span>
+    <span class="text-[10px] text-[#8b909a]">Nominal Mean</span>
+  </div>
+  <div class="p-2.5 rounded-lg bg-[#1a1e26] border border-white/[0.04] flex flex-col">
+    <span class="text-[10px] text-[#8b909a] uppercase font-bold">EXCURSIONS</span>
+    <span id="ship-excursions-stat" class="text-sm font-bold text-[#d9be8b] mt-0.5">1 event · 18.5m</span>
+    <span class="text-[10px] text-[#d9be8b]">Above +8.0°C</span>
+  </div>
+</div>
 </section>
-<!-- SECTION 2 — RECOMMENDED ACTION -->
+
+<!-- SECTION 2 — RECOMMENDED ACTION & EXPLAINABLE AI -->
 <section class="rounded-xl bg-[#171a22] p-6 shadow-sm border border-white/[0.05]">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
 <span class="w-2 h-2 rounded-full bg-[#d9be8b]"></span>
-<span class="text-label-caps font-label-caps tracking-wider uppercase text-[#d9be8b]">Protocol Trigger · Step 1 of 2</span>
+<span class="text-label-caps font-label-caps tracking-wider uppercase text-[#d9be8b]">Explainable AI · Decision Directive</span>
 </div>
-<span class="text-label-sm font-label-sm text-[#8b909a]">Priority Alpha</span>
+<span id="ship-priority-badge" class="text-label-sm font-label-sm text-[#d9be8b] font-semibold">Priority Alpha</span>
 </div>
-<div class="mt-3 flex flex-col gap-2">
-<h2 class="text-headline-md font-headline-md text-[#f5eedb]">Recommended action</h2>
-<p class="text-body-lg font-body-lg text-[#ede5d4] font-medium leading-snug">
-              Check the refrigeration unit and prepare to move the shipment to the nearest validated cold storage.
-            </p>
-<p class="text-body-md font-body-md text-[#a0a5ad] leading-relaxed">
-              The internal core temperature has hovered above 8.0°C for 11 consecutive minutes. Autonomous reefer telematics flag an auxiliary compressor loop fault on Unit #2. <strong class="text-[#f5eedb] font-normal">Vellore Sub-District Depot</strong> is 14 km away (approx 16 min transit time).
-            </p>
+
+<!-- Explainable AI Anomaly Detection Card -->
+<div class="mt-3 p-3 rounded-lg bg-[#231E18] border border-[#987E55]/40 flex flex-col gap-1.5">
+  <div class="flex items-center justify-between">
+    <span class="font-label-caps text-label-caps uppercase font-bold text-[#987E55] flex items-center gap-1">
+      <span class="material-symbols-outlined text-[16px]">psychology</span>
+      Predictive Risk & Root Cause Explanation
+    </span>
+    <span id="ship-predictive-risk-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#B8756C]/20 text-[#B8756C] border border-[#B8756C]/40">
+      CRITICAL
+    </span>
+  </div>
+  <p id="ship-predictive-why" class="text-xs text-[#f5eedb] leading-relaxed font-medium">
+    Active thermal breach detected (+9.4°C > +8.0°C). Auxiliary compressor circuit fault logged under extreme ambient heat (+38.5°C).
+  </p>
+  <div class="p-2 rounded bg-[#171614] text-[11px] text-[#E8DFD0] flex items-start gap-1.5">
+    <span class="material-symbols-outlined text-[14px] text-[#A4875C] mt-0.5">crisis_alert</span>
+    <span id="ship-predictive-rec">Immediate diversion to Vellore Sub-District Depot (14 km away · ~16 min transit time).</span>
+  </div>
 </div>
-<div class="mt-5 pt-4 border-t border-white/[0.04] flex flex-wrap items-center justify-between gap-3">
+
+<div class="mt-4 pt-4 border-t border-white/[0.04] flex flex-wrap items-center justify-between gap-3">
 <div class="flex items-center gap-3">
-<button class="px-5 py-2.5 rounded-lg bg-[#ede5d4] text-[#111317] hover:bg-[#f5eedb] transition-all text-headline-sm font-headline-sm shadow-sm active:scale-[0.99]" type="button">
-                Acknowledge Problem
-              </button>
-<button class="px-4 py-2.5 rounded-lg bg-[#1f232c] text-[#f5eedb] hover:bg-[#282d38] transition-colors text-body-md font-body-md" type="button">
-                Open Problem Details
-              </button>
+<button id="btn-acknowledge-problem" class="px-5 py-2.5 rounded-lg bg-[#ede5d4] text-[#111317] hover:bg-[#f5eedb] transition-all text-headline-sm font-headline-sm shadow-sm active:scale-[0.99]" type="button">
+  Acknowledge Problem
+</button>
+<button id="btn-open-problem" class="px-4 py-2.5 rounded-lg bg-[#1f232c] text-[#f5eedb] hover:bg-[#282d38] transition-colors text-body-md font-body-md" type="button">
+  Open Problem Details
+</button>
 </div>
 <a class="inline-flex items-center gap-1.5 text-body-sm font-body-sm text-[#d9be8b] hover:text-[#f5eedb] transition-colors" href="#directive" id="btn-dispatch-directive">
 <span>Dispatch Driver Directive</span>
@@ -469,42 +549,86 @@
 </div>
 </div>
 </section>
-<!-- SECTION 6 — SHIPMENT INFORMATION -->
+<!-- SECTION 6 — VACCINE PAYLOAD & INTEGRATION -->
 <section class="rounded-xl bg-[#14171d] p-5 shadow-sm flex flex-col gap-3">
 <div class="flex items-center justify-between pb-1">
-<span class="text-headline-sm font-headline-sm text-[#f5eedb]">Shipment Manifest</span>
-<span class="text-label-caps font-label-caps text-[#8b909a]">ISO-9001 WHO-PQS</span>
+<span class="text-headline-sm font-headline-sm text-[#f5eedb]">Vaccine Contents & Rig</span>
+<span class="text-label-caps font-label-caps text-[#6F7F6D] flex items-center gap-1">
+  <span class="material-symbols-outlined text-[14px]">verified</span> CDSCO / WHO-PQS
+</span>
 </div>
 <div class="flex flex-col divide-y divide-white/[0.04] text-body-sm font-body-sm">
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Shipment ID</span>
+<span class="text-[#8b909a]">Shipment Code</span>
 <span class="text-[#f5eedb] font-medium font-headline-sm"><span class="dyn-shipment-code">VK-1042</span></span>
 </div>
 <div class="py-2 flex flex-col gap-0.5">
-<span class="text-[#8b909a]">Consignment</span>
-<span class="text-[#f5eedb] font-medium">8,400 vials Rotavirus + Measles-Rubella</span>
-<span class="text-[11px] text-[#8b909a]">WHO-PQS E003 Monovalent Freeze-Sensitive</span>
+<span class="text-[#8b909a]">Vaccine Biological Product</span>
+<span id="ship-vaccine-name" class="text-[#f5eedb] font-medium">Rotavirus Oral Vaccine (PQS E004)</span>
+<span id="ship-vaccine-mfr" class="text-[11px] text-[#8b909a]">Bharat Biotech International Ltd.</span>
 </div>
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Origin Facility</span>
-<span class="text-[#ede5d4] text-right">Chennai Reg. Store (Depot 4)</span>
+<span class="text-[#8b909a]">Quantity / Total Doses</span>
+<span id="ship-vaccine-doses" class="text-[#ede5d4] font-medium">8,400 doses (840 vials)</span>
 </div>
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Destination</span>
-<span class="text-[#ede5d4] text-right">Vellore District Hospital</span>
+<span class="text-[#8b909a]">Required Temp Range</span>
+<span id="ship-vaccine-range" class="text-[#9bb89b] font-semibold">+2.0°C to +8.0°C</span>
 </div>
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Departure Time</span>
-<span class="text-[#ede5d4]">08 Sep 2026 · 10:24 IST</span>
+<span class="text-[#8b909a]">Batch & Expiry</span>
+<span class="text-[#ede5d4]"><span id="ship-vaccine-batch">BB-ROTA-8841</span> · Exp: <span id="ship-vaccine-exp">31 Dec 2026</span></span>
 </div>
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Vehicle</span>
-<span class="text-[#ede5d4]">Ashok Leyland 407 · TN-4821-HX</span>
+<span class="text-[#8b909a]">Payload Risk Status</span>
+<span id="ship-vaccine-risk" class="font-bold text-[#d99b9b]">CRITICAL (Excursion)</span>
 </div>
 <div class="py-2 flex items-center justify-between">
-<span class="text-[#8b909a]">Primary Carrier</span>
-<span class="text-[#ede5d4]">TN Medical Services Logistics</span>
+<span class="text-[#8b909a]">Assigned Reefer Rig</span>
+<span id="ship-vehicle-info" class="text-[#ede5d4] text-right font-mono">TN-XX-1234 · Tata Prima 2830.K</span>
 </div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-[#8b909a]">Commercial Driver</span>
+<span id="ship-driver-info" class="text-[#ede5d4] text-right">K. Muthukrishnan (+91 94441 20982)</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-[#8b909a]">Real-time Position</span>
+<span id="ship-location-text" class="text-[#ede5d4] text-right">Sriperumbudur · Km 74.2 · NH-48</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-[#8b909a]">Corridor & ETA</span>
+<span id="ship-eta-text" class="text-[#ede5d4] text-right">Chennai CWS → Vellore Hub · 52 min</span>
+</div>
+<div class="py-2 flex items-center justify-between">
+<span class="text-[#8b909a]">Last Telemetry Ping</span>
+<span id="ship-last-ping" class="text-[#9bb89b] text-right">12s ago · RSSI -68 dBm</span>
+</div>
+</div>
+</section>
+
+<!-- SECTION 7 — DATA PROVENANCE & SYSTEM TRUST -->
+<section class="rounded-xl bg-[#14171d] p-5 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between pb-1">
+<span class="text-headline-sm font-headline-sm text-[#f5eedb]">Data Provenance & Trust</span>
+<span id="ship-prov-badge" class="px-2 py-0.5 rounded text-label-caps font-label-caps bg-[#9bb89b]/15 text-[#9bb89b] border border-[#9bb89b]/30">VERIFIED OFFICIAL IOT</span>
+</div>
+<div class="flex flex-col gap-2 text-xs text-[#8b909a]">
+  <div class="p-2.5 rounded bg-[#1a1e26] flex items-center justify-between">
+    <span>Telemetry Sensor:</span>
+    <span class="text-[#f5eedb] font-medium">Primary Probe TS-04 (Dual PT100)</span>
+  </div>
+  <div class="p-2.5 rounded bg-[#1a1e26] flex items-center justify-between">
+    <span>External Meteorological Data:</span>
+    <span class="text-[#f5eedb] font-medium">India Meteorological Dept (IMD API)</span>
+  </div>
+  <div class="p-2.5 rounded bg-[#1a1e26] flex items-center justify-between">
+    <span>Corridor Routing Vector:</span>
+    <span class="text-[#f5eedb] font-medium">OpenRouteService (ORS) Highway Network</span>
+  </div>
+  <div class="p-2.5 rounded bg-[#1a1e26] flex items-center justify-between">
+    <span>Audit Ledger:</span>
+    <span class="text-[#9bb89b] font-medium">SHA-256 Cryptographically Chained</span>
+  </div>
 </div>
 </section>
 <!-- SECTION 9 — RECENT EVENTS LOG -->
@@ -567,7 +691,12 @@
 </div>
 </div>
 </div>
-</div></main><footer class="w-full bg-surface-container-low py-3xl"><div class="w-full px-container-pad flex flex-col md:flex-row items-center justify-between gap-lg"><div class="flex items-center gap-sm"><div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined text-[#f5eedb] text-[20px]">verified_user</span></div><span class="font-headline-sm text-headline-sm text-on-surface">VaxKavach Autonomous Logistics</span></div><div class="flex items-center gap-base"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">SIMULATED TELEMETRY ENVIRONMENT</span><span class="font-body-sm text-body-sm text-on-surface-variant">© 2025 VaxKavach Operations Network. All rights reserved.</span></div></div></footer>
+<footer class="h-10 px-8 bg-[#101216] border-t border-[#1a1e26] flex items-center justify-between text-xs text-[#707886] shrink-0" style="background-color: #111317; border-top: 1px solid #232731; color: #9E9B95;">
+<div class="flex items-center space-x-4"><span>VaxKavach Operational Core v2.4</span><span>•</span><span>Deterministic Decision System</span><span>•</span><span style="color: #829A80; font-weight: 500;">MKT Audit Sealed</span></div>
+<div>
+<span>Simulated pan-India cold-chain stream active</span>
+</div>
+</footer></div></div>
   <script type="module" src="/js/api.js"></script>
   <script type="module" src="/js/websocket.js"></script>
   <script type="module" src="/js/app.js"></script>

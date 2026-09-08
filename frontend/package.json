@@ -17,6 +17,7 @@
     "driver.js": "^1.8.0",
     "framer-motion": "^13.2.0",
     "gsap": "^3.15.0",
+    "leaflet": "^1.9.4",
     "lucide-react": "^1.42.0",
     "postcss": "^8.5.28",
     "prop-types": "^15.8.1",

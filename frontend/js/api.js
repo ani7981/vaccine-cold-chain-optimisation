@@ -17,3 +17,9 @@ export const startSimulation = () => request('/simulation/start', {method: 'POST
 export const rerouteShipment = (id, target_depot_id) => request(`/shipments/${encodeURIComponent(id)}/reroute`, {method:'POST', body: JSON.stringify({target_depot_id})});
 export const acknowledgeProblem = id => request(`/problems/${encodeURIComponent(id)}/acknowledge`, {method:'POST', body:'{}'});
 export const overrideProblem = (id, note) => request(`/problems/${encodeURIComponent(id)}/override`, {method:'POST', body:JSON.stringify({note})});
+export const resolveProblem = (id, resolution) => request(`/problems/${encodeURIComponent(id)}/resolve`, {method: 'POST', body: JSON.stringify(resolution)});
+export const transitionProblem = (id, transition) => request(`/problems/${encodeURIComponent(id)}/transition`, {method: 'POST', body: JSON.stringify(transition)});
+export const fetchProblemHistory = id => request(`/problems/${encodeURIComponent(id)}/history`);
+export const fetchVehicles = status => request(status ? `/fleet/vehicles?status=${encodeURIComponent(status)}` : '/fleet/vehicles');
+export const fetchVehicle = id => request(`/fleet/vehicles/${encodeURIComponent(id)}`);
+
