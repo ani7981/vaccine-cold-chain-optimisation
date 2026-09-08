@@ -563,3 +563,328 @@ html.light .driver-overlay {
 body {
   animation: vkPageIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/* ==========================================================================
+   MATERIAL DESIGN 3 TOKEN NORMALIZATION
+   Maps MD3 CSS custom properties → VaxKavach canonical dark tokens
+   Prevents lime-green / neon-cyan / purple Stitch artifacts
+   ========================================================================== */
+
+:root {
+  /* MD3 → VaxKavach token bridge */
+  --color-primary: #E8DFD0;
+  --color-on-primary: #211F1B;
+  --color-primary-container: #25231F;
+  --color-on-primary-container: #F0E8D9;
+  --color-primary-fixed: #F0E8D9;
+  --color-primary-fixed-dim: #D8D0C2;
+  --color-on-primary-fixed: #211F1B;
+  --color-on-primary-fixed-variant: #3A3836;
+  --color-secondary: #A4875C;
+  --color-on-secondary: #171614;
+  --color-secondary-container: #2C2A25;
+  --color-on-secondary-container: #D8C9A8;
+  --color-secondary-fixed: #C4A46E;
+  --color-secondary-fixed-dim: #A4875C;
+  --color-on-secondary-fixed: #171614;
+  --color-tertiary: #667A7D;
+  --color-on-tertiary: #171614;
+  --color-tertiary-container: #1E2A2C;
+  --color-on-tertiary-container: #A8BBBF;
+  --color-background: #171614;
+  --color-on-background: #F0E8D9;
+  --color-surface: #1E1D1A;
+  --color-surface-variant: #25231F;
+  --color-on-surface: #F0E8D9;
+  --color-on-surface-variant: #A69F94;
+  --color-surface-tint: #E8DFD0;
+  --color-surface-container-lowest: #171614;
+  --color-surface-container-low: #1E1D1A;
+  --color-surface-container: #25231F;
+  --color-surface-container-high: #2C2A25;
+  --color-surface-container-highest: #363430;
+  --color-inverse-surface: #F0E8D9;
+  --color-inverse-on-surface: #171614;
+  --color-inverse-primary: #211F1B;
+  --color-outline: #3A3731;
+  --color-outline-variant: #2C2A25;
+  --color-error: #99655D;
+  --color-on-error: #F0E8D9;
+  --color-error-container: rgba(153,101,93,0.18);
+  --color-on-error-container: #D99B9B;
+  --color-scrim: rgba(0,0,0,0.6);
+
+  /* Spacing tokens (MD3 compatible) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --container-pad: 24px;
+  --dock-w: 72px;
+}
+
+/* Tailwind utility class overrides for MD3 color names */
+.bg-primary { background-color: #E8DFD0 !important; }
+.bg-primary-container { background-color: #25231F !important; }
+.bg-secondary { background-color: #A4875C !important; }
+.bg-secondary-container { background-color: #2C2A25 !important; }
+.bg-tertiary { background-color: #667A7D !important; }
+.bg-tertiary-container { background-color: #1E2A2C !important; }
+.bg-surface { background-color: #1E1D1A !important; }
+.bg-surface-variant { background-color: #25231F !important; }
+.bg-surface-container-lowest { background-color: #171614 !important; }
+.bg-surface-container-low { background-color: #1E1D1A !important; }
+.bg-surface-container { background-color: #25231F !important; }
+.bg-surface-container-high { background-color: #2C2A25 !important; }
+.bg-surface-container-highest { background-color: #363430 !important; }
+.bg-error { background-color: #99655D !important; }
+.bg-error-container { background-color: rgba(153,101,93,0.18) !important; }
+.bg-inverse-surface { background-color: #F0E8D9 !important; }
+
+.text-primary { color: #E8DFD0 !important; }
+.text-primary-fixed { color: #F0E8D9 !important; }
+.text-on-primary { color: #211F1B !important; }
+.text-on-primary-fixed { color: #211F1B !important; }
+.text-on-primary-container { color: #F0E8D9 !important; }
+.text-secondary { color: #A4875C !important; }
+.text-on-secondary { color: #171614 !important; }
+.text-on-secondary-container { color: #D8C9A8 !important; }
+.text-tertiary { color: #667A7D !important; }
+.text-on-tertiary { color: #171614 !important; }
+.text-on-tertiary-container { color: #A8BBBF !important; }
+.text-on-surface { color: #F0E8D9 !important; }
+.text-on-surface-variant { color: #A69F94 !important; }
+.text-on-background { color: #F0E8D9 !important; }
+.text-error { color: #99655D !important; }
+.text-on-error { color: #F0E8D9 !important; }
+.text-on-error-container { color: #D99B9B !important; }
+.text-inverse-on-surface { color: #171614 !important; }
+
+.border-outline { border-color: #3A3731 !important; }
+.border-outline-variant { border-color: #2C2A25 !important; }
+.border-primary { border-color: #E8DFD0 !important; }
+.border-surface-variant { border-color: #3A3731 !important; }
+
+/* Border opacity variants */
+[class*='border-surface-variant'] { border-color: rgba(58,55,49,0.6) !important; }
+[class*='divide-surface-variant'] > :not([hidden]) ~ :not([hidden]) { border-color: rgba(58,55,49,0.4) !important; }
+
+/* Ring overrides */
+.ring-primary { --tw-ring-color: rgba(232,223,208,0.4) !important; }
+.focus\:ring-primary\/40:focus { --tw-ring-color: rgba(232,223,208,0.4) !important; }
+
+/* Selection overrides */
+.selection\:bg-primary-container ::selection { background-color: #2C2A25; color: #F0E8D9; }
+.selection\:text-on-primary-container ::selection { color: #F0E8D9; }
+
+/* ==========================================================================
+   HEADER NORMALIZATION (MD3 pages use a fixed top-0 transparent header)
+   ========================================================================== */
+
+header.fixed,
+header[class*='bg-surface-container'] {
+  background-color: rgba(23, 22, 20, 0.94) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid #3A3731 !important;
+}
+
+/* ==========================================================================
+   SIDEBAR / DOCK NORMALIZATION (MD3 pages use w-dock-w token)
+   ========================================================================== */
+
+aside[class*='w-dock-w'],
+aside[class*='bg-surface-container-lowest'],
+aside[class*='bg-surface-container-low'] {
+  background-color: #1E1D1A !important;
+  border-right: 1px solid #3A3731 !important;
+  width: 72px !important;
+}
+
+/* Nav items in sidebar */
+aside a[class*='w-11'],
+aside button[class*='w-11'],
+aside a[class*='h-11'],
+aside button[class*='h-11'] {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 10px !important;
+}
+
+/* Active nav item pill */
+aside a[class*='bg-[#F5EEDB]'],
+aside a[class*='bg-primary'],
+aside button[class*='bg-primary'] {
+  background-color: #E8DFD0 !important;
+  color: #211F1B !important;
+}
+
+/* ==========================================================================
+   MATERIAL SYMBOLS SIZE NORMALIZATION
+   All pages: consistent 20px icon size (some pages had 24px, 28px)
+   ========================================================================== */
+
+.material-symbols-outlined {
+  font-size: 20px;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Allow explicit 18px (compact areas) */
+[style*='font-size: 18px'] .material-symbols-outlined,
+.material-symbols-outlined[style*='font-size: 18px'] {
+  font-size: 18px !important;
+}
+
+/* Prevent over-large icons */
+.material-symbols-outlined.text-\[24px\],
+.material-symbols-outlined.text-\[28px\],
+.material-symbols-outlined.text-\[32px\] {
+  font-size: 20px !important;
+}
+
+/* ==========================================================================
+   OVERVIEW PAGE SPECIFICS
+   overview.html uses a slightly different dark shade (#0c0e12)
+   ========================================================================== */
+
+body[style*='0c0e12'],
+body[style*='0e1014'] {
+  background-color: #171614 !important;
+}
+
+aside[style*='0e1014'],
+aside[style*='0d0f13'],
+aside[style*='0c0e12'] {
+  background-color: #1E1D1A !important;
+  border-right: 1px solid #3A3731 !important;
+}
+
+header[style*='16181e'],
+header[style*='121418'],
+header[style*='0e1014'] {
+  background-color: #1E1D1A !important;
+  border-bottom: 1px solid #3A3731 !important;
+}
+
+footer[style*='111317'],
+footer[style*='101216'] {
+  background-color: #1E1D1A !important;
+  border-top: 1px solid #3A3731 !important;
+}
+
+main[style*='0c0e12'],
+main[style*='0e1014'] {
+  background-color: #171614 !important;
+}
+
+/* Section cards in overview */
+section[style*='1a1c20'],
+div[style*='1a1c20'],
+div[style*='1e2024'] {
+  background-color: var(--vk-surface) !important;
+}
+
+/* ==========================================================================
+   NEON / LIME SUPPRESSION (from stitch MD3 theme generation)
+   ========================================================================== */
+
+/* Lime green primary from stitch */
+[class*='bg-\[\#ccf13c\]'],
+[class*='bg-\[\#b0d41a\]'],
+[class*='bg-\[\#a8e63b\]'] {
+  background-color: var(--vk-surface-3) !important;
+  color: var(--vk-cream) !important;
+}
+[class*='text-\[\#ccf13c\]'],
+[class*='text-\[\#b0d41a\]'],
+[class*='text-\[\#a8e63b\]'] {
+  color: var(--vk-cream) !important;
+}
+
+/* Neon cyan */
+[class*='bg-\[\#00a6e0\]'],
+[class*='bg-\[\#7bd0ff\]'] {
+  background-color: var(--vk-info) !important;
+}
+[class*='text-\[\#00a6e0\]'],
+[class*='text-\[\#7bd0ff\]'] {
+  color: var(--vk-info) !important;
+}
+
+/* Purple tertiary */
+[class*='bg-\[\#7342dd\]'],
+[class*='bg-\[\#e9ddff\]'],
+[class*='bg-\[\#5516be\]'] {
+  background-color: var(--vk-surface-2) !important;
+  color: var(--vk-cream) !important;
+}
+[class*='text-\[\#7342dd\]'],
+[class*='text-\[\#5516be\]'] {
+  color: var(--vk-cream-soft) !important;
+}
+
+/* ==========================================================================
+   MAIN CONTENT AREA BG NORMALIZATION
+   ========================================================================== */
+
+main[class*='bg-surface-container-lowest'],
+main[class*='bg-surface-container-low'],
+div[class*='bg-surface-container-lowest'],
+div[class*='flex-1'][class*='bg-surface-container-lowest'],
+div[class*='flex-1'][class*='bg-surface-container-low'] {
+  background-color: #171614 !important;
+}
+
+/* ==========================================================================
+   CARD / SECTION BG NORMALIZATION
+   ========================================================================== */
+
+section[class*='bg-surface-container-low'],
+article[class*='bg-surface-container-low'],
+div[class*='bg-surface-container-low\/'] {
+  background-color: rgba(30,29,26,0.6) !important;
+}
+
+section[class*='bg-surface-container-high'],
+article[class*='bg-surface-container-high'] {
+  background-color: #2C2A25 !important;
+}
+
+/* Input fields */
+input[class*='bg-surface-container-highest'],
+textarea[class*='bg-surface-container-highest'],
+select[class*='bg-surface-container-highest'] {
+  background-color: #363430 !important;
+  color: #F0E8D9 !important;
+  border-color: #3A3731 !important;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY NORMALIZATION — MD3 font scale classes
+   Map headline-xl / headline-lg / body-md etc to consistent sizing
+   ========================================================================== */
+
+.text-headline-xl { font-size: 2rem; line-height: 1.2; font-weight: 700; }
+.text-headline-lg { font-size: 1.625rem; line-height: 1.25; font-weight: 700; }
+.text-headline-md { font-size: 1.25rem; line-height: 1.3; font-weight: 600; }
+.text-headline-sm { font-size: 1rem; line-height: 1.4; font-weight: 600; }
+.text-body-lg { font-size: 1rem; line-height: 1.6; }
+.text-body-md { font-size: 0.875rem; line-height: 1.5; }
+.text-body-sm { font-size: 0.8125rem; line-height: 1.5; }
+.text-label-lg { font-size: 0.875rem; font-weight: 500; }
+.text-label-md { font-size: 0.8125rem; font-weight: 500; }
+.text-label-sm { font-size: 0.75rem; font-weight: 500; }
+.text-label-caps { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.font-headline-xl { font-weight: 700; }
+.font-headline-lg { font-weight: 700; }
+.font-headline-md { font-weight: 600; }
+.font-headline-sm { font-weight: 600; }
+.font-body-md { font-weight: 400; }
+.font-body-sm { font-weight: 400; }
+.font-label-md { font-weight: 500; }
+.font-label-sm { font-weight: 500; }
+.font-label-caps { font-weight: 600; }
+
