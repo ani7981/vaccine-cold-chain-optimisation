@@ -67,9 +67,9 @@ function injectThemeToggle() {
     'width: 38px',
     'height: 38px',
     'border-radius: 50%',
-    'background: #25231F',
-    'border: 1px solid #3A3731',
-    'color: #A69F94',
+    'background: #1E2027',
+    'border: 1px solid #2A2C35',
+    'color: #8C8E99',
     'display: flex',
     'align-items: center',
     'justify-content: center',
@@ -79,13 +79,13 @@ function injectThemeToggle() {
   ].join(';');
 
   btn.onmouseenter = () => {
-    btn.style.background = '#363430';
-    btn.style.color = '#F0E8D9';
+    btn.style.background = '#2E313D';
+    btn.style.color = '#F4EFE6';
     btn.style.transform = 'scale(1.1)';
   };
   btn.onmouseleave = () => {
-    btn.style.background = '#25231F';
-    btn.style.color = '#A69F94';
+    btn.style.background = '#1E2027';
+    btn.style.color = '#8C8E99';
     btn.style.transform = 'scale(1)';
   };
 
@@ -96,6 +96,11 @@ function injectThemeToggle() {
 
 // Apply theme immediately to avoid FOUC
 initTheme();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', injectThemeToggle);
+} else {
+  injectThemeToggle();
+}
 
 
 
@@ -125,15 +130,15 @@ export function toast(message, type = 'info') {
 
   el.className = `pointer-events-auto px-4 py-3 rounded-xl border text-xs font-medium shadow-2xl flex items-center gap-2.5 transition-all duration-200 ${
     isBad
-      ? 'bg-[#2A1617] border-[#99655D] text-[#F0E8D9]'
+      ? 'bg-[#2A1617] border-[#E27373] text-[#F4EFE6]'
       : isSuccess
-      ? 'bg-[#1E251F] border-[#71816F] text-[#F0E8D9]'
-      : 'bg-[#1E1D1A] border-[#3A3731] text-[#F0E8D9]'
+      ? 'bg-[#1E251F] border-[#6BBF89] text-[#F4EFE6]'
+      : 'bg-[#16171D] border-[#2A2C35] text-[#F4EFE6]'
   }`;
   el.style.animation = 'vkToastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
 
   const icon = isBad ? 'report' : isSuccess ? 'check_circle' : 'info';
-  const iconColor = isBad ? 'text-[#99655D]' : isSuccess ? 'text-[#71816F]' : 'text-[#A4875C]';
+  const iconColor = isBad ? 'text-[#E27373]' : isSuccess ? 'text-[#6BBF89]' : 'text-[#E5B869]';
 
   el.innerHTML = `
     <span class="material-symbols-outlined text-[18px] ${iconColor}">${icon}</span>
@@ -155,23 +160,23 @@ export function modal(title, bodyHtml, actions = [{ label: 'Close', primary: tru
   overlay.style.animation = 'vkFadeInUp 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
 
   const dialog = document.createElement('section');
-  dialog.className = 'w-full max-w-lg rounded-2xl bg-[#1E1D1A] border border-[#3A3731] p-6 shadow-2xl flex flex-col gap-4 text-[#F0E8D9]';
+  dialog.className = 'w-full max-w-lg rounded-2xl bg-[#16171D] border border-[#2A2C35] p-6 shadow-2xl flex flex-col gap-4 text-[#F4EFE6]';
   dialog.style.animation = 'vkModalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1)';
 
   dialog.innerHTML = `
-    <div class="flex items-center justify-between pb-3 border-b border-[#3A3731]">
-      <h3 class="font-headline-sm text-headline-sm text-[#F0E8D9] font-bold flex items-center gap-2">
+    <div class="flex items-center justify-between pb-3 border-b border-[#2A2C35]">
+      <h3 class="font-headline-sm text-headline-sm text-[#F4EFE6] font-bold flex items-center gap-2">
         <span class="material-symbols-outlined text-vk-info text-[20px]">verified</span>
         <span>${title}</span>
       </h3>
-      <button class="w-8 h-8 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#25231F] transition-colors" id="modal-close-x" aria-label="Close">
+      <button class="w-8 h-8 rounded-lg flex items-center justify-center text-[#8C8E99] hover:text-[#F4EFE6] hover:bg-[#1E2027] transition-colors" id="modal-close-x" aria-label="Close">
         <span class="material-symbols-outlined text-[18px]">close</span>
       </button>
     </div>
-    <div class="text-sm text-[#A69F94] leading-relaxed">
+    <div class="text-sm text-[#8C8E99] leading-relaxed">
       ${bodyHtml}
     </div>
-    <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#3A3731]" id="modal-actions-box"></div>
+    <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#2A2C35]" id="modal-actions-box"></div>
   `;
 
   const actionsBox = dialog.querySelector('#modal-actions-box');
@@ -179,8 +184,8 @@ export function modal(title, bodyHtml, actions = [{ label: 'Close', primary: tru
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = act.primary
-      ? 'px-4 py-2 rounded-xl bg-[#E8DFD0] text-[#211F1B] font-semibold text-xs hover:bg-[#F5EEDB] transition-all shadow-sm'
-      : 'px-4 py-2 rounded-xl bg-[#25231F] text-[#F0E8D9] border border-[#3A3731] font-medium text-xs hover:bg-[#2C2A25] transition-colors';
+      ? 'px-4 py-2 rounded-xl bg-[#F4EFE6] text-[#111215] font-semibold text-xs hover:bg-[#F4EFE6] transition-all shadow-sm'
+      : 'px-4 py-2 rounded-xl bg-[#1E2027] text-[#F4EFE6] border border-[#2A2C35] font-medium text-xs hover:bg-[#262832] transition-colors';
     btn.textContent = act.label;
     btn.onclick = () => {
       if (act.onClick) act.onClick();
@@ -207,21 +212,21 @@ export function modal(title, bodyHtml, actions = [{ label: 'Close', primary: tru
 export function driverCommsModal(driverName = 'K. Muthukrishnan', phone = '+91 94441 20982', vehicle = 'Tata Ultra Reefer (TN-4821-HX)') {
   const content = `
     <div class="flex flex-col gap-3">
-      <div class="p-3.5 rounded-xl bg-[#25231F] border border-[#3A3731] flex items-center justify-between">
+      <div class="p-3.5 rounded-xl bg-[#1E2027] border border-[#2A2C35] flex items-center justify-between">
         <div class="flex flex-col">
-          <span class="text-[11px] uppercase tracking-wider text-[#A69F94]">Assigned Driver</span>
-          <strong class="text-[#F0E8D9] font-semibold mt-0.5">${driverName}</strong>
-          <span class="text-xs text-[#A69F94] font-mono">${phone}</span>
+          <span class="text-[11px] uppercase tracking-wider text-[#8C8E99]">Assigned Driver</span>
+          <strong class="text-[#F4EFE6] font-semibold mt-0.5">${driverName}</strong>
+          <span class="text-xs text-[#8C8E99] font-mono">${phone}</span>
         </div>
-        <div class="w-10 h-10 rounded-full bg-[#171614] border border-[#3A3731] flex items-center justify-center text-[#71816F]">
+        <div class="w-10 h-10 rounded-full bg-[#0D0E11] border border-[#2A2C35] flex items-center justify-center text-[#6BBF89]">
           <span class="material-symbols-outlined text-[20px]">phone_in_talk</span>
         </div>
       </div>
-      <div class="p-3 rounded-lg bg-[#171614] border border-[#3A3731] text-xs text-[#A69F94]">
-        <span class="text-[#F0E8D9] font-medium">Vehicle Context:</span> ${vehicle}<br>
-        <span class="text-[#F0E8D9] font-medium">Direct Channel:</span> Satellite Telematics Transceiver + GSM Fallback
+      <div class="p-3 rounded-lg bg-[#0D0E11] border border-[#2A2C35] text-xs text-[#8C8E99]">
+        <span class="text-[#F4EFE6] font-medium">Vehicle Context:</span> ${vehicle}<br>
+        <span class="text-[#F4EFE6] font-medium">Direct Channel:</span> Satellite Telematics Transceiver + GSM Fallback
       </div>
-      <p class="text-xs text-[#A69F94]">Select an operational dispatch directive to push to the vehicle driver head-unit console:</p>
+      <p class="text-xs text-[#8C8E99]">Select an operational dispatch directive to push to the vehicle driver head-unit console:</p>
     </div>
   `;
 
@@ -267,7 +272,7 @@ function bindGlobalActions() {
         e.preventDefault();
         modal(
           'How VaxKavach Works',
-          '<p class="mb-2">VaxKavach monitors simulated cold-chain telemetry across India\'s Universal Immunization Programme (UIP) corridors.</p><ul class="list-disc pl-5 space-y-1.5 text-xs text-[#A69F94]"><li><strong>Thermal Potency (Haynes MKT):</strong> Calculates Mean Kinetic Temperature dynamically.</li><li><strong>Multi-Sensor Correlation:</strong> Correlates cabin door locks, reefer diagnostics, ambient temperatures, and GPS speed.</li><li><strong>Deterministic Routing:</strong> Proactively computes nearest accredited WHO-PQS depots before critical excursions.</li><li><strong>Cryptographic Ledger:</strong> Every event is SHA-256 chained for tamper-evident compliance.</li></ul>',
+          '<p class="mb-2">VaxKavach monitors simulated cold-chain telemetry across India\'s Universal Immunization Programme (UIP) corridors.</p><ul class="list-disc pl-5 space-y-1.5 text-xs text-[#8C8E99]"><li><strong>Thermal Potency (Haynes MKT):</strong> Calculates Mean Kinetic Temperature dynamically.</li><li><strong>Multi-Sensor Correlation:</strong> Correlates cabin door locks, reefer diagnostics, ambient temperatures, and GPS speed.</li><li><strong>Deterministic Routing:</strong> Proactively computes nearest accredited WHO-PQS depots before critical excursions.</li><li><strong>Cryptographic Ledger:</strong> Every event is SHA-256 chained for tamper-evident compliance.</li></ul>',
           [{ label: 'Launch Dashboard', primary: true, onClick: () => go('/overview.html') }, { label: 'Close', primary: false }]
         );
       };
@@ -285,7 +290,7 @@ function bindGlobalActions() {
         e.preventDefault();
         modal(
           'Operational & Compliance Reference',
-          '<p class="mb-2">Simulated pharmaceutical cold-chain environment adhering to:</p><ul class="list-disc pl-5 space-y-1 text-xs text-[#A69F94]"><li>WHO-PQS E006 Cold Chain Equipment Protocols</li><li>FDA 21 CFR Part 11 Electronic Records & Signatures</li><li>GMP / GDP Good Distribution Practice Guidelines</li><li>Government of India Universal Immunization Programme (UIP) standards</li></ul>'
+          '<p class="mb-2">Simulated pharmaceutical cold-chain environment adhering to:</p><ul class="list-disc pl-5 space-y-1 text-xs text-[#8C8E99]"><li>WHO-PQS E006 Cold Chain Equipment Protocols</li><li>FDA 21 CFR Part 11 Electronic Records & Signatures</li><li>GMP / GDP Good Distribution Practice Guidelines</li><li>Government of India Universal Immunization Programme (UIP) standards</li></ul>'
         );
       };
     }
@@ -605,7 +610,7 @@ async function initShipments() {
 
     if (badgeDot) {
       if (isProblem) badgeDot.className = 'w-2 h-2 rounded-full bg-[#B8756C] animate-pulse';
-      else if (isAttention) badgeDot.className = 'w-2 h-2 rounded-full bg-[#A4875C] animate-pulse';
+      else if (isAttention) badgeDot.className = 'w-2 h-2 rounded-full bg-[#E5B869] animate-pulse';
       else if (isResolved) badgeDot.className = 'w-2 h-2 rounded-full bg-[#829A80]';
       else badgeDot.className = 'w-2 h-2 rounded-full bg-[#829A80]';
     }
@@ -616,7 +621,7 @@ async function initShipments() {
         badgeText.className = 'text-[10px] font-mono uppercase font-bold tracking-wider text-[#B8756C]';
       } else if (isAttention) {
         badgeText.textContent = 'Telemetry Warning Inspection';
-        badgeText.className = 'text-[10px] font-mono uppercase font-bold tracking-wider text-[#A4875C]';
+        badgeText.className = 'text-[10px] font-mono uppercase font-bold tracking-wider text-[#E5B869]';
       } else if (isResolved) {
         badgeText.textContent = 'Resolved Incident Inspection';
         badgeText.className = 'text-[10px] font-mono uppercase font-bold tracking-wider text-[#829A80]';
@@ -639,7 +644,7 @@ async function initShipments() {
     const statusPill = document.getElementById('inspector-status-pill');
 
     const tempVal = s.current_temperature != null ? s.current_temperature : 4.2;
-    const tempColor = isProblem ? '#B8756C' : isAttention ? '#A4875C' : '#829A80';
+    const tempColor = isProblem ? '#B8756C' : isAttention ? '#E5B869' : '#829A80';
 
     if (tempDisplay) {
       tempDisplay.textContent = `${tempVal.toFixed(1)}°C`;
@@ -652,7 +657,7 @@ async function initShipments() {
         tempDelta.className = 'text-[10px] font-mono text-[#B8756C] font-medium';
       } else if (tempVal >= 6.8) {
         tempDelta.textContent = '(Approaching +8.0°C Ceiling)';
-        tempDelta.className = 'text-[10px] font-mono text-[#A4875C] font-medium';
+        tempDelta.className = 'text-[10px] font-mono text-[#E5B869] font-medium';
       } else if (tempVal < 2.0) {
         tempDelta.textContent = `(-${(2.0 - tempVal).toFixed(1)}° Freeze Risk)`;
         tempDelta.className = 'text-[10px] font-mono text-[#B8756C] font-medium';
@@ -672,7 +677,7 @@ async function initShipments() {
         statusPill.className = 'px-2 py-0.5 rounded bg-[#2A1617] text-[#B8756C] border border-[#B8756C]/30 text-[10px] font-mono uppercase font-bold';
       } else if (isAttention) {
         statusPill.textContent = 'Ceiling Warning';
-        statusPill.className = 'px-2 py-0.5 rounded bg-[#282116] text-[#A4875C] border border-[#A4875C]/30 text-[10px] font-mono uppercase font-bold';
+        statusPill.className = 'px-2 py-0.5 rounded bg-[#282116] text-[#E5B869] border border-[#E5B869]/30 text-[10px] font-mono uppercase font-bold';
       } else if (isResolved) {
         statusPill.textContent = 'Resolved (PR-1033)';
         statusPill.className = 'px-2 py-0.5 rounded bg-[#162518] text-[#829A80] border border-[#829A80]/30 text-[10px] font-mono uppercase font-bold';
@@ -707,12 +712,12 @@ async function initShipments() {
       if (sparkAreaPath) sparkAreaPath.setAttribute('d', 'M 0 32 L 60 29 L 120 26 L 180 22 L 240 18 L 300 15 L 380 13 L 380 40 L 0 40 Z');
       if (sparkLinePath) {
         sparkLinePath.setAttribute('d', 'M 0 32 L 60 29 L 120 26 L 180 22 L 240 18 L 300 15 L 380 13');
-        sparkLinePath.setAttribute('stroke', '#A4875C');
+        sparkLinePath.setAttribute('stroke', '#E5B869');
       }
       if (sparkDot) { sparkDot.setAttribute('cy', '13'); sparkDot.setAttribute('fill', '#EDE5D8'); }
       if (sparkStart) sparkStart.textContent = '13:30 (4.5°C)';
       if (sparkMid) sparkMid.textContent = '14:00 (6.2°C)';
-      if (sparkEnd) { sparkEnd.innerHTML = `14:31 (<span class="dyn-temp" style="color:#A4875C">${tempVal.toFixed(1)}°C</span>)`; sparkEnd.className = 'text-[#A4875C]'; }
+      if (sparkEnd) { sparkEnd.innerHTML = `14:31 (<span class="dyn-temp" style="color:#E5B869">${tempVal.toFixed(1)}°C</span>)`; sparkEnd.className = 'text-[#E5B869]'; }
     } else if (isResolved) {
       if (sparkAreaPath) sparkAreaPath.setAttribute('d', 'M 0 14 L 60 16 L 120 20 L 180 25 L 240 28 L 300 29 L 380 30 L 380 40 L 0 40 Z');
       if (sparkLinePath) {
@@ -757,7 +762,7 @@ async function initShipments() {
         compressorEl.className = 'text-[11px] font-mono text-[#B8756C] font-semibold';
       } else if (isAttention) {
         compressorEl.textContent = 'RPM 2100 (High Inverter Load)';
-        compressorEl.className = 'text-[11px] font-mono text-[#A4875C] font-semibold';
+        compressorEl.className = 'text-[11px] font-mono text-[#E5B869] font-semibold';
       } else if (s.latest_telemetry?.refrigeration_state === 'SIGNAL_LOSS') {
         compressorEl.textContent = 'Telemetry Interrupted (Radio)';
         compressorEl.className = 'text-[11px] font-mono text-[#9A9890] font-semibold';
@@ -788,11 +793,11 @@ async function initShipments() {
         recHeader.className = 'flex items-center gap-1 text-[#B8756C]';
         recTag.textContent = 'Emergency Reroute Directive';
         recText.innerHTML = s.predictive_risk?.recommended_action
-          ? s.predictive_risk.recommended_action.replace(/(Vellore Sub-District Depot|Kanchipuram Backup Store)/g, '<strong class="text-[#F0E8D9] font-bold">$1</strong>')
-          : 'Divert immediately to <strong class="text-[#F0E8D9] font-bold">Vellore Sub-District Depot</strong> before thermal buffer collapses.';
+          ? s.predictive_risk.recommended_action.replace(/(Vellore Sub-District Depot|Kanchipuram Backup Store)/g, '<strong class="text-[#F4EFE6] font-bold">$1</strong>')
+          : 'Divert immediately to <strong class="text-[#F4EFE6] font-bold">Vellore Sub-District Depot</strong> before thermal buffer collapses.';
       } else if (isAttention) {
-        recContainer.className = 'rounded-lg bg-[#231E18] p-2 border-l-4 border-l-[#A4875C] flex flex-col gap-0.5';
-        recHeader.className = 'flex items-center gap-1 text-[#A4875C]';
+        recContainer.className = 'rounded-lg bg-[#231E18] p-2 border-l-4 border-l-[#E5B869] flex flex-col gap-0.5';
+        recHeader.className = 'flex items-center gap-1 text-[#E5B869]';
         recTag.textContent = 'Predictive Advisory Directive';
         recText.innerHTML = s.predictive_risk?.recommended_action || 'Engage secondary inverter loop and lower compressor setpoint to +2.5°C before ceiling breach.';
       } else if (isResolved) {
@@ -834,7 +839,7 @@ async function initShipments() {
       } else {
         viewProblemBtn.style.display = '';
         viewProblemBtn.disabled = true;
-        viewProblemBtn.className = 'w-full py-1 px-3 rounded-lg bg-[#181a1d] text-[#6F7F6D] border border-[#282a2e] text-xs flex items-center justify-center gap-1.5 font-medium cursor-not-allowed opacity-80';
+        viewProblemBtn.className = 'w-full py-1 px-3 rounded-lg bg-[#181a1d] text-[#6BBF89] border border-[#282a2e] text-xs flex items-center justify-center gap-1.5 font-medium cursor-not-allowed opacity-80';
         viewProblemBtn.querySelector('span').textContent = 'Zero Active Problems ✓';
         viewProblemBtn.onclick = null;
       }
@@ -851,7 +856,7 @@ async function initShipments() {
     if (rerouteBtn) {
       if (isProblem) {
         rerouteBtn.disabled = false;
-        rerouteBtn.className = 'py-1 px-2 rounded-lg bg-[#282116] text-[#A4875C] hover:bg-[#342A1C] transition-colors border border-[#A4875C]/40 flex items-center justify-center gap-1 font-semibold cursor-pointer';
+        rerouteBtn.className = 'py-1 px-2 rounded-lg bg-[#282116] text-[#E5B869] hover:bg-[#342A1C] transition-colors border border-[#E5B869]/40 flex items-center justify-center gap-1 font-semibold cursor-pointer';
         rerouteBtn.querySelector('span').textContent = 'Authorize Reroute';
         rerouteBtn.onclick = async () => {
           rerouteBtn.disabled = true;
@@ -907,13 +912,13 @@ async function initShipments() {
       filterIndicator.textContent = `Showing ${filtered.length} of ${totalShipments} active shipments`;
     }
     if (footerCount) {
-      footerCount.innerHTML = `Showing <strong class="text-[#F0E8D9] font-semibold">${filtered.length}</strong> of <strong class="text-[#F0E8D9] font-semibold">${totalShipments}</strong> active shipments (${activeShipments} in-transit, ${totalShipments - activeShipments} resolved)`;
+      footerCount.innerHTML = `Showing <strong class="text-[#F4EFE6] font-semibold">${filtered.length}</strong> of <strong class="text-[#F4EFE6] font-semibold">${totalShipments}</strong> active shipments (${activeShipments} in-transit, ${totalShipments - activeShipments} resolved)`;
     }
 
     container.innerHTML = '';
     if (filtered.length === 0) {
       container.innerHTML = `
-        <div class="p-8 rounded-xl bg-[#1e2024] border border-[#333539] text-center text-sm text-[#A69F94]">
+        <div class="p-8 rounded-xl bg-[#1e2024] border border-[#333539] text-center text-sm text-[#8C8E99]">
           No shipments found matching filter "<strong>${activeFilter}</strong>" and query "<strong>${q}</strong>".
         </div>
       `;
@@ -934,7 +939,7 @@ async function initShipments() {
       let badgeBg = 'bg-[#162518] text-[#829A80]';
       let badgeLabel = 'Safe';
       let tempColor = 'text-[#829A80]';
-      let driftColor = 'text-[#A69F94]';
+      let driftColor = 'text-[#8C8E99]';
       let driftLabel = 'Optimal';
       let tagBg = 'bg-[#162518] text-[#829A80]';
       let tagDot = 'bg-[#829A80]';
@@ -954,15 +959,15 @@ async function initShipments() {
         tagLabel = 'Problem';
         iconSvg = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>';
       } else if (isAttention) {
-        borderLeft = 'border-l-4 border-l-[#A4875C]';
-        iconBg = 'bg-[#282116] text-[#A4875C] border-[#A4875C]/30';
-        badgeBg = 'bg-[#282116] text-[#A4875C]';
+        borderLeft = 'border-l-4 border-l-[#E5B869]';
+        iconBg = 'bg-[#282116] text-[#E5B869] border-[#E5B869]/30';
+        badgeBg = 'bg-[#282116] text-[#E5B869]';
         badgeLabel = 'Attn';
-        tempColor = 'text-[#A4875C]';
-        driftColor = 'text-[#A4875C]';
+        tempColor = 'text-[#E5B869]';
+        driftColor = 'text-[#E5B869]';
         driftLabel = 'Ceiling near';
-        tagBg = 'bg-[#282116] text-[#A4875C]';
-        tagDot = 'bg-[#A4875C]';
+        tagBg = 'bg-[#282116] text-[#E5B869]';
+        tagDot = 'bg-[#E5B869]';
         tagLabel = 'Attention';
         iconSvg = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path></svg>';
       } else if (isResolved) {
@@ -975,7 +980,7 @@ async function initShipments() {
       const card = document.createElement('article');
       card.className = `group cursor-pointer rounded-xl px-3.5 py-2.5 transition-all duration-200 border shadow-sm ${
         isSelected
-          ? `bg-[#25231F] border-[#E8DFD0] ring-1 ring-[#E8DFD0]/40 ${borderLeft}`
+          ? `bg-[#1E2027] border-[#F4EFE6] ring-1 ring-[#F4EFE6]/40 ${borderLeft}`
           : `bg-[#1e2024] hover:bg-[#282a2e] border-[#333539] ${borderLeft}`
       }`;
       card.id = `shipment-row-${s.shipment_code.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
@@ -989,24 +994,24 @@ async function initShipments() {
             </div>
             <div class="flex flex-col min-w-0">
               <div class="flex items-center gap-1.5">
-                <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">${s.shipment_code}</span>
+                <span class="font-mono text-sm font-bold text-[#F4EFE6] tracking-tight">${s.shipment_code}</span>
                 <span class="px-1.5 py-0.2 rounded ${badgeBg} text-[9px] font-mono font-bold uppercase">
                   ${badgeLabel}
                 </span>
               </div>
-              <span class="text-[11px] text-[#A69F94] truncate">${s.vehicle?.model || 'Reefer'} · ${s.vehicle?.registration_number || 'TN-XX-0000'}</span>
+              <span class="text-[11px] text-[#8C8E99] truncate">${s.vehicle?.model || 'Reefer'} · ${s.vehicle?.registration_number || 'TN-XX-0000'}</span>
             </div>
           </div>
 
           <!-- Route & GPS -->
           <div class="flex flex-col min-w-0 flex-1 px-1">
-            <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
+            <div class="flex items-center gap-1 text-[#F4EFE6] text-xs font-medium">
               <span class="truncate">${s.origin?.name || s.origin?.city || 'Origin'}</span>
-              <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-              <span class="truncate text-[#A69F94]">${s.destination?.name || s.destination?.city || 'Destination'}</span>
+              <svg class="w-3 h-3 text-[#8C8E99] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <span class="truncate text-[#8C8E99]">${s.destination?.name || s.destination?.city || 'Destination'}</span>
             </div>
-            <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
-              <svg class="w-3 h-3 ${isProblem ? 'text-[#B8756C]' : 'text-[#A69F94]'} shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
+            <div class="flex items-center gap-1 mt-0.5 text-[#8C8E99] text-[11px]">
+              <svg class="w-3 h-3 ${isProblem ? 'text-[#B8756C]' : 'text-[#8C8E99]'} shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
               <span class="truncate">${s.vehicle?.corridor || 'National Logistics Corridor'}</span>
             </div>
           </div>
@@ -1015,7 +1020,7 @@ async function initShipments() {
           <div class="flex flex-col items-end shrink-0 min-w-[70px]">
             <div class="flex items-center gap-0.5">
               <span class="font-mono text-base font-bold ${tempColor}"><span class="dyn-temp">${tempVal.toFixed(1)}°C</span></span>
-              ${isProblem ? '<svg class="w-3.5 h-3.5 text-[#B8756C]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>' : isAttention ? '<svg class="w-3.5 h-3.5 text-[#A4875C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>' : '<svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>'}
+              ${isProblem ? '<svg class="w-3.5 h-3.5 text-[#B8756C]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>' : isAttention ? '<svg class="w-3.5 h-3.5 text-[#E5B869]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>' : '<svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>'}
             </div>
             <span class="text-[9px] font-mono ${driftColor} uppercase tracking-wider">${driftLabel}</span>
           </div>
@@ -1026,11 +1031,11 @@ async function initShipments() {
               <span class="w-1.5 h-1.5 rounded-full ${tagDot}"></span>
               ${tagLabel}
             </span>
-            <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:31 IST</span>
+            <span class="text-[10px] font-mono text-[#8C8E99] mt-0.5">14:31 IST</span>
           </div>
 
           <!-- Inspect CTA -->
-          <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg ${isSelected ? 'bg-[#F5EEDB] text-[#111317] font-semibold' : 'bg-[#282a2e] text-[#EDE5D4] hover:bg-[#333539] font-medium border border-[#333539]'} text-xs transition-colors shrink-0 shadow-sm" type="button">
+          <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg ${isSelected ? 'bg-[#F4EFE6] text-[#111317] font-semibold' : 'bg-[#282a2e] text-[#F4EFE6] hover:bg-[#333539] font-medium border border-[#333539]'} text-xs transition-colors shrink-0 shadow-sm" type="button">
             <span>Inspect</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
@@ -1075,9 +1080,9 @@ async function initShipments() {
         const b = document.getElementById(f.id);
         if (!b) return;
         if (f.key === activeFilter) {
-          b.className = 'shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#F5EEDB] text-[#111317] text-xs transition-all shadow-sm font-semibold';
+          b.className = 'shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#F4EFE6] text-[#111317] text-xs transition-all shadow-sm font-semibold';
         } else {
-          b.className = 'shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]';
+          b.className = 'shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#F4EFE6] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]';
         }
       });
       renderShipmentList();
@@ -1093,9 +1098,9 @@ async function initShipments() {
         const b = document.getElementById(f.id);
         if (!b) return;
         if (f.key === 'ALL') {
-          b.className = 'shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#F5EEDB] text-[#111317] text-xs transition-all shadow-sm font-semibold';
+          b.className = 'shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#F4EFE6] text-[#111317] text-xs transition-all shadow-sm font-semibold';
         } else {
-          b.className = 'shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]';
+          b.className = 'shipment-filter-btn px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#F4EFE6] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]';
         }
       });
       renderShipmentList();
@@ -1173,8 +1178,8 @@ async function initProblems() {
         t.style.backgroundColor = '';
         t.style.color = '';
       });
-      tab.style.backgroundColor = '#E8DFD0';
-      tab.style.color = '#211F1B';
+      tab.style.backgroundColor = '#F4EFE6';
+      tab.style.color = '#111215';
 
       filterProblems();
     };
@@ -1198,7 +1203,7 @@ async function initProblems() {
         try {
           await acknowledgeProblem(p.id);
           ackBtn.textContent = 'Acknowledged ✓';
-          ackBtn.style.color = '#71816F';
+          ackBtn.style.color = '#6BBF89';
           toast(`Incident ${p.problem_code || p.id} marked as Acknowledged.`, 'success');
         } catch (err) {
           toast(err.message, 'error');
@@ -1274,7 +1279,7 @@ async function initProblemDetail() {
         const targetDepot = probData?.recommendation?.target_depot_id || 'depot_vellore_sub';
         modal(
           'Authorize Emergency Reroute Protocol',
-          `<div class="space-y-3 text-left"><p class="text-xs text-[#EDE5D4]">Initiate immediate cold-chain diversion protocol for consignment <strong>${scode}</strong>.</p><div class="p-3 rounded-lg bg-[#25231F] border border-[#3A3731] space-y-1.5 text-xs"><div class="flex justify-between text-[#F0E8D9]"><span>Target Depot:</span> <span class="font-semibold text-[#EDE5D4]">${probData?.recommendation?.description || 'Nearest Certified ILR Facility'}</span></div><div class="flex justify-between text-[#A69F94]"><span>Corridor Distance:</span> <span>14 km via NH-48 Bypass</span></div><div class="flex justify-between text-[#A69F94]"><span>Backup Cold Capacity:</span> <span class="text-[#829A80]">Verified In Spec (+2°C to +8°C)</span></div><div class="flex justify-between text-[#A69F94]"><span>Estimated Arrival:</span> <span class="font-semibold text-[#F0E8D9]">18 minutes</span></div></div><p class="text-[11px] text-[#A69F94]">Automated diversion directives will be committed to the cryptographic audit trail immediately upon authorization.</p></div>`,
+          `<div class="space-y-3 text-left"><p class="text-xs text-[#F4EFE6]">Initiate immediate cold-chain diversion protocol for consignment <strong>${scode}</strong>.</p><div class="p-3 rounded-lg bg-[#1E2027] border border-[#2A2C35] space-y-1.5 text-xs"><div class="flex justify-between text-[#F4EFE6]"><span>Target Depot:</span> <span class="font-semibold text-[#F4EFE6]">${probData?.recommendation?.description || 'Nearest Certified ILR Facility'}</span></div><div class="flex justify-between text-[#8C8E99]"><span>Corridor Distance:</span> <span>14 km via NH-48 Bypass</span></div><div class="flex justify-between text-[#8C8E99]"><span>Backup Cold Capacity:</span> <span class="text-[#829A80]">Verified In Spec (+2°C to +8°C)</span></div><div class="flex justify-between text-[#8C8E99]"><span>Estimated Arrival:</span> <span class="font-semibold text-[#F4EFE6]">18 minutes</span></div></div><p class="text-[11px] text-[#8C8E99]">Automated diversion directives will be committed to the cryptographic audit trail immediately upon authorization.</p></div>`,
           [
             {
               label: 'Authorize & Dispatch Reroute',
@@ -1309,7 +1314,7 @@ async function initProblemDetail() {
         try {
           await acknowledgeProblem(probId);
           btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check_circle</span><span>Acknowledged ✓</span>';
-          btn.style.color = '#71816F';
+          btn.style.color = '#6BBF89';
           toast('Incident state transitioned to ACKNOWLEDGED.', 'success');
         } catch (err) {
           toast(err.message, 'error');
@@ -1326,7 +1331,7 @@ async function initProblemDetail() {
       btn.onclick = () => {
         modal(
           'Operational Action Directive',
-          '<p class="mb-3">Mitigation directive active: Route diversion instructed via Vellore Sub-District Depot (Bay #3).</p><div class="p-3 rounded-lg bg-[#25231F] border border-[#3A3731] text-xs text-[#A69F94]">Target ETA: 18 minutes · Estimated potency preservation: 100%</div>',
+          '<p class="mb-3">Mitigation directive active: Route diversion instructed via Vellore Sub-District Depot (Bay #3).</p><div class="p-3 rounded-lg bg-[#1E2027] border border-[#2A2C35] text-xs text-[#8C8E99]">Target ETA: 18 minutes · Estimated potency preservation: 100%</div>',
           [
             { label: 'Confirm Action Dispatch', primary: true, onClick: () => toast('Action dispatch logged in SHA-256 ledger.', 'success') },
             { label: 'Cancel', primary: false }
@@ -1448,7 +1453,7 @@ async function initShipmentDetail() {
       riskBadge.textContent = predRisk.risk_level || 'HEALTHY';
       riskBadge.className = `px-2 py-0.5 rounded text-[10px] font-bold ${
         predRisk.risk_level === 'CRITICAL' ? 'bg-[#B8756C]/20 text-[#B8756C] border border-[#B8756C]/40' :
-        predRisk.risk_level === 'WARNING' ? 'bg-[#987E55]/20 text-[#987E55] border border-[#987E55]/40' :
+        predRisk.risk_level === 'WARNING' ? 'bg-[#E5B869]/20 text-[#E5B869] border border-[#E5B869]/40' :
         'bg-[#829A80]/20 text-[#829A80] border border-[#829A80]/40'
       }`;
     }
@@ -1501,7 +1506,7 @@ async function initShipmentDetail() {
     if (provBadge) {
       provBadge.textContent = prov.source_type || 'VERIFIED OFFICIAL IOT';
       if (prov.source_type === 'SIMULATED_SCENARIO') {
-        provBadge.className = 'px-2 py-0.5 rounded text-label-caps font-label-caps bg-[#987E55]/15 text-[#987E55] border border-[#987E55]/30';
+        provBadge.className = 'px-2 py-0.5 rounded text-label-caps font-label-caps bg-[#E5B869]/15 text-[#E5B869] border border-[#E5B869]/30';
       } else {
         provBadge.className = 'px-2 py-0.5 rounded text-label-caps font-label-caps bg-[#9bb89b]/15 text-[#9bb89b] border border-[#9bb89b]/30';
       }
@@ -1541,12 +1546,12 @@ async function initShipmentDetail() {
         modal(
           'Cold-Chain Handover Manifest',
           `<div class="flex flex-col gap-2 font-mono text-xs">
-            <div class="flex justify-between py-1 border-b border-[#3A3731]"><span>Consignment:</span><strong class="text-[#F0E8D9]">${shipId}</strong></div>
-            <div class="flex justify-between py-1 border-b border-[#3A3731]"><span>Digital Seal:</span><span class="text-[#71816F]">VERIFIED INTACT</span></div>
-            <div class="flex justify-between py-1 border-b border-[#3A3731]"><span>Vaccine:</span><span class="text-[#F0E8D9]">${shipmentData?.product?.name || 'Rotavirus'}</span></div>
-            <div class="flex justify-between py-1 border-b border-[#3A3731]"><span>Carrier Rig:</span><span class="text-[#F0E8D9]">${shipmentData?.vehicle?.code || 'TN-XX-1234'}</span></div>
-            <div class="flex justify-between py-1 border-b border-[#3A3731]"><span>MKT Integrity:</span><span class="text-[#F0E8D9]">${shipmentData?.current_mkt || '4.3'}°C (Sealed)</span></div>
-            <div class="flex justify-between py-1"><span>Handover Code:</span><span class="text-[#A4875C]">HO-IND-88219</span></div>
+            <div class="flex justify-between py-1 border-b border-[#2A2C35]"><span>Consignment:</span><strong class="text-[#F4EFE6]">${shipId}</strong></div>
+            <div class="flex justify-between py-1 border-b border-[#2A2C35]"><span>Digital Seal:</span><span class="text-[#6BBF89]">VERIFIED INTACT</span></div>
+            <div class="flex justify-between py-1 border-b border-[#2A2C35]"><span>Vaccine:</span><span class="text-[#F4EFE6]">${shipmentData?.product?.name || 'Rotavirus'}</span></div>
+            <div class="flex justify-between py-1 border-b border-[#2A2C35]"><span>Carrier Rig:</span><span class="text-[#F4EFE6]">${shipmentData?.vehicle?.code || 'TN-XX-1234'}</span></div>
+            <div class="flex justify-between py-1 border-b border-[#2A2C35]"><span>MKT Integrity:</span><span class="text-[#F4EFE6]">${shipmentData?.current_mkt || '4.3'}°C (Sealed)</span></div>
+            <div class="flex justify-between py-1"><span>Handover Code:</span><span class="text-[#E5B869]">HO-IND-88219</span></div>
           </div>`,
           [
             { label: 'Print Handover Receipt', primary: true, onClick: () => window.print() },
@@ -1641,15 +1646,15 @@ async function initHistory() {
       try {
         const res = await verifyAudit();
         if (res.valid) {
-          verifyBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-[#71816F]">check_circle</span><span>100% Cryptographically Intact</span>';
+          verifyBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-[#6BBF89]">check_circle</span><span>100% Cryptographically Intact</span>';
           toast(`SHA-256 Ledger Verified: All ${res.verified_records} blocks intact without mutation.`, 'success');
         } else {
           toast('Verification failed: Hash mismatch in audit chain.', 'error');
-          verifyBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-[#99655D]">error</span><span>Hash Mismatch</span>';
+          verifyBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-[#E27373]">error</span><span>Hash Mismatch</span>';
         }
       } catch (err) {
         toast('Ledger verified via genesis root hash.', 'success');
-        verifyBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-[#71816F]">check_circle</span><span>Ledger Verified</span>';
+        verifyBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-[#6BBF89]">check_circle</span><span>Ledger Verified</span>';
       }
     };
   }
@@ -1804,10 +1809,10 @@ async function initFleet() {
     }
     if (status === 'WARNING') {
       return {
-        text: isLight ? '#8C5508' : '#987E55',
+        text: isLight ? '#8C5508' : '#E5B869',
         bg: isLight ? '#FEF3C7' : 'rgba(152, 126, 85, 0.15)',
         border: isLight ? '#FDE68A' : 'rgba(152, 126, 85, 0.35)',
-        dot: isLight ? '#8C5508' : '#987E55',
+        dot: isLight ? '#8C5508' : '#E5B869',
         label: 'WARNING'
       };
     }
@@ -1821,10 +1826,10 @@ async function initFleet() {
       };
     }
     return {
-      text: isLight ? '#236B48' : '#6F7F6D',
+      text: isLight ? '#236B48' : '#6BBF89',
       bg: isLight ? '#DEF7EC' : 'rgba(111, 127, 109, 0.15)',
       border: isLight ? '#BCF0DA' : 'rgba(111, 127, 109, 0.35)',
-      dot: isLight ? '#236B48' : '#6F7F6D',
+      dot: isLight ? '#236B48' : '#6BBF89',
       label: 'HEALTHY'
     };
   }
@@ -1883,17 +1888,17 @@ async function initFleet() {
       const card = document.createElement('article');
       card.className = `group relative cursor-pointer rounded-xl p-4 transition-all duration-150 border flex flex-col gap-3 shadow-sm ${
         isSelected
-          ? 'bg-[#1e2024] border-[#E8DFD0] shadow-md ring-1 ring-[#E8DFD0]/40'
+          ? 'bg-[#1e2024] border-[#F4EFE6] shadow-md ring-1 ring-[#F4EFE6]/40'
           : 'bg-[#1a1c20] hover:bg-[#1e2024] border-[#282a2e]'
       }`;
       card.setAttribute('data-vehicle-id', v.id);
 
       card.innerHTML = `
-        <div class="absolute left-0 top-3 bottom-3 w-1 rounded-r-full" style="background-color: ${isSelected ? '#E8DFD0' : st.dot}"></div>
+        <div class="absolute left-0 top-3 bottom-3 w-1 rounded-r-full" style="background-color: ${isSelected ? '#F4EFE6' : st.dot}"></div>
         <div class="flex items-start justify-between gap-3 pl-2">
           <div class="flex flex-col min-w-0">
             <div class="flex items-center gap-2 flex-wrap">
-              <span class="font-mono text-sm font-bold tracking-tight text-[#F0ECE4]">${v.registration_number}</span>
+              <span class="font-mono text-sm font-bold tracking-tight text-[#F4EFE6]">${v.registration_number}</span>
               <span class="px-2 py-0.5 rounded-full font-label-caps text-[10px] font-bold uppercase tracking-wider" style="color: ${st.text}; background-color: ${st.bg}; border: 1px solid ${st.border};">
                 <span class="inline-block w-1.5 h-1.5 rounded-full mr-1" style="background-color: ${st.dot}"></span>
                 ${st.label}
@@ -1911,18 +1916,18 @@ async function initFleet() {
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pl-2 pt-2 border-t border-[#282a2e] text-xs text-[#9A9890]">
           <div class="truncate">
             <span class="text-[10px] uppercase font-mono block text-[#9A9890]/70">Cargo / Batch</span>
-            <span class="font-semibold text-[#F0ECE4] truncate block">${shipmentCode} · ${productName.split(' ')[0]}</span>
+            <span class="font-semibold text-[#F4EFE6] truncate block">${shipmentCode} · ${productName.split(' ')[0]}</span>
           </div>
           <div class="truncate">
             <span class="text-[10px] uppercase font-mono block text-[#9A9890]/70">Driver / Comms</span>
-            <span class="text-[#F0ECE4] truncate block">${v.driver_name}</span>
+            <span class="text-[#F4EFE6] truncate block">${v.driver_name}</span>
           </div>
           <div class="truncate col-span-2 sm:col-span-1 flex items-center justify-between sm:justify-start gap-2">
             <div>
               <span class="text-[10px] uppercase font-mono block text-[#9A9890]/70">Telemetry</span>
               <span class="text-[#829A80] font-mono text-[11px]">${sensorCode}</span>
             </div>
-            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#111317] border border-[#282a2e] ${doorState === 'OPEN' ? 'text-[#B8756C]' : 'text-[#6F7F6D]'}">
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#111317] border border-[#282a2e] ${doorState === 'OPEN' ? 'text-[#B8756C]' : 'text-[#6BBF89]'}">
               ${doorState === 'OPEN' ? 'UNSEALED' : 'SEALED'}
             </span>
           </div>
@@ -2009,8 +2014,8 @@ async function initFleet() {
 
       btn.className = `p-2.5 rounded-xl border transition-all flex flex-col items-center justify-center gap-1.5 text-center relative ${
         isSelected
-          ? 'bg-[#17191d] border-[#E8DFD0] text-[#F0ECE4] shadow-sm'
-          : 'bg-[#111317] border-[#282a2e] text-[#9A9890] hover:text-[#F0ECE4] hover:border-[#3A3731]'
+          ? 'bg-[#17191d] border-[#F4EFE6] text-[#F4EFE6] shadow-sm'
+          : 'bg-[#111317] border-[#282a2e] text-[#9A9890] hover:text-[#F4EFE6] hover:border-[#2A2C35]'
       }`;
       btn.innerHTML = `
         <div class="flex items-center justify-between w-full px-1">
@@ -2018,22 +2023,22 @@ async function initFleet() {
           <span class="w-1.5 h-1.5 rounded-full" style="background-color: ${statusColor};"></span>
         </div>
         <span class="material-symbols-outlined text-[20px]" style="color: ${statusColor};">${node.icon}</span>
-        <span class="text-[11px] font-bold leading-tight truncate w-full text-[#F0ECE4]">${node.label}</span>
+        <span class="text-[11px] font-bold leading-tight truncate w-full text-[#F4EFE6]">${node.label}</span>
         <span class="text-[9.5px] font-mono text-[#9A9890] truncate w-full">${node.sub}</span>
       `;
 
       btn.onclick = () => {
         Array.from(topologyNodesContainer.children).forEach(c => {
-          c.classList.remove('border-[#E8DFD0]', 'bg-[#17191d]', 'shadow-sm');
+          c.classList.remove('border-[#F4EFE6]', 'bg-[#17191d]', 'shadow-sm');
           c.classList.add('border-[#282a2e]', 'bg-[#111317]');
         });
         btn.classList.remove('border-[#282a2e]', 'bg-[#111317]');
-        btn.classList.add('border-[#E8DFD0]', 'bg-[#17191d]', 'shadow-sm');
+        btn.classList.add('border-[#F4EFE6]', 'bg-[#17191d]', 'shadow-sm');
 
         if (topoDetailTitle) {
           topoDetailTitle.innerHTML = `
             <div class="flex items-center justify-between w-full flex-wrap gap-2">
-              <span class="flex items-center gap-1.5 font-bold text-xs text-[#F0ECE4]">
+              <span class="flex items-center gap-1.5 font-bold text-xs text-[#F4EFE6]">
                 <span class="material-symbols-outlined text-[16px]" style="color: ${statusColor};">${node.icon}</span>
                 ${node.title}
               </span>
@@ -2059,7 +2064,7 @@ async function initFleet() {
     if (topoDetailTitle) {
       topoDetailTitle.innerHTML = `
         <div class="flex items-center justify-between w-full flex-wrap gap-2">
-          <span class="flex items-center gap-1.5 font-bold text-xs text-[#F0ECE4]">
+          <span class="flex items-center gap-1.5 font-bold text-xs text-[#F4EFE6]">
             <span class="material-symbols-outlined text-[16px] text-[#829A80]">local_shipping</span>
             ${nodes[0].title}
           </span>
@@ -2178,11 +2183,11 @@ async function initFleet() {
       const isSim = v.provenance?.is_simulated;
       provBadge.textContent = isSim ? 'SIMULATED SCENARIO' : (v.provenance?.source_type || 'OFFICIAL IOT');
       if (isSim) {
-        provBadge.style.color = '#987E55';
+        provBadge.style.color = '#E5B869';
         provBadge.style.backgroundColor = 'rgba(152, 126, 85, 0.15)';
         provBadge.style.borderColor = 'rgba(152, 126, 85, 0.35)';
       } else {
-        provBadge.style.color = '#6F7F6D';
+        provBadge.style.color = '#6BBF89';
         provBadge.style.backgroundColor = 'rgba(111, 127, 109, 0.15)';
         provBadge.style.borderColor = 'rgba(111, 127, 109, 0.35)';
       }
@@ -2218,11 +2223,11 @@ async function initFleet() {
       incidentStateBadge.style.backgroundColor = 'rgba(184, 117, 108, 0.15)';
       incidentStateBadge.style.borderColor = 'rgba(184, 117, 108, 0.35)';
     } else if (currentStatus === 'INVESTIGATING' || currentStatus === 'WARNING') {
-      incidentStateBadge.style.color = '#987E55';
+      incidentStateBadge.style.color = '#E5B869';
       incidentStateBadge.style.backgroundColor = 'rgba(152, 126, 85, 0.15)';
       incidentStateBadge.style.borderColor = 'rgba(152, 126, 85, 0.35)';
     } else {
-      incidentStateBadge.style.color = '#6F7F6D';
+      incidentStateBadge.style.color = '#6BBF89';
       incidentStateBadge.style.backgroundColor = 'rgba(111, 127, 109, 0.15)';
       incidentStateBadge.style.borderColor = 'rgba(111, 127, 109, 0.35)';
     }
@@ -2247,22 +2252,22 @@ async function initFleet() {
       const circle = s.el.querySelector('div');
       const text = s.el.querySelector('span');
       if (s.num < activeStepNum) {
-        circle.className = 'w-6 h-6 rounded-full bg-[#6F7F6D] border-2 border-[#6F7F6D] text-black flex items-center justify-center text-[10px] font-bold';
+        circle.className = 'w-6 h-6 rounded-full bg-[#6BBF89] border-2 border-[#6BBF89] text-black flex items-center justify-center text-[10px] font-bold';
         circle.textContent = '✓';
-        text.className = 'text-[9px] text-[#6F7F6D] uppercase font-semibold';
+        text.className = 'text-[9px] text-[#6BBF89] uppercase font-semibold';
       } else if (s.num === activeStepNum) {
         if (s.num === 4) {
-          circle.className = 'w-6 h-6 rounded-full bg-[#6F7F6D] border-2 border-[#6F7F6D] text-black flex items-center justify-center text-[10px] font-bold';
+          circle.className = 'w-6 h-6 rounded-full bg-[#6BBF89] border-2 border-[#6BBF89] text-black flex items-center justify-center text-[10px] font-bold';
           circle.textContent = '✓';
-          text.className = 'text-[9px] text-[#6F7F6D] uppercase font-semibold';
+          text.className = 'text-[9px] text-[#6BBF89] uppercase font-semibold';
         } else if (s.num === 3) {
           circle.className = 'w-6 h-6 rounded-full bg-[#B8756C] border-2 border-[#B8756C] text-white flex items-center justify-center text-[10px] font-bold';
           circle.textContent = s.num;
           text.className = 'text-[9px] text-[#B8756C] uppercase font-semibold';
         } else {
-          circle.className = 'w-6 h-6 rounded-full bg-[#987E55] border-2 border-[#987E55] text-white flex items-center justify-center text-[10px] font-bold';
+          circle.className = 'w-6 h-6 rounded-full bg-[#E5B869] border-2 border-[#E5B869] text-white flex items-center justify-center text-[10px] font-bold';
           circle.textContent = s.num;
-          text.className = 'text-[9px] text-[#987E55] uppercase font-semibold';
+          text.className = 'text-[9px] text-[#E5B869] uppercase font-semibold';
         }
       } else {
         circle.className = 'w-6 h-6 rounded-full bg-[#111317] border-2 border-[#282a2e] text-[#9A9890] flex items-center justify-center text-[10px] font-bold';
@@ -2297,7 +2302,7 @@ async function initFleet() {
       btnInvestigate.disabled = !hasActiveProblem || currentStatus === 'INVESTIGATING';
       btnInvestigate.className = btnInvestigate.disabled
         ? 'flex-1 py-1.5 px-3 rounded-lg bg-[#111317] border border-[#282a2e] text-xs text-[#555] cursor-not-allowed font-medium'
-        : 'flex-1 py-1.5 px-3 rounded-lg bg-[#111317] hover:bg-[#1a1c20] border border-[#282a2e] text-xs text-[#F0ECE4] font-medium transition-colors cursor-pointer';
+        : 'flex-1 py-1.5 px-3 rounded-lg bg-[#111317] hover:bg-[#1a1c20] border border-[#282a2e] text-xs text-[#F4EFE6] font-medium transition-colors cursor-pointer';
       btnInvestigate.onclick = async () => {
         if (!problem) return;
         try {
@@ -2316,7 +2321,7 @@ async function initFleet() {
       btnActionReq.disabled = !hasActiveProblem || currentStatus === 'ACTION_REQUIRED';
       btnActionReq.className = btnActionReq.disabled
         ? 'flex-1 py-1.5 px-3 rounded-lg bg-[#111317] border border-[#282a2e] text-xs text-[#555] cursor-not-allowed font-medium'
-        : 'flex-1 py-1.5 px-3 rounded-lg bg-[#111317] hover:bg-[#1a1c20] border border-[#987E55]/40 text-xs text-[#987E55] font-medium transition-colors cursor-pointer';
+        : 'flex-1 py-1.5 px-3 rounded-lg bg-[#111317] hover:bg-[#1a1c20] border border-[#E5B869]/40 text-xs text-[#E5B869] font-medium transition-colors cursor-pointer';
       btnActionReq.onclick = async () => {
         if (!problem) return;
         try {
@@ -2334,7 +2339,7 @@ async function initFleet() {
     if (btnResolve) {
       if (hasActiveProblem) {
         btnResolve.disabled = false;
-        btnResolve.className = 'w-full py-2 px-3 rounded-lg bg-[#829A80] hover:bg-[#6F7F6D] text-black font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-md';
+        btnResolve.className = 'w-full py-2 px-3 rounded-lg bg-[#829A80] hover:bg-[#6BBF89] text-black font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-md';
         btnResolve.innerHTML = `<span class="material-symbols-outlined text-[16px]">check_circle</span> Resolve Incident &amp; Log Audit`;
         btnResolve.onclick = () => {
           if (!resolutionModal) return;
@@ -2346,7 +2351,7 @@ async function initFleet() {
         };
       } else {
         btnResolve.disabled = true;
-        btnResolve.className = 'w-full py-2 px-3 rounded-lg bg-[#111317] border border-[#282a2e] text-[#6F7F6D] font-semibold text-xs flex items-center justify-center gap-1.5 cursor-not-allowed';
+        btnResolve.className = 'w-full py-2 px-3 rounded-lg bg-[#111317] border border-[#282a2e] text-[#6BBF89] font-semibold text-xs flex items-center justify-center gap-1.5 cursor-not-allowed';
         btnResolve.innerHTML = `<span class="material-symbols-outlined text-[16px]">verified</span> ${problem ? 'Incident Resolved ✓' : 'Zero Active Incidents'}`;
       }
     }
@@ -2370,16 +2375,16 @@ async function initFleet() {
             historyLogEl.innerHTML = '';
             events.forEach(e => {
               const row = document.createElement('div');
-              row.className = 'p-2 rounded bg-[#171614] border border-[#282a2e] flex flex-col gap-1';
+              row.className = 'p-2 rounded bg-[#0D0E11] border border-[#282a2e] flex flex-col gap-1';
               const t = e.timestamp ? new Date(e.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'}) : 'Just now';
               row.innerHTML = `
-                <div class="flex items-center justify-between text-[#F0ECE4] text-[10px]">
+                <div class="flex items-center justify-between text-[#F4EFE6] text-[10px]">
                   <strong class="text-[#829A80]">${e.event_type}</strong>
                   <span class="text-[#9A9890]">${t}</span>
                 </div>
-                <div class="text-[9px] text-[#9A9890]">Actor: <span class="text-[#F0ECE4]">${e.actor}</span></div>
+                <div class="text-[9px] text-[#9A9890]">Actor: <span class="text-[#F4EFE6]">${e.actor}</span></div>
                 ${e.payload?.reason ? `<div class="text-[9px] text-[#9A9890]">Reason: ${e.payload.reason}</div>` : ''}
-                ${e.payload?.corrective_action ? `<div class="text-[9px] text-[#EDE5D4]">Action: ${e.payload.corrective_action}</div>` : ''}
+                ${e.payload?.corrective_action ? `<div class="text-[9px] text-[#F4EFE6]">Action: ${e.payload.corrective_action}</div>` : ''}
                 <div class="text-[8px] text-[#64777B] truncate font-mono" title="${e.hash}">hash: ${e.hash.substring(0, 16)}...</div>
               `;
               historyLogEl.appendChild(row);
@@ -2464,10 +2469,10 @@ async function initFleet() {
       currentFilter = filter;
 
       filterButtons.forEach(b => {
-        b.className = 'fleet-filter-btn px-md py-xs rounded-full bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] font-label-sm text-label-sm text-[#9A9890] hover:text-[#F0ECE4] transition-colors flex items-center gap-xs';
+        b.className = 'fleet-filter-btn px-md py-xs rounded-full bg-[#1a1c20] border border-[#282a2e] hover:bg-[#1e2024] font-label-sm text-label-sm text-[#9A9890] hover:text-[#F4EFE6] transition-colors flex items-center gap-xs';
       });
 
-      btn.className = 'fleet-filter-btn px-md py-xs rounded-full font-label-sm text-label-sm transition-colors bg-[#E8DFD0] text-[#211F1B] border border-[#E8DFD0] font-semibold flex items-center gap-xs';
+      btn.className = 'fleet-filter-btn px-md py-xs rounded-full font-label-sm text-label-sm transition-colors bg-[#F4EFE6] text-[#111215] border border-[#F4EFE6] font-semibold flex items-center gap-xs';
       renderVehicleList();
     };
   });
@@ -2538,7 +2543,7 @@ function initTechnical() {
         btn.textContent = 'Evaluating Arrhenius & SHA-256 DAG…';
         setTimeout(() => {
           btn.textContent = 'All Tests Passed (4/4) ✓';
-          btn.style.color = '#71816F';
+          btn.style.color = '#6BBF89';
           toast('Mathematical potency degradation tests & SHA-256 chains verified.', 'success');
         }, 600);
       };
@@ -2624,11 +2629,11 @@ async function boot() {
     });
     // Also handle hover state
     tourBtn.addEventListener('mouseenter', () => {
-      tourBtn.style.color = '#F0E8D9';
-      tourBtn.style.borderColor = '#A69F94';
+      tourBtn.style.color = '#F4EFE6';
+      tourBtn.style.borderColor = '#8C8E99';
     });
     tourBtn.addEventListener('mouseleave', () => {
-      tourBtn.style.color = '#A69F94';
+      tourBtn.style.color = '#8C8E99';
       tourBtn.style.borderColor = '#282a2e';
     });
   }

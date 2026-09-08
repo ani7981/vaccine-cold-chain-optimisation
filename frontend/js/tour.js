@@ -1,23 +1,55 @@
 /**
  * VaxKavach Demo Tour — driver.js v1 integration
- * CSS is injected via <link> tag so it works both in Vite dev and standalone.
+ * Resilient loader: Works seamlessly with Vite, static servers, and standalone file serving.
  */
 
-import { driver } from 'driver.js';
-
-// Inject driver.js CSS once, safely
+// Dynamically ensure Driver.js stylesheet is loaded
 function ensureDriverCSS() {
   if (document.getElementById('driver-css')) return;
   const link = document.createElement('link');
   link.id = 'driver-css';
   link.rel = 'stylesheet';
-  // Try local first (Vite dev), fall back gracefully
-  link.href = '/node_modules/driver.js/dist/driver.css';
+  link.href = '/css/driver.css';
   link.onerror = () => {
-    // CDN fallback
     link.href = 'https://cdn.jsdelivr.net/npm/driver.js@1.3.5/dist/driver.css';
   };
   document.head.appendChild(link);
+}
+
+// Dynamically resolve or load driver function
+async function loadDriver() {
+  if (window.driver?.js?.driver) return window.driver.js.driver;
+  if (window.driver?.driver) return window.driver.driver;
+  if (typeof window.driver === 'function') return window.driver;
+
+  ensureDriverCSS();
+
+  // Try dynamic import (in Vite build / dev)
+  try {
+    const mod = await import('driver.js');
+    if (mod?.driver) return mod.driver;
+  } catch (e) {
+    // Fall back to script tag injection
+  }
+
+  // Inject vendor script or CDN
+  return new Promise((resolve) => {
+    const s = document.createElement('script');
+    s.src = '/js/vendor/driver.js';
+    s.onload = () => {
+      resolve(window.driver?.js?.driver || window.driver?.driver || window.driver || null);
+    };
+    s.onerror = () => {
+      const s2 = document.createElement('script');
+      s2.src = 'https://cdn.jsdelivr.net/npm/driver.js@1.3.5/dist/driver.iife.js';
+      s2.onload = () => {
+        resolve(window.driver?.js?.driver || window.driver?.driver || window.driver || null);
+      };
+      s2.onerror = () => resolve(null);
+      document.head.appendChild(s2);
+    };
+    document.head.appendChild(s);
+  });
 }
 
 // ─── Tour step definitions per page ─────────────────────────────────────────
@@ -26,7 +58,7 @@ const OVERVIEW_STEPS = [
   {
     popover: {
       title: '👋 Welcome to VaxKavach',
-      description: 'This is the live operations desk for India\'s simulated vaccine cold-chain network. Let\'s walk through the key controls.',
+      description: 'The autonomous operations desk for India\'s simulated vaccine cold-chain network. Let\'s explore the live controls.',
       side: 'bottom',
       align: 'start',
     }
@@ -35,7 +67,7 @@ const OVERVIEW_STEPS = [
     element: '[data-tour="nav-rail"]',
     popover: {
       title: 'Tactical Navigation Rail',
-      description: 'Jump between Shipments, Live Map, Problems Queue, History, Fleet, and Technical views. One click from anywhere.',
+      description: 'Switch between Overview, Shipments, Live Map, Problems Queue, Audit History, Fleet, and Diagnostics with a single click.',
       side: 'right',
     }
   },
@@ -43,15 +75,15 @@ const OVERVIEW_STEPS = [
     element: '[data-tour="brand"]',
     popover: {
       title: 'VaxKavach System Identity',
-      description: 'The VaxKavach shield marks this as an autonomous pharmaceutical cold-chain operations desk — not a generic dashboard.',
+      description: 'Autonomous pharmaceutical cold-chain intelligence ensuring Universal Immunization Programme compliance across transit corridors.',
       side: 'right',
     }
   },
   {
     element: '#btn-walkthrough-tour',
     popover: {
-      title: 'Demo Tour Button',
-      description: 'You clicked this to start the tour! You can restart it any time from here, or append ?tour=true to any URL.',
+      title: 'Demo Tour',
+      description: 'Restart this tour any time by clicking this button, or launch it with ?tour=true in any URL.',
       side: 'bottom',
     }
   },
@@ -59,7 +91,7 @@ const OVERVIEW_STEPS = [
     element: 'main section:first-child',
     popover: {
       title: 'Live Network Health',
-      description: 'Fleet-wide status at a glance — 12 shipments, 9 healthy, 2 needing attention, 1 active temperature excursion.',
+      description: 'Real-time corridor telemetry: 12 shipments tracked, 9 optimal, 2 requiring attention, 1 active thermal excursion.',
       side: 'bottom',
     }
   },
@@ -67,7 +99,7 @@ const OVERVIEW_STEPS = [
     element: 'main section:nth-child(2)',
     popover: {
       title: 'Active Incident — VK-1042',
-      description: 'Shipment VK-1042 (Chennai → Vellore) has a developing thermal excursion. 5 correlated signals triggered this alert.',
+      description: 'Shipment VK-1042 (Chennai → Vellore) has breached the 8°C ceiling. Multi-sensor correlation detected door seal failure + compressor strain.',
       side: 'top',
     }
   },
@@ -75,7 +107,7 @@ const OVERVIEW_STEPS = [
     element: '#vk-theme-toggle',
     popover: {
       title: '☀️ Light / Dark Mode',
-      description: 'Click to switch between the clinical dark theme and the ivory light mode. Your preference is saved automatically.',
+      description: 'Switch between the dark charcoal operations theme and the clean ivory daylight mode. Persisted in your browser.',
       side: 'left',
     }
   }
@@ -84,17 +116,17 @@ const OVERVIEW_STEPS = [
 const PROBLEMS_STEPS = [
   {
     popover: {
-      title: '⚠️ Problems Queue',
-      description: 'All active temperature excursions surface here, sorted by severity. Each card shows evidence, signals, MKT impact and recommended action.',
+      title: '⚠️ Problems Operations Queue',
+      description: 'All active and monitored cold-chain excursions triage here by severity with MKT impact, signal correlation, and automated action proposals.',
       side: 'bottom',
     }
   },
   {
-    element: 'main section, main .bg-\\[\\#1E1D1A\\], article',
+    element: 'article',
     popover: {
-      title: 'Incident Cards',
-      description: 'Click any card to open the full investigation — temperature trace, GPS history, door state, and the reroute recommendation.',
-      side: 'right',
+      title: 'Incident Record — PR-1042',
+      description: 'Correlated evidence: 9.4°C temp, door open timer, ambient 38°C, MKT 6.8°C. Reroute protocol to Vellore Sub-District Depot ready for dispatch.',
+      side: 'bottom',
     }
   }
 ];
@@ -102,8 +134,8 @@ const PROBLEMS_STEPS = [
 const SHIPMENTS_STEPS = [
   {
     popover: {
-      title: '📦 Shipments Directory',
-      description: 'Every vaccine shipment currently moving through the network. Filter by status, corridor or search by ID.',
+      title: '📦 Active Shipments Directory',
+      description: 'Real-time telemetry and payload records for all live vaccine transit vehicles across interstate highways.',
       side: 'bottom',
     }
   }
@@ -112,24 +144,12 @@ const SHIPMENTS_STEPS = [
 const MAP_STEPS = [
   {
     popover: {
-      title: '🗺️ Live Logistics Map',
-      description: 'Real-time GPS positions, corridor overlays, and nearest-depot reroute recommendations plotted on India\'s logistics network.',
+      title: '🗺️ Live Logistics Telemetry Map',
+      description: 'Dynamic GPS positions, thermal corridor overlays, and nearest WHO-PQS depot reroute geometries plotted across India.',
       side: 'bottom',
     }
   }
 ];
-
-const GENERIC_STEPS = [
-  {
-    popover: {
-      title: '👋 VaxKavach Operations',
-      description: 'For the full walkthrough, visit the Overview page and click "Walkthrough Tour", or open /overview.html?tour=true',
-      side: 'bottom',
-    }
-  }
-];
-
-// ─── Build step list based on current page ───────────────────────────────────
 
 function getStepsForPage() {
   const page = location.pathname.split('/').pop() || 'overview.html';
@@ -140,49 +160,98 @@ function getStepsForPage() {
     'shipments.html': SHIPMENTS_STEPS,
     'map.html': MAP_STEPS,
   };
-  const steps = map[page] || GENERIC_STEPS;
-  // Filter out steps whose element doesn't exist on this page
+  const steps = map[page] || OVERVIEW_STEPS;
   return steps.filter(s => {
     if (!s.element) return true;
     return !!document.querySelector(s.element);
   });
 }
 
-// ─── Public API ──────────────────────────────────────────────────────────────
-
 let driverInstance = null;
 
-export function startDemoTour() {
-  ensureDriverCSS();
-
-  const steps = getStepsForPage();
-
-  if (driverInstance) {
-    try { driverInstance.destroy(); } catch (_) {}
+// Fallback interactive modal if driver.js fails
+function showFallbackTour(steps) {
+  let stepIndex = 0;
+  const overlay = document.createElement('div');
+  overlay.className = 'fixed inset-0 z-[100000] bg-black/75 backdrop-blur-sm flex items-center justify-center p-4';
+  
+  function renderStep() {
+    const s = steps[stepIndex];
+    overlay.innerHTML = `
+      <div class="w-full max-w-md bg-[#16171D] border border-[#2A2C35] rounded-2xl p-6 shadow-2xl text-[#F4EFE6] flex flex-col gap-4">
+        <div class="flex items-center justify-between border-b border-[#2A2C35] pb-3">
+          <span class="text-xs font-mono text-[#8C8E99] uppercase tracking-wider">Step ${stepIndex + 1} of ${steps.length}</span>
+          <button id="tour-fallback-close" class="text-[#8C8E99] hover:text-[#F4EFE6] text-lg font-bold">×</button>
+        </div>
+        <div>
+          <h3 class="text-base font-bold mb-1.5 text-[#F4EFE6]">${s.popover.title}</h3>
+          <p class="text-xs text-[#8C8E99] leading-relaxed">${s.popover.description}</p>
+        </div>
+        <div class="flex items-center justify-between pt-3 border-t border-[#2A2C35]">
+          <button id="tour-fallback-prev" class="px-3 py-1.5 rounded-lg bg-[#1E2027] border border-[#2A2C35] text-xs font-medium text-[#F4EFE6] ${stepIndex === 0 ? 'opacity-40 pointer-events-none' : 'hover:bg-[#262832]'}">← Back</button>
+          <button id="tour-fallback-next" class="px-4 py-1.5 rounded-lg bg-[#F4EFE6] text-[#111215] text-xs font-semibold hover:bg-white transition-colors">${stepIndex === steps.length - 1 ? 'Done ✓' : 'Next →'}</button>
+        </div>
+      </div>
+    `;
+    overlay.querySelector('#tour-fallback-close').onclick = () => overlay.remove();
+    const prev = overlay.querySelector('#tour-fallback-prev');
+    if (prev) prev.onclick = () => { if (stepIndex > 0) { stepIndex--; renderStep(); } };
+    const next = overlay.querySelector('#tour-fallback-next');
+    if (next) next.onclick = () => {
+      if (stepIndex < steps.length - 1) { stepIndex++; renderStep(); }
+      else overlay.remove();
+    };
   }
 
-  driverInstance = driver({
-    popoverClass: 'vk-tour-popover',
-    showProgress: true,
-    progressText: '{{current}} / {{total}}',
-    nextBtnText: 'Next →',
-    prevBtnText: '← Back',
-    doneBtnText: '✓ Done',
-    animate: true,
-    overlayOpacity: 0.55,
-    smoothScroll: true,
-    allowClose: true,
-    steps,
-  });
-
-  driverInstance.drive();
+  renderStep();
+  document.body.appendChild(overlay);
 }
 
-// Auto-start if ?tour=true in URL
-if (typeof window !== 'undefined' && new URLSearchParams(location.search).get('tour') === 'true') {
-  if (document.readyState === 'loading') {
-    window.addEventListener('DOMContentLoaded', () => setTimeout(startDemoTour, 1000));
-  } else {
-    setTimeout(startDemoTour, 1000);
+export async function startDemoTour() {
+  const steps = getStepsForPage();
+
+  try {
+    const driverFn = await loadDriver();
+    if (!driverFn) {
+      showFallbackTour(steps);
+      return;
+    }
+
+    if (driverInstance) {
+      try { driverInstance.destroy(); } catch (_) {}
+    }
+
+    driverInstance = driverFn({
+      popoverClass: 'vk-tour-popover',
+      showProgress: true,
+      progressText: '{{current}} / {{total}}',
+      nextBtnText: 'Next →',
+      prevBtnText: '← Back',
+      doneBtnText: '✓ Done',
+      animate: true,
+      overlayOpacity: 0.6,
+      smoothScroll: true,
+      allowClose: true,
+      steps,
+    });
+
+    driverInstance.drive();
+  } catch (err) {
+    console.warn('Driver.js initialization fallback:', err);
+    showFallbackTour(steps);
+  }
+}
+
+// Make globally available on window
+if (typeof window !== 'undefined') {
+  window.startDemoTour = startDemoTour;
+
+  // Auto-start if ?tour=true in URL
+  if (new URLSearchParams(location.search).get('tour') === 'true') {
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', () => setTimeout(startDemoTour, 900));
+    } else {
+      setTimeout(startDemoTour, 900);
+    }
   }
 }
