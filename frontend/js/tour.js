@@ -58,7 +58,7 @@ const OVERVIEW_STEPS = [
   {
     popover: {
       title: '👋 Welcome to VaxKavach',
-      description: 'The autonomous operations desk for India\'s simulated vaccine cold-chain network. Let\'s explore the live controls.',
+      description: 'The autonomous operations desk for India\'s cold-chain vaccine logistics network. Let\'s explore the live controls.',
       side: 'bottom',
       align: 'start',
     }

@@ -1,35 +1,53 @@
 version: '3.8'
 
 services:
-  db:
+  postgis:
     image: postgis/postgis:15-3.3
+    container_name: vaxkavach-postgis
     environment:
-      POSTGRES_USER: vaxkavach
-      POSTGRES_PASSWORD: vaxpassword
-      POSTGRES_DB: vaxkavach_db
+      POSTGRES_USER: ${POSTGRES_USER:-vaxkavach}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vaxpassword}
+      POSTGRES_DB: ${POSTGRES_DB:-vaxkavach_db}
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U vaxkavach -d vaxkavach_db"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-vaxkavach} -d ${POSTGRES_DB:-vaxkavach_db}"]
+      interval: 8s
+      timeout: 4s
+      retries: 6
+    restart: unless-stopped
+    shm_size: 256mb
 
   backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile
+    container_name: vaxkavach-backend
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-vaxkavach}:${POSTGRES_PASSWORD:-vaxpassword}@postgis:5432/${POSTGRES_DB:-vaxkavach_db}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - API_BASE_URL=http://backend:8000
     ports:
       - "8001:8000"
-    environment:
-      - DATABASE_URL=postgresql://vaxkavach:vaxpassword@db:5432/vaxkavach_db
-      - API_BASE_URL=http://localhost:8000
     depends_on:
-      db:
+      postgis:
         condition: service_healthy
-    volumes:
-      - ./backend:/app
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vaxkavach-frontend
+    ports:
+      - "80:80"
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
 
 volumes:
   pgdata:
+    name: vaxkavach_pgdata

@@ -2,6 +2,7 @@
 // VAXKAVACH INDUSTRIAL TELEMETRY MAP ENGINE
 // Professional-grade GIS Operations Command Center for Cold-Chain Reefers
 // ============================================================================
+import { fetchRerouteCandidates } from '/js/api.js';
 
 // Access Leaflet from window.L (loaded via script tag in map.html or vendor/CDN fallback)
 const L = (typeof window !== 'undefined' && window.L)
@@ -475,6 +476,98 @@ export function initLiveTelemetryMap() {
     if (openProbBtn) {
       openProbBtn.style.display = r.status === 'problem' ? 'flex' : 'none';
     }
+
+    renderRerouteCandidatesForReefer(r);
+  }
+
+  // --------------------------------------------------------------------------
+  // Dynamic 3-Tier Spatial Engine Route Preview
+  // --------------------------------------------------------------------------
+  let activeDiversionPolyline = null;
+
+  async function renderRerouteCandidatesForReefer(r) {
+    const listEl = document.getElementById('drawer-candidates-list');
+    const recText = document.getElementById('drawer-rec-text');
+    const badgeEl = document.getElementById('drawer-routing-badge');
+    if (!listEl) return;
+
+    if (r.status !== 'problem' && r.code !== 'VK-1042') {
+      listEl.innerHTML = '<div class="text-[11px] text-[#736E65] p-2 bg-[#16171D] rounded border border-[#282622]">Reefer operating nominally. Emergency diversion unneeded.</div>';
+      if (activeDiversionPolyline) {
+        map.removeLayer(activeDiversionPolyline);
+        activeDiversionPolyline = null;
+      }
+      return;
+    }
+
+    listEl.innerHTML = '<div class="text-[11px] text-[#A69F94] p-2 bg-[#16171D] rounded border border-[#282622] animate-pulse">Running 3-Tier PostGIS + OSRM route &amp; thermal feasibility analysis...</div>';
+
+    try {
+      const res = await fetchRerouteCandidates('ship_1');
+      const candidates = res.candidates || [];
+      if (!candidates.length) {
+        listEl.innerHTML = '<div class="text-[11px] text-[#B8756C] p-2 bg-[#2A1617] rounded">No compatible facilities found within search radius.</div>';
+        return;
+      }
+
+      if (badgeEl && candidates[0].routing_source) {
+        badgeEl.textContent = candidates[0].routing_source.replace(/_/g, ' ');
+      }
+
+      if (recText) {
+        const top = candidates[0];
+        recText.innerHTML = `<strong class="text-[#F4EFE6] font-bold">Divert immediately to ${top.depot_name}</strong> (${top.road_distance_km} km · ${top.eta_minutes} min ETA). <span class="text-[#E5B869]">${top.thermal_feasibility.badge}</span> before thermal reserve collapses.`;
+      }
+
+      function previewRoute(c) {
+        if (activeDiversionPolyline) {
+          map.removeLayer(activeDiversionPolyline);
+        }
+
+        const latLngs = c.route_geometry.map(pt => [pt[1], pt[0]]);
+        const lineColor = c.thermal_feasibility.color === 'HEALTHY' ? '#829A80' : (c.thermal_feasibility.color === 'WARNING' ? '#E5B869' : '#B8756C');
+        activeDiversionPolyline = L.polyline(latLngs, {
+          color: lineColor,
+          weight: 5.0,
+          opacity: 0.95,
+          dashArray: '8, 8'
+        }).addTo(map);
+
+        activeDiversionPolyline.bindTooltip(`Emergency Diversion: ${c.depot_name} (${c.road_distance_km} km · ${c.eta_minutes}m ETA)`, { sticky: true });
+        map.fitBounds(activeDiversionPolyline.getBounds().pad(0.18), { duration: 0.8 });
+      }
+
+      listEl.innerHTML = candidates.map((c, idx) => {
+        const isTop = idx === 0;
+        const badgeColor = c.thermal_feasibility.color === 'HEALTHY' ? 'text-[#829A80] bg-[#162218] border-[#829A80]/40' : (c.thermal_feasibility.color === 'WARNING' ? 'text-[#E5B869] bg-[#231E18] border-[#E5B869]/40' : 'text-[#B8756C] bg-[#2A1617] border-[#B8756C]/40');
+        return `
+          <div class="candidate-card p-2 rounded-lg bg-[#16171D] border ${isTop ? 'border-[#E5B869]' : 'border-[#282622]'} hover:border-[#F4EFE6] cursor-pointer transition-colors" data-idx="${idx}">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-[11px] text-[#F4EFE6] truncate max-w-[180px]">#${idx + 1} ${c.depot_name}</span>
+              <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border ${badgeColor}">${c.thermal_feasibility.status}</span>
+            </div>
+            <div class="flex items-center justify-between text-[10px] font-mono text-[#A69F94] mt-1">
+              <span>Road: <strong class="text-[#F4EFE6]">${c.road_distance_km} km</strong> (${c.eta_minutes}m)</span>
+              <span class="${badgeColor.split(' ')[0]} font-semibold">${c.thermal_feasibility.badge}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      listEl.querySelectorAll('.candidate-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const idx = parseInt(card.dataset.idx, 10);
+          listEl.querySelectorAll('.candidate-card').forEach(c => c.classList.remove('border-[#E5B869]', 'bg-[#231E18]'));
+          card.classList.add('border-[#E5B869]', 'bg-[#231E18]');
+          previewRoute(candidates[idx]);
+        });
+      });
+
+      previewRoute(candidates[0]);
+
+    } catch (err) {
+      console.warn('Reroute candidates fetch note:', err);
+    }
   }
 
   REEFERS.forEach(r => {
@@ -554,17 +647,21 @@ export function initLiveTelemetryMap() {
     const r = REEFERS.find(x => x.code === payload.shipment_code);
     if (r) {
       if (payload.temperature !== undefined) r.temp = payload.temperature;
-      if (payload.lat && payload.lon) r.coords = [payload.lat, payload.lon];
-      if (payload.speed !== undefined) r.speed = `${Math.round(payload.speed)} km/h`;
-      if (payload.problem_status) {
-        if (payload.problem_status.severity === 'CRITICAL' || payload.problem_status.severity === 'HIGH') {
-          r.status = 'problem';
-        } else if (payload.problem_status.severity === 'MEDIUM') {
-          r.status = 'attention';
-        } else {
-          r.status = 'okay';
-        }
+      const lat = payload.lat !== undefined ? payload.lat : payload.latitude;
+      const lon = payload.lon !== undefined ? payload.lon : payload.longitude;
+      if (lat !== undefined && lon !== undefined) {
+        r.coords = [lat, lon];
       }
+      if (payload.speed !== undefined) r.speed = `${Math.round(payload.speed)} km/h`;
+      
+      if (payload.has_problem || payload.severity === 'CRITICAL' || payload.temperature > 8.0) {
+        r.status = 'problem';
+      } else if (payload.severity === 'MEDIUM' || payload.temperature >= 6.8) {
+        r.status = 'attention';
+      } else {
+        r.status = 'okay';
+      }
+
       const marker = reeferMarkers[r.code];
       if (marker) {
         marker.setLatLng(r.coords);

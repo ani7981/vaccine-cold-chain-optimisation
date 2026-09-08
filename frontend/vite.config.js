@@ -3,7 +3,18 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   server: {
-    port: 5173
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:8001',
+        changeOrigin: true,
+        ws: true
+      },
+      '/ws': {
+        target: 'ws://127.0.0.1:8001',
+        ws: true
+      }
+    }
   },
   build: {
     rollupOptions: {
@@ -20,6 +31,8 @@ export default defineConfig({
         fleet: resolve(import.meta.dirname, 'fleet.html'),
         technical: resolve(import.meta.dirname, 'technical.html'),
         settings: resolve(import.meta.dirname, 'settings.html'),
+        syringe: resolve(import.meta.dirname, 'syringe.html'),
+        syringe3d: resolve(import.meta.dirname, 'syringe-3d.html'),
       }
     }
   },
@@ -35,7 +48,7 @@ export default defineConfig({
           if (pathname.startsWith('/@') || pathname.startsWith('/node_modules') || pathname.startsWith('/api')) {
             return next();
           }
-          if (pathname === '/') {
+          if (pathname === '/' || pathname === '/index' || pathname === '/index.html') {
             req.url = '/landing.html' + parsedUrl.search;
           } else if (pathname === '/problems' || pathname === '/problems/') {
             req.url = '/problems.html' + parsedUrl.search;

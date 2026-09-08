@@ -341,10 +341,24 @@
 
             <!-- Deterministic Algorithmic Directive -->
             <div id="drawer-directive-box" class="p-3 rounded-xl bg-[#231E18] border-l-4 border-l-[#E5B869] text-xs space-y-1">
-              <span class="text-[10px] font-mono uppercase font-bold text-[#E5B869] block">Automated Recommendation</span>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase font-bold text-[#E5B869] block">Spatial Intelligence Directive</span>
+                <span id="drawer-routing-badge" class="px-1.5 py-0.5 rounded text-[9px] font-mono uppercase bg-[#16171D] text-[#829A80] border border-[#829A80]/40">PostGIS + OSRM</span>
+              </div>
               <p id="drawer-rec-text" class="text-[#F4EFE6] text-[11px] leading-relaxed">
-                Divert immediately to Vellore Sub-District Depot (14 km, 18 min ETA) before thermal buffer collapses.
+                Evaluating optimal cold storage transshipment facility within active thermal reserve...
               </p>
+            </div>
+
+            <!-- Dynamic Evaluated Candidates List -->
+            <div id="drawer-candidates-section" class="flex flex-col gap-1.5 pt-1">
+              <span class="text-[10px] font-mono uppercase text-[#8C8E99] flex items-center justify-between">
+                <span>Ranked Alternate Facilities</span>
+                <span class="text-[9px] text-[#736E65]">Click to Preview Path</span>
+              </span>
+              <div id="drawer-candidates-list" class="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+                <!-- Populated dynamically by map.js via /api/routing/reroute-candidates -->
+              </div>
             </div>
           </div>
 

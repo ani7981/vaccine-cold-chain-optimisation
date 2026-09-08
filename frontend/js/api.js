@@ -1,5 +1,7 @@
-// Docker exposes this project's API on 8001 so it does not collide with other local services.
-export const API_BASE = `${location.protocol}//${location.hostname}:8001/api`;
+// In Vite dev server (port 5173/3000), API runs on 8001; in Docker/production, reverse-proxied at /api
+const isDev = typeof window !== 'undefined' && (location.port === '5173' || location.port === '3000');
+export const API_BASE = isDev ? `${location.protocol}//${location.hostname}:8001/api` : '/api';
+
 async function request(path, options = {}) {
   const res = await fetch(`${API_BASE}${path}`, {headers: {'Content-Type': 'application/json'}, ...options});
   if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || `Request failed (${res.status})`);
@@ -22,4 +24,34 @@ export const transitionProblem = (id, transition) => request(`/problems/${encode
 export const fetchProblemHistory = id => request(`/problems/${encodeURIComponent(id)}/history`);
 export const fetchVehicles = status => request(status ? `/fleet/vehicles?status=${encodeURIComponent(status)}` : '/fleet/vehicles');
 export const fetchVehicle = id => request(`/fleet/vehicles/${encodeURIComponent(id)}`);
+export const fetchAiModelInfo = () => request('/analytics/ai-model-info');
+export const fetchAiInsights = id => request(`/analytics/ai-insights/${encodeURIComponent(id)}`);
+export const fetchRerouteCandidates = id => request(`/routing/reroute-candidates/${encodeURIComponent(id)}`);
+export const fetchCorridors = () => request('/routing/corridors');
+export const fetchSensorDiagnostics = id => request(`/telemetry/diagnostics/${encodeURIComponent(id)}`);
+export const ingestTelemetry = packet => request('/telemetry/ingest', {method: 'POST', body: JSON.stringify(packet)});
+export const ingestTelemetryBatch = packets => request('/telemetry/ingest-batch', {method: 'POST', body: JSON.stringify(packets)});
+export const fetchMerkleRoot = () => request('/audit/merkle-root');
+export const fetchMerkleProof = eventId => request(`/audit/merkle-proof/${encodeURIComponent(eventId)}`);
+export const verifyMerkleProof = (leafHash, proofPath, expectedRoot) => request('/audit/verify-proof', {
+  method: 'POST',
+  body: JSON.stringify({leaf_hash: leafHash, proof_path: proofPath, expected_root: expectedRoot})
+});
+export const simulateAuditTamper = (targetIndex = 0) => request('/audit/simulate-tamper', {
+  method: 'POST',
+  body: JSON.stringify({target_index: targetIndex})
+});
+export const fetchBatchCertificate = (shipmentId, actor = "Chief_Regulatory_Officer") => 
+  request(`/audit/certificate/${encodeURIComponent(shipmentId)}?actor=${encodeURIComponent(actor)}`);
+export const fetchSimulationStatus = () => request('/simulation/status');
+export const injectSimulationChaos = (shipmentId, incidentType, durationSeconds = 300) => request('/simulation/inject-incident', {
+  method: 'POST',
+  body: JSON.stringify({ shipment_id: shipmentId, incident_type: incidentType, duration_seconds: durationSeconds })
+});
+export const clearSimulationChaos = (shipmentId) => request(
+  shipmentId ? `/simulation/clear-incidents?shipment_id=${encodeURIComponent(shipmentId)}` : '/simulation/clear-incidents',
+  { method: 'POST' }
+);
+
+
 

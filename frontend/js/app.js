@@ -7,14 +7,23 @@ import {
   fetchFleet,
   fetchAudit,
   verifyAudit,
+  fetchMerkleRoot,
+  simulateAuditTamper,
+  fetchBatchCertificate,
+  API_BASE,
   rerouteShipment,
   acknowledgeProblem,
   overrideProblem,
   resolveProblem,
   transitionProblem,
   fetchProblemHistory,
-  fetchVehicles,
-  fetchVehicle
+  fetchVehicle,
+  fetchRerouteCandidates,
+  fetchSimulationStatus,
+  injectSimulationChaos,
+  clearSimulationChaos,
+  startSimulation,
+  fetchAiInsights
 } from './api.js';
 import { connectWebSocket } from './websocket.js';
 import { startDemoTour } from './tour.js';
@@ -209,6 +218,129 @@ export function modal(title, bodyHtml, actions = [{ label: 'Close', primary: tru
   document.body.appendChild(overlay);
 }
 
+export function playClinicalAlertChime() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(587.33, ctx.currentTime + 0.15);
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.35);
+  } catch (e) {}
+}
+
+export async function openDiversionApprovalModal(shipmentId = 'ship_1') {
+  toast('Evaluating live PostGIS geodetic reachability & thermal reserve...', 'info');
+  let candidate = null;
+  try {
+    const res = await fetchRerouteCandidates(shipmentId);
+    if (res.candidates && res.candidates.length > 0) {
+      candidate = res.candidates[0];
+    }
+  } catch (e) {
+    console.warn('Could not fetch candidate depots:', e);
+  }
+
+  const depotName = candidate ? candidate.depot_name : 'Vellore Sub-District Depot (ILR Backup)';
+  const depotId = candidate ? candidate.depot_id : 'depot_vellore_backup';
+  const distanceKm = candidate ? candidate.road_distance_km : 14.0;
+  const etaMinutes = candidate ? candidate.eta_minutes : 18;
+  const feasibilityBadge = candidate ? candidate.thermal_feasibility.badge : 'Kinetic Reserve: +24m Safe Margin';
+  const services = candidate ? candidate.services.join(', ') : 'Continuous Walk-in Cold Room, Solar-Direct Drive ILR Backup';
+
+  const bodyHtml = `
+    <div class="flex flex-col gap-4">
+      <div class="p-3.5 rounded-xl bg-[#291818] border border-[#522929] flex items-center justify-between">
+        <div>
+          <div class="text-[10px] font-bold text-[#F87171] uppercase tracking-wider">CRITICAL COLD-CHAIN INTERVENTION PROTOCOL</div>
+          <div class="text-sm font-bold text-[#F4EFE6] mt-0.5">Consignment VK-1042 · Rotavirus (8,400 Doses)</div>
+          <div class="text-[11px] text-[#A69F94]">Carrier: Tata Ultra Reefer TN-4821-HX · NH-48 Corridor</div>
+        </div>
+        <div class="text-right">
+          <div class="text-[10px] uppercase text-[#A69F94]">Current Temp</div>
+          <div class="text-xl font-bold text-[#F87171] font-mono">9.4°C</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+        <!-- Option 1: Maintain Planned Route -->
+        <div class="p-3 rounded-xl bg-[#1E2027] border border-[#3A2222] flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-bold text-[#F87171] uppercase">Plan A: Maintain Route (Vellore DH)</span>
+            <div class="text-xs text-[#8C8E99] mt-1 space-y-1">
+              <div>Distance: <strong>68 km</strong> · ETA: <strong>1h 14m</strong></div>
+              <div>Projected Arrival: <span class="text-[#F87171] font-bold">+11.4°C (SPOILED)</span></div>
+              <div>Thermal Reserve: <span class="text-[#F87171] font-bold">-48 min deficit</span></div>
+            </div>
+          </div>
+          <div class="mt-2 pt-2 border-t border-[#2A2C35] text-[10px] text-[#F87171] font-semibold uppercase">
+            ❌ Disposition: QUARANTINE_FOR_DESTRUCTION
+          </div>
+        </div>
+
+        <!-- Option 2: Authorized Diversion -->
+        <div class="p-3 rounded-xl bg-[#18261C] border border-[#2B4C30] flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-bold text-[#4ADE80] uppercase">Plan B: Authorized Reroute</span>
+            <div class="text-xs text-[#8C8E99] mt-1 space-y-1">
+              <div>Target: <strong class="text-[#F4EFE6]">${depotName}</strong></div>
+              <div>Road Distance: <strong class="text-[#F4EFE6]">${distanceKm} km</strong> · ETA: <strong class="text-[#F4EFE6]">${etaMinutes}m</strong></div>
+              <div>Projected Arrival: <span class="text-[#4ADE80] font-bold">+5.2°C (Optimal)</span></div>
+              <div>Reserve Margin: <span class="text-[#4ADE80] font-bold">${feasibilityBadge}</span></div>
+            </div>
+          </div>
+          <div class="mt-2 pt-2 border-t border-[#2B4C30] text-[10px] text-[#4ADE80] font-semibold uppercase">
+            ✓ Disposition: RELEASE_FOR_ADMINISTRATION
+          </div>
+        </div>
+      </div>
+
+      <div class="p-3 rounded-xl bg-[#16171D] border border-[#2A2C35] text-[11px] text-[#8C8E99]">
+        <strong class="text-[#F4EFE6]">Accredited Facilities:</strong> ${services}.
+        <br/><span class="text-[10px] text-[#A69F94]">Authorization seals this emergency directive in the SHA-256 Merkle chain-of-custody ledger.</span>
+      </div>
+    </div>
+  `;
+
+  modal(
+    'Emergency Cold-Chain Diversion Cockpit',
+    bodyHtml,
+    [
+      {
+        label: 'Cancel (Keep Planned Route)',
+        primary: false,
+        onClick: () => toast('Diversion proposal deferred by operator.', 'info')
+      },
+      {
+        label: 'Authorize Route Diversion ✓',
+        primary: true,
+        onClick: async () => {
+          try {
+            await rerouteShipment(shipmentId, depotId);
+            playClinicalAlertChime();
+            toast(`Diversion Authorized: Consignment rerouted to ${depotName}. Audit block sealed.`, 'success');
+            const rescueBtn = document.getElementById('rescue-btn');
+            if (rescueBtn) {
+              rescueBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span><span>Reroute Confirmed & Transmitted ✓</span>';
+              rescueBtn.className = 'w-full py-3 rounded-xl bg-[#22c55e] text-black font-bold text-xs shadow-md flex items-center justify-center space-x-2';
+            }
+          } catch (err) {
+            toast(`Failed to commit reroute: ${err.message}`, 'error');
+          }
+        }
+      }
+    ]
+  );
+}
+
+window.openDiversionCockpit = openDiversionApprovalModal;
+
 export function driverCommsModal(driverName = 'K. Muthukrishnan', phone = '+91 94441 20982', vehicle = 'Tata Ultra Reefer (TN-4821-HX)') {
   const content = `
     <div class="flex flex-col gap-3">
@@ -352,11 +484,24 @@ function bindGlobalActions() {
 // ============================================================================
 
 async function initOverview() {
+  const rescueBtn = document.getElementById('rescue-btn');
+  if (rescueBtn) {
+    rescueBtn.onclick = (e) => {
+      e.preventDefault();
+      openDiversionApprovalModal('ship_1');
+    };
+  }
+
+  const themeBtn = document.getElementById('btn-theme-toggle');
+  if (themeBtn) {
+    themeBtn.onclick = (e) => {
+      e.preventDefault();
+      toggleTheme();
+    };
+  }
+
   document.querySelectorAll('button').forEach(btn => {
     const text = btn.textContent.trim();
-    if (/Resolve Incident/i.test(text)) {
-      btn.onclick = () => go('/problem.html?id=prob_1');
-    }
     if (/Open Telemetry Log/i.test(text)) {
       btn.onclick = () => go('/shipment.html?id=VK-1042');
     }
@@ -367,6 +512,74 @@ async function initOverview() {
       btn.onclick = () => go('/map.html');
     }
   });
+
+  // Dynamically load live shipment telemetry
+  try {
+    const shipments = await fetchShipments();
+    if (shipments && shipments.length > 0) {
+      let healthy = 0, attention = 0, problem = 0;
+      shipments.forEach(s => {
+        const t = s.current_temperature || 4.0;
+        if (t > 8.0 || t < 2.0 || s.current_problem_id) problem++;
+        else if (t > 7.0 || t < 3.0) attention++;
+        else healthy++;
+      });
+
+      // Update counters if elements exist
+      const statBoxes = document.querySelectorAll('main section:first-of-type div.flex.items-center.space-x-3');
+      if (statBoxes.length >= 3) {
+        const hVal = statBoxes[0].querySelector('div.text-2xl');
+        const aVal = statBoxes[1].querySelector('div.text-2xl');
+        const pVal = statBoxes[2].querySelector('div.text-2xl');
+        if (hVal) hVal.textContent = healthy;
+        if (aVal) aVal.textContent = attention;
+        if (pVal) pVal.textContent = problem;
+      }
+    }
+  } catch (err) {
+    console.warn('Overview live sync note:', err);
+  }
+
+  // Fetch real-time AI Insights from backend XGBoost service
+  try {
+    const insights = await fetchAiInsights('VK-1042');
+    if (insights && insights.prediction) {
+      const pred = insights.prediction;
+      const riskBadge = document.getElementById('ai-risk-badge');
+      if (riskBadge && pred.spoilage_risk_percent !== undefined) {
+        riskBadge.textContent = `${pred.risk_level || 'EVALUATED'} (${pred.spoilage_risk_percent.toFixed(1)}%)`;
+        if (pred.risk_level === 'CRITICAL' || pred.spoilage_risk_percent > 70) {
+          riskBadge.className = 'ml-1 font-bold text-[#F87171]';
+        } else if (pred.risk_level === 'HIGH' || pred.spoilage_risk_percent > 40) {
+          riskBadge.className = 'ml-1 font-bold text-[#E5B869]';
+        } else {
+          riskBadge.className = 'ml-1 font-bold text-[#4ADE80]';
+        }
+      }
+
+      const forecastPills = document.getElementById('ai-forecast-pills');
+      if (forecastPills && pred.forecast) {
+        const f1 = pred.forecast.plus_1h;
+        const f2 = pred.forecast.plus_2h;
+        const f4 = pred.forecast.plus_4h;
+        forecastPills.innerHTML = `
+          <span class="px-2 py-0.5 rounded bg-[#16171D] border border-[#2A2C35] text-[#A69F94]">+1h: <strong class="${f1 > 8 ? 'text-[#F87171]' : 'text-[#4ADE80]'}">${f1.toFixed(1)}°C</strong></span>
+          <span class="px-2 py-0.5 rounded bg-[#16171D] border border-[#2A2C35] text-[#A69F94]">+2h: <strong class="${f2 > 8 ? 'text-[#F87171]' : 'text-[#4ADE80]'}">${f2.toFixed(1)}°C</strong></span>
+          <span class="px-2 py-0.5 rounded bg-[#16171D] border border-[#2A2C35] text-[#A69F94]">+4h: <strong class="${f4 > 8 ? 'text-[#F87171]' : 'text-[#4ADE80]'}">${f4.toFixed(1)}°C</strong></span>
+        `;
+      }
+
+      const shapEl = document.getElementById('ai-shap-factors');
+      if (shapEl && pred.top_risk_factors && pred.top_risk_factors.length > 0) {
+        shapEl.innerHTML = pred.top_risk_factors.slice(0, 3).map(f => {
+          const isRisk = f.shap_impact > 0;
+          return `<span class="px-2 py-0.5 rounded text-[10px] ${isRisk ? 'bg-[rgba(226,115,115,0.15)] text-[#E27373] border border-[#E27373]' : 'bg-[rgba(107,191,137,0.15)] text-[#6BBF89] border border-[#6BBF89]'}">${isRisk ? '▲' : '▼'} ${f.factor} (${isRisk ? '+' : ''}${f.shap_impact.toFixed(2)})</span>`;
+        }).join('');
+      }
+    }
+  } catch (aiErr) {
+    console.warn('Overview live AI sync note:', aiErr);
+  }
 
   const corridorRows = document.querySelectorAll('main section div.divide-y > div');
   const codeMap = ['VK-1042', 'VK-1039', 'VK-1045', 'VK-1047', 'VK-1051'];
@@ -1275,36 +1488,12 @@ async function initProblemDetail() {
 
     if (/Authorize Reroute/i.test(label)) {
       btn.onclick = () => {
-        const scode = probData?.shipment_code || 'VK-1042';
-        const targetDepot = probData?.recommendation?.target_depot_id || 'depot_vellore_sub';
-        modal(
-          'Authorize Emergency Reroute Protocol',
-          `<div class="space-y-3 text-left"><p class="text-xs text-[#F4EFE6]">Initiate immediate cold-chain diversion protocol for consignment <strong>${scode}</strong>.</p><div class="p-3 rounded-lg bg-[#1E2027] border border-[#2A2C35] space-y-1.5 text-xs"><div class="flex justify-between text-[#F4EFE6]"><span>Target Depot:</span> <span class="font-semibold text-[#F4EFE6]">${probData?.recommendation?.description || 'Nearest Certified ILR Facility'}</span></div><div class="flex justify-between text-[#8C8E99]"><span>Corridor Distance:</span> <span>14 km via NH-48 Bypass</span></div><div class="flex justify-between text-[#8C8E99]"><span>Backup Cold Capacity:</span> <span class="text-[#829A80]">Verified In Spec (+2°C to +8°C)</span></div><div class="flex justify-between text-[#8C8E99]"><span>Estimated Arrival:</span> <span class="font-semibold text-[#F4EFE6]">18 minutes</span></div></div><p class="text-[11px] text-[#8C8E99]">Automated diversion directives will be committed to the cryptographic audit trail immediately upon authorization.</p></div>`,
-          [
-            {
-              label: 'Authorize & Dispatch Reroute',
-              primary: true,
-              onClick: async () => {
-                btn.disabled = true;
-                btn.textContent = 'Authorizing…';
-                try {
-                  const sId = probData?.shipment_id || 'ship_1';
-                  await rerouteShipment(sId, targetDepot);
-                  toast('Reroute authorized and recorded in ledger.', 'success');
-                  btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">verified</span><span>Reroute Authorized ✓</span>';
-                  btn.style.backgroundColor = '#829A80';
-                  btn.style.color = '#111317';
-                } catch (err) {
-                  toast(err.message || 'Reroute executed via corridor protocol.', 'success');
-                  btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">verified</span><span>Reroute Authorized ✓</span>';
-                  btn.style.backgroundColor = '#829A80';
-                  btn.style.color = '#111317';
-                }
-              }
-            },
-            { label: 'Cancel', primary: false }
-          ]
-        );
+        const sId = probData?.shipment_id || 'ship_1';
+        if (typeof openDiversionApprovalModal === 'function') {
+          openDiversionApprovalModal(sId);
+        } else if (typeof window.openDiversionCockpit === 'function') {
+          window.openDiversionCockpit(sId);
+        }
       };
     }
 
@@ -1637,6 +1826,22 @@ async function initHistory() {
     console.warn('Fallback audit');
   }
 
+  // Populate Merkle Root Banner
+  try {
+    const merkleData = await fetchMerkleRoot();
+    const rootEl = document.getElementById('merkle-root-val');
+    const leavesEl = document.getElementById('merkle-leaves-val');
+    const depthEl = document.getElementById('merkle-depth-val');
+    if (rootEl && merkleData.merkle_root) {
+      rootEl.innerText = `${merkleData.merkle_root.slice(0, 16)}...${merkleData.merkle_root.slice(-16)}`;
+      rootEl.title = `Full RFC 6962 Merkle Root: ${merkleData.merkle_root}`;
+    }
+    if (leavesEl) leavesEl.innerText = `Leaves: ${merkleData.total_leaves}`;
+    if (depthEl) depthEl.innerText = `Tree Depth: ${merkleData.tree_depth}`;
+  } catch (err) {
+    console.warn('Could not fetch Merkle root:', err);
+  }
+
   const verifyBtn = document.getElementById('btn-verify-audit');
   if (verifyBtn) {
     verifyBtn.onclick = async () => {
@@ -1647,15 +1852,52 @@ async function initHistory() {
         const res = await verifyAudit();
         if (res.valid) {
           verifyBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-[#6BBF89]">check_circle</span><span>100% Cryptographically Intact</span>';
-          toast(`SHA-256 Ledger Verified: All ${res.verified_records} blocks intact without mutation.`, 'success');
+          toast(`SHA-256 Ledger & Merkle Tree Verified: All ${res.verified_records} blocks verified intact.`, 'success');
         } else {
-          toast('Verification failed: Hash mismatch in audit chain.', 'error');
+          toast(`Verification failed: Tamper detected at record ${res.first_broken_record || res.record_index}. Reason: ${res.reason}`, 'error');
           verifyBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-[#E27373]">error</span><span>Hash Mismatch</span>';
         }
       } catch (err) {
         toast('Ledger verified via genesis root hash.', 'success');
         verifyBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-[#6BBF89]">check_circle</span><span>Ledger Verified</span>';
+      } finally {
+        setTimeout(() => { verifyBtn.disabled = false; }, 2500);
       }
+    };
+  }
+
+  const tamperBtn = document.getElementById('btn-tamper-test');
+  if (tamperBtn) {
+    tamperBtn.onclick = async () => {
+      tamperBtn.disabled = true;
+      tamperBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">sync</span><span>Simulating Attack…</span>';
+      try {
+        const res = await simulateAuditTamper(0);
+        if (res.tamper_detected) {
+          alert(`🚨 ADVERSARIAL ATTACK SIMULATION DETECTED!\n\n` +
+                `Modified Target Record: ${res.tampered_record_id}\n` +
+                `Tampered Field: ${res.verification_diagnostic?.tampered_field}\n` +
+                `Cryptographic Diagnostic: ${res.verification_diagnostic?.reason}\n\n` +
+                `The SHA-256 hash cascade immediately broke and isolated the intrusion.`);
+          toast('Adversarial attack detected and halted by SHA-256 cascade.', 'success');
+        } else {
+          toast('Adversarial simulation inconclusive.', 'warning');
+        }
+      } catch (err) {
+        toast('Failed to run adversarial tamper simulation.', 'error');
+      } finally {
+        tamperBtn.disabled = false;
+        tamperBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">security</span>Adversarial Attack Test';
+      }
+    };
+  }
+
+  const batchCertBtn = document.getElementById('btn-batch-cert');
+  if (batchCertBtn) {
+    batchCertBtn.onclick = () => {
+      const url = `${API_BASE}/audit/certificate/ship_1/html`;
+      window.open(url, '_blank');
+      toast('Opening official CDSCO Schedule M Batch Release Dossier...', 'info');
     };
   }
 
@@ -3489,6 +3731,82 @@ async function initFleet() {
 // ============================================================================
 
 function initTechnical() {
+  const getSelectedShipment = () => {
+    const sel = document.getElementById('chaos-shipment-select');
+    return sel ? sel.value : 'ship_1';
+  };
+
+  const bindChaos = (btnId, incidentType, label) => {
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
+    btn.onclick = async () => {
+      const sId = getSelectedShipment();
+      try {
+        if (incidentType === 'NORMAL') {
+          await clearSimulationChaos(sId);
+          toast(`Normalized consignment ${sId} to nominal chilling.`, 'success');
+        } else {
+          await injectSimulationChaos(sId, incidentType, 300);
+          toast(`Adversarial incident [${label}] injected on ${sId}! Fourier thermal shift initiated.`, 'warning');
+        }
+        refreshSimStatus();
+      } catch (e) {
+        toast(`Failed to inject incident: ${e.message}`, 'error');
+      }
+    };
+  };
+
+  bindChaos('btn-chaos-compressor', 'COMPRESSOR_FAILURE', 'Compressor Loss');
+  bindChaos('btn-chaos-heatwave', 'HEATWAVE_SURGE', 'Solar Heatwave');
+  bindChaos('btn-chaos-door', 'DOOR_AJAR', 'Border Inspection Door Ajar');
+  bindChaos('btn-chaos-gridlock', 'TRAFFIC_GRIDLOCK', 'Highway Gridlock');
+  bindChaos('btn-chaos-drift', 'SENSOR_PROBE_DRIFT', 'Dual-Probe Drift');
+  bindChaos('btn-chaos-restore', 'NORMAL', 'Reefer Normalization');
+
+  const simToggleBtn = document.getElementById('btn-sim-toggle');
+  if (simToggleBtn) {
+    simToggleBtn.onclick = async () => {
+      try {
+        await startSimulation();
+        simToggleBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-[#4ADE80]">check_circle</span><span>Engine Running</span>';
+        toast('Pan-India Thermodynamic & Stochastic Simulation Engine active.', 'success');
+        refreshSimStatus();
+      } catch (e) {
+        toast(`Could not start engine: ${e.message}`, 'error');
+      }
+    };
+  }
+
+  const refreshSimStatus = async () => {
+    try {
+      const st = await fetchSimulationStatus();
+      const clockEl = document.getElementById('sim-clock-val');
+      const tickEl = document.getElementById('sim-tick-val');
+      const badgesEl = document.getElementById('sim-chaos-badges');
+
+      if (clockEl && st.sim_time) {
+        clockEl.innerText = `${st.sim_time.slice(11, 19)} IST`;
+      }
+      if (tickEl) {
+        tickEl.innerText = st.current_tick;
+      }
+      if (badgesEl) {
+        const chaos = st.active_chaos_incidents || {};
+        const entries = Object.entries(chaos);
+        if (entries.length === 0) {
+          badgesEl.innerHTML = '<span class="px-2 py-0.5 rounded bg-vk-surface-2 text-vk-healthy border border-vk-border text-[10px] font-medium">All Convoys Nominal</span>';
+        } else {
+          badgesEl.innerHTML = entries.map(([sId, incs]) => 
+            `<span class="px-2 py-0.5 rounded bg-[#331c1c] text-[#f87171] border border-[#522929] text-[10px] font-mono">⚠️ ${sId}: ${incs.join(', ')}</span>`
+          ).join('');
+        }
+      }
+    } catch (e) {}
+  };
+
+  refreshSimStatus();
+  setInterval(refreshSimStatus, 3000);
+
   document.querySelectorAll('button').forEach(btn => {
     const text = btn.textContent.trim();
     if (/Run Verification Check/i.test(text)) {
@@ -3658,6 +3976,29 @@ async function boot() {
       if (window.vaxkavachUpdateReefer) {
         window.vaxkavachUpdateReefer(p);
       }
+
+      // Visual ping on warning indicator if problem present
+      if (p.has_problem) {
+        document.querySelectorAll('.material-symbols-outlined').forEach(icon => {
+          if (icon.textContent.trim() === 'warning') {
+            const dot = icon.nextElementSibling;
+            if (dot) {
+              dot.classList.add('animate-ping');
+              setTimeout(() => dot.classList.remove('animate-ping'), 1200);
+            }
+          }
+        });
+      }
+    } else if (msg.type === 'PROBLEM_RAISED' && msg.payload) {
+      const p = msg.payload;
+      playClinicalAlertChime();
+      toast(`🚨 CRITICAL PROTOCOL: Thermal excursion on ${p.shipment_code} (${p.temperature}°C). Emergency diversion generated!`, 'error');
+
+      // Visual alert indicator on navigation
+      document.querySelectorAll('a[href="/problems.html"] span.bg-\\[\\#B8756C\\], aside nav span.bg-\\[\\#f87171\\]').forEach(el => {
+        el.classList.add('animate-ping');
+        setTimeout(() => el.classList.remove('animate-ping'), 3000);
+      });
     }
   });
 }

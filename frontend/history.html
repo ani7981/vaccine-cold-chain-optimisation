@@ -133,30 +133,7 @@
 <!-- MAIN CONTENT WORKSPACE -->
 <div class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-[#0D0E11]">
 <!-- Sub-navigation Bar for Verification State -->
-<section class="w-full bg-[#0D0E11] border-b border-[#2A2C35] py-2 px-6 flex-shrink-0">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-<div class="flex items-center gap-2 flex-wrap">
-<span class="font-mono text-[11px] uppercase tracking-wider text-[#8C8E99]">Active Environment:</span>
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#16171D] border border-[#2A2C35] text-[#F4EFE6] text-[12px]">
-<span class="w-1.5 h-1.5 rounded-full bg-[#6BBF89]"></span>
-Simulation Node: Alpha-7
-</span>
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#16171D] border border-[#2A2C35] text-[#F4EFE6] text-[12px]">
-<span class="w-1.5 h-1.5 rounded-full bg-[#6BBF89]"></span>
-SHA-256 Ingestion Stream
-</span>
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#16171D] border border-[#2A2C35] text-[#F4EFE6] text-[12px]">
-<span class="w-1.5 h-1.5 rounded-full bg-[#667A7D]"></span>
-Policy: WHO-PQS / TR961
-</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-mono text-[11px] uppercase tracking-wider px-2.5 py-1 rounded bg-[#16171D] border border-[#2A2C35] text-[#E5B869]">
-DEMO AUDIT ENVIRONMENT · NO MUTATIONS PERMITTED
-</span>
-</div>
-</div>
-</section>
+
 
 <!-- Technical Console Workspace -->
 <div class="w-full p-6 flex flex-col gap-6">
@@ -546,21 +523,37 @@ DEMO AUDIT ENVIRONMENT · NO MUTATIONS PERMITTED
 </div>
 <!-- Card 6: Cryptographic Audit Chain & Verified Records -->
 <div class="bg-vk-surface border border-vk-border rounded-xl p-xl flex flex-col gap-base shadow-sm">
-<div class="flex items-center justify-between">
+<div class="flex items-center justify-between flex-wrap gap-md">
 <div class="flex flex-col">
 <span class="font-label-caps text-label-caps uppercase tracking-wider text-vk-text-muted">Tamper-Evident Ledger</span>
-<span class="font-headline-sm text-headline-sm text-vk-cream">Cryptographic Event Chain</span>
+<span class="font-headline-sm text-headline-sm text-vk-cream">Cryptographic Merkle Event Chain</span>
 </div>
 <div class="flex items-center gap-sm flex-wrap">
-<button id="btn-verify-audit" class="px-md py-xs rounded-lg bg-[#F4EFE6] text-[#111215] font-label-sm text-label-sm font-semibold flex items-center gap-xs shadow-sm hover:bg-[#F4EFE6] transition-all" type="button"><span class="material-symbols-outlined text-[16px]">verified</span>Verify Ledger Integrity</button>
+<button id="btn-verify-audit" class="px-md py-xs rounded-lg bg-[#F4EFE6] text-[#111215] font-label-sm text-label-sm font-semibold flex items-center gap-xs shadow-sm hover:bg-[#F4EFE6] transition-all" type="button"><span class="material-symbols-outlined text-[16px]">verified</span>Verify Ledger</button>
+<button id="btn-tamper-test" class="px-md py-xs rounded-lg bg-[#2D1B1B] border border-[#5C2E2E] text-[#F87171] font-label-sm text-label-sm font-semibold hover:bg-[#3D2020] flex items-center gap-xs transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">security</span>Adversarial Attack Test</button>
+<button id="btn-batch-cert" class="px-md py-xs rounded-lg bg-[#1B2920] border border-[#2E5C3A] text-[#4ADE80] font-label-sm text-label-sm font-semibold hover:bg-[#223829] flex items-center gap-xs transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">workspace_premium</span>CDSCO Batch Certificate</button>
 <button id="btn-export-audit" class="px-md py-xs rounded-lg bg-vk-surface-2 border border-vk-border text-vk-cream font-label-sm text-label-sm hover:bg-vk-surface-3 flex items-center gap-xs transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">download</span>Export CSV</button>
 </div>
 </div>
+<div id="merkle-root-banner" class="p-md rounded-lg bg-[#161922] border border-[#2B3245] flex flex-col sm:flex-row sm:items-center justify-between gap-sm text-xs">
+  <div class="flex items-center gap-sm">
+    <span class="material-symbols-outlined text-[#60A5FA] text-[20px]">account_tree</span>
+    <div>
+      <div class="text-[10px] uppercase font-bold text-[#94A3B8]">RFC 6962 Binary Merkle Root</div>
+      <div id="merkle-root-val" class="font-mono text-[11px] text-[#F8FAFC] font-semibold">Computing Root...</div>
+    </div>
+  </div>
+  <div class="flex items-center gap-md text-[11px] font-mono text-[#94A3B8]">
+    <span id="merkle-leaves-val">Leaves: --</span>
+    <span id="merkle-depth-val">Depth: --</span>
+    <span class="px-2 py-0.5 rounded bg-[#1E293B] text-[#38BDF8] border border-[#334155] uppercase text-[10px]">SHA-256 Dual-Layer</span>
+  </div>
+</div>
 <p class="font-body-sm text-body-sm text-vk-text-muted">
-              Every operational state transition is cryptographically sealed as a sequential hash chain. Any retrospective mutation breaks downstream parity and halts validation.
-            </p>
+  Every operational state transition is cryptographically sealed in both a linear SHA-256 previous-hash chain and a binary Merkle tree. Any retrospective mutation breaks downstream parity and invalidates the batch disposition.
+</p>
 <!-- Linked Hash Records -->
-<div class="flex flex-col gap-xs">
+<div id="audit-cards-container" class="flex flex-col gap-xs">
 <!-- Record 0104 -->
 <div class="p-md rounded-lg bg-vk-surface-2 border border-vk-border flex flex-col gap-xs tabular-nums">
 <div class="flex items-center justify-between flex-wrap gap-xs">

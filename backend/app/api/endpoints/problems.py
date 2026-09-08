@@ -42,6 +42,19 @@ def serialize_problem(problem: Problem, db: Session):
     }
 
 
+def find_problem(problem_id: str, db: Session):
+    p = db.query(Problem).filter((Problem.id == problem_id) | (Problem.problem_code == problem_id)).first()
+    if not p:
+        p = (
+            db.query(Problem)
+            .join(Shipment, Problem.shipment_id == Shipment.id)
+            .filter((Shipment.shipment_code == problem_id) | (Shipment.id == problem_id))
+            .order_by(Problem.detected_at.desc())
+            .first()
+        )
+    return p
+
+
 @router.get("/")
 def list_problems(db: Session = Depends(get_db)):
     return [serialize_problem(p, db) for p in db.query(Problem).order_by(Problem.detected_at.desc()).all()]
@@ -49,7 +62,7 @@ def list_problems(db: Session = Depends(get_db)):
 
 @router.get("/{problem_id}")
 def get_problem(problem_id: str, db: Session = Depends(get_db)):
-    problem = db.query(Problem).filter((Problem.id == problem_id) | (Problem.problem_code == problem_id)).first()
+    problem = find_problem(problem_id, db)
     if not problem:
         raise HTTPException(status_code=404, detail="Problem not found")
     return serialize_problem(problem, db)
@@ -57,7 +70,7 @@ def get_problem(problem_id: str, db: Session = Depends(get_db)):
 
 @router.get("/{problem_id}/history")
 def get_problem_history(problem_id: str, db: Session = Depends(get_db)):
-    problem = db.query(Problem).filter((Problem.id == problem_id) | (Problem.problem_code == problem_id)).first()
+    problem = find_problem(problem_id, db)
     if not problem:
         raise HTTPException(status_code=404, detail="Problem not found")
     events = db.query(AuditEvent).filter(AuditEvent.entity_id == problem.id).order_by(AuditEvent.timestamp.asc()).all()
@@ -69,7 +82,7 @@ def get_problem_history(problem_id: str, db: Session = Depends(get_db)):
 
 @router.post("/{problem_id}/acknowledge")
 async def acknowledge_problem(problem_id: str, body: OperationalActionRequest, db: Session = Depends(get_db)):
-    problem = db.query(Problem).filter((Problem.id == problem_id) | (Problem.problem_code == problem_id)).first()
+    problem = find_problem(problem_id, db)
     if not problem:
         raise HTTPException(status_code=404, detail="Problem not found")
     if problem.status == "OPEN":
@@ -92,7 +105,7 @@ async def acknowledge_problem(problem_id: str, body: OperationalActionRequest, d
 
 @router.post("/{problem_id}/transition")
 async def transition_problem(problem_id: str, body: IncidentTransitionRequest, db: Session = Depends(get_db)):
-    problem = db.query(Problem).filter((Problem.id == problem_id) | (Problem.problem_code == problem_id)).first()
+    problem = find_problem(problem_id, db)
     if not problem:
         raise HTTPException(status_code=404, detail="Problem not found")
     
@@ -144,7 +157,7 @@ async def transition_problem(problem_id: str, body: IncidentTransitionRequest, d
 
 @router.post("/{problem_id}/resolve")
 async def resolve_problem(problem_id: str, body: IncidentResolutionRequest, db: Session = Depends(get_db)):
-    problem = db.query(Problem).filter((Problem.id == problem_id) | (Problem.problem_code == problem_id)).first()
+    problem = find_problem(problem_id, db)
     if not problem:
         raise HTTPException(status_code=404, detail="Problem not found")
     
@@ -208,7 +221,7 @@ async def resolve_problem(problem_id: str, body: IncidentResolutionRequest, db: 
 
 @router.post("/{problem_id}/override")
 async def override_problem(problem_id: str, body: OperationalActionRequest, db: Session = Depends(get_db)):
-    problem = db.query(Problem).filter((Problem.id == problem_id) | (Problem.problem_code == problem_id)).first()
+    problem = find_problem(problem_id, db)
     if not problem:
         raise HTTPException(status_code=404, detail="Problem not found")
     if problem.status not in {"REROUTED", "OVERRIDDEN", "RESOLVED"}:

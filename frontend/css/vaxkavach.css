@@ -1055,6 +1055,39 @@ html.light a[class*="bg-[#ede5cf]"] span {
   color: #FFFFFF !important;
 }
 
+.excursion-alert-banner {
+  background-color: #16171D;
+  border-width: 1px 1px 1px 4px;
+  border-style: solid;
+  border-color: #2A2C35 #2A2C35 #2A2C35 #E27373;
+}
+
+html.light .excursion-alert-banner {
+  background-color: #FFF5F5 !important;
+  border-color: #FED7D7 #FED7D7 #FED7D7 #DC2626 !important;
+  border-left-width: 4px !important;
+}
+
+.btn-resolve-incident {
+  background-color: #F4EFE6;
+  color: #111214;
+}
+
+.btn-resolve-incident:hover {
+  background-color: #FFFFFF;
+}
+
+html.light .btn-resolve-incident {
+  background-color: #111215 !important;
+  color: #F4EFE6 !important;
+  border-color: #111215 !important;
+}
+
+html.light .btn-resolve-incident:hover {
+  background-color: #282D37 !important;
+  color: #FFFFFF !important;
+}
+
 /* Light mode semantic clinical badges */
 html.light .badge-healthy,
 html.light [class*="text-[#6BBF89]"],
@@ -1121,5 +1154,24 @@ html.light .modal-card {
 /* Visibility utility guarantee */
 .hidden {
   display: none !important;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.pulse-marker {
+  animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
 
