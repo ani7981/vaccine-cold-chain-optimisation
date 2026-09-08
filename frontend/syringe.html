@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syringe Element — VaxKavach</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surface: '#16171D',
+            border:  '#2A2C35',
+            muted:   '#8C8E99',
+            cream:   '#F4EFE6',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fill-syringe {
+      from { stroke-dashoffset: 6; }
+      to   { stroke-dashoffset: 0; }
+    }
+    .syringe-fill-anim {
+      stroke-dasharray: 6;
+      stroke-dashoffset: 6;
+      animation: fill-syringe 1.2s 0.3s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0D0E11] text-[#F4EFE6] font-sans antialiased p-10">
+
+  <h1 class="text-2xl font-semibold mb-1">Syringe Element</h1>
+  <p class="text-[#8C8E99] text-sm mb-10">Reusable grey SVG component · copy the <code class="bg-[#16171D] px-1 rounded">&lt;svg&gt;</code> tag for use anywhere</p>
+
+  <!-- Size variants -->
+  <section class="mb-12">
+    <h2 class="text-xs uppercase tracking-widest text-[#8C8E99] mb-6">Size Variants</h2>
+    <div class="flex items-end gap-10 flex-wrap">
+
+      <div class="flex flex-col items-center gap-3">
+        <svg style="color:#8C8E99" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-label="Syringe">
+          <line x1="22" y1="2" x2="18" y2="6"/>
+          <path d="M18 6l-2-2-9 9 4 4 9-9z"/>
+          <line x1="5" y1="15" x2="2" y2="22"/>
+          <line x1="9" y1="11" x2="14" y2="16"/>
+          <line x1="7" y1="13" x2="12" y2="18"/>
+          <line x1="11" y1="9" x2="16" y2="14"/>
+        </svg>
+        <span class="text-[10px] text-[#8C8E99]">xs · w-6</span>
+      </div>
+
+      <div class="flex flex-col items-center gap-3">
+        <svg style="color:#8C8E99" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-label="Syringe">
+          <line x1="22" y1="2" x2="18" y2="6"/>
+          <path d="M18 6l-2-2-9 9 4 4 9-9z"/>
+          <line x1="5" y1="15" x2="2" y2="22"/>
+          <line x1="9" y1="11" x2="14" y2="16"/>
+          <line x1="7" y1="13" x2="12" y2="18"/>
+          <line x1="11" y1="9" x2="16" y2="14"/>
+        </svg>
+        <span class="text-[10px] text-[#8C8E99]">sm · w-8</span>
+      </div>
+
+      <div class="flex flex-col items-center gap-3">
+        <svg style="color:#8C8E99" class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-label="Syringe">
+          <line x1="22" y1="2" x2="18" y2="6"/>
+          <path d="M18 6l-2-2-9 9 4 4 9-9z"/>
+          <line x1="5" y1="15" x2="2" y2="22"/>
+          <line x1="9" y1="11" x2="14" y2="16"/>
+          <line x1="7" y1="13" x2="12" y2="18"/>
+          <line x1="11" y1="9" x2="16" y2="14"/>
+        </svg>
+        <span class="text-[10px] text-[#8C8E99]">md · w-12</span>
+      </div>
+
+      <div class="flex flex-col items-center gap-3">
+        <svg style="color:#8C8E99" class="w-20 h-20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-label="Syringe">
+          <line x1="22" y1="2" x2="18" y2="6"/>
+          <path d="M18 6l-2-2-9 9 4 4 9-9z"/>
+          <line x1="5" y1="15" x2="2" y2="22"/>
+          <line x1="9" y1="11" x2="14" y2="16"/>
+          <line x1="7" y1="13" x2="12" y2="18"/>
+          <line x1="11" y1="9" x2="16" y2="14"/>
+        </svg>
+        <span class="text-[10px] text-[#8C8E99]">lg · w-20</span>
+      </div>
+
+      <!-- XL detailed -->
+      <div class="flex flex-col items-center gap-3">
+        <svg style="color:#8C8E99" class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 48 48" aria-label="Syringe detailed">
+          <line x1="44" y1="4" x2="40" y2="8" stroke-width="1.4"/>
+          <rect x="14" y="14" width="22" height="8" rx="1.5"/>
+          <line x1="8" y1="18" x2="14" y2="18"/>
+          <line x1="6" y1="14" x2="6" y2="22"/>
+          <line x1="8" y1="14" x2="8" y2="22"/>
+          <line x1="36" y1="18" x2="44" y2="18"/>
+          <line x1="20" y1="14" x2="20" y2="11.5" stroke-width="0.9"/>
+          <line x1="24" y1="14" x2="24" y2="11.5" stroke-width="0.9"/>
+          <line x1="28" y1="14" x2="28" y2="11.5" stroke-width="0.9"/>
+          <line x1="32" y1="14" x2="32" y2="11.5" stroke-width="0.9"/>
+          <line x1="44" y1="18" x2="47" y2="18" stroke-width="0.9"/>
+        </svg>
+        <span class="text-[10px] text-[#8C8E99]">xl · w-32 (detailed)</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Grey tone palette -->
+  <section class="mb-12">
+    <h2 class="text-xs uppercase tracking-widest text-[#8C8E99] mb-6">Grey Tones</h2>
+    <div class="flex items-center gap-8 flex-wrap">
+      <div class="flex flex-col items-center gap-2">
+        <svg style="color:#6B7280" class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <line x1="22" y1="2" x2="18" y2="6"/><path d="M18 6l-2-2-9 9 4 4 9-9z"/>
+          <line x1="5" y1="15" x2="2" y2="22"/><line x1="9" y1="11" x2="14" y2="16"/>
+          <line x1="7" y1="13" x2="12" y2="18"/><line x1="11" y1="9" x2="16" y2="14"/>
+        </svg>
+        <span class="text-[10px] text-[#8C8E99]">#6B7280</span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <svg style="color:#8C8E99" class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <line x1="22" y1="2" x2="18" y2="6"/><path d="M18 6l-2-2-9 9 4 4 9-9z"/>
+          <line x1="5" y1="15" x2="2" y2="22"/><line x1="9" y1="11" x2="14" y2="16"/>
+          <line x1="7" y1="13" x2="12" y2="18"/><line x1="11" y1="9" x2="16" y2="14"/>
+        </svg>
+        <span class="text-[10px] text-[#8C8E99]">#8C8E99 (muted)</span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <svg style="color:#A69F94" class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <line x1="22" y1="2" x2="18" y2="6"/><path d="M18 6l-2-2-9 9 4 4 9-9z"/>
+          <line x1="5" y1="15" x2="2" y2="22"/><line x1="9" y1="11" x2="14" y2="16"/>
+          <line x1="7" y1="13" x2="12" y2="18"/><line x1="11" y1="9" x2="16" y2="14"/>
+        </svg>
+        <span class="text-[10px] text-[#8C8E99]">#A69F94</span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <svg style="color:#C0BDB8" class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <line x1="22" y1="2" x2="18" y2="6"/><path d="M18 6l-2-2-9 9 4 4 9-9z"/>
+          <line x1="5" y1="15" x2="2" y2="22"/><line x1="9" y1="11" x2="14" y2="16"/>
+          <line x1="7" y1="13" x2="12" y2="18"/><line x1="11" y1="9" x2="16" y2="14"/>
+        </svg>
+        <span class="text-[10px] text-[#8C8E99]">#C0BDB8</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Animated variant -->
+  <section class="mb-12">
+    <h2 class="text-xs uppercase tracking-widest text-[#8C8E99] mb-6">Animated Plunger Variant</h2>
+    <div id="anim-wrap" class="cursor-pointer inline-flex flex-col items-center gap-3" title="Click to replay">
+      <svg class="w-24 h-24" viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <g stroke="#8C8E99" stroke-width="1.1">
+          <line x1="44" y1="4" x2="40" y2="8" stroke-width="1.4"/>
+          <rect x="14" y="14" width="22" height="8" rx="1.5"/>
+          <line x1="36" y1="18" x2="44" y2="18"/>
+          <line x1="44" y1="18" x2="47" y2="18" stroke-width="0.9"/>
+          <line x1="20" y1="14" x2="20" y2="11.5" stroke-width="0.9"/>
+          <line x1="24" y1="14" x2="24" y2="11.5" stroke-width="0.9"/>
+          <line x1="28" y1="14" x2="28" y2="11.5" stroke-width="0.9"/>
+          <line x1="32" y1="14" x2="32" y2="11.5" stroke-width="0.9"/>
+        </g>
+        <g stroke="#6B7280" stroke-width="1.3">
+          <line class="syringe-fill-anim" x1="8" y1="18" x2="14" y2="18"/>
+          <line x1="6" y1="14" x2="6" y2="22"/>
+          <line x1="8" y1="14" x2="8" y2="22"/>
+        </g>
+      </svg>
+      <span class="text-[10px] text-[#8C8E99] hover:text-[#F4EFE6] transition-colors">click to replay</span>
+    </div>
+    <script>
+      document.getElementById('anim-wrap').addEventListener('click', () => {
+        const el = document.querySelector('.syringe-fill-anim');
+        el.style.animation = 'none';
+        el.offsetHeight;
+        el.style.animation = '';
+      });
+    </script>
+  </section>
+
+  <!-- Copy-paste snippet -->
+  <section class="mb-12">
+    <h2 class="text-xs uppercase tracking-widest text-[#8C8E99] mb-4">Copy-Paste Snippet</h2>
+    <p class="text-sm text-[#8C8E99] mb-4">Drop this <code class="bg-[#16171D] px-1 rounded">&lt;svg&gt;</code> tag anywhere. Change <code class="bg-[#16171D] px-1 rounded">class="w-8 h-8"</code> to resize.</p>
+    <pre class="bg-[#16171D] border border-[#2A2C35] rounded-xl p-5 text-sm text-[#C0BDB8] overflow-x-auto leading-relaxed"><code>&lt;!-- Grey Syringe Icon --&gt;
+&lt;svg class="w-8 h-8" style="color:#8C8E99"
+     fill="none" stroke="currentColor" stroke-width="1.6"
+     stroke-linecap="round" stroke-linejoin="round"
+     viewBox="0 0 24 24" aria-label="Syringe"&gt;
+  &lt;line x1="22" y1="2" x2="18" y2="6"/&gt;
+  &lt;path d="M18 6l-2-2-9 9 4 4 9-9z"/&gt;
+  &lt;line x1="5" y1="15" x2="2" y2="22"/&gt;
+  &lt;line x1="9" y1="11" x2="14" y2="16"/&gt;
+  &lt;line x1="7" y1="13" x2="12" y2="18"/&gt;
+  &lt;line x1="11" y1="9" x2="16" y2="14"/&gt;
+&lt;/svg&gt;</code></pre>
+  </section>
+
+  <!-- Detailed variant snippet -->
+  <section>
+    <h2 class="text-xs uppercase tracking-widest text-[#8C8E99] mb-4">Detailed Variant (48×48 viewBox)</h2>
+    <pre class="bg-[#16171D] border border-[#2A2C35] rounded-xl p-5 text-sm text-[#C0BDB8] overflow-x-auto leading-relaxed"><code>&lt;!-- Detailed Syringe with barrel, plunger, graduation marks --&gt;
+&lt;svg class="w-20 h-20" style="color:#8C8E99"
+     fill="none" stroke="currentColor" stroke-width="1.1"
+     stroke-linecap="round" stroke-linejoin="round"
+     viewBox="0 0 48 48" aria-label="Syringe"&gt;
+  &lt;line x1="44" y1="4" x2="40" y2="8" stroke-width="1.4"/&gt;
+  &lt;rect x="14" y="14" width="22" height="8" rx="1.5"/&gt;
+  &lt;line x1="8" y1="18" x2="14" y2="18"/&gt;
+  &lt;line x1="6" y1="14" x2="6" y2="22"/&gt;
+  &lt;line x1="8" y1="14" x2="8" y2="22"/&gt;
+  &lt;line x1="36" y1="18" x2="44" y2="18"/&gt;
+  &lt;line x1="20" y1="14" x2="20" y2="11.5" stroke-width="0.9"/&gt;
+  &lt;line x1="24" y1="14" x2="24" y2="11.5" stroke-width="0.9"/&gt;
+  &lt;line x1="28" y1="14" x2="28" y2="11.5" stroke-width="0.9"/&gt;
+  &lt;line x1="32" y1="14" x2="32" y2="11.5" stroke-width="0.9"/&gt;
+  &lt;line x1="44" y1="18" x2="47" y2="18" stroke-width="0.9"/&gt;
+&lt;/svg&gt;</code></pre>
+  </section>
+
+</body>
+</html>

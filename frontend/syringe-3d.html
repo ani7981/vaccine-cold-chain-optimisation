@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Syringe — VaxKavach</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0D0E11; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #F4EFE6; }
+
+    #app {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.5rem;
+      z-index: 10;
+      pointer-events: none;
+    }
+    header h1 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #F4EFE6;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    header h1 .badge {
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #1C1E26;
+      border: 1px solid #2E313D;
+      color: #8C8E99;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    header p {
+      font-size: 0.8rem;
+      color: #8C8E99;
+      margin-top: 0.25rem;
+    }
+
+    #canvas-container {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+    }
+    #canvas-container:active {
+      cursor: grabbing;
+    }
+    canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* Controls bar at bottom */
+    .controls-panel {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: rgba(22, 23, 29, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid #2A2C35;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .controls-panel button {
+      background: transparent;
+      border: none;
+      color: #8C8E99;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .controls-panel button:hover {
+      color: #F4EFE6;
+      background: #252834;
+    }
+    .controls-panel .divider {
+      width: 1px;
+      height: 14px;
+      background: #2E313D;
+    }
+    .controls-panel span.hint {
+      font-size: 0.7rem;
+      color: #696C7A;
+      letter-spacing: 0.03em;
+    }
+
+    /* Dose slider */
+    .dose-control {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      color: #8C8E99;
+    }
+    .dose-control input[type=range] {
+      width: 80px;
+      accent-color: #8C8E99;
+      cursor: pointer;
+    }
+
+    #loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #0D0E11;
+      z-index: 20;
+      transition: opacity 0.4s ease;
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #222530;
+      border-top-color: #8C8E99;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+
+  <!-- Load Three.js UMD: local first, fallback to CDN -->
+  <script src="/three.min.js"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+    }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <div id="loading">
+      <div class="spinner"></div>
+      <p style="margin-top: 1rem; font-size: 0.8rem; color: #8C8E99;">Loading 3D Syringe...</p>
+    </div>
+
+    <header>
+      <h1>
+        VaxKavach 3D Syringe
+        <span class="badge">Surgical Grey</span>
+      </h1>
+      <p>Precision Cold-Chain Vaccine Injector (5 ml)</p>
+    </header>
+
+    <div id="canvas-container"></div>
+
+    <div class="controls-panel">
+      <button id="btn-rotate">⏸ Pause Rotation</button>
+      <div class="divider"></div>
+      <button id="btn-reset">↺ Reset View</button>
+      <div class="divider"></div>
+      <div class="dose-control">
+        <label for="slider-dose">Plunger:</label>
+        <input type="range" id="slider-dose" min="0" max="100" value="65" />
+      </div>
+      <div class="divider"></div>
+      <span class="hint">Drag to inspect · Scroll to zoom</span>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof THREE === 'undefined') {
+        document.getElementById('loading').innerHTML = '<p style="color:#E06C75;padding:2rem;">Failed to load Three.js library. Please refresh or check connection.</p>';
+        return;
+      }
+
+      // Hide loading screen
+      const loadingEl = document.getElementById('loading');
+      setTimeout(() => {
+        loadingEl.style.opacity = '0';
+        setTimeout(() => loadingEl.style.display = 'none', 400);
+      }, 100);
+
+      const container = document.getElementById('canvas-container');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      /* ── 1. Scene & Renderer ── */
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0D0E11);
+
+      const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
+      camera.position.set(0, 0.4, 7.5);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(width, height);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      /* ── 2. Studio Lighting (Crisp Grey Highlights) ── */
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+      scene.add(ambientLight);
+
+      // Key light - bright cold white top-left
+      const keyLight = new THREE.DirectionalLight(0xE0E6F0, 1.8);
+      keyLight.position.set(5, 8, 6);
+      keyLight.castShadow = true;
+      scene.add(keyLight);
+
+      // Fill light - softer cool grey from right
+      const fillLight = new THREE.DirectionalLight(0x8C92A4, 1.0);
+      fillLight.position.set(-6, 2, 4);
+      scene.add(fillLight);
+
+      // Rim light - sharp back highlight for silhouette edge
+      const rimLight = new THREE.DirectionalLight(0xB0BAC8, 1.4);
+      rimLight.position.set(0, -5, -6);
+      scene.add(rimLight);
+
+      // Bottom bounce light
+      const bounceLight = new THREE.DirectionalLight(0x404552, 0.6);
+      bounceLight.position.set(0, -6, 2);
+      scene.add(bounceLight);
+
+      /* ── 3. Materials (Monochromatic Grey Palette) ── */
+      // Frosted Glass Barrel
+      const barrelGlassMat = new THREE.MeshStandardMaterial({
+        color: 0x9EA2B0,
+        metalness: 0.12,
+        roughness: 0.18,
+        transparent: true,
+        opacity: 0.48,
+        depthWrite: false,
+        side: THREE.DoubleSide
+      });
+
+      // Liquid inside chamber (vaccine solution)
+      const liquidMat = new THREE.MeshStandardMaterial({
+        color: 0x767988,
+        metalness: 0.25,
+        roughness: 0.35,
+        transparent: true,
+        opacity: 0.70
+      });
+
+      // Surgical Steel Needle & Hub
+      const surgicalSteelMat = new THREE.MeshStandardMaterial({
+        color: 0xD2D5DE,
+        metalness: 0.95,
+        roughness: 0.15
+      });
+
+      // Dark Grey Rubber Stopper / Piston
+      const rubberPistonMat = new THREE.MeshStandardMaterial({
+        color: 0x2A2C33,
+        metalness: 0.05,
+        roughness: 0.92
+      });
+
+      // Metallic Plunger Shaft
+      const plungerShaftMat = new THREE.MeshStandardMaterial({
+        color: 0x7E818E,
+        metalness: 0.45,
+        roughness: 0.35
+      });
+
+      // Rigid Plastic Finger Flanges & Thumb Disc
+      const flangePlasticMat = new THREE.MeshStandardMaterial({
+        color: 0x616470,
+        metalness: 0.30,
+        roughness: 0.40
+      });
+
+      // Black/Grey Graduation Markings
+      const markMat = new THREE.MeshBasicMaterial({
+        color: 0x181920
+      });
+
+      /* ── 4. Build Detailed Syringe Model ── */
+      const syringeGroup = new THREE.Group();
+      scene.add(syringeGroup);
+
+      // Default tilt angle
+      syringeGroup.rotation.z = Math.PI / 4;
+      syringeGroup.rotation.x = 0.25;
+
+      const barrelLength = 3.2;
+      const barrelRadius = 0.44;
+
+      /* (a) Glass Barrel Cylinder */
+      const barrelGeo = new THREE.CylinderGeometry(barrelRadius, barrelRadius, barrelLength, 48, 1, true);
+      const barrelMesh = new THREE.Mesh(barrelGeo, barrelGlassMat);
+      syringeGroup.add(barrelMesh);
+
+      /* (b) Barrel Front Taper / Nozzle (Luer-slip) */
+      const nozzleTaperGeo = new THREE.CylinderGeometry(0.18, barrelRadius, 0.40, 48);
+      const nozzleTaper = new THREE.Mesh(nozzleTaperGeo, barrelGlassMat);
+      nozzleTaper.position.y = barrelLength / 2 + 0.20;
+      syringeGroup.add(nozzleTaper);
+
+      const nozzleTipGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.35, 36);
+      const nozzleTip = new THREE.Mesh(nozzleTipGeo, barrelGlassMat);
+      nozzleTip.position.y = barrelLength / 2 + 0.40 + 0.175;
+      syringeGroup.add(nozzleTip);
+
+      /* (c) Needle Hub (Metal Luer connector) */
+      const hubGeo = new THREE.CylinderGeometry(0.09, 0.15, 0.30, 32);
+      const hubMesh = new THREE.Mesh(hubGeo, surgicalSteelMat);
+      hubMesh.position.y = barrelLength / 2 + 0.75;
+      syringeGroup.add(hubMesh);
+
+      /* (d) Surgical Needle with Beveled Sharp Tip */
+      const needleLength = 1.6;
+      const needleGeo = new THREE.CylinderGeometry(0.015, 0.020, needleLength, 24);
+      const needleMesh = new THREE.Mesh(needleGeo, surgicalSteelMat);
+      needleMesh.position.y = barrelLength / 2 + 0.90 + needleLength / 2;
+      syringeGroup.add(needleMesh);
+
+      const tipGeo = new THREE.ConeGeometry(0.018, 0.15, 24);
+      const tipMesh = new THREE.Mesh(tipGeo, surgicalSteelMat);
+      tipMesh.position.y = barrelLength / 2 + 0.90 + needleLength + 0.07;
+      syringeGroup.add(tipMesh);
+
+      /* (e) Finger Flange Grip at Barrel Base (Left & Right Wings) */
+      const flangeWidth = 1.4;
+      const flangeThickness = 0.08;
+      const flangeGeo = new THREE.BoxGeometry(flangeWidth, flangeThickness, 0.55);
+      const flangeMesh = new THREE.Mesh(flangeGeo, flangePlasticMat);
+      flangeMesh.position.y = -barrelLength / 2;
+      syringeGroup.add(flangeMesh);
+
+      const flangeLipGeo = new THREE.TorusGeometry(barrelRadius + 0.03, 0.03, 16, 48);
+      const flangeLip = new THREE.Mesh(flangeLipGeo, flangePlasticMat);
+      flangeLip.rotation.x = Math.PI / 2;
+      flangeLip.position.y = -barrelLength / 2;
+      syringeGroup.add(flangeLip);
+
+      /* (f) Printed Measurement Graduation Marks (1 to 5 ml) */
+      const marksCount = 18;
+      const startY = -barrelLength / 2 + 0.45;
+      const endY = barrelLength / 2 - 0.25;
+      const stepY = (endY - startY) / (marksCount - 1);
+
+      for (let i = 0; i < marksCount; i++) {
+        const isMajor = (i % 4 === 0);
+        const markWidth = isMajor ? 0.32 : 0.18;
+        const markHeight = isMajor ? 0.022 : 0.014;
+        const markGeo = new THREE.PlaneGeometry(markWidth, markHeight);
+        const markMesh = new THREE.Mesh(markGeo, markMat);
+        markMesh.position.set(0, startY + i * stepY, barrelRadius + 0.002);
+        syringeGroup.add(markMesh);
+      }
+
+      /* (g) Dynamic Plunger Assembly (Stopper + Rod + Thumb Pad) */
+      const plungerAssembly = new THREE.Group();
+      syringeGroup.add(plungerAssembly);
+
+      // Double-ribbed rubber stopper
+      const stopperHeight = 0.36;
+      const stopperRib1 = new THREE.Mesh(new THREE.CylinderGeometry(barrelRadius * 0.96, barrelRadius * 0.96, 0.12, 36), rubberPistonMat);
+      const stopperRib2 = new THREE.Mesh(new THREE.CylinderGeometry(barrelRadius * 0.96, barrelRadius * 0.96, 0.12, 36), rubberPistonMat);
+      stopperRib1.position.y = 0.09;
+      stopperRib2.position.y = -0.09;
+      plungerAssembly.add(stopperRib1, stopperRib2);
+
+      // Plunger stem / cruciform shaft
+      const rodLength = barrelLength + 0.6;
+      const rodGeo1 = new THREE.BoxGeometry(0.06, rodLength, 0.32);
+      const rodGeo2 = new THREE.BoxGeometry(0.32, rodLength, 0.06);
+      const rod1 = new THREE.Mesh(rodGeo1, plungerShaftMat);
+      const rod2 = new THREE.Mesh(rodGeo2, plungerShaftMat);
+      rod1.position.y = -rodLength / 2;
+      rod2.position.y = -rodLength / 2;
+      plungerAssembly.add(rod1, rod2);
+
+      // Thumb disc push-pad
+      const thumbDiscGeo = new THREE.CylinderGeometry(0.48, 0.48, 0.08, 40);
+      const thumbDisc = new THREE.Mesh(thumbDiscGeo, flangePlasticMat);
+      thumbDisc.position.y = -rodLength;
+      plungerAssembly.add(thumbDisc);
+
+      /* (h) Liquid Column inside chamber */
+      const liquidGeo = new THREE.CylinderGeometry(barrelRadius * 0.94, barrelRadius * 0.94, 1, 36);
+      const liquidMesh = new THREE.Mesh(liquidGeo, liquidMat);
+      syringeGroup.add(liquidMesh);
+
+      // Plunger position function (0 = fully inserted, 100 = fully drawn back)
+      function updatePlunger(percent) {
+        const minPos = barrelLength / 2 - 0.25;      // fully inserted
+        const maxPos = -barrelLength / 2 + 0.35;    // fully retracted
+        const currentY = minPos + (maxPos - minPos) * (percent / 100);
+
+        plungerAssembly.position.y = currentY;
+
+        // Scale liquid volume to match plunger position
+        const liquidTop = barrelLength / 2;
+        const currentLiquidHeight = Math.max(0.01, liquidTop - currentY);
+        liquidMesh.scale.set(1, currentLiquidHeight, 1);
+        liquidMesh.position.y = liquidTop - currentLiquidHeight / 2;
+      }
+
+      updatePlunger(65);
+
+      /* ── 5. User Interaction Controls ── */
+      let isDragging = false;
+      let previousMousePosition = { x: 0, y: 0 };
+      let rotationVelocity = { x: 0, y: 0 };
+      let autoRotate = true;
+
+      const btnRotate = document.getElementById('btn-rotate');
+      const btnReset = document.getElementById('btn-reset');
+      const sliderDose = document.getElementById('slider-dose');
+
+      btnRotate.addEventListener('click', () => {
+        autoRotate = !autoRotate;
+        btnRotate.textContent = autoRotate ? '⏸ Pause Rotation' : '▶ Auto Rotate';
+      });
+
+      btnReset.addEventListener('click', () => {
+        syringeGroup.rotation.set(0.25, 0, Math.PI / 4);
+        camera.position.set(0, 0.4, 7.5);
+        rotationVelocity = { x: 0, y: 0 };
+      });
+
+      sliderDose.addEventListener('input', (e) => {
+        updatePlunger(parseFloat(e.target.value));
+      });
+
+      // Pointer drag events for smooth 360 orbit
+      container.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        autoRotate = false;
+        btnRotate.textContent = '▶ Auto Rotate';
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const deltaX = e.clientX - previousMousePosition.x;
+        const deltaY = e.clientY - previousMousePosition.y;
+
+        rotationVelocity.y = deltaX * 0.005;
+        rotationVelocity.x = deltaY * 0.005;
+
+        syringeGroup.rotation.y += rotationVelocity.y;
+        syringeGroup.rotation.x += rotationVelocity.x;
+
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+      });
+
+      window.addEventListener('pointerup', () => {
+        isDragging = false;
+      });
+
+      // Wheel zoom (clamped)
+      container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        camera.position.z += e.deltaY * 0.004;
+        camera.position.z = Math.max(3.0, Math.min(14.0, camera.position.z));
+      }, { passive: false });
+
+      // Resize handler
+      window.addEventListener('resize', () => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      });
+
+      /* ── 6. Render Loop with Inertia ── */
+      function animate() {
+        requestAnimationFrame(animate);
+
+        if (autoRotate) {
+          syringeGroup.rotation.y += 0.008;
+        } else if (!isDragging) {
+          // Apply gentle damping to drag momentum
+          syringeGroup.rotation.y += rotationVelocity.y;
+          syringeGroup.rotation.x += rotationVelocity.x;
+          rotationVelocity.x *= 0.92;
+          rotationVelocity.y *= 0.92;
+        }
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    });
+  </script>
+</body>
+</html>
