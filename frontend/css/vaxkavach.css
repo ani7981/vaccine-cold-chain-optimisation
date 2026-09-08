@@ -1117,3 +1117,9 @@ html.light .modal-card {
   border-color: #DCD6CA !important;
   color: #0D0E11 !important;
 }
+
+/* Visibility utility guarantee */
+.hidden {
+  display: none !important;
+}
+

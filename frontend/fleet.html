@@ -194,9 +194,13 @@
 </span>
 </div>
 <div class="flex items-center gap-sm self-start lg:self-auto flex-wrap">
-<button id="btn-theme-toggle" class="px-md py-xs rounded-full bg-[#16171D] border border-[#2A2C35] text-[#9A9890] hover:text-[#F4EFE6] transition-colors flex items-center gap-1.5" title="Toggle Light/Dark Mode" type="button">
+<button id="btn-theme-toggle" class="btn-theme-toggle px-md py-xs rounded-full bg-[#16171D] border border-[#2A2C35] text-[#9A9890] hover:text-[#F4EFE6] transition-colors flex items-center gap-1.5" title="Toggle Light/Dark Mode" type="button">
 <span class="material-symbols-outlined text-[16px]">light_mode</span>
 <span class="text-[11px] font-semibold">Theme</span>
+</button>
+<button id="btn-walkthrough-tour" class="px-md py-xs rounded-full bg-[#16171D] border border-[#2A2C35] text-[#9A9890] hover:text-[#F4EFE6] transition-colors flex items-center gap-1.5" title="Walkthrough Tour" type="button">
+<span class="material-symbols-outlined text-[16px]">tour</span>
+<span class="text-[11px] font-semibold">Tour</span>
 </button>
 <div class="px-md py-xs rounded-full bg-[#16171D] border border-[#2A2C35] flex items-center gap-xs">
 <span class="material-symbols-outlined text-[15px] text-[#64777B]">sync</span>
@@ -292,15 +296,15 @@
   <!-- Rendered via JavaScript: Vehicle -> Shipment -> Vaccine -> Route -> Sensor -> Incident -->
 </div>
 <div id="fleet-topology-detail-card" class="p-sm rounded-lg bg-[#0D0E11] border border-[#2A2C35] text-xs flex flex-col gap-1">
-  <span class="font-bold text-[#F4EFE6] flex items-center gap-1" id="topo-detail-title">
+  <span class="font-bold text-[#F4EFE6] flex items-center gap-1" id="fleet-topology-detail-title">
     <span class="material-symbols-outlined text-[14px] text-[#829A80]">info</span> Node Overview
   </span>
-  <span class="text-[#9A9890]" id="topo-detail-body">Click any node above to inspect its real-time telemetry, specifications, and regulatory assurance status.</span>
+  <span class="text-[#9A9890]" id="fleet-topology-detail-body">Click any node above to inspect its real-time telemetry, specifications, and regulatory assurance status.</span>
 </div>
 </div>
 
 <!-- PREDICTIVE AI & EXPLAINABLE RISK BANNER -->
-<div id="fleet-predictive-banner" class="p-md rounded-xl bg-[#231E18] border border-[#E5B869]/40 flex flex-col gap-2">
+<div id="fleet-predictive-banner" class="p-md rounded-xl bg-[#1E2027] border border-[#E5B869]/40 flex flex-col gap-2">
 <div class="flex items-center justify-between">
 <span class="font-label-caps text-label-caps uppercase font-bold text-[#E5B869] flex items-center gap-1">
   <span class="material-symbols-outlined text-[16px]">psychology</span>
@@ -379,19 +383,19 @@
 <!-- 4-Stage Stepper: Open -> Investigating -> Action Required -> Resolved -->
 <div class="flex items-center justify-between relative pt-1 pb-1">
 <div class="absolute left-3 right-3 top-1/2 -translate-y-1/2 h-0.5 bg-[#2A2C35]"></div>
-<div id="step-open" class="z-10 flex flex-col items-center gap-1">
+<div id="fleet-step-open" class="z-10 flex flex-col items-center gap-1">
   <div class="w-6 h-6 rounded-full bg-[#0D0E11] border-2 border-[#829A80] text-[#829A80] flex items-center justify-center text-[10px] font-bold">1</div>
   <span class="text-[9px] text-[#9A9890] uppercase font-semibold">Open</span>
 </div>
-<div id="step-investigating" class="z-10 flex flex-col items-center gap-1">
+<div id="fleet-step-investigating" class="z-10 flex flex-col items-center gap-1">
   <div class="w-6 h-6 rounded-full bg-[#0D0E11] border-2 border-[#E5B869] text-[#E5B869] flex items-center justify-center text-[10px] font-bold">2</div>
   <span class="text-[9px] text-[#9A9890] uppercase font-semibold">Investigate</span>
 </div>
-<div id="step-action" class="z-10 flex flex-col items-center gap-1">
+<div id="fleet-step-action" class="z-10 flex flex-col items-center gap-1">
   <div class="w-6 h-6 rounded-full bg-[#B8756C] border-2 border-[#B8756C] text-white flex items-center justify-center text-[10px] font-bold">3</div>
   <span class="text-[9px] text-[#B8756C] uppercase font-semibold">Action</span>
 </div>
-<div id="step-resolved" class="z-10 flex flex-col items-center gap-1">
+<div id="fleet-step-resolved" class="z-10 flex flex-col items-center gap-1">
   <div class="w-6 h-6 rounded-full bg-[#0D0E11] border-2 border-[#2A2C35] text-[#9A9890] flex items-center justify-center text-[10px] font-bold">4</div>
   <span class="text-[9px] text-[#9A9890] uppercase font-semibold">Resolved</span>
 </div>
@@ -457,7 +461,7 @@
 <span class="material-symbols-outlined text-[18px]">query_stats</span>
 <span>View Technical Details</span>
 </button>
-<button id="btn-fleet-view-map" class="w-full sm:w-auto py-sm px-md rounded-xl bg-[#231E18] text-[#B8863A] hover:bg-[#342A1C] border border-[#B8863A]/40 font-headline-sm text-headline-sm transition-all text-center flex items-center justify-center gap-xs" type="button" title="Track on Live Map">
+<button id="btn-fleet-view-map" class="w-full sm:w-auto py-sm px-md rounded-xl bg-[#1E2027] text-[#E5B869] hover:bg-[#2A2C35] border border-[#E5B869]/40 font-headline-sm text-headline-sm transition-all text-center flex items-center justify-center gap-xs" type="button" title="Track on Live Map">
 <span class="material-symbols-outlined text-[18px]">map</span>
 <span>Map</span>
 </button>

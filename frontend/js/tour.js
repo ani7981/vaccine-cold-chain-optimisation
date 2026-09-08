@@ -151,6 +151,40 @@ const MAP_STEPS = [
   }
 ];
 
+const FLEET_STEPS = [
+  {
+    popover: {
+      title: '🚛 Reefer Fleet Operations Command',
+      description: 'Real-time telemetry and dispatch console for all national cold chain vehicles operating across Indian highway corridors.',
+      side: 'bottom',
+    }
+  },
+  {
+    element: '#fleet-vehicle-list',
+    popover: {
+      title: 'Vehicle Roster & Status',
+      description: 'Filter between Healthy, Warning, Critical, and Offline reefers. Click any vehicle to inspect its live refrigeration telemetry and cargo.',
+      side: 'right',
+    }
+  },
+  {
+    element: '#fleet-topology-container',
+    popover: {
+      title: 'Interactive Topology Graph',
+      description: 'Explore the 6-stage operational pipeline: Rig specs, Consignment, Biological payload, Corridor vector, IoT Sensor mesh, and Safety regulatory assurance.',
+      side: 'left',
+    }
+  },
+  {
+    element: '#fleet-incident-panel',
+    popover: {
+      title: 'Incident Lifecycle & Audit',
+      description: 'Track open excursions through Investigating, Action Required, and Resolved states. Log cryptographic audit events directly to the SHA-256 ledger.',
+      side: 'left',
+    }
+  }
+];
+
 function getStepsForPage() {
   const page = location.pathname.split('/').pop() || 'overview.html';
   const map = {
@@ -159,6 +193,7 @@ function getStepsForPage() {
     'problems.html': PROBLEMS_STEPS,
     'shipments.html': SHIPMENTS_STEPS,
     'map.html': MAP_STEPS,
+    'fleet.html': FLEET_STEPS,
   };
   const steps = map[page] || OVERVIEW_STEPS;
   return steps.filter(s => {
