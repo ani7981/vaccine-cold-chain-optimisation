@@ -16,11 +16,23 @@
         max-width: 100vw;
         overflow-x: hidden;
       }
-      body { overscroll-behavior: none; }
       main > :first-child { margin-top: 0 !important; }
       main > :last-child { margin-bottom: 0 !important; }
     }
-    ::-webkit-scrollbar { display: none; }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111317;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #333539;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4a4d53;
+    }
   </style>
   <script src="https://cdn.tailwindcss.com"></script>
   <script id="tailwind-config">
@@ -66,7 +78,7 @@
       <div class="flex w-full max-w-full min-h-screen overflow-x-hidden">
         
         <!-- 1. PERSISTENT OPERATIONAL DOCK (72px) -->
-        <aside class="w-[72px] flex-shrink-0 bg-[#0D0E11] border-r border-[#2A2C35] flex flex-col items-center justify-between py-4 z-40">
+        <aside class="w-[72px] flex-shrink-0 bg-[#0D0E11] border-r border-[#2A2C35] flex flex-col items-center justify-between py-4 z-40 sticky top-0 h-screen">
           <div class="flex flex-col items-center space-y-6 w-full">
             <a class="w-10 h-10 rounded-lg bg-[#16171D] border border-[#2A2C35] flex items-center justify-center text-[#F4EFE6] hover:border-[#8C8E99] transition-colors" href="/landing.html" title="VaxKavach Home">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24">
@@ -216,8 +228,8 @@
           </section>
 
           <!-- 4 & 5. SPLIT WORKSPACE: SHIPMENT DIRECTORY & LIVE INSPECTOR DRAWER -->
-          <!-- Fluid responsive layout: strictly NO HORIZONTAL OVERFLOW -->
-          <section class="flex-1 w-full max-w-full px-4 sm:px-6 py-4 flex flex-col lg:flex-row gap-4 items-start overflow-hidden">
+          <!-- Fluid responsive layout: allows natural vertical scrolling -->
+          <section class="flex-1 w-full max-w-full px-4 sm:px-6 py-4 flex flex-col lg:flex-row gap-4 items-start">
             
             <!-- Left: Shipment List (Cards / Rows) — Thinned footprint -->
             <div class="flex-1 min-w-0 w-full flex flex-col gap-2">
@@ -233,7 +245,7 @@
             </div>
 
             <!-- Right / Inspector Panel: VK-1042 LIVE TELEMETRY DRAWER — Thinned footprint (320px) -->
-            <aside class="w-full lg:w-[310px] xl:w-[325px] shrink-0 rounded-xl bg-[#1E2027] p-3.5 flex flex-col gap-2.5 border border-[#333539] shadow-lg" id="inspector-drawer">
+            <aside class="w-full lg:w-[310px] xl:w-[325px] shrink-0 rounded-xl bg-[#1E2027] p-3.5 flex flex-col gap-2.5 border border-[#333539] shadow-lg lg:sticky lg:top-4 self-start max-h-[calc(100vh-2rem)] overflow-y-auto" id="inspector-drawer">
               
               <!-- Inspector Header -->
               <div class="flex items-start justify-between gap-2 border-b border-[#333539]/40 pb-2">
