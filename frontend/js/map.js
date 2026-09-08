@@ -3,10 +3,14 @@
 // Professional-grade GIS Operations Command Center for Cold-Chain Reefers
 // ============================================================================
 
-import * as LModule from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-
-const L = window.L || LModule.default || LModule;
+// Access Leaflet from window.L (loaded via script tag in map.html or vendor/CDN fallback)
+const L = (typeof window !== 'undefined' && window.L)
+  ? window.L
+  : new Proxy({}, {
+      get(_, prop) {
+        return (typeof window !== 'undefined' && window.L) ? window.L[prop] : undefined;
+      }
+    });
 
 // ----------------------------------------------------------------------------
 // DATA: Pan-India Vaccine Logistics Network & Active Telemetry
