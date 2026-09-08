@@ -78,7 +78,7 @@ function run() {
 
   const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(400, 400),
-    new THREE.MeshStandardMaterial({ color: '#131210', roughness: 0.84, metalness: 0.03 })
+    new THREE.MeshStandardMaterial({ color: '#131210', roughness: 0.84, metalness: 0.03, transparent: true, opacity: 1.0 })
   );
   floor.rotation.x = -Math.PI / 2;
   floor.receiveShadow = true;
@@ -108,6 +108,8 @@ function run() {
   const cFogBase = new THREE.Color('#0D0E11');
   const cFogAlert = new THREE.Color('#280c0f');
   const redTint = { val: 0.0 };
+  const roadFade = { val: 1.0 };
+  const mapFade = { val: 0.0 };
 
   function updateLightingTint(t) {
     key.color.copy(cKeyBase).lerp(cKeyAlert, t);
@@ -122,7 +124,8 @@ function run() {
     if (truck.userData && truck.userData.setWarning) truck.userData.setWarning(t);
   }
 
-  root.add(syringe, shipper, truck, road);
+  const indiaMap = loadIndiaMapMesh();
+  root.add(syringe, shipper, truck, road, indiaMap);
 
   shipper.position.set(25, -0.45, 0); // Way offscreen right
   shipper.visible = false; // Strictly hidden on starting hero screen
@@ -132,6 +135,7 @@ function run() {
   truck.visible = false;
   truck.position.set(16, -0.55, 0); // Offscreen right until loading
   road.visible = false;
+  indiaMap.visible = false; // Strictly hidden and unused before the finale begins
   // DOM Elements for continuous floating HUD & in-scene probe
   const hud = document.querySelector('#live-telemetry-hud');
   const hudBadge = document.querySelector('#hud-badge');
@@ -380,9 +384,46 @@ function run() {
     .to(camera.position, { x: -15.0, y: 2.2, z: 0.0, duration: 0.45, ease: 'power2.inOut' }, 4.45)
     .to(lookTarget, { x: -15.01, y: -1.54, z: 0.0, duration: 0.45, ease: 'power2.inOut' }, 4.45)
 
-    // --- FINALE: AND PAN OUT BY MOVING PERPENDICULARLY UP ABOVE THE ROAD (ZOOM OUT INTO VOID) ---
-    .to(camera.position, { x: -15.0, y: 105.0, z: 0.0, duration: 1.15, ease: 'power2.inOut' }, 4.90)
-    .to(lookTarget, { x: -15.01, y: -1.54, z: 0.0, duration: 1.15, ease: 'power2.inOut' }, 4.90);
+    // --- FINALE: AFTER TRUCK HAS DISAPPEARED & CAMERA LOOKS DOWN AT ROAD, ZOOM OUT TO CLEAN INDIA MAP ---
+    // 1 & 2) Truck has completely driven away and is no longer visible
+    .set(truck, { visible: false }, 4.90)
+    .set(shipper, { visible: false }, 4.90)
+    // 3 & 4) Camera is at existing close-up looking down at road; geographic zoom-out begins and map starts being used
+    .set(indiaMap, { visible: true }, 4.90)
+    .to(scene.fog, { far: 450, duration: 1.35, ease: 'power2.out' }, 4.90)
+    .to(camera.position, { x: -37.7, y: 138.0, z: -7.7, duration: 1.35, ease: 'power2.inOut' }, 4.90)
+    .to(lookTarget, { x: -37.71, y: -1.54, z: -7.7, duration: 1.35, ease: 'power2.inOut' }, 4.90)
+
+    // Local road and environment progressively become smaller with altitude and disappear naturally
+    .to(roadFade, {
+      val: 0.0,
+      duration: 0.45,
+      ease: 'power2.inOut',
+      onUpdate: () => {
+        if (road.userData.setOpacity) road.userData.setOpacity(roadFade.val);
+      }
+    }, 5.05)
+    .to(floor.material, {
+      opacity: 0.0,
+      duration: 0.45,
+      ease: 'power2.inOut',
+      onUpdate: () => {
+        floor.material.depthWrite = floor.material.opacity > 0.99;
+      }
+    }, 5.05)
+    .set(road, { visible: false }, 5.50)
+    .set(floor, { visible: false }, 5.50)
+
+    // India map is revealed as camera gets farther away, settling on the complete nationwide view
+    .to(mapFade, {
+      val: 1.0,
+      duration: 0.50,
+      ease: 'power2.out',
+      onUpdate: () => {
+        indiaMap.userData.targetOpacity = mapFade.val;
+        if (indiaMap.userData.material) indiaMap.userData.material.opacity = mapFade.val;
+      }
+    }, 4.95);
 
   let active = true;
   document.addEventListener('visibilitychange', () => (active = !document.hidden));
@@ -692,6 +733,19 @@ function roadModel() {
   }
 
   g.position.set(-15, -1.54, 0); // Positioned flush below wheels
+
+  const roadMats = [asphaltMat, shoulderMat, markWhiteMat, markYellowMat];
+  roadMats.forEach((m) => {
+    m.transparent = true;
+    m.opacity = 1.0;
+  });
+  g.userData.setOpacity = (v) => {
+    roadMats.forEach((m) => {
+      m.opacity = v;
+      m.depthWrite = v > 0.99;
+    });
+  };
+
   return g;
 }
 
@@ -982,5 +1036,92 @@ function truckModel() {
   g.position.set(16, -0.55, 0);
   g.rotation.y = -0.20; // 3/4 perspective: open rear latch faces the viewer
   return g;
+}
+
+function loadIndiaMapMesh() {
+  const group = new THREE.Group();
+  group.visible = false; // Strictly hidden and unused before the finale begins
+
+  fetch('/india-map.html')
+    .then((r) => r.text())
+    .then((html) => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const svg = doc.querySelector('svg#india-map');
+      if (!svg) return;
+
+      // Extract existing styling from india-map.html without modifying any styles or colors
+      const styleTag = doc.querySelector('style');
+      if (styleTag) {
+        const clonedStyle = styleTag.cloneNode(true);
+        // Ensure :root custom properties also explicitly apply to root <svg> element
+        clonedStyle.textContent = clonedStyle.textContent.replace(':root', ':root, svg');
+        svg.insertBefore(clonedStyle, svg.firstChild);
+      }
+
+      svg.setAttribute('width', '2048');
+      svg.setAttribute('height', '2192');
+
+      // Ensure no fill color and clean outline strokes on all state boundaries
+      const states = svg.querySelectorAll('.state');
+      states.forEach((s) => {
+        s.setAttribute('fill', 'none');
+        s.setAttribute('stroke', '#4A90E2');
+        s.setAttribute('stroke-width', '0.8');
+        s.setAttribute('stroke-linejoin', 'round');
+      });
+
+      const serializer = new XMLSerializer();
+      const svgStr = serializer.serializeToString(svg);
+      const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 2048;
+        canvas.height = 2192;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        URL.revokeObjectURL(url);
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.generateMipmaps = true;
+
+        const w = 72;
+        const h = w * (642.12 / 600.00); // 77.0544 (exact aspect ratio of 600x642.12)
+        const geo = new THREE.PlaneGeometry(w, h);
+        const mat = new THREE.MeshBasicMaterial({
+          map: texture,
+          transparent: true,
+          opacity: group.userData.targetOpacity !== undefined ? group.userData.targetOpacity : 0.0,
+          depthWrite: false
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+
+        // North-Up Orientation:
+        // Top (North: Jammu & Kashmir / Ladakh) -> World -X (Top of screen in camera look-down)
+        // Bottom (South: Tamil Nadu) -> World +X (Bottom of screen)
+        // Right (East: Arunachal Pradesh) -> World -Z (Right of screen)
+        // Left (West: Gujarat) -> World +Z (Left of screen)
+        // Normal -> World +Y (Facing up towards camera)
+        mesh.rotation.order = 'XYZ';
+        mesh.rotation.set(-Math.PI / 2, 0, Math.PI / 2);
+
+        // Position: Geographically aligns the NH48 Chennai / Tamil Nadu corridor with road coordinate (-15.0, 0.0)
+        mesh.position.set(-36.47, -1.58, -7.68);
+
+        group.userData.mesh = mesh;
+        group.userData.material = mat;
+        group.add(mesh);
+      };
+      img.src = url;
+    })
+    .catch((err) => console.warn('Could not load india-map.html', err));
+
+  return group;
 }
 
