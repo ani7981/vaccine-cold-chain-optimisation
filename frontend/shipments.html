@@ -1,645 +1,750 @@
-<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-primary":"#2a3500","tertiary-container":"#e9ddff","tertiary-fixed":"#e9ddff","on-tertiary-container":"#7342dd","surface-variant":"#333539","on-tertiary":"#3c0091","on-primary-fixed":"#171e00","primary-fixed-dim":"#b0d41a","on-primary-fixed-variant":"#3e4c00","error":"#ffb4ab","primary":"#ffffff","surface-container-highest":"#333539","surface-container":"#1e2024","surface":"#111317","on-error-container":"#ffdad6","on-tertiary-fixed":"#23005c","on-surface-variant":"#c5c9af","on-surface":"#e2e2e8","on-secondary-fixed":"#001e2c","on-secondary-container":"#00374d","inverse-on-surface":"#2f3035","secondary-fixed":"#c4e7ff","on-tertiary-fixed-variant":"#5516be","error-container":"#93000a","on-secondary":"#00354a","inverse-primary":"#536600","tertiary":"#ffffff","tertiary-fixed-dim":"#d0bcff","secondary-container":"#00a6e0","secondary-fixed-dim":"#7bd0ff","on-primary-container":"#586c00","background":"#111317","surface-dim":"#111317","on-secondary-fixed-variant":"#004c69","outline":"#8f937b","surface-container-high":"#282a2e","surface-container-low":"#1a1c20","on-background":"#e2e2e8","on-error":"#690005","inverse-surface":"#e2e2e8","primary-fixed":"#ccf13c","surface-container-lowest":"#0c0e12","primary-container":"#ccf13c","outline-variant":"#454935","surface-tint":"#b0d41a","secondary":"#7bd0ff","surface-bright":"#37393e"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"3xl":"40px","container-pad":"20px","xl":"24px","base":"16px","dock-w":"72px","lg":"20px","xs":"4px","md":"12px","gutter":"16px","2xl":"32px","sm":"8px"},fontFamily:{"body-md":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"label-caps":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"telemetry-stat":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"telemetry-lg":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"]},fontSize:{"body-md":["13px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}],"headline-sm":["15px",{lineHeight:"22px",letterSpacing:"0em",fontWeight:"600"}],"body-sm":["12px",{lineHeight:"18px",letterSpacing:"0em",fontWeight:"400"}],"label-caps":["11px",{lineHeight:"16px",letterSpacing:"0.06em",fontWeight:"700"}],"body-lg":["15px",{lineHeight:"24px",letterSpacing:"0em",fontWeight:"400"}],"headline-md":["18px",{lineHeight:"26px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"700"}],"telemetry-stat":["20px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"700"}],"label-sm":["11px",{lineHeight:"16px",letterSpacing:"0.01em",fontWeight:"500"}],"telemetry-lg":["28px",{lineHeight:"34px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-xl":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}]}}}};</script>  <link rel="stylesheet" href="/css/vaxkavach.css">
-</head><body class="bg-surface-container-lowest font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 bg-surface-container-lowest/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.6)]"><div class="h-20 w-full px-container-pad flex items-center justify-between gap-md"><div class="flex items-center gap-base"><div class="flex items-center gap-sm"><div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center"><span class="material-symbols-outlined text-primary-fixed text-[24px]">shield_with_heart</span></div><div class="flex flex-col"><span class="font-headline-md text-headline-md tracking-tight text-primary leading-none">VaxKavach</span><span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant leading-none mt-xs">India Telemetry Arc</span></div></div><div class="hidden xl:flex items-center gap-xs px-sm py-xs rounded-full bg-surface-container-low"><div class="w-2 h-2 rounded-full bg-[#E5DEC9] animate-pulse"></div><span class="font-label-caps text-label-caps text-[#E5DEC9] uppercase tracking-wider">SIMULATED DATA — DEMO MODE</span></div></div><nav class="hidden lg:flex items-center gap-lg" data-active-classes="text-primary-fixed font-semibold"><a aria-current="page" class="transition-colors text-[#F5EEDB] font-semibold" data-path="overview" href="/overview.html">Overview</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="shipments" href="/shipments.html">Shipments</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="live-map" href="/map.html">Map</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="problems-queue" href="/problems.html">Problems</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="telemetry-history" href="/history.html">History</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="fleet-operations" href="/fleet.html">Fleet</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="technical-specs" href="/technical.html">Technical</a></nav><div class="flex items-center gap-md"><div class="hidden sm:flex items-center gap-sm"><button class="px-base py-sm rounded-full bg-surface-container-high text-on-surface font-body-sm text-body-sm hover:bg-surface-variant hover:text-on-surface transition-colors" type="button">How It Works</button><button class="px-base py-sm rounded-full bg-[#F5EEDB] text-[#111317] font-headline-sm text-headline-sm hover:bg-[#E2D9C5] transition-colors shadow-sm font-semibold" type="button">Explore the Demo</button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface-container-lowest min-h-screen"><div class="flex flex-col w-full">
-<!-- Layout Master Shell with Lateral Icon Dock -->
-<div class="flex w-full min-h-[calc(100vh-5rem)]">
-<!-- 1. PERSISTENT OPERATIONAL DOCK -->
-<aside class="hidden md:flex flex-col items-center justify-between w-dock-w shrink-0 bg-surface-container-lowest border-r border-surface-variant/20 py-lg">
-<div class="flex flex-col items-center gap-xl w-full">
-<!-- Cross Logo Emblem -->
-<div class="w-11 h-11 rounded-xl bg-surface-container-high flex items-center justify-center text-primary shadow-sm">
-<span class="material-symbols-outlined text-[24px]">local_hospital</span>
-</div>
-<!-- Navigation Dock Items -->
-<nav aria-label="Tactical Rail" class="flex flex-col items-center gap-xs w-full px-xs">
-<!-- Overview -->
-<a class="w-11 h-11 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="/overview.html" title="Overview">
-<span class="material-symbols-outlined text-[20px]">space_dashboard</span>
-</a>
-<!-- Shipments (ACTIVE/SELECTED) -->
-<a class="w-11 h-11 rounded-xl flex items-center justify-center bg-[#F5EEDB] text-[#111317] font-semibold shadow-md" href="/shipments.html" title="Shipments"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span></a>
-<!-- Map -->
-<a class="w-11 h-11 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#" title="Map">
-<span class="material-symbols-outlined text-[20px]">explore</span>
-</a>
-<!-- Problems -->
-<a class="relative w-11 h-11 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="/problems.html" title="Problems">
-<span class="material-symbols-outlined text-[20px]">warning</span>
-<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error"></span>
-</a>
-<!-- History -->
-<a class="w-11 h-11 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="/history.html" title="History">
-<span class="material-symbols-outlined text-[20px]">receipt_long</span>
-</a>
-<!-- Fleet -->
-<a class="w-11 h-11 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="/fleet.html" title="Fleet">
-<span class="material-symbols-outlined text-[20px]">commute</span>
-</a>
-<!-- Technical -->
-<a class="w-11 h-11 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="/technical.html" title="Technical Specs">
-<span class="material-symbols-outlined text-[20px]">tune</span>
-</a>
-</nav>
-</div>
-<!-- Dock Utility Bottom -->
-<div class="flex flex-col items-center gap-base w-full px-xs">
-<button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" title="Operator Support" type="button">
-<span class="material-symbols-outlined text-[20px]">help_center</span>
-</button>
-<button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" title="Console Settings" type="button">
-<span class="material-symbols-outlined text-[20px]">settings</span>
-</button>
-<div class="h-16 flex items-center justify-center">
-<span class="font-label-caps text-label-caps [writing-mode:vertical-rl] tracking-widest text-on-surface-variant/50 uppercase select-none">
-            Simulated Arc
-          </span>
-</div>
-</div>
-</aside>
-<!-- Content Workspace Master -->
-<div class="flex-1 flex flex-col min-w-0 bg-surface-container-lowest">
-<!-- 2. HEADER & TELEMETRY BADGE RAIL -->
-<section class="w-full px-container-pad pt-xl pb-md border-b border-surface-variant/20 bg-surface-container-low/30">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-base">
-<div class="flex flex-col gap-xs">
-<div class="flex items-center gap-sm">
-<span class="font-label-caps text-label-caps tracking-widest uppercase text-on-surface-variant">Cold-Chain Network Directory</span>
-<span class="text-on-surface-variant/40">•</span>
-<span class="font-label-caps text-label-caps tracking-wide text-on-surface-variant">Universal Immunisation Programme</span>
-</div>
-<h1 class="font-headline-xl text-headline-xl text-primary tracking-tight">Shipments</h1>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
-              Find, filter and inspect vaccine shipments across the Indian cold-chain network with live thermal assurance.
-            </p>
-</div>
-<!-- Top-Right Operational Telemetry Metrics -->
-<div class="flex flex-wrap items-center gap-md lg:justify-end">
-<div class="px-base py-sm rounded-xl bg-surface-container-high/80 border border-surface-variant/30 flex items-center gap-md shadow-sm">
-<div class="flex flex-col">
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Fleet Payload</span>
-<span class="font-headline-sm text-headline-sm text-primary">12 active <span class="text-on-surface-variant font-normal">· 38 total</span></span>
-</div>
-<div class="w-px h-8 bg-surface-variant/40"></div>
-<div class="flex items-center gap-sm">
-<div class="w-2.5 h-2.5 rounded-full bg-[#4E8752] animate-pulse"></div>
-<div class="flex flex-col">
-<span class="font-label-caps text-label-caps text-primary tracking-wider uppercase font-semibold">Live Data</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">08 Sep 2026 · 14:32 IST</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- 3. SEARCH & COMPACT FILTER CONTROLS -->
-<section class="w-full px-container-pad py-md bg-surface-container-low/60 border-b border-surface-variant/20">
-<div class="flex flex-col gap-md">
-<!-- Search Row -->
-<div class="flex items-center justify-between gap-base">
-<div class="relative flex-1 max-w-3xl">
-<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant">search</span>
-<input class="w-full pl-10 pr-16 py-sm rounded-xl bg-surface-container-highest/60 text-on-surface placeholder:text-on-surface-variant/60 font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary/40 transition-all border border-surface-variant/30" id="shipment-search-input" placeholder="Search shipment ID, route or location… (e.g. VK-1042, Chennai, Vellore, Agra)" type="text">
-<div class="absolute right-md top-1/2 -translate-y-1/2 flex items-center gap-xs px-xs py-0.5 rounded bg-surface-container-low text-on-surface-variant font-label-caps text-label-caps border border-surface-variant/40">
-<span>⌘K</span>
-</div>
-</div>
-<!-- Quick Sort Pill -->
-<div class="hidden sm:flex items-center gap-xs shrink-0">
-<span class="font-label-sm text-label-sm text-on-surface-variant">Sort by:</span>
-<button class="flex items-center gap-xs px-md py-sm rounded-lg bg-surface-container-high text-on-surface font-body-sm text-body-sm hover:bg-surface-variant transition-colors border border-surface-variant/30" type="button">
-<span>Latest update</span>
-<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
-</button>
-</div>
-</div>
-<!-- Secondary Filter Chips Bar -->
-<div class="flex flex-wrap items-center justify-between gap-sm pt-xs">
-<div class="flex flex-wrap items-center gap-xs sm:gap-sm">
-<!-- Status Chips -->
-<button class="px-md py-xs rounded-full bg-[#F5EEDB] text-[#111317] font-headline-sm text-headline-sm transition-all shadow-sm font-semibold" type="button">All (38)</button>
-<button class="px-md py-xs rounded-full bg-surface-container-high text-on-surface font-body-sm text-body-sm hover:bg-surface-variant transition-colors flex items-center gap-xs border border-surface-variant/30" type="button">
-<span class="w-2 h-2 rounded-full bg-[#4E8752]"></span>
-<span>Okay (32)</span>
-</button>
-<button class="px-md py-xs rounded-full bg-surface-container-high text-on-surface font-body-sm text-body-sm hover:bg-surface-variant transition-colors flex items-center gap-xs border border-surface-variant/30" type="button">
-<span class="w-2 h-2 rounded-full bg-[#B8863A]"></span>
-<span>Need attention (4)</span>
-</button>
-<button class="px-md py-xs rounded-full bg-surface-container-high text-on-surface font-body-sm text-body-sm hover:bg-surface-variant transition-colors flex items-center gap-xs border border-surface-variant/30" type="button">
-<span class="w-2 h-2 rounded-full bg-[#B34A42]"></span>
-<span>Problem (2)</span>
-</button>
-<div class="hidden md:block w-px h-4 bg-surface-variant/40 mx-xs"></div>
-<!-- Parameter Filters -->
-<button class="hidden md:flex items-center gap-xs px-md py-xs rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm border border-surface-variant/30 transition-colors" type="button">
-<span>Route: All Routes</span>
-<span class="material-symbols-outlined text-[14px]">arrow_drop_down</span>
-</button>
-<button class="hidden lg:flex items-center gap-xs px-md py-xs rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm border border-surface-variant/30 transition-colors" type="button">
-<span>Temp: Normal (2–8°C)</span>
-<span class="material-symbols-outlined text-[14px]">arrow_drop_down</span>
-</button>
-<button class="hidden xl:flex items-center gap-xs px-md py-xs rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm border border-surface-variant/30 transition-colors" type="button">
-<span>Window: Today</span>
-<span class="material-symbols-outlined text-[14px]">arrow_drop_down</span>
-</button>
-</div>
-<button class="text-on-surface-variant hover:text-primary font-label-caps text-label-caps uppercase tracking-wider transition-colors ml-auto sm:ml-0" type="button">
-              Clear filters
-            </button>
-</div>
-</div>
-</section>
-<!-- 4 & 5. SPLIT WORKSPACE: SHIPMENT DIRECTORY & LIVE INSPECTOR DRAWER -->
-<section class="flex-1 w-full px-container-pad py-lg flex flex-col xl:flex-row gap-lg items-start">
-<!-- Left: Shipment List (Cards / Rows) -->
-<div class="flex-1 w-full flex flex-col gap-sm">
-<!-- Row 1: <span class="dyn-shipment-code">VK-1042</span> (DEMO INCIDENT — SELECTED & HIGHLIGHTED) -->
-<article class="group cursor-pointer rounded-2xl bg-[#181B22] p-base transition-all duration-200 border-l-4 border-l-[#B34A42] border-t border-r border-b border-surface-variant/30 shadow-md hover:bg-[#1E222A]" id="shipment-row-vk1042" onclick="selectShipment('VK-1042')">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-base">
-<!-- Core Identifier & Vehicle Details -->
-<div class="flex items-start gap-md min-w-[240px]">
-<div class="w-10 h-10 rounded-xl bg-[#28181A] text-[#B34A42] flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[20px]">ac_unit</span>
-</div>
-<div class="flex flex-col min-w-0">
-<div class="flex items-center gap-sm">
-<span class="font-headline-md text-headline-md text-primary font-bold tracking-tight"><span class="dyn-shipment-code">VK-1042</span></span>
-<span class="px-xs py-0.5 rounded bg-[#2A1617] text-[#B34A42] font-label-caps text-label-caps uppercase tracking-wider">
-                      Thermal Breach
-                    </span>
-</div>
-<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Reefer Tata Ultra · TN-4821-HX</span>
-</div>
-</div>
-<!-- Route Vector & Current GPS -->
-<div class="flex flex-col min-w-0 flex-1 lg:max-w-md">
-<div class="flex items-center gap-xs text-on-surface">
-<span class="font-headline-sm text-headline-sm truncate">Chennai Regional Store</span>
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant shrink-0">arrow_forward</span>
-<span class="font-headline-sm text-headline-sm truncate text-on-surface-variant">Vellore DH</span>
-</div>
-<div class="flex items-center gap-xs mt-1 text-on-surface-variant font-body-sm text-body-sm">
-<span class="material-symbols-outlined text-[14px] text-[#B34A42]">location_on</span>
-<span class="truncate">Near Sriperumbudur (Km 74.2) · NH 48</span>
-</div>
-</div>
-<!-- Thermal Status Badge & Delta Readout -->
-<div class="flex items-center justify-between lg:justify-end gap-lg shrink-0">
-<div class="flex flex-col text-left lg:text-right">
-<div class="flex items-center gap-xs lg:justify-end">
-<span class="font-telemetry-lg text-telemetry-lg text-[#B34A42] font-bold"><span class="dyn-temp">9.4°C</span></span>
-<span class="material-symbols-outlined text-[18px] text-[#B34A42]">arrow_upward</span>
-</div>
-<span class="font-label-caps text-label-caps text-[#B34A42] uppercase tracking-wider font-semibold">11 min above ceiling (8.0°C)</span>
-</div>
-<div class="flex flex-col items-end gap-xs min-w-[100px]">
-<span class="inline-flex items-center gap-1.5 px-sm py-xs rounded-full bg-[#2A1617] text-[#B34A42] font-label-caps text-label-caps uppercase font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#B34A42] animate-ping"></span>
-                    Problem
-                  </span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">14:31 IST</span>
-</div>
-<button class="hidden sm:flex items-center gap-xs px-md py-sm rounded-xl bg-[#F5EEDB] text-[#111317] font-headline-sm text-headline-sm hover:bg-[#E2D9C5] transition-colors shrink-0 shadow-sm font-semibold" type="button"><span>Inspect</span><span class="material-symbols-outlined text-[16px]">chevron_right</span></button>
-</div>
-</div>
-</article>
-<!-- Row 2: VK-1047 (NEED ATTENTION) -->
-<article class="group cursor-pointer rounded-2xl bg-surface-container p-base transition-all duration-200 border border-surface-variant/20 hover:bg-surface-container-high" onclick="selectShipment('VK-1047')">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-base">
-<!-- Core Identifier & Vehicle Details -->
-<div class="flex items-start gap-md min-w-[240px]">
-<div class="w-10 h-10 rounded-xl bg-[#282116] text-[#B8863A] flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[20px]">thermostat</span>
-</div>
-<div class="flex flex-col min-w-0">
-<div class="flex items-center gap-sm">
-<span class="font-headline-md text-headline-md text-primary font-bold tracking-tight">VK-1047</span>
-<span class="px-xs py-0.5 rounded bg-[#282116] text-[#B8863A] font-label-caps text-label-caps uppercase tracking-wider">
-                      Approaching
-                    </span>
-</div>
-<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">BharatBenz 1217C · DL-01-AB-3301</span>
-</div>
-</div>
-<!-- Route Vector & Current GPS -->
-<div class="flex flex-col min-w-0 flex-1 lg:max-w-md">
-<div class="flex items-center gap-xs text-on-surface">
-<span class="font-headline-sm text-headline-sm truncate">Delhi Regional Store</span>
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant shrink-0">arrow_forward</span>
-<span class="font-headline-sm text-headline-sm truncate text-on-surface-variant">Patna Medical Depot</span>
-</div>
-<div class="flex items-center gap-xs mt-1 text-on-surface-variant font-body-sm text-body-sm">
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant">location_on</span>
-<span class="truncate">Agra Expressway Toll (Km 198)</span>
-</div>
-</div>
-<!-- Thermal Status Badge & Delta Readout -->
-<div class="flex items-center justify-between lg:justify-end gap-lg shrink-0">
-<div class="flex flex-col text-left lg:text-right">
-<div class="flex items-center gap-xs lg:justify-end">
-<span class="font-telemetry-lg text-telemetry-lg text-[#B8863A] font-bold">7.2°C</span>
-<span class="material-symbols-outlined text-[16px] text-[#B8863A]">trending_up</span>
-</div>
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Approaching 8°C ceiling</span>
-</div>
-<div class="flex flex-col items-end gap-xs min-w-[100px]">
-<span class="inline-flex items-center gap-1.5 px-sm py-xs rounded-full bg-[#282116] text-[#B8863A] font-label-caps text-label-caps uppercase font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#B8863A]"></span>
-                    Attention
-                  </span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">14:27 IST</span>
-</div>
-<button class="hidden sm:flex items-center gap-xs px-md py-sm rounded-xl bg-surface-container-high text-on-surface font-headline-sm text-headline-sm group-hover:bg-surface-variant transition-colors shrink-0 border border-surface-variant/30" type="button">
-<span>Inspect</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Row 3: VK-1039 (OKAY) -->
-<article class="group cursor-pointer rounded-2xl bg-surface-container p-base transition-all duration-200 border border-surface-variant/20 hover:bg-surface-container-high" onclick="selectShipment('VK-1039')">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-base">
-<div class="flex items-start gap-md min-w-[240px]">
-<div class="w-10 h-10 rounded-xl bg-[#162518] text-[#4E8752] flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[20px]">check_circle</span>
-</div>
-<div class="flex flex-col min-w-0">
-<div class="flex items-center gap-sm">
-<span class="font-headline-md text-headline-md text-primary font-bold tracking-tight">VK-1039</span>
-<span class="px-xs py-0.5 rounded bg-[#162518] text-[#4E8752] font-label-caps text-label-caps uppercase tracking-wider">
-                      Safe
-                    </span>
-</div>
-<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Eicher Pro 3015 · KA-04-E-8820</span>
-</div>
-</div>
-<div class="flex flex-col min-w-0 flex-1 lg:max-w-md">
-<div class="flex items-center gap-xs text-on-surface">
-<span class="font-headline-sm text-headline-sm truncate">Bengaluru Vaccine Store</span>
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant shrink-0">arrow_forward</span>
-<span class="font-headline-sm text-headline-sm truncate text-on-surface-variant">Hyderabad DC</span>
-</div>
-<div class="flex items-center gap-xs mt-1 text-on-surface-variant font-body-sm text-body-sm">
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant">location_on</span>
-<span class="truncate">Hosur Gateway (Km 42) · NH 44</span>
-</div>
-</div>
-<div class="flex items-center justify-between lg:justify-end gap-lg shrink-0">
-<div class="flex flex-col text-left lg:text-right">
-<div class="flex items-center gap-xs lg:justify-end">
-<span class="font-telemetry-lg text-telemetry-lg text-[#4E8752] font-bold">5.1°C</span>
-<span class="material-symbols-outlined text-[16px] text-[#4E8752]">check</span>
-</div>
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Optimal Envelope</span>
-</div>
-<div class="flex flex-col items-end gap-xs min-w-[100px]">
-<span class="inline-flex items-center gap-1.5 px-sm py-xs rounded-full bg-[#162518] text-[#4E8752] font-label-caps text-label-caps uppercase font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
-                    Okay
-                  </span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">14:30 IST</span>
-</div>
-<button class="hidden sm:flex items-center gap-xs px-md py-sm rounded-xl bg-surface-container-high text-on-surface font-headline-sm text-headline-sm group-hover:bg-surface-variant transition-colors shrink-0 border border-surface-variant/30" type="button">
-<span>Inspect</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Row 4: VK-1045 (OKAY) -->
-<article class="group cursor-pointer rounded-2xl bg-surface-container p-base transition-all duration-200 border border-surface-variant/20 hover:bg-surface-container-high" onclick="selectShipment('VK-1045')">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-base">
-<div class="flex items-start gap-md min-w-[240px]">
-<div class="w-10 h-10 rounded-xl bg-[#162518] text-[#4E8752] flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[20px]">check_circle</span>
-</div>
-<div class="flex flex-col min-w-0">
-<div class="flex items-center gap-sm">
-<span class="font-headline-md text-headline-md text-primary font-bold tracking-tight">VK-1045</span>
-<span class="px-xs py-0.5 rounded bg-[#162518] text-[#4E8752] font-label-caps text-label-caps uppercase tracking-wider">
-                      Safe
-                    </span>
-</div>
-<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Ashok Leyland Reefer · MH-04-KF-1092</span>
-</div>
-</div>
-<div class="flex flex-col min-w-0 flex-1 lg:max-w-md">
-<div class="flex items-center gap-xs text-on-surface">
-<span class="font-headline-sm text-headline-sm truncate">Mumbai Regional Store</span>
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant shrink-0">arrow_forward</span>
-<span class="font-headline-sm text-headline-sm truncate text-on-surface-variant">Ahmedabad Depot</span>
-</div>
-<div class="flex items-center gap-xs mt-1 text-on-surface-variant font-body-sm text-body-sm">
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant">location_on</span>
-<span class="truncate">Surat South Bypass (Km 265)</span>
-</div>
-</div>
-<div class="flex items-center justify-between lg:justify-end gap-lg shrink-0">
-<div class="flex flex-col text-left lg:text-right">
-<div class="flex items-center gap-xs lg:justify-end">
-<span class="font-telemetry-lg text-telemetry-lg text-[#4E8752] font-bold">4.8°C</span>
-<span class="material-symbols-outlined text-[16px] text-[#4E8752]">check</span>
-</div>
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Optimal Envelope</span>
-</div>
-<div class="flex flex-col items-end gap-xs min-w-[100px]">
-<span class="inline-flex items-center gap-1.5 px-sm py-xs rounded-full bg-[#162518] text-[#4E8752] font-label-caps text-label-caps uppercase font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
-                    Okay
-                  </span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">14:29 IST</span>
-</div>
-<button class="hidden sm:flex items-center gap-xs px-md py-sm rounded-xl bg-surface-container-high text-on-surface font-headline-sm text-headline-sm group-hover:bg-surface-variant transition-colors shrink-0 border border-surface-variant/30" type="button">
-<span>Inspect</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Row 5: VK-1051 (OKAY) -->
-<article class="group cursor-pointer rounded-2xl bg-surface-container p-base transition-all duration-200 border border-surface-variant/20 hover:bg-surface-container-high" onclick="selectShipment('VK-1051')">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-base">
-<div class="flex items-start gap-md min-w-[240px]">
-<div class="w-10 h-10 rounded-xl bg-[#162518] text-[#4E8752] flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[20px]">check_circle</span>
-</div>
-<div class="flex flex-col min-w-0">
-<div class="flex items-center gap-sm">
-<span class="font-headline-md text-headline-md text-primary font-bold tracking-tight">VK-1051</span>
-<span class="px-xs py-0.5 rounded bg-[#162518] text-[#4E8752] font-label-caps text-label-caps uppercase tracking-wider">
-                      Safe
-                    </span>
-</div>
-<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Tata 407 Insulated · WB-22-C-5514</span>
-</div>
-</div>
-<div class="flex flex-col min-w-0 flex-1 lg:max-w-md">
-<div class="flex items-center gap-xs text-on-surface">
-<span class="font-headline-sm text-headline-sm truncate">Kolkata Regional Store</span>
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant shrink-0">arrow_forward</span>
-<span class="font-headline-sm text-headline-sm truncate text-on-surface-variant">Patna Vaccine Store</span>
-</div>
-<div class="flex items-center gap-xs mt-1 text-on-surface-variant font-body-sm text-body-sm">
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant">location_on</span>
-<span class="truncate">Durgapur Industrial Belt (Km 162)</span>
-</div>
-</div>
-<div class="flex items-center justify-between lg:justify-end gap-lg shrink-0">
-<div class="flex flex-col text-left lg:text-right">
-<div class="flex items-center gap-xs lg:justify-end">
-<span class="font-telemetry-lg text-telemetry-lg text-[#4E8752] font-bold">5.7°C</span>
-<span class="material-symbols-outlined text-[16px] text-[#4E8752]">check</span>
-</div>
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Optimal Envelope</span>
-</div>
-<div class="flex flex-col items-end gap-xs min-w-[100px]">
-<span class="inline-flex items-center gap-1.5 px-sm py-xs rounded-full bg-[#162518] text-[#4E8752] font-label-caps text-label-caps uppercase font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
-                    Okay
-                  </span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">14:26 IST</span>
-</div>
-<button class="hidden sm:flex items-center gap-xs px-md py-sm rounded-xl bg-surface-container-high text-on-surface font-headline-sm text-headline-sm group-hover:bg-surface-variant transition-colors shrink-0 border border-surface-variant/30" type="button">
-<span>Inspect</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Row 6: VK-1033 (OKAY) -->
-<article class="group cursor-pointer rounded-2xl bg-surface-container p-base transition-all duration-200 border border-surface-variant/20 hover:bg-surface-container-high" onclick="selectShipment('VK-1033')">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-base">
-<div class="flex items-start gap-md min-w-[240px]">
-<div class="w-10 h-10 rounded-xl bg-[#162518] text-[#4E8752] flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[20px]">check_circle</span>
-</div>
-<div class="flex flex-col min-w-0">
-<div class="flex items-center gap-sm">
-<span class="font-headline-md text-headline-md text-primary font-bold tracking-tight">VK-1033</span>
-<span class="px-xs py-0.5 rounded bg-[#162518] text-[#4E8752] font-label-caps text-label-caps uppercase tracking-wider">
-                      Safe
-                    </span>
-</div>
-<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Force Trax Reefer · KL-07-CD-9011</span>
-</div>
-</div>
-<div class="flex flex-col min-w-0 flex-1 lg:max-w-md">
-<div class="flex items-center gap-xs text-on-surface">
-<span class="font-headline-sm text-headline-sm truncate">Kochi Regional Depot</span>
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant shrink-0">arrow_forward</span>
-<span class="font-headline-sm text-headline-sm truncate text-on-surface-variant">Thiruvananthapuram MC</span>
-</div>
-<div class="flex items-center gap-xs mt-1 text-on-surface-variant font-body-sm text-body-sm">
-<span class="material-symbols-outlined text-[14px] text-on-surface-variant">location_on</span>
-<span class="truncate">Alappuzha Bypass (Km 64)</span>
-</div>
-</div>
-<div class="flex items-center justify-between lg:justify-end gap-lg shrink-0">
-<div class="flex flex-col text-left lg:text-right">
-<div class="flex items-center gap-xs lg:justify-end">
-<span class="font-telemetry-lg text-telemetry-lg text-[#4E8752] font-bold">4.2°C</span>
-<span class="material-symbols-outlined text-[16px] text-[#4E8752]">check</span>
-</div>
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Optimal Envelope</span>
-</div>
-<div class="flex flex-col items-end gap-xs min-w-[100px]">
-<span class="inline-flex items-center gap-1.5 px-sm py-xs rounded-full bg-[#162518] text-[#4E8752] font-label-caps text-label-caps uppercase font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
-                    Okay
-                  </span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">14:21 IST</span>
-</div>
-<button class="hidden sm:flex items-center gap-xs px-md py-sm rounded-xl bg-surface-container-high text-on-surface font-headline-sm text-headline-sm group-hover:bg-surface-variant transition-colors shrink-0 border border-surface-variant/30" type="button">
-<span>Inspect</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-</button>
-</div>
-</div>
-</article>
-</div>
-<!-- Right / Inspector Panel: <span class="dyn-shipment-code">VK-1042</span> LIVE TELEMETRY DRAWER -->
-<aside class="w-full xl:w-[440px] shrink-0 rounded-2xl bg-surface-container-high p-lg flex flex-col gap-lg border border-surface-variant/30 shadow-xl" id="inspector-drawer">
-<!-- Inspector Header -->
-<div class="flex items-start justify-between gap-base border-b border-surface-variant/20 pb-md">
-<div class="flex flex-col">
-<div class="flex items-center gap-xs">
-<span class="w-2 h-2 rounded-full bg-[#B34A42] animate-pulse"></span>
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-[#B34A42]">Incident Inspection</span>
-</div>
-<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight mt-0.5" id="inspector-id"><span class="dyn-shipment-code">VK-1042</span></h2>
-<span class="font-body-sm text-body-sm text-on-surface-variant">Consignment IND-VR-2026-X8</span>
-</div>
-<div class="flex items-center gap-xs">
-<button class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors border border-surface-variant/20" title="Print Manifest" type="button">
-<span class="material-symbols-outlined text-[16px]">print</span>
-</button>
-<button class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors border border-surface-variant/20" title="Close Panel" type="button">
-<span class="material-symbols-outlined text-[16px]">close</span>
-</button>
-</div>
-</div>
-<!-- Cold-Chain Telemetry Summary & Sparkline -->
-<div class="rounded-xl bg-surface-container p-md flex flex-col gap-sm border border-surface-variant/20">
-<div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">Cold-Chain Envelope</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Safe Limit: 2.0°C – 8.0°C</span>
-</div>
-<div class="flex items-baseline justify-between">
-<div class="flex items-baseline gap-xs">
-<span class="font-telemetry-lg text-telemetry-lg text-[#B34A42] font-extrabold"><span class="dyn-temp">9.4°C</span></span>
-<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">(+1.4°C Excursion)</span>
-</div>
-<span class="px-sm py-xs rounded bg-[#2A1617] text-[#B34A42] font-label-caps text-label-caps uppercase font-bold">
-                11m Critical
-              </span>
-</div>
-<!-- Temperature Sparkline Curve (Inline SVG, 60-min window) -->
-<div class="w-full pt-xs">
-<div class="h-16 w-full relative">
-<!-- Safe Zone Threshold Lines -->
-<div class="absolute inset-x-0 top-1/3 border-b border-dashed border-[#B34A42]/40 z-0"></div>
-<span class="absolute right-0 top-1 text-[9px] text-[#B34A42] font-mono">+8.0°C Max</span>
-<svg class="w-full h-full overflow-visible relative z-10" preserveAspectRatio="none" viewBox="0 0 380 64">
-<!-- Gradient Area under curve -->
-<defs>
-<linearGradient id="tempGradient" x1="0" x2="0" y1="0" y2="1">
-<stop offset="0%" stop-color="#B34A42" stop-opacity="0.35"></stop>
-<stop offset="70%" stop-color="#B34A42" stop-opacity="0.0"></stop>
-</linearGradient>
-</defs>
-<!-- Excursion fill -->
-<path d="M 0 46 L 50 44 L 110 40 L 170 38 L 220 30 L 280 20 L 330 12 L 380 8 L 380 64 L 0 64 Z" fill="url(#tempGradient)"></path>
-<!-- Sparkline Curve -->
-<path d="M 0 46 L 50 44 L 110 40 L 170 38 L 220 30 L 280 20 L 330 12 L 380 8" fill="none" stroke="#B34A42" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-<!-- Current Data Point -->
-<circle class="animate-ping" cx="380" cy="8" fill="#B34A42" r="4.5"></circle>
-<circle cx="380" cy="8" fill="#EDE5D8" r="3.5"></circle>
-</svg>
-</div>
-<div class="flex justify-between text-on-surface-variant/60 font-label-caps text-label-caps mt-1">
-<span>13:30 (5.2°C)</span>
-<span>14:00 (6.8°C)</span>
-<span class="text-[#B34A42]">14:31 (<span class="dyn-temp">9.4°C</span>)</span>
-</div>
-</div>
-</div>
-<!-- Payload Inventory Specification -->
-<div class="flex flex-col gap-xs">
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">Vaccine Consignment Payload</span>
-<div class="grid grid-cols-2 gap-sm">
-<div class="rounded-xl bg-surface-container p-sm border border-surface-variant/20">
-<span class="font-label-sm text-label-sm text-on-surface-variant">Dose Volume</span>
-<p class="font-headline-sm text-headline-sm text-primary mt-0.5">8,400 Doses</p>
-<span class="text-[11px] text-on-surface-variant">WHO-PQS Monovalent</span>
-</div>
-<div class="rounded-xl bg-surface-container p-sm border border-surface-variant/20">
-<span class="font-label-sm text-label-sm text-on-surface-variant">Vaccine Type</span>
-<p class="font-headline-sm text-headline-sm text-primary mt-0.5">Rotavirus + Pentavalent</p>
-<span class="text-[11px] text-on-surface-variant">Batch #IND-VR-2026</span>
-</div>
-</div>
-</div>
-<!-- Chiller Compressor Diagnostic Telemetry -->
-<div class="rounded-xl bg-surface-container p-md flex flex-col gap-sm border border-surface-variant/20">
-<div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">Reefer Telemetry Diagnostics</span>
-<span class="material-symbols-outlined text-[16px] text-on-surface-variant">device_thermostat</span>
-</div>
-<div class="flex items-center justify-between py-xs border-b border-surface-variant/20">
-<span class="font-body-sm text-body-sm text-on-surface-variant">Compressor Status</span>
-<span class="font-label-sm text-label-sm text-[#B34A42] font-semibold">RPM Drop (940 vs 2,200 Nominal)</span>
-</div>
-<div class="flex items-center justify-between py-xs border-b border-surface-variant/20">
-<span class="font-body-sm text-body-sm text-on-surface-variant">Ambient Highway Temp</span>
-<span class="font-label-sm text-label-sm text-on-surface font-semibold">+38.5°C Direct Sunlight</span>
-</div>
-<div class="flex items-center justify-between py-xs">
-<span class="font-body-sm text-body-sm text-on-surface-variant">Assigned Carrier</span>
-<span class="font-label-sm text-label-sm text-on-surface font-semibold">K. Muthukrishnan (+91 94441 20982)</span>
-</div>
-</div>
-<!-- Active Algorithmic Recommendation -->
-<div class="rounded-xl bg-[#231E18] p-md border-l-4 border-l-[#B8863A] flex flex-col gap-xs">
-<div class="flex items-center gap-xs text-[#B8863A]">
-<span class="material-symbols-outlined text-[16px]">alt_route</span>
-<span class="font-label-caps text-label-caps uppercase font-bold tracking-wider">Deterministic Recommendation</span>
-</div>
-<p class="font-body-sm text-body-sm text-primary">
-              Divert immediately to <strong class="text-primary font-bold">Vellore Sub-District Depot ILR Facility</strong> (14 km away, 18 min ETA) before thermal buffer collapses.
-            </p>
-</div>
-<!-- Action CTA Group -->
-<div class="flex flex-col gap-sm pt-xs mt-auto">
-<button class="w-full py-md px-base rounded-xl bg-[#F5EEDB] text-[#111317] font-headline-sm text-headline-sm hover:bg-[#E2D9C5] transition-all shadow-md flex items-center justify-center gap-sm font-semibold" type="button"><span class="material-symbols-outlined text-[18px]">visibility</span><span>View Problem Details</span></button>
-<div class="grid grid-cols-2 gap-sm">
-<button class="py-sm px-md rounded-xl bg-surface-container text-primary font-headline-sm text-headline-sm hover:bg-surface-container-highest transition-colors border border-surface-variant/30 flex items-center justify-center gap-xs" type="button">
-<span class="material-symbols-outlined text-[16px]">call</span>
-<span>Driver Comms</span>
-</button>
-<button class="py-sm px-md rounded-xl bg-[#282116] text-[#B8863A] font-headline-sm text-headline-sm hover:bg-[#342A1C] transition-colors border border-[#B8863A]/40 flex items-center justify-center gap-xs" type="button">
-<span class="material-symbols-outlined text-[16px]">turn_sharp_right</span>
-<span>Authorize Reroute</span>
-</button>
-</div>
-</div>
-</aside>
-</section>
-<!-- 6. FOOTER & PAGINATION -->
-<footer class="w-full px-container-pad py-md border-t border-surface-variant/20 bg-surface-container-low/40 flex flex-col sm:flex-row items-center justify-between gap-base mt-auto">
-<div class="flex items-center gap-md">
-<span class="font-body-sm text-body-sm text-on-surface-variant">
-            Showing <strong class="text-primary font-semibold">1–6</strong> of <strong class="text-primary font-semibold">38</strong> shipments (12 active in-transit, 26 scheduled/completed)
-          </span>
-</div>
-<!-- Pagination Controls -->
-<div class="flex items-center gap-xs">
-<button class="px-sm py-xs rounded-lg bg-surface-container-high text-on-surface-variant/40 font-body-sm text-body-sm border border-surface-variant/20 cursor-not-allowed" disabled="" type="button">
-            Previous
-          </button>
-<button class="w-8 h-8 rounded-lg bg-[#F5EEDB] text-[#111317] font-headline-sm text-headline-sm flex items-center justify-center shadow-sm font-semibold" type="button">1</button>
-<button class="w-8 h-8 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-variant font-headline-sm text-headline-sm flex items-center justify-center transition-colors border border-surface-variant/20" type="button">
-            2
-          </button>
-<button class="w-8 h-8 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-variant font-headline-sm text-headline-sm flex items-center justify-center transition-colors border border-surface-variant/20" type="button">
-            3
-          </button>
-<button class="w-8 h-8 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-variant font-headline-sm text-headline-sm flex items-center justify-center transition-colors border border-surface-variant/20" type="button">
-            4
-          </button>
-<button class="px-sm py-xs rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-variant font-body-sm text-body-sm border border-surface-variant/20 transition-colors" type="button">
-            Next
-          </button>
-</div>
-<!-- Live Deterministic Audit Watermark -->
-<div class="hidden lg:flex items-center gap-xs">
-<span class="w-1.5 h-1.5 rounded-full bg-[#4E8752]"></span>
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant/70">
-            Deterministic Decision System • CCVMRC Validated Protocol • MKT Audit Sealed
-          </span>
-</div>
-</footer>
-</div>
-</div>
-</div>
-<script>
-  function selectShipment(id) {
-    const inspectorId = document.getElementById('inspector-id');
-    if (inspectorId) {
-      inspectorId.textContent = id;
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <title>VaxKavach — Active Shipments Queue</title>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
     }
-  }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-variant": "#333539",
+            "primary": "#ffffff",
+            "surface-container-highest": "#333539",
+            "surface-container": "#1e2024",
+            "surface": "#111317",
+            "on-surface-variant": "#c5c9af",
+            "on-surface": "#e2e2e8",
+            "background": "#111317",
+            "surface-container-high": "#282a2e",
+            "surface-container-low": "#1a1c20",
+            "surface-container-lowest": "#0c0e12",
+            "vk-surface": "#171614",
+            "vk-surface-card": "#1E1D1A",
+            "vk-border": "#3A3731",
+            "vk-cream": "#F0E8D9",
+            "vk-muted": "#A69F94",
+            "vk-healthy": "#829A80",
+            "vk-attention": "#A4875C",
+            "vk-problem": "#B8756C"
+          },
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="/css/vaxkavach.css">
+</head>
+<body class="bg-[#111317] font-sans text-on-surface antialiased selection:bg-[#F0E8D9] selection:text-[#171614] overflow-x-hidden w-full max-w-full">
+  <main class="w-full max-w-full flex-1 flex flex-col min-h-0 overflow-x-hidden">
+    <div class="flex flex-col w-full max-w-full overflow-x-hidden">
+      <!-- Master Shell with Lateral 72px Dock -->
+      <div class="flex w-full max-w-full min-h-screen overflow-x-hidden">
+        
+        <!-- 1. PERSISTENT OPERATIONAL DOCK (72px) -->
+        <aside class="w-[72px] flex-shrink-0 bg-[#171614] border-r border-[#3A3731] flex flex-col items-center justify-between py-4 z-40">
+          <div class="flex flex-col items-center space-y-6 w-full">
+            <a class="w-10 h-10 rounded-lg bg-[#1E1D1A] border border-[#3A3731] flex items-center justify-center text-[#F0E8D9] hover:border-[#A69F94] transition-colors" href="/landing.html" title="VaxKavach Home">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <path d="M12 8v4"></path>
+                <path d="M12 16h.01"></path>
+              </svg>
+            </a>
+            <nav aria-label="Main Navigation" class="flex flex-col items-center space-y-2.5 w-full px-2">
+              <a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/overview.html" title="Overview">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><rect height="7" rx="1.5" width="7" x="3" y="3"></rect><rect height="7" rx="1.5" width="7" x="14" y="3"></rect><rect height="7" rx="1.5" width="7" x="14" y="14"></rect><rect height="7" rx="1.5" width="7" x="3" y="14"></rect></svg>
+              </a>
+              <a aria-current="page" class="relative w-10 h-10 rounded-lg bg-[#E8DFD0] text-[#211F1B] flex items-center justify-center font-semibold shadow-sm transition-all" href="/shipments.html" title="Shipments">
+                <span class="absolute -left-2 top-1/2 -translate-y-1/2 w-1.5 h-5 bg-[#E8DFD0] rounded-r-full"></span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
+              </a>
+              <a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/map.html" title="Live Map">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              </a>
+              <a class="relative w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/problems.html" title="Problems Operational Queue">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
+                <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#B8756C]"></span>
+              </a>
+              <a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/history.html" title="Telemetry History">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </a>
+              <a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/fleet.html" title="Reefer Fleet">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><rect height="13" width="15" x="1" y="3"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+              </a>
+              <a class="w-10 h-10 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/technical.html" title="Telemetry & Diagnostics">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><line x1="4" x2="4" y1="21" y2="14"></line><line x1="4" x2="4" y1="10" y2="3"></line><line x1="12" x2="12" y1="21" y2="12"></line><line x1="12" x2="12" y1="8" y2="3"></line><line x1="20" x2="20" y1="21" y2="16"></line><line x1="20" x2="20" y1="12" y2="3"></line></svg>
+              </a>
+            </nav>
+          </div>
+          <div class="flex flex-col items-center space-y-3 w-full pb-1">
+            <div class="flex flex-col items-center cursor-default" title="Telemetry Link: Nominal">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#829A80] mb-1 animate-pulse"></span>
+              <span class="text-[9px] font-mono tracking-wider text-[#A69F94] uppercase">LNK</span>
+            </div>
+            <a class="w-8 h-8 rounded-lg flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] hover:bg-[#1E1D1A] transition-colors" href="/settings.html" title="Settings">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </a>
+          </div>
+        </aside>
 
-  // Quick shortcut listener for Command/Ctrl+K search focus
-  window.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      const input = document.getElementById('shipment-search-input');
-      if (input) input.focus();
-    }
-  });
-</script></main><footer class="w-full bg-surface-container-low py-3xl"><div class="w-full px-container-pad flex flex-col md:flex-row items-center justify-between gap-lg"><div class="flex items-center gap-sm"><div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined text-primary-fixed text-[20px]">verified_user</span></div><span class="font-headline-sm text-headline-sm text-on-surface">VaxKavach Autonomous Logistics</span></div><div class="flex items-center gap-base"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">SIMULATED TELEMETRY ENVIRONMENT</span><span class="font-body-sm text-body-sm text-on-surface-variant">© 2025 VaxKavach Operations Network. All rights reserved.</span></div></div></footer>
+        <!-- Content Workspace Master (min-w-0, overflow-x-hidden) -->
+        <div class="flex-1 flex flex-col min-w-0 bg-[#0c0e12] overflow-x-hidden w-full max-w-full">
+          
+          <!-- 2. HEADER & TELEMETRY BADGE RAIL -->
+          <section class="w-full px-4 sm:px-6 pt-4 pb-3 border-b border-[#333539]/30 bg-[#1a1c20]/40 flex-shrink-0">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div class="flex flex-col gap-0.5">
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] font-mono tracking-widest uppercase text-[#A69F94]">Cold-Chain Network Directory</span>
+                  <span class="text-[#A69F94]/40">•</span>
+                  <span class="text-[10px] font-mono tracking-wide text-[#A69F94]">Universal Immunisation Programme</span>
+                </div>
+                <h1 class="text-xl sm:text-2xl font-bold text-[#F0E8D9] tracking-tight">Shipments</h1>
+                <p class="text-xs text-[#A69F94]">
+                  Find, filter and inspect vaccine shipments across the Indian cold-chain network with live thermal assurance.
+                </p>
+              </div>
+
+              <!-- Top-Right Operational Telemetry Metrics -->
+              <div class="flex items-center gap-3 self-start md:self-auto shrink-0">
+                <div class="px-3 py-1.5 rounded-xl bg-[#282a2e]/90 border border-[#333539]/40 flex items-center gap-3 shadow-sm">
+                  <div class="flex flex-col">
+                    <span class="text-[10px] font-mono text-[#A69F94] uppercase tracking-wider">Fleet Payload</span>
+                    <span class="text-xs font-bold font-mono text-[#F0E8D9]">12 active <span class="text-[#A69F94] font-normal">· 38 total</span></span>
+                  </div>
+                  <div class="w-px h-6 bg-[#333539]"></div>
+                  <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-[#829A80] animate-pulse"></div>
+                    <div class="flex flex-col">
+                      <span class="text-[10px] font-mono text-[#F0E8D9] tracking-wider uppercase font-semibold">Live Data</span>
+                      <span class="text-[10px] font-mono text-[#A69F94]">08 Sep · 14:32 IST</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. SEARCH & COMPACT FILTER CONTROLS -->
+          <section class="w-full px-4 sm:px-6 py-2.5 bg-[#1a1c20]/60 border-b border-[#333539]/30 flex-shrink-0">
+            <div class="flex flex-col gap-2">
+              <!-- Search Row -->
+              <div class="flex items-center justify-between gap-3">
+                <div class="relative flex-1 max-w-xl">
+                  <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#A69F94] pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  <input class="w-full pl-9 pr-12 py-1.5 rounded-lg bg-[#333539]/60 text-[#F0E8D9] placeholder-[#A69F94]/60 text-xs focus:outline-none focus:ring-1 focus:ring-[#F0E8D9]/40 transition-all border border-[#333539]" id="shipment-search-input" placeholder="Search shipment ID, route or location… (e.g. VK-1042, Chennai, Vellore, Agra)" type="text">
+                  <div class="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center px-1.5 py-0.5 rounded bg-[#1a1c20] text-[#A69F94] text-[10px] font-mono border border-[#333539]">
+                    <span>⌘K</span>
+                  </div>
+                </div>
+                <!-- Quick Sort Pill -->
+                <div class="hidden sm:flex items-center gap-1.5 shrink-0">
+                  <span class="text-xs text-[#A69F94] font-mono">Sort:</span>
+                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#F0E8D9] text-xs hover:bg-[#333539] transition-colors border border-[#333539]" type="button">
+                    <span>Latest update</span>
+                    <svg class="w-3.5 h-3.5 text-[#A69F94]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Secondary Filter Chips Bar -->
+              <div class="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <button class="px-2.5 py-0.5 rounded-full bg-[#F5EEDB] text-[#111317] text-xs transition-all shadow-sm font-semibold" type="button">All (38)</button>
+                  <button class="px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]" type="button">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
+                    <span>Okay (32)</span>
+                  </button>
+                  <button class="px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]" type="button">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#A4875C]"></span>
+                    <span>Need attention (4)</span>
+                  </button>
+                  <button class="px-2.5 py-0.5 rounded-full bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors flex items-center gap-1.5 border border-[#333539]" type="button">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#B8756C]"></span>
+                    <span>Problem (2)</span>
+                  </button>
+                  <div class="hidden md:block w-px h-3.5 bg-[#333539] mx-1"></div>
+                  <button class="hidden md:flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#1a1c20] text-[#A69F94] hover:text-[#F0E8D9] text-xs border border-[#333539] transition-colors" type="button">
+                    <span>Route: All Routes</span>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                  <button class="hidden lg:flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#1a1c20] text-[#A69F94] hover:text-[#F0E8D9] text-xs border border-[#333539] transition-colors" type="button">
+                    <span>Temp: Normal (2–8°C)</span>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                  <button class="hidden xl:flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#1a1c20] text-[#A69F94] hover:text-[#F0E8D9] text-xs border border-[#333539] transition-colors" type="button">
+                    <span>Window: Today</span>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                </div>
+                <button class="text-[#A69F94] hover:text-[#F0E8D9] text-[10px] font-mono uppercase tracking-wider transition-colors ml-auto sm:ml-0" type="button">
+                  Clear filters
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4 & 5. SPLIT WORKSPACE: SHIPMENT DIRECTORY & LIVE INSPECTOR DRAWER -->
+          <!-- Fluid responsive layout: strictly NO HORIZONTAL OVERFLOW -->
+          <section class="flex-1 w-full max-w-full px-4 sm:px-6 py-4 flex flex-col lg:flex-row gap-4 items-start overflow-hidden">
+            
+            <!-- Left: Shipment List (Cards / Rows) — Thinned footprint -->
+            <div class="flex-1 min-w-0 w-full flex flex-col gap-2">
+              
+              <!-- Row 1: VK-1042 (DEMO INCIDENT — SELECTED & HIGHLIGHTED) -->
+              <article class="group cursor-pointer rounded-xl bg-[#181B22] px-3.5 py-2.5 transition-all duration-200 border-l-4 border-l-[#B8756C] border-t border-r border-b border-[#333539] shadow-sm hover:bg-[#1E222A]" id="shipment-row-vk1042" onclick="selectShipment('VK-1042')">
+                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
+                  <!-- Identifier & Rig -->
+                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
+                    <div class="w-8 h-8 rounded-lg bg-[#28181A] text-[#B8756C] flex items-center justify-center shrink-0 border border-[#B8756C]/30">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight"><span class="dyn-shipment-code">VK-1042</span></span>
+                        <span class="px-1.5 py-0.2 rounded bg-[#2A1617] text-[#B8756C] text-[9px] font-mono font-bold uppercase">
+                          Breach
+                        </span>
+                      </div>
+                      <span class="text-[11px] text-[#A69F94] truncate">Tata Ultra · TN-4821-HX</span>
+                    </div>
+                  </div>
+
+                  <!-- Route & GPS -->
+                  <div class="flex flex-col min-w-0 flex-1 px-1">
+                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
+                      <span class="truncate">Chennai Regional Store</span>
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      <span class="truncate text-[#A69F94]">Vellore DH</span>
+                    </div>
+                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
+                      <svg class="w-3 h-3 text-[#B8756C] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
+                      <span class="truncate">Near Sriperumbudur (Km 74.2) · NH 48</span>
+                    </div>
+                  </div>
+
+                  <!-- Thermal Telemetry -->
+                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
+                    <div class="flex items-center gap-0.5">
+                      <span class="font-mono text-base font-bold text-[#B8756C]"><span class="dyn-temp">9.4°C</span></span>
+                      <svg class="w-3.5 h-3.5 text-[#B8756C]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                    </div>
+                    <span class="text-[9px] font-mono text-[#B8756C] uppercase tracking-wider">+1.4° drift</span>
+                  </div>
+
+                  <!-- Status Tag -->
+                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#2A1617] text-[#B8756C] text-[10px] font-mono font-bold uppercase">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#B8756C] animate-ping"></span>
+                      Problem
+                    </span>
+                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:31 IST</span>
+                  </div>
+
+                  <!-- Inspect CTA -->
+                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#F5EEDB] text-[#111317] text-xs hover:bg-[#E2D9C5] transition-colors shrink-0 shadow-sm font-semibold" type="button">
+                    <span>Inspect</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+              </article>
+
+              <!-- Row 2: VK-1047 (NEED ATTENTION) -->
+              <article class="group cursor-pointer rounded-xl bg-[#1e2024] px-3.5 py-2.5 transition-all duration-200 border border-[#333539] hover:bg-[#282a2e]" onclick="selectShipment('VK-1047')">
+                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
+                  <!-- Identifier & Rig -->
+                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
+                    <div class="w-8 h-8 rounded-lg bg-[#282116] text-[#A4875C] flex items-center justify-center shrink-0 border border-[#A4875C]/30">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path></svg>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">VK-1047</span>
+                        <span class="px-1.5 py-0.2 rounded bg-[#282116] text-[#A4875C] text-[9px] font-mono font-bold uppercase">
+                          Attn
+                        </span>
+                      </div>
+                      <span class="text-[11px] text-[#A69F94] truncate">BharatBenz 1217C · DL-01-AB-3301</span>
+                    </div>
+                  </div>
+
+                  <!-- Route & GPS -->
+                  <div class="flex flex-col min-w-0 flex-1 px-1">
+                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
+                      <span class="truncate">Delhi Regional Store</span>
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      <span class="truncate text-[#A69F94]">Patna Medical Depot</span>
+                    </div>
+                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
+                      <span class="truncate">Agra Expressway Toll (Km 198)</span>
+                    </div>
+                  </div>
+
+                  <!-- Thermal Telemetry -->
+                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
+                    <div class="flex items-center gap-0.5">
+                      <span class="font-mono text-base font-bold text-[#A4875C]">7.2°C</span>
+                      <svg class="w-3.5 h-3.5 text-[#A4875C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    </div>
+                    <span class="text-[9px] font-mono text-[#A69F94] uppercase tracking-wider">Ceiling near</span>
+                  </div>
+
+                  <!-- Status Tag -->
+                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#282116] text-[#A4875C] text-[10px] font-mono font-bold uppercase">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#A4875C]"></span>
+                      Attention
+                    </span>
+                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:27 IST</span>
+                  </div>
+
+                  <!-- Inspect CTA -->
+                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors shrink-0 border border-[#333539] font-medium" type="button">
+                    <span>Inspect</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+              </article>
+
+              <!-- Row 3: VK-1039 (OKAY) -->
+              <article class="group cursor-pointer rounded-xl bg-[#1e2024] px-3.5 py-2.5 transition-all duration-200 border border-[#333539] hover:bg-[#282a2e]" onclick="selectShipment('VK-1039')">
+                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
+                  <!-- Identifier & Rig -->
+                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
+                    <div class="w-8 h-8 rounded-lg bg-[#162518] text-[#829A80] flex items-center justify-center shrink-0 border border-[#829A80]/30">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">VK-1039</span>
+                        <span class="px-1.5 py-0.2 rounded bg-[#162518] text-[#829A80] text-[9px] font-mono font-bold uppercase">
+                          Safe
+                        </span>
+                      </div>
+                      <span class="text-[11px] text-[#A69F94] truncate">Eicher Pro 3015 · KA-04-E-8820</span>
+                    </div>
+                  </div>
+
+                  <!-- Route & GPS -->
+                  <div class="flex flex-col min-w-0 flex-1 px-1">
+                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
+                      <span class="truncate">Bengaluru Vaccine Store</span>
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      <span class="truncate text-[#A69F94]">Hyderabad DC</span>
+                    </div>
+                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
+                      <span class="truncate">Hosur Gateway (Km 42) · NH 44</span>
+                    </div>
+                  </div>
+
+                  <!-- Thermal Telemetry -->
+                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
+                    <div class="flex items-center gap-0.5">
+                      <span class="font-mono text-base font-bold text-[#829A80]">5.1°C</span>
+                      <svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <span class="text-[9px] font-mono text-[#A69F94] uppercase tracking-wider">Optimal</span>
+                  </div>
+
+                  <!-- Status Tag -->
+                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#162518] text-[#829A80] text-[10px] font-mono font-bold uppercase">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
+                      Okay
+                    </span>
+                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:30 IST</span>
+                  </div>
+
+                  <!-- Inspect CTA -->
+                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors shrink-0 border border-[#333539] font-medium" type="button">
+                    <span>Inspect</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+              </article>
+
+              <!-- Row 4: VK-1045 (OKAY) -->
+              <article class="group cursor-pointer rounded-xl bg-[#1e2024] px-3.5 py-2.5 transition-all duration-200 border border-[#333539] hover:bg-[#282a2e]" onclick="selectShipment('VK-1045')">
+                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
+                  <!-- Identifier & Rig -->
+                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
+                    <div class="w-8 h-8 rounded-lg bg-[#162518] text-[#829A80] flex items-center justify-center shrink-0 border border-[#829A80]/30">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">VK-1045</span>
+                        <span class="px-1.5 py-0.2 rounded bg-[#162518] text-[#829A80] text-[9px] font-mono font-bold uppercase">
+                          Safe
+                        </span>
+                      </div>
+                      <span class="text-[11px] text-[#A69F94] truncate">Ashok Leyland · MH-04-KF-1092</span>
+                    </div>
+                  </div>
+
+                  <!-- Route & GPS -->
+                  <div class="flex flex-col min-w-0 flex-1 px-1">
+                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
+                      <span class="truncate">Mumbai Regional Store</span>
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      <span class="truncate text-[#A69F94]">Ahmedabad Depot</span>
+                    </div>
+                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
+                      <span class="truncate">Surat South Bypass (Km 265)</span>
+                    </div>
+                  </div>
+
+                  <!-- Thermal Telemetry -->
+                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
+                    <div class="flex items-center gap-0.5">
+                      <span class="font-mono text-base font-bold text-[#829A80]">4.8°C</span>
+                      <svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <span class="text-[9px] font-mono text-[#A69F94] uppercase tracking-wider">Optimal</span>
+                  </div>
+
+                  <!-- Status Tag -->
+                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#162518] text-[#829A80] text-[10px] font-mono font-bold uppercase">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
+                      Okay
+                    </span>
+                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:29 IST</span>
+                  </div>
+
+                  <!-- Inspect CTA -->
+                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors shrink-0 border border-[#333539] font-medium" type="button">
+                    <span>Inspect</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+              </article>
+
+              <!-- Row 5: VK-1051 (OKAY) -->
+              <article class="group cursor-pointer rounded-xl bg-[#1e2024] px-3.5 py-2.5 transition-all duration-200 border border-[#333539] hover:bg-[#282a2e]" onclick="selectShipment('VK-1051')">
+                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
+                  <!-- Identifier & Rig -->
+                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
+                    <div class="w-8 h-8 rounded-lg bg-[#162518] text-[#829A80] flex items-center justify-center shrink-0 border border-[#829A80]/30">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">VK-1051</span>
+                        <span class="px-1.5 py-0.2 rounded bg-[#162518] text-[#829A80] text-[9px] font-mono font-bold uppercase">
+                          Safe
+                        </span>
+                      </div>
+                      <span class="text-[11px] text-[#A69F94] truncate">Tata 407 · WB-22-C-5514</span>
+                    </div>
+                  </div>
+
+                  <!-- Route & GPS -->
+                  <div class="flex flex-col min-w-0 flex-1 px-1">
+                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
+                      <span class="truncate">Kolkata Store</span>
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      <span class="truncate text-[#A69F94]">Patna Vaccine Store</span>
+                    </div>
+                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
+                      <span class="truncate">Durgapur Industrial Belt (Km 162)</span>
+                    </div>
+                  </div>
+
+                  <!-- Thermal Telemetry -->
+                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
+                    <div class="flex items-center gap-0.5">
+                      <span class="font-mono text-base font-bold text-[#829A80]">5.7°C</span>
+                      <svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <span class="text-[9px] font-mono text-[#A69F94] uppercase tracking-wider">Optimal</span>
+                  </div>
+
+                  <!-- Status Tag -->
+                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#162518] text-[#829A80] text-[10px] font-mono font-bold uppercase">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
+                      Okay
+                    </span>
+                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:26 IST</span>
+                  </div>
+
+                  <!-- Inspect CTA -->
+                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors shrink-0 border border-[#333539] font-medium" type="button">
+                    <span>Inspect</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+              </article>
+
+              <!-- Row 6: VK-1033 (OKAY) -->
+              <article class="group cursor-pointer rounded-xl bg-[#1e2024] px-3.5 py-2.5 transition-all duration-200 border border-[#333539] hover:bg-[#282a2e]" onclick="selectShipment('VK-1033')">
+                <div class="flex items-center justify-between gap-2.5 sm:gap-3">
+                  <!-- Identifier & Rig -->
+                  <div class="flex items-center gap-2.5 shrink-0 w-40 sm:w-48 min-w-0">
+                    <div class="w-8 h-8 rounded-lg bg-[#162518] text-[#829A80] flex items-center justify-center shrink-0 border border-[#829A80]/30">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                      <div class="flex items-center gap-1.5">
+                        <span class="font-mono text-sm font-bold text-[#F0E8D9] tracking-tight">VK-1033</span>
+                        <span class="px-1.5 py-0.2 rounded bg-[#162518] text-[#829A80] text-[9px] font-mono font-bold uppercase">
+                          Safe
+                        </span>
+                      </div>
+                      <span class="text-[11px] text-[#A69F94] truncate">Force Trax · KL-07-CD-9011</span>
+                    </div>
+                  </div>
+
+                  <!-- Route & GPS -->
+                  <div class="flex flex-col min-w-0 flex-1 px-1">
+                    <div class="flex items-center gap-1 text-[#EDE5D4] text-xs font-medium">
+                      <span class="truncate">Kochi Regional Depot</span>
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      <span class="truncate text-[#A69F94]">Thiruvananthapuram</span>
+                    </div>
+                    <div class="flex items-center gap-1 mt-0.5 text-[#A69F94] text-[11px]">
+                      <svg class="w-3 h-3 text-[#A69F94] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
+                      <span class="truncate">Alappuzha Bypass (Km 64)</span>
+                    </div>
+                  </div>
+
+                  <!-- Thermal Telemetry -->
+                  <div class="flex flex-col items-end shrink-0 min-w-[70px]">
+                    <div class="flex items-center gap-0.5">
+                      <span class="font-mono text-base font-bold text-[#829A80]">4.2°C</span>
+                      <svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <span class="text-[9px] font-mono text-[#A69F94] uppercase tracking-wider">Optimal</span>
+                  </div>
+
+                  <!-- Status Tag -->
+                  <div class="hidden sm:flex flex-col items-end shrink-0 min-w-[70px]">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#162518] text-[#829A80] text-[10px] font-mono font-bold uppercase">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
+                      Okay
+                    </span>
+                    <span class="text-[10px] font-mono text-[#A69F94] mt-0.5">14:21 IST</span>
+                  </div>
+
+                  <!-- Inspect CTA -->
+                  <button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#282a2e] text-[#EDE5D4] text-xs hover:bg-[#333539] transition-colors shrink-0 border border-[#333539] font-medium" type="button">
+                    <span>Inspect</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+              </article>
+            </div>
+
+            <!-- Right / Inspector Panel: VK-1042 LIVE TELEMETRY DRAWER — Thinned footprint (320px) -->
+            <aside class="w-full lg:w-[310px] xl:w-[325px] shrink-0 rounded-xl bg-[#1e2024] p-3.5 flex flex-col gap-2.5 border border-[#333539] shadow-lg" id="inspector-drawer">
+              
+              <!-- Inspector Header -->
+              <div class="flex items-start justify-between gap-2 border-b border-[#333539]/40 pb-2">
+                <div class="flex flex-col">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-[#B8756C] animate-pulse"></span>
+                    <span class="text-[10px] font-mono uppercase font-bold tracking-wider text-[#B8756C]">Incident Inspection</span>
+                  </div>
+                  <h2 class="text-xl font-bold font-mono text-[#F0E8D9] tracking-tight mt-0.5" id="inspector-id"><span class="dyn-shipment-code">VK-1042</span></h2>
+                  <span class="text-xs text-[#A69F94]">Consignment IND-VR-2026-X8</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <button class="w-7 h-7 rounded-lg bg-[#1a1c20] flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] transition-colors border border-[#333539]" title="Print Manifest" type="button">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                  </button>
+                  <button class="w-7 h-7 rounded-lg bg-[#1a1c20] flex items-center justify-center text-[#A69F94] hover:text-[#F0E8D9] transition-colors border border-[#333539]" title="Close Panel" type="button">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Cold-Chain Telemetry Summary & Sparkline -->
+              <div class="rounded-lg bg-[#181B22] p-2.5 flex flex-col gap-1.5 border border-[#333539]">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-mono uppercase tracking-wider text-[#A69F94]">Cold-Chain Envelope</span>
+                  <span class="text-[10px] font-mono text-[#A69F94]">Safe: 2.0°C – 8.0°C</span>
+                </div>
+                <div class="flex items-baseline justify-between">
+                  <div class="flex items-baseline gap-1">
+                    <span class="font-mono text-xl font-bold text-[#B8756C]"><span class="dyn-temp">9.4°C</span></span>
+                    <span class="text-[10px] font-mono text-[#B8756C] font-medium">(+1.4° Excursion)</span>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-[#2A1617] text-[#B8756C] text-[10px] font-mono uppercase font-bold">
+                    11m Critical
+                  </span>
+                </div>
+
+                <!-- Temperature Sparkline Curve (Inline SVG) -->
+                <div class="w-full pt-1">
+                  <div class="h-10 w-full relative">
+                    <div class="absolute inset-x-0 top-1/3 border-b border-dashed border-[#B8756C]/40 z-0"></div>
+                    <span class="absolute right-0 top-0 text-[8px] text-[#B8756C] font-mono">+8.0°C Max</span>
+                    <svg class="w-full h-full overflow-visible relative z-10" preserveAspectRatio="none" viewBox="0 0 380 40">
+                      <defs>
+                        <linearGradient id="tempGradient" x1="0" x2="0" y1="0" y2="1">
+                          <stop offset="0%" stop-color="#B8756C" stop-opacity="0.35"></stop>
+                          <stop offset="70%" stop-color="#B8756C" stop-opacity="0.0"></stop>
+                        </linearGradient>
+                      </defs>
+                      <path d="M 0 30 L 50 28 L 110 25 L 170 23 L 220 18 L 280 12 L 330 7 L 380 4 L 380 40 L 0 40 Z" fill="url(#tempGradient)"></path>
+                      <path d="M 0 30 L 50 28 L 110 25 L 170 23 L 220 18 L 280 12 L 330 7 L 380 4" fill="none" stroke="#B8756C" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                      <circle cx="380" cy="4" fill="#EDE5D8" r="3"></circle>
+                    </svg>
+                  </div>
+                  <div class="flex justify-between text-[#A69F94] text-[9px] font-mono mt-0.5">
+                    <span>13:30 (5.2°C)</span>
+                    <span>14:00 (6.8°C)</span>
+                    <span class="text-[#B8756C]">14:31 (<span class="dyn-temp">9.4°C</span>)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Payload Inventory Specification -->
+              <div class="flex flex-col gap-1">
+                <span class="text-[10px] font-mono uppercase tracking-wider text-[#A69F94]">Vaccine Consignment Payload</span>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="rounded-lg bg-[#181B22] p-2 border border-[#333539]">
+                    <span class="text-[10px] font-mono text-[#A69F94] block">Dose Volume</span>
+                    <p class="text-xs font-bold font-mono text-[#F0E8D9] mt-0.5">8,400 Doses</p>
+                    <span class="text-[10px] text-[#A69F94] block truncate">WHO-PQS Monovalent</span>
+                  </div>
+                  <div class="rounded-lg bg-[#181B22] p-2 border border-[#333539]">
+                    <span class="text-[10px] font-mono text-[#A69F94] block">Vaccine Type</span>
+                    <p class="text-xs font-bold font-mono text-[#F0E8D9] mt-0.5 truncate">Rotavirus + Pentavalent</p>
+                    <span class="text-[10px] text-[#A69F94] block truncate">Batch #IND-VR-2026</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Chiller Compressor Diagnostic Telemetry -->
+              <div class="rounded-lg bg-[#181B22] p-2 flex flex-col gap-1 border border-[#333539]">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-mono uppercase tracking-wider text-[#A69F94]">Reefer Diagnostics</span>
+                  <svg class="w-3.5 h-3.5 text-[#A69F94]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path></svg>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-[#333539]/30 text-xs">
+                  <span class="text-[#A69F94]">Compressor</span>
+                  <span class="text-[11px] font-mono text-[#B8756C] font-semibold">RPM 940 (Fault)</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-[#333539]/30 text-xs">
+                  <span class="text-[#A69F94]">Ambient Temp</span>
+                  <span class="text-[11px] font-mono text-[#F0E8D9] font-semibold">+38.5°C Direct</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 text-xs">
+                  <span class="text-[#A69F94]">Assigned Carrier</span>
+                  <span class="text-[11px] text-[#F0E8D9] truncate">K. Muthukrishnan</span>
+                </div>
+              </div>
+
+              <!-- Active Algorithmic Recommendation -->
+              <div class="rounded-lg bg-[#231E18] p-2 border-l-4 border-l-[#A4875C] flex flex-col gap-0.5">
+                <div class="flex items-center gap-1 text-[#A4875C]">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"></circle><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path><circle cx="18" cy="5" r="3"></circle></svg>
+                  <span class="text-[10px] font-mono uppercase font-bold tracking-wider">Automated Directive</span>
+                </div>
+                <p class="text-[11px] text-[#F0E8D9] leading-relaxed">
+                  Divert immediately to <strong class="text-[#F0E8D9] font-bold">Vellore Sub-District Depot</strong> (14 km, 18 min ETA) before thermal buffer collapses.
+                </p>
+              </div>
+
+              <!-- Action CTA Group -->
+              <div class="flex flex-col gap-1.5 pt-0.5 mt-auto">
+                <button id="btn-drawer-inspect" class="w-full py-1.5 px-3 rounded-lg bg-[#F5EEDB] text-[#111317] text-xs hover:bg-[#E2D9C5] transition-all shadow-sm flex items-center justify-center gap-1.5 font-semibold" type="button">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                  <span>Open Full Telemetry Inspection →</span>
+                </button>
+                <button id="btn-drawer-problem" class="w-full py-1 px-3 rounded-lg bg-[#2A1617] text-[#B8756C] hover:bg-[#381B1C] border border-[#B8756C]/40 text-xs transition-all flex items-center justify-center gap-1.5 font-semibold" type="button">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                  <span>View Problem &amp; Rescue Protocol</span>
+                </button>
+                <div class="grid grid-cols-2 gap-1.5">
+                  <button id="btn-drawer-driver" class="py-1 px-2 rounded-lg bg-[#1e2024] text-[#F0E8D9] text-xs hover:bg-[#282a2e] transition-colors border border-[#333539] flex items-center justify-center gap-1" type="button">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span>Driver Comms</span>
+                  </button>
+                  <button id="btn-drawer-reroute" class="py-1 px-2 rounded-lg bg-[#282116] text-[#A4875C] text-xs hover:bg-[#342A1C] transition-colors border border-[#A4875C]/40 flex items-center justify-center gap-1 font-semibold" type="button">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>Authorize Reroute</span>
+                  </button>
+                </div>
+              </div>
+            </aside>
+          </section>
+
+          <!-- 6. FOOTER & PAGINATION -->
+          <footer class="w-full px-4 sm:px-6 py-2.5 border-t border-[#333539]/30 bg-[#1a1c20]/40 flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto flex-shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-[#A69F94] font-mono">
+                Showing <strong class="text-[#F0E8D9] font-semibold">1–6</strong> of <strong class="text-[#F0E8D9] font-semibold">38</strong> shipments (12 active in-transit, 26 scheduled)
+              </span>
+            </div>
+
+           
+            <!-- Live Deterministic Audit Watermark -->
+            <div class="hidden lg:flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#829A80]"></span>
+              <span class="text-[10px] font-mono uppercase tracking-wider text-[#A69F94]">
+                Deterministic Decision System • CDSCO / WHO-PQS Standard • MKT Audit Sealed
+              </span>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function selectShipment(id) {
+        const inspectorId = document.getElementById('inspector-id');
+        if (inspectorId) {
+          inspectorId.textContent = id;
+        }
+      }
+
+      // Quick shortcut listener for Command/Ctrl+K search focus
+      window.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          const input = document.getElementById('shipment-search-input');
+          if (input) input.focus();
+        }
+      });
+    </script>
+  </main>
   <script type="module" src="/js/api.js"></script>
   <script type="module" src="/js/websocket.js"></script>
   <script type="module" src="/js/app.js"></script>
-</body></html>
+</body>
+</html>

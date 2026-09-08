@@ -23,10 +23,10 @@
   --vk-border: #3A3731;
   --vk-border-soft: #302E29;
 
-  /* Muted Clinical Semantics (Never Neon, Never Saturated) */
-  --vk-healthy: #71816F;
+  /* Muted Clinical Semantics (Never Neon, Never Saturated - WCAG AA compliant >= 4.5:1) */
+  --vk-healthy: #829A80;
   --vk-attention: #A4875C;
-  --vk-problem: #99655D;
+  --vk-problem: #B8756C;
   --vk-info: #667A7D;
 
   /* Primary & Secondary Interactivity */
@@ -366,7 +366,18 @@ html.light [class*="bg-\[#171614\]"],
 html.light [class*="bg-\[#1E1D1A\]"],
 html.light [class*="bg-\[#16181D\]"],
 html.light [class*="bg-\[#25231F\]"],
-html.light [class*="bg-\[#0C0E12\]"] {
+html.light [class*="bg-\[#0C0E12\]"],
+html.light [class*="bg-\[#1a1c20\]"],
+html.light [class*="bg-\[#14161a\]"],
+html.light [class*="bg-\[#14171d\]"],
+html.light [class*="bg-\[#14171D\]"],
+html.light [class*="bg-\[#1a1c22\]"],
+html.light [class*="bg-\[#111317\]"],
+html.light [style*="background-color: #1a1c20"],
+html.light [style*="background-color: #1e2024"],
+html.light [style*="background-color: #111317"],
+html.light [style*="background-color: #16181e"],
+html.light [style*="background-color: #14171d"] {
   background-color: var(--vk-surface) !important;
 }
 

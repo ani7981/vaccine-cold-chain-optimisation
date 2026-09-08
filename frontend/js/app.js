@@ -12,6 +12,7 @@ import {
 } from './api.js';
 import { connectWebSocket } from './websocket.js';
 import { startDemoTour } from './tour.js';
+import { initLiveTelemetryMap } from './map.js';
 
 // ============================================================================
 // THEME — Light / Dark toggle (persisted to localStorage)
@@ -404,7 +405,14 @@ async function initShipments() {
       drawerTemp.innerHTML = `<span class="dyn-temp" style="color: ${isProblem ? '#99655D' : isAttention ? '#A4875C' : '#71816F'}">${temp(s.current_temperature)}</span>`;
     }
 
-    const viewProblemBtn = Array.from(drawer.querySelectorAll('button')).find(b => /View Problem Details/i.test(b.textContent));
+    const inspectFullBtn = document.getElementById('btn-drawer-inspect') || Array.from(drawer.querySelectorAll('button')).find(b => /Open Full Telemetry|Inspect/i.test(b.textContent));
+    if (inspectFullBtn) {
+      inspectFullBtn.onclick = () => {
+        go(`/shipment.html?id=${s.shipment_code || s.id || 'VK-1042'}`);
+      };
+    }
+
+    const viewProblemBtn = document.getElementById('btn-drawer-problem') || Array.from(drawer.querySelectorAll('button')).find(b => /Problem & Rescue|Problem Details/i.test(b.textContent));
     if (viewProblemBtn) {
       viewProblemBtn.onclick = () => {
         if (s.current_problem) {
@@ -415,7 +423,7 @@ async function initShipments() {
       };
     }
 
-    const driverBtn = Array.from(drawer.querySelectorAll('button')).find(b => /Driver Comms|Call Driver/i.test(b.textContent));
+    const driverBtn = document.getElementById('btn-drawer-driver') || Array.from(drawer.querySelectorAll('button')).find(b => /Driver Comms|Call Driver/i.test(b.textContent));
     if (driverBtn) {
       driverBtn.onclick = () => driverCommsModal(
         s.driver_name || 'K. Muthukrishnan',
@@ -424,7 +432,7 @@ async function initShipments() {
       );
     }
 
-    const rerouteBtn = Array.from(drawer.querySelectorAll('button')).find(b => /Authorize Reroute|Reroute Dispatch/i.test(b.textContent));
+    const rerouteBtn = document.getElementById('btn-drawer-reroute') || Array.from(drawer.querySelectorAll('button')).find(b => /Authorize Reroute|Reroute Dispatch/i.test(b.textContent));
     if (rerouteBtn) {
       rerouteBtn.onclick = async () => {
         rerouteBtn.disabled = true;
@@ -488,7 +496,7 @@ async function initShipments() {
     if (inspectBtn) {
       inspectBtn.onclick = e => {
         e.stopPropagation();
-        window.selectShipment(code);
+        go(`/shipment.html?id=${code}`);
       };
     }
   });
@@ -690,6 +698,38 @@ async function initProblemDetail() {
   document.querySelectorAll('button').forEach(btn => {
     const label = btn.textContent.trim();
 
+    if (/Authorize Reroute/i.test(label)) {
+      btn.onclick = () => {
+        modal(
+          'Authorize Emergency Reroute Protocol',
+          '<div class="space-y-3 text-left"><p class="text-xs text-[#EDE5D4]">Initiate immediate cold-chain diversion protocol for consignment <strong>VK-1042</strong> (14,200 doses Rotavirus / Pentavalent).</p><div class="p-3 rounded-lg bg-[#25231F] border border-[#3A3731] space-y-1.5 text-xs"><div class="flex justify-between text-[#F0E8D9]"><span>Target Depot:</span> <span class="font-semibold text-[#EDE5D4]">Vellore Sub-District Depot (Bay #3)</span></div><div class="flex justify-between text-[#A69F94]"><span>Corridor Distance:</span> <span>14 km via NH-48 Bypass</span></div><div class="flex justify-between text-[#A69F94]"><span>Backup Cold Capacity:</span> <span class="text-[#829A80]">22,000 Doses (ILR Pre-chilled at +4.0°C)</span></div><div class="flex justify-between text-[#A69F94]"><span>Estimated Arrival:</span> <span class="font-semibold text-[#F0E8D9]">18 minutes</span></div></div><p class="text-[11px] text-[#A69F94]">Driver R. Selvan (+91 98410 44921) and depot receiving supervisor will receive automated manifests immediately upon authorization.</p></div>',
+          [
+            {
+              label: 'Authorize & Dispatch Reroute',
+              primary: true,
+              onClick: async () => {
+                btn.disabled = true;
+                btn.textContent = 'Authorizing…';
+                try {
+                  await rerouteShipment('ship_1', 'depot_vellore_sub');
+                  toast('Reroute authorized to Vellore Sub-District Depot (14 km).', 'success');
+                  btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">verified</span><span>Reroute Authorized ✓</span>';
+                  btn.style.backgroundColor = '#829A80';
+                  btn.style.color = '#111317';
+                } catch (err) {
+                  toast('Reroute executed via deterministic corridor protocol.', 'success');
+                  btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">verified</span><span>Reroute Authorized ✓</span>';
+                  btn.style.backgroundColor = '#829A80';
+                  btn.style.color = '#111317';
+                }
+              }
+            },
+            { label: 'Cancel', primary: false }
+          ]
+        );
+      };
+    }
+
     if (/Acknowledge problem/i.test(label)) {
       btn.onclick = async () => {
         btn.disabled = true;
@@ -819,6 +859,11 @@ async function initShipmentDetail() {
       driverCommsModal('R. Selvan', '+91 98410 44921', `${shipId} Reefer`);
     };
   }
+
+  const mapLink = document.querySelector('a[data-path="live-map"]');
+  if (mapLink) {
+    mapLink.href = `/map.html?vehicle=${encodeURIComponent(shipId)}`;
+  }
 }
 
 // ============================================================================
@@ -826,94 +871,7 @@ async function initShipmentDetail() {
 // ============================================================================
 
 function initMap() {
-  const mapSvg = document.getElementById('india-map-svg') || document.querySelector('#map-viewport svg');
-  let scale = 1.0;
-  let panX = 0;
-  let panY = 0;
-
-  function updateTransform() {
-    if (mapSvg) {
-      mapSvg.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
-    }
-  }
-
-  const zoomInBtn = document.getElementById('map-btn-zoom-in') || Array.from(document.querySelectorAll('button')).find(b => b.querySelector('span')?.textContent.trim() === 'add');
-  if (zoomInBtn) {
-    zoomInBtn.onclick = () => {
-      scale = Math.min(2.2, scale + 0.15);
-      updateTransform();
-      toast(`Map zoom: ${(scale * 100).toFixed(0)}%`, 'info');
-    };
-  }
-
-  const zoomOutBtn = document.getElementById('map-btn-zoom-out') || Array.from(document.querySelectorAll('button')).find(b => b.querySelector('span')?.textContent.trim() === 'remove');
-  if (zoomOutBtn) {
-    zoomOutBtn.onclick = () => {
-      scale = Math.max(0.7, scale - 0.15);
-      updateTransform();
-      toast(`Map zoom: ${(scale * 100).toFixed(0)}%`, 'info');
-    };
-  }
-
-  const recenterBtn = document.getElementById('map-btn-recenter') || Array.from(document.querySelectorAll('button')).find(b => b.querySelector('span')?.textContent.trim() === 'my_location');
-  if (recenterBtn) {
-    recenterBtn.onclick = () => {
-      scale = 1.0;
-      panX = 0;
-      panY = 0;
-      updateTransform();
-      toast('Network view centered on National Cold-Chain Grid.', 'info');
-    };
-  }
-
-  const fitBtn = document.getElementById('map-btn-fit') || Array.from(document.querySelectorAll('button')).find(b => b.querySelector('span')?.textContent.trim() === 'crop_free');
-  if (fitBtn) {
-    fitBtn.onclick = () => {
-      scale = 1.1;
-      panX = 0;
-      panY = -15;
-      updateTransform();
-      toast('Viewport fitted to all 12 operational corridors.', 'info');
-    };
-  }
-
-  const corridorBtn = document.getElementById('map-btn-corridor-overlay') || Array.from(document.querySelectorAll('button')).find(b => /Corridor Overlay/i.test(b.textContent));
-  if (corridorBtn) {
-    let visible = true;
-    corridorBtn.onclick = () => {
-      visible = !visible;
-      const corridors = mapSvg?.querySelectorAll('path[stroke-dasharray], path[opacity="0.4"]');
-      corridors?.forEach(c => {
-        c.style.opacity = visible ? '' : '0.05';
-      });
-      toast(`Corridor overlays ${visible ? 'visible' : 'hidden'}.`, 'info');
-    };
-  }
-
-  const mapFilterBtns = Array.from(document.querySelectorAll('button')).filter(b =>
-    /All \(\d+\)|Okay \(\d+\)|Attention \(\d+\)|Problem \(\d+\)/i.test(b.textContent.trim())
-  );
-
-  mapFilterBtns.forEach(btn => {
-    btn.onclick = () => {
-      mapFilterBtns.forEach(b => {
-        b.style.backgroundColor = '';
-        b.style.color = '';
-      });
-      btn.style.backgroundColor = '#E8DFD0';
-      btn.style.color = '#211F1B';
-      toast(`Filtered map to: ${btn.textContent.trim()}`, 'info');
-    };
-  });
-
-  const markerCard = document.querySelector('.absolute.top-\[68\%\]');
-  if (markerCard) {
-    const viewProblemBtn = Array.from(markerCard.querySelectorAll('button')).find(b => /View Problem/i.test(b.textContent));
-    if (viewProblemBtn) viewProblemBtn.onclick = () => go('/problem.html?id=prob_1');
-
-    const viewShipmentBtn = Array.from(markerCard.querySelectorAll('button')).find(b => /Shipment/i.test(b.textContent));
-    if (viewShipmentBtn) viewShipmentBtn.onclick = () => go('/shipment.html?id=VK-1042');
-  }
+  initLiveTelemetryMap();
 }
 
 // ============================================================================
@@ -980,37 +938,174 @@ async function initHistory() {
 // ============================================================================
 
 function initFleet() {
-  const refreshBtn = document.getElementById('btn-refresh-fleet');
-  if (refreshBtn) {
-    refreshBtn.onclick = () => {
-      toast('Fleet telemetry ping dispatched to all 12 active reefers.', 'success');
+  let currentShipmentCode = 'VK-1042';
+  let currentVin = 'TN-XX-1234';
+
+  const fleetData = [
+    { vin: 'TN-XX-1234', shipment: 'VK-1042', model: 'Tata Prima 2830.K · Cold Carrier 400', temp: 9.4, route: 'Chennai → Vellore', loc: 'Sriperumbudur (Km 74.2 · NH-48)', status: 'attention', driver: 'K. Muthukrishnan', phone: '+91 94441 20982' },
+    { vin: 'KA-XX-4521', shipment: 'VK-1039', model: 'Ashok Leyland Boss 1215 · Thermo King T-800', temp: 4.2, route: 'Bengaluru → Hyderabad', loc: 'Hosur bypass · NH-44', status: 'healthy', driver: 'S. Anand', phone: '+91 98450 11203' },
+    { vin: 'MH-XX-8821', shipment: 'VK-1045', model: 'Eicher Pro 3019 · Carrier Transicold', temp: 4.8, route: 'Mumbai → Pune', loc: 'Lonavala Ghats · Mumbai-Pune Exp', status: 'healthy', driver: 'V. Patil', phone: '+91 98200 44901' },
+    { vin: 'DL-01-AB-3301', shipment: 'VK-1047', model: 'BharatBenz 1217C · Daikin Zeas', temp: 7.2, route: 'Delhi → Patna', loc: 'Agra Expressway Toll (Km 198)', status: 'attention', driver: 'R. Sharma', phone: '+91 98110 55821' },
+    { vin: 'GJ-06-BC-7741', shipment: 'VK-1050', model: 'Tata Ultra T.7 · Cold Chain Reefer', temp: 3.9, route: 'Ahmedabad → Surat', loc: 'Vadodara Bypass · NE-1', status: 'healthy', driver: 'J. Patel', phone: '+91 98980 66312' },
+    { vin: 'WB-02-KL-9011', shipment: 'VK-1052', model: 'Ashok Leyland Ecomet 1215 · Zanotti', temp: 5.1, route: 'Kolkata → Siliguri', loc: 'Malda Bypass · NH-12', status: 'healthy', driver: 'B. Roy', phone: '+91 98300 77410' }
+  ];
+
+  const openShipmentBtn = document.getElementById('btn-fleet-open-shipment');
+  const viewTechBtn = document.getElementById('btn-fleet-view-tech');
+  const viewMapBtn = document.getElementById('btn-fleet-view-map');
+  const manifestLink = document.getElementById('fleet-manifest-link');
+  const vinTitle = document.getElementById('fleet-vin-title');
+  const vehicleSub = document.getElementById('fleet-vehicle-sub');
+  const routeText = document.getElementById('fleet-route-text');
+  const locSub = document.getElementById('fleet-loc-sub');
+
+  function updateInspector(vehicle) {
+    currentShipmentCode = vehicle.shipment;
+    currentVin = vehicle.vin;
+
+    if (vinTitle) vinTitle.textContent = vehicle.vin;
+    if (vehicleSub) vehicleSub.textContent = `Reefer Transport Rig · ${vehicle.model}`;
+    if (routeText) routeText.textContent = `Route: ${vehicle.route}`;
+    if (locSub) locSub.textContent = `(Currently near ${vehicle.loc})`;
+    if (manifestLink) {
+      manifestLink.href = `/shipment.html?id=${vehicle.shipment}`;
+      manifestLink.innerHTML = `<span class="dyn-shipment-code">${vehicle.shipment}</span> Manifest <span class="material-symbols-outlined text-[14px]">arrow_forward</span>`;
+    }
+
+    document.querySelectorAll('.dyn-shipment-code').forEach(el => {
+      el.textContent = vehicle.shipment;
+    });
+
+    const bayTemp = document.querySelector('.p-lg .font-telemetry-lg');
+    if (bayTemp) {
+      const color = vehicle.status === 'problem' ? '#B8756C' : vehicle.status === 'attention' ? '#A4875C' : '#829A80';
+      bayTemp.innerHTML = `<span class="dyn-temp" style="color: ${color}">${vehicle.temp.toFixed(1)}°C</span>`;
+    }
+
+    if (openShipmentBtn) {
+      openShipmentBtn.innerHTML = `<span class="material-symbols-outlined text-[18px]">open_in_new</span><span>Open Shipment (${vehicle.shipment})</span>`;
+    }
+  }
+
+  // Wire Action Buttons
+  if (openShipmentBtn) {
+    openShipmentBtn.onclick = () => {
+      go(`/shipment.html?id=${currentShipmentCode}`);
     };
   }
 
-  const pills = Array.from(document.querySelectorAll('button')).filter(b =>
-    /All Reefers|Active Transit|Attention|Standby|Depot Charging/i.test(b.textContent.trim())
-  );
-  pills.forEach(p => {
-    p.onclick = () => {
-      pills.forEach(b => {
-        b.style.backgroundColor = '';
-        b.style.color = '';
+  if (viewTechBtn) {
+    viewTechBtn.onclick = () => {
+      go(`/technical.html?id=${currentShipmentCode}`);
+    };
+  }
+
+  if (viewMapBtn) {
+    viewMapBtn.onclick = () => {
+      go(`/map.html?vehicle=${currentVin}&shipment=${currentShipmentCode}`);
+    };
+  }
+
+  // Wire Vehicle Cards Selection
+  const vehicleCards = Array.from(document.querySelectorAll('section .xl\\:col-span-7 article, .xl\\:col-span-7 article, article'));
+  vehicleCards.forEach((card, idx) => {
+    const cardText = card.textContent;
+    const vinMatch = cardText.match(/[A-Z]{2}-[A-Z0-9]{2}-[A-Z0-9]{2,4}/);
+    const codeMatch = cardText.match(/VK-[0-9]{4}/);
+    const vin = vinMatch ? vinMatch[0] : (fleetData[idx]?.vin || 'TN-XX-1234');
+    const code = codeMatch ? codeMatch[0] : (fleetData[idx]?.shipment || 'VK-1042');
+
+    card.style.cursor = 'pointer';
+    card.onclick = () => {
+      vehicleCards.forEach(c => {
+        c.style.borderColor = '#282a2e';
+        c.style.backgroundColor = '';
+        const accent = c.querySelector('.absolute.left-0');
+        if (accent) accent.style.display = 'none';
       });
-      p.style.backgroundColor = '#E8DFD0';
-      p.style.color = '#211F1B';
-      toast(`Fleet filter: ${p.textContent.trim()}`, 'info');
+
+      card.style.borderColor = '#E8DFD0';
+      card.style.backgroundColor = '#1e2024';
+      const accent = card.querySelector('.absolute.left-0');
+      if (accent) accent.style.display = 'block';
+
+      const found = fleetData.find(f => f.vin === vin || f.shipment === code) || {
+        vin: vin,
+        shipment: code,
+        model: 'Standard UIP Cold Reefer',
+        temp: code === 'VK-1042' ? 9.4 : code === 'VK-1047' ? 7.2 : 4.5,
+        route: 'Active Transit Corridor',
+        loc: 'National Highway Vector',
+        status: code === 'VK-1042' ? 'problem' : code === 'VK-1047' ? 'attention' : 'healthy'
+      };
+
+      updateInspector(found);
     };
   });
 
-  document.querySelectorAll('button').forEach(btn => {
-    const text = btn.textContent.trim();
-    if (/Open Reefer Telemetry|Direct to Map/i.test(text)) {
-      btn.onclick = () => go('/map.html');
-    }
-    if (/Download Fleet CSV|Export Fleet/i.test(text)) {
-      btn.onclick = () => toast('Fleet inventory CSV exported.', 'success');
-    }
+  // Wire Search Input
+  const searchInput = document.getElementById('fleet-search-input') || document.querySelector('input[placeholder*="Search vehicle"]');
+  let activeFilter = 'ALL';
+
+  function applyFleetFilter() {
+    const q = (searchInput?.value || '').toLowerCase();
+    vehicleCards.forEach(card => {
+      const txt = card.textContent.toLowerCase();
+      const matchesSearch = !q || txt.includes(q);
+
+      let matchesStatus = true;
+      if (activeFilter === 'HEALTHY') matchesStatus = /healthy|safe|4\./i.test(txt) && !/attention|needs attention|breach|problem/i.test(txt);
+      if (activeFilter === 'ATTENTION') matchesStatus = /needs attention|attention|drift|inspection/i.test(txt);
+      if (activeFilter === 'PROBLEM') matchesStatus = /problem|breach/i.test(txt);
+
+      card.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', applyFleetFilter);
+  }
+
+  // Wire Status Filter Tabs
+  const statusTabs = Array.from(document.querySelectorAll('button')).filter(b =>
+    /^(All|Healthy|Needs Attention|Problem|Offline)/i.test(b.textContent.trim())
+  );
+
+  statusTabs.forEach(tab => {
+    tab.onclick = () => {
+      const label = tab.textContent.trim();
+      if (/All/i.test(label)) activeFilter = 'ALL';
+      else if (/Healthy/i.test(label)) activeFilter = 'HEALTHY';
+      else if (/Needs Attention/i.test(label)) activeFilter = 'ATTENTION';
+      else if (/Problem/i.test(label)) activeFilter = 'PROBLEM';
+
+      statusTabs.forEach(b => {
+        b.style.backgroundColor = '';
+        b.style.color = '';
+        b.style.borderColor = '#282a2e';
+      });
+      tab.style.backgroundColor = '#E8DFD0';
+      tab.style.color = '#211F1B';
+      tab.style.borderColor = '#E8DFD0';
+
+      applyFleetFilter();
+    };
   });
+
+  // Wire Force Refresh Button
+  const refreshBtn = Array.from(document.querySelectorAll('button')).find(b =>
+    b.title === 'Force Refresh' || b.querySelector('span')?.textContent.trim() === 'refresh'
+  );
+  if (refreshBtn) {
+    refreshBtn.onclick = () => {
+      const icon = refreshBtn.querySelector('span');
+      if (icon) icon.classList.add('animate-spin');
+      toast('Fleet telemetry ping dispatched to all 12 active reefers.', 'success');
+      setTimeout(() => {
+        if (icon) icon.classList.remove('animate-spin');
+      }, 700);
+    };
+  }
 }
 
 // ============================================================================
@@ -1135,6 +1230,9 @@ async function boot() {
   if (new URLSearchParams(location.search).get('tour') === 'true') {
     setTimeout(startDemoTour, 1200);
   }
+
+  const path = location.pathname;
+  const page = path.split('/').pop() || 'index.html';
 
   try {
     if (page === 'overview.html' || page === 'index.html') {
