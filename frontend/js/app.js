@@ -33,31 +33,59 @@ import { initLiveTelemetryMap } from './map.js';
 // THEME — Light / Dark toggle (persisted to localStorage)
 // ============================================================================
 
-function initTheme() {
-  const saved = localStorage.getItem('vaxkavach_theme');
-  if (saved === 'light') {
+function applyTheme(theme) {
+  const isLight = theme === 'light';
+  if (isLight) {
     document.documentElement.classList.add('light');
+    document.documentElement.classList.remove('dark');
   } else {
     document.documentElement.classList.remove('light');
+    document.documentElement.classList.add('dark');
   }
+  localStorage.setItem('vaxkavach_theme', isLight ? 'light' : 'dark');
+  updateThemeToggleIcon();
+  window.dispatchEvent(new CustomEvent('vaxkavach-theme-changed', { detail: { isLight, theme: isLight ? 'light' : 'dark' } }));
+}
+
+function initTheme() {
+  const saved = localStorage.getItem('vaxkavach_theme');
+  applyTheme(saved === 'light' ? 'light' : 'dark');
 }
 
 function toggleTheme() {
-  const isLight = document.documentElement.classList.toggle('light');
-  localStorage.setItem('vaxkavach_theme', isLight ? 'light' : 'dark');
-  updateThemeToggleIcon();
+  const isCurrentlyLight = document.documentElement.classList.contains('light');
+  applyTheme(isCurrentlyLight ? 'dark' : 'light');
 }
 
 function updateThemeToggleIcon() {
-  const btn = document.getElementById('vk-theme-toggle');
-  if (!btn) return;
   const isLight = document.documentElement.classList.contains('light');
-  btn.innerHTML = isLight
-    ? `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`
-    : `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
-  btn.title = isLight ? '☀️ Switch to Dark Mode' : '🌙 Switch to Light Mode';
-}
+  const sunIcon = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+  const moonIcon = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
 
+  // Update floating button
+  const floatingBtn = document.getElementById('vk-theme-toggle');
+  if (floatingBtn) {
+    floatingBtn.innerHTML = isLight ? moonIcon : sunIcon;
+    floatingBtn.title = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+    if (isLight) {
+      floatingBtn.style.background = '#FFFFFF';
+      floatingBtn.style.borderColor = '#DCD6CA';
+      floatingBtn.style.color = '#0D0E11';
+      floatingBtn.style.boxShadow = '0 2px 12px rgba(0,0,0,0.12)';
+    } else {
+      floatingBtn.style.background = '#1E2027';
+      floatingBtn.style.borderColor = '#2A2C35';
+      floatingBtn.style.color = '#F4EFE6';
+      floatingBtn.style.boxShadow = '0 2px 12px rgba(0,0,0,0.5)';
+    }
+  }
+
+  // Update in-page header buttons
+  document.querySelectorAll('.btn-theme-toggle, #btn-theme-toggle').forEach(btn => {
+    btn.innerHTML = isLight ? moonIcon : sunIcon;
+    btn.title = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+  });
+}
 
 function injectThemeToggle() {
   if (document.getElementById('vk-theme-toggle')) return;
@@ -67,7 +95,6 @@ function injectThemeToggle() {
   btn.setAttribute('title', 'Toggle Light / Dark Mode');
   btn.onclick = toggleTheme;
 
-  // Ensure the button always sits on top of everything
   btn.style.cssText = [
     'position: fixed',
     'bottom: 56px',
@@ -88,13 +115,15 @@ function injectThemeToggle() {
   ].join(';');
 
   btn.onmouseenter = () => {
-    btn.style.background = '#2E313D';
-    btn.style.color = '#F4EFE6';
+    const isLight = document.documentElement.classList.contains('light');
+    btn.style.background = isLight ? '#F4EFE6' : '#2E313D';
+    btn.style.color = isLight ? '#0D0E11' : '#F4EFE6';
     btn.style.transform = 'scale(1.1)';
   };
   btn.onmouseleave = () => {
-    btn.style.background = '#1E2027';
-    btn.style.color = '#8C8E99';
+    const isLight = document.documentElement.classList.contains('light');
+    btn.style.background = isLight ? '#FFFFFF' : '#1E2027';
+    btn.style.color = isLight ? '#0D0E11' : '#8C8E99';
     btn.style.transform = 'scale(1)';
   };
 
@@ -105,10 +134,19 @@ function injectThemeToggle() {
 
 // Apply theme immediately to avoid FOUC
 initTheme();
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', injectThemeToggle);
-} else {
+function setupThemeButtons() {
   injectThemeToggle();
+  document.querySelectorAll('.btn-theme-toggle, #btn-theme-toggle').forEach(b => {
+    b.onclick = (e) => {
+      e.preventDefault();
+      toggleTheme();
+    };
+  });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupThemeButtons);
+} else {
+  setupThemeButtons();
 }
 
 

@@ -48,6 +48,12 @@
     .tactical-dark-tiles {
       filter: invert(100%) hue-rotate(180deg) brightness(80%) contrast(120%) grayscale(60%) !important;
     }
+    html.light .leaflet-container {
+      background: #F8F6F0 !important;
+    }
+    html.light .tactical-dark-tiles {
+      filter: grayscale(80%) contrast(105%) brightness(102%) !important;
+    }
     .leaflet-popup-content-wrapper {
       background: #0D0E11 !important;
       color: #F4EFE6 !important;
@@ -55,9 +61,19 @@
       border-radius: 10px !important;
       box-shadow: 0 10px 25px rgba(0,0,0,0.7) !important;
     }
+    html.light .leaflet-popup-content-wrapper {
+      background: #FFFFFF !important;
+      color: #0D0E11 !important;
+      border: 1px solid #DCD6CA !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
+    }
     .leaflet-popup-tip {
       background: #0D0E11 !important;
       border: 1px solid #2A2C35 !important;
+    }
+    html.light .leaflet-popup-tip {
+      background: #FFFFFF !important;
+      border: 1px solid #DCD6CA !important;
     }
     .custom-leaflet-tooltip {
       background: #0D0E11 !important;
@@ -67,6 +83,11 @@
       font-size: 11px !important;
       padding: 4px 8px !important;
       border-radius: 6px !important;
+    }
+    html.light .custom-leaflet-tooltip {
+      background: #FFFFFF !important;
+      color: #0D0E11 !important;
+      border: 1px solid #DCD6CA !important;
     }
     @keyframes pulse-ring {
       0% { transform: scale(0.95); opacity: 0.85; }

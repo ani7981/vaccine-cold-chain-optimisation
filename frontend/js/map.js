@@ -47,7 +47,7 @@ export const CORRIDORS = {
   },
   'NH-44': {
     name: 'NH-44 Central Spine (Bengaluru → Anantapur → Kurnool → Hyderabad)',
-    color: '#7BD0FF',
+    color: '#829A80',
     path: [
       [12.9716, 77.5946], // Bengaluru
       [13.3409, 77.5376], // Doddaballapur
@@ -284,9 +284,9 @@ function createReeferIcon(reefer) {
   const isProblem = reefer.status === 'problem';
   const isAttention = reefer.status === 'attention';
 
-  const borderColor = isProblem ? '#B8756C' : isAttention ? '#A4875C' : '#829A80';
-  const bgBadge = isProblem ? '#2A1617' : isAttention ? '#231E18' : '#162218';
-  const textColor = isProblem ? '#E5A4A4' : isAttention ? '#D8BE8A' : '#9DBFA6';
+  const borderColor = isProblem ? '#B8756C' : isAttention ? '#E5B869' : '#829A80';
+  const bgBadge = isProblem ? '#2A1617' : isAttention ? '#26241E' : '#162218';
+  const textColor = isProblem ? '#E5A4A4' : isAttention ? '#E5B869' : '#9DBFA6';
 
   const pulseRing = isProblem
     ? `<span style="position: absolute; top: -5px; left: -5px; width: 34px; height: 34px; border-radius: 9999px; background: rgba(184, 117, 108, 0.5); animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; z-index: -1;"></span>`
@@ -314,9 +314,9 @@ function createReeferIcon(reefer) {
 
 function createDepotIcon(depot) {
   const isBackup = depot.type === 'Emergency Backup';
-  const color = isBackup ? '#B8863A' : '#EDE5D8';
+  const color = isBackup ? '#E5B869' : '#EDE5D8';
   const html = `
-    <div style="display: flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 5px; background: #171614; border: 1px dashed ${color}; box-shadow: 0 2px 8px rgba(0,0,0,0.85); white-space: nowrap;">
+    <div style="display: flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 5px; background: #16171D; border: 1px dashed ${color}; box-shadow: 0 2px 8px rgba(0,0,0,0.85); white-space: nowrap;">
       <span style="font-size: 10px; color: ${color}; font-weight: bold;">✚</span>
       <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 600; color: #EDE5D8;">${depot.city}</span>
     </div>
@@ -465,7 +465,7 @@ export function initLiveTelemetryMap() {
         statusPill.className = 'px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#2A1617] text-[#B8756C] border border-[#B8756C]/40';
         statusPill.textContent = 'Thermal Breach';
       } else if (r.status === 'attention') {
-        statusPill.className = 'px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#231E18] text-[#A4875C] border border-[#A4875C]/40';
+        statusPill.className = 'px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#26241E] text-[#E5B869] border border-[#E5B869]/40';
         statusPill.textContent = 'Needs Attention';
       } else {
         statusPill.className = 'px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#162218] text-[#829A80] border border-[#829A80]/40';
@@ -492,7 +492,7 @@ export function initLiveTelemetryMap() {
     if (!listEl) return;
 
     if (r.status !== 'problem' && r.code !== 'VK-1042') {
-      listEl.innerHTML = '<div class="text-[11px] text-[#736E65] p-2 bg-[#16171D] rounded border border-[#282622]">Reefer operating nominally. Emergency diversion unneeded.</div>';
+      listEl.innerHTML = '<div class="text-[11px] text-[#8C8E99] p-2 bg-[#16171D] rounded border border-[#2A2C35]">Reefer operating nominally. Emergency diversion unneeded.</div>';
       if (activeDiversionPolyline) {
         map.removeLayer(activeDiversionPolyline);
         activeDiversionPolyline = null;
@@ -500,7 +500,7 @@ export function initLiveTelemetryMap() {
       return;
     }
 
-    listEl.innerHTML = '<div class="text-[11px] text-[#A69F94] p-2 bg-[#16171D] rounded border border-[#282622] animate-pulse">Running 3-Tier PostGIS + OSRM route &amp; thermal feasibility analysis...</div>';
+    listEl.innerHTML = '<div class="text-[11px] text-[#A69F94] p-2 bg-[#16171D] rounded border border-[#2A2C35] animate-pulse">Running 3-Tier PostGIS + OSRM route &amp; thermal feasibility analysis...</div>';
 
     try {
       const res = await fetchRerouteCandidates('ship_1');
@@ -539,9 +539,9 @@ export function initLiveTelemetryMap() {
 
       listEl.innerHTML = candidates.map((c, idx) => {
         const isTop = idx === 0;
-        const badgeColor = c.thermal_feasibility.color === 'HEALTHY' ? 'text-[#829A80] bg-[#162218] border-[#829A80]/40' : (c.thermal_feasibility.color === 'WARNING' ? 'text-[#E5B869] bg-[#231E18] border-[#E5B869]/40' : 'text-[#B8756C] bg-[#2A1617] border-[#B8756C]/40');
+        const badgeColor = c.thermal_feasibility.color === 'HEALTHY' ? 'text-[#829A80] bg-[#162218] border-[#829A80]/40' : (c.thermal_feasibility.color === 'WARNING' ? 'text-[#E5B869] bg-[#26241E] border-[#E5B869]/40' : 'text-[#B8756C] bg-[#2A1617] border-[#B8756C]/40');
         return `
-          <div class="candidate-card p-2 rounded-lg bg-[#16171D] border ${isTop ? 'border-[#E5B869]' : 'border-[#282622]'} hover:border-[#F4EFE6] cursor-pointer transition-colors" data-idx="${idx}">
+          <div class="candidate-card p-2 rounded-lg bg-[#16171D] border ${isTop ? 'border-[#E5B869]' : 'border-[#2A2C35]'} hover:border-[#F4EFE6] cursor-pointer transition-colors" data-idx="${idx}">
             <div class="flex items-center justify-between">
               <span class="font-bold text-[11px] text-[#F4EFE6] truncate max-w-[180px]">#${idx + 1} ${c.depot_name}</span>
               <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border ${badgeColor}">${c.thermal_feasibility.status}</span>
@@ -557,8 +557,8 @@ export function initLiveTelemetryMap() {
       listEl.querySelectorAll('.candidate-card').forEach(card => {
         card.addEventListener('click', () => {
           const idx = parseInt(card.dataset.idx, 10);
-          listEl.querySelectorAll('.candidate-card').forEach(c => c.classList.remove('border-[#E5B869]', 'bg-[#231E18]'));
-          card.classList.add('border-[#E5B869]', 'bg-[#231E18]');
+          listEl.querySelectorAll('.candidate-card').forEach(c => c.classList.remove('border-[#E5B869]', 'bg-[#1E2027]'));
+          card.classList.add('border-[#E5B869]', 'bg-[#1E2027]');
           previewRoute(candidates[idx]);
         });
       });
