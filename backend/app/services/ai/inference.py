@@ -1,5 +1,6 @@
 import os
 import json
+import math
 import joblib
 import numpy as np
 
@@ -51,8 +52,8 @@ class AIDecisionService:
         Builds the 11-dimensional zero-leakage physical IoT telemetry feature vector.
         Consensus temperature from dual probes + ambient gradient + kinetic rates of change.
         """
-        p1 = raw.get("probe_1_temp", raw.get("temperature", raw.get("thermal_shipper_temp_reading", 4.0)))
-        p2 = raw.get("probe_2_temp", p1)
+        p1 = raw.get("probe_1_temp", raw.get("temperature", raw.get("current_temperature", raw.get("chamber_temp_reading", raw.get("thermal_shipper_temp_reading", 4.0)))))
+        p2 = raw.get("probe_2_temp", raw.get("probe_2_temperature", p1))
         p1 = float(p1)
         p2 = float(p2)
         temp_mean = (p1 + p2) / 2.0
@@ -62,12 +63,12 @@ class AIDecisionService:
         room_humidity = float(raw.get("humidity", raw.get("room_humidity_reading", 65.0)))
         thermal_gradient = room_temp - temp_mean
 
-        delta_1h = float(raw.get("temp_delta_1h", 0.0))
+        delta_1h = float(raw.get("temp_delta_1h", raw.get("rate_of_rise_c_hr", 0.0)))
         delta_3h = float(raw.get("temp_delta_3h", delta_1h * 3.0))
-        temp_accel = float(raw.get("temp_accel", delta_1h))
+        temp_accel = float(raw.get("temp_accel", delta_1h * 0.1))
         rolling_mean = float(raw.get("temp_rolling_mean_3h", temp_mean))
         rolling_std = float(raw.get("temp_rolling_std_3h", max(0.05, abs(delta_1h) * 0.5)))
-        is_frozen = 1.0 if temp_mean < -30.0 else 0.0
+        is_frozen = 1.0 if temp_mean < -15.0 else 0.0
 
         vector = [
             temp_mean, probe_discrepancy, room_temp, room_humidity,
@@ -87,40 +88,90 @@ class AIDecisionService:
             return {
                 "ai_available": False,
                 "spoilage_probability": 0.0,
+                "spoilage_risk_percent": 0.0,
                 "risk_level": "UNKNOWN",
                 "forecast": {},
+                "projected_ceiling_breach_hours": None,
                 "top_risk_factors": []
             }
 
         X = self.build_feature_vector(raw_features)
+        temp_mean = float(X[0, 0])
+        room_temp = float(X[0, 2])
+        delta_1h = max(-2.5, min(2.0, float(X[0, 5])))
 
         # 1. 4-Hour Forward Lookahead Spoilage/Excursion Risk
         try:
-            prob = float(self.classifier.predict_proba(X)[0][1])
+            raw_prob = float(self.classifier.predict_proba(X)[0][1])
         except Exception:
-            prob = 0.05
+            raw_prob = 0.05
 
-        if prob >= 0.70:
+        # Domain & Physics Risk Calibration
+        if temp_mean > temp_ceiling:
+            # Active Excursion: chamber is already past clinical upper bound
+            prob = max(raw_prob, min(0.99, 0.85 + (temp_mean - temp_ceiling) * 0.05))
             risk_level = "CRITICAL"
-        elif prob >= 0.45:
+        elif temp_mean < temp_floor and temp_floor > -15.0:
+            # Freezing Danger: destroys vaccine potency immediately
+            prob = max(raw_prob, min(0.99, 0.85 + (temp_floor - temp_mean) * 0.08))
+            risk_level = "CRITICAL"
+        elif temp_mean >= (temp_ceiling - 1.0) and delta_1h > 0.05:
+            # High Risk Drift towards breach
+            prob = max(raw_prob, min(0.85, 0.60 + (temp_mean - (temp_ceiling - 1.0)) * 0.20))
             risk_level = "HIGH"
-        elif prob >= 0.20:
+        elif temp_mean >= (temp_ceiling - 1.5) and delta_1h > 0.10:
+            prob = max(raw_prob, min(0.65, 0.45 + delta_1h * 0.5))
             risk_level = "MEDIUM"
         else:
-            risk_level = "LOW"
+            prob = min(raw_prob, 0.12) if abs(delta_1h) < 0.10 else raw_prob
+            if prob >= 0.70:
+                risk_level = "CRITICAL"
+            elif prob >= 0.45:
+                risk_level = "HIGH"
+            elif prob >= 0.20:
+                risk_level = "MEDIUM"
+            else:
+                risk_level = "LOW"
 
-        # 2. Multi-Horizon Temperature Forecasts (+1h, +2h, +4h)
+        # 2. Multi-Horizon Physics-Informed Temperature Forecasts (+1h, +2h, +4h)
         forecasts = {}
         projected_breach_hours = None
 
         for horizon in [1, 2, 4]:
             key = f"horizon_{horizon}h"
+            pred_delta = 0.0
             if key in self.forecasters:
-                pred_val = round(float(self.forecasters[key].predict(X)[0]), 2)
-                forecasts[f"plus_{horizon}h"] = pred_val
-                # Check for breach of upper clinical ceiling
-                if pred_val > temp_ceiling and projected_breach_hours is None:
-                    projected_breach_hours = horizon
+                try:
+                    pred_delta = float(self.forecasters[key].predict(X)[0])
+                except Exception:
+                    pred_delta = 0.0
+
+            # Newton-Fourier thermal drift physics:
+            # Drift decays as container approaches ambient equilibrium
+            drift_decay = math.exp(-0.06 * horizon)
+            physical_delta = delta_1h * horizon * drift_decay
+
+            # If regressor delta agrees in sign, blend ML and physics; otherwise anchor to physical rate
+            if np.sign(pred_delta) == np.sign(delta_1h) and abs(delta_1h) > 0.02:
+                blended_delta = 0.70 * physical_delta + 0.30 * pred_delta
+            elif abs(delta_1h) > 0.05:
+                blended_delta = physical_delta
+            else:
+                # Nominal regulated refrigeration: cargo stays near setpoint with minimal thermostat cycling
+                blended_delta = math.copysign(min(0.08 * horizon, abs(pred_delta * 0.04)), pred_delta if pred_delta != 0 else 1.0)
+
+            # Clamping bounds: container cannot heat above ambient + 2°C or drop below setpoint floor
+            t_soak_max = min(40.0, room_temp + 2.0)
+            max_rise = max(0.0, t_soak_max - temp_mean)
+            max_drop = -2.2 * horizon if delta_1h < -0.1 else -0.5 * horizon
+
+            clamped_delta = max(max_drop, min(max_rise, blended_delta))
+            pred_val = round(temp_mean + clamped_delta, 2)
+            forecasts[f"plus_{horizon}h"] = pred_val
+
+            # Check for breach of upper clinical ceiling
+            if pred_val > temp_ceiling and projected_breach_hours is None:
+                projected_breach_hours = horizon
 
         # 3. Instance-Level SHAP Explanation Vector
         local_risk_factors = []

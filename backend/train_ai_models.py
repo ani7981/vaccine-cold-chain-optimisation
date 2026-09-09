@@ -76,10 +76,10 @@ def main():
         # Forward lookahead: failure occurring within [t, t + 4h]
         g['risk_next_4h'] = is_failed.iloc[::-1].rolling(5, min_periods=1).max().iloc[::-1].astype(int)
 
-        # Multi-horizon regression targets
-        g['target_temp_1h'] = temp.shift(-1)
-        g['target_temp_2h'] = temp.shift(-2)
-        g['target_temp_4h'] = temp.shift(-4)
+        # Multi-horizon delta regression targets (physics-informed residual forecasting)
+        g['target_delta_1h'] = temp.shift(-1) - temp
+        g['target_delta_2h'] = temp.shift(-2) - temp
+        g['target_delta_4h'] = temp.shift(-4) - temp
 
         feature_dfs.append(g)
 
@@ -170,7 +170,7 @@ def main():
     reg_metrics = {}
 
     for horizon in [1, 2, 4]:
-        target_col = f'target_temp_{horizon}h'
+        target_col = f'target_delta_{horizon}h'
         valid_tr = train_mask & df_dataset[target_col].notnull()
         valid_te = test_mask & df_dataset[target_col].notnull()
 

@@ -8,7 +8,7 @@ from typing import Dict, Any, List, Optional, Tuple
 from sqlalchemy.orm import Session
 
 from app.core.database import SessionLocal
-from app.models.all import Simulation, Shipment, Vehicle, TelemetryReading, Recommendation
+from app.models.all import Simulation, Shipment, Vehicle, TelemetryReading, Recommendation, Problem
 from app.services.routing.engine import CORRIDORS
 from app.services.simulation.thermodynamics import ReeferThermodynamicModel
 from app.services.simulation.weather import EnvironmentalWeatherEngine
@@ -205,6 +205,21 @@ class SimulationEngine:
                     door_state = overrides["door_state"]
                     probe_drift = overrides["probe_drift_delta"]
                     heatwave_active = overrides["heatwave_active"]
+
+                    # Check DB for active unresolved problem affecting refrigeration
+                    if chiller_state == "NORMAL" and shipment.current_problem_id:
+                        active_prob = db.query(Problem).filter(
+                            Problem.id == shipment.current_problem_id,
+                            Problem.status.in_(["OPEN", "IN_PROGRESS", "ACTION_REQUIRED", "ACKNOWLEDGED", "INVESTIGATING"])
+                        ).first()
+                        if active_prob:
+                            prob_type = (active_prob.problem_type or "").upper()
+                            if prob_type in ["TEMPERATURE_EXCURSION", "REFRIGERATION_FAILURE", "COMPRESSOR_FAILURE"]:
+                                chiller_state = "FAILED"
+                            elif prob_type in ["PREDICTIVE_THERMAL_DRIFT"]:
+                                chiller_state = "DEGRADED"
+                            elif prob_type in ["DOOR_AJAR", "DOOR_SEAL_COMPROMISED"]:
+                                door_state = "OPEN"
 
                     # 1. Update Vehicle Position & Spatial Progress
                     nav = self.navigators[s_id]

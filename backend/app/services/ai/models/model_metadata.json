@@ -61,16 +61,16 @@
   },
   "forecaster_metrics": {
     "ahead_1h": {
-      "mae": 1.006,
-      "rmse": 2.128
+      "mae": 1.008,
+      "rmse": 2.053
     },
     "ahead_2h": {
-      "mae": 1.13,
-      "rmse": 3.194
+      "mae": 1.149,
+      "rmse": 3.165
     },
     "ahead_4h": {
-      "mae": 1.454,
-      "rmse": 4.85
+      "mae": 1.472,
+      "rmse": 4.844
     }
   },
   "shap_feature_importance": [

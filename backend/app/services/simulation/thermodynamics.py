@@ -90,11 +90,11 @@ class ReeferThermodynamicModel:
         delta_t = (q_net * dt_seconds) / self.thermal_capacitance
         t_next = t_current + delta_t
 
-        # Physics bounds: cargo can never exceed ambient when heating or drop below evaporator temp (-5°C)
-        if delta_t_amb > 0 and t_next > t_ambient:
-            t_next = t_ambient
-        elif delta_t_amb < 0 and t_next < t_ambient:
-            t_next = t_ambient
+        # Physics bounds: payload compartment temperature is bounded by sol-air equilibrium
+        # (cannot heat beyond ambient + 3.5°C in insulated reefer, capped at 42.0°C max Indian asphalt ambient)
+        # or drop below active refrigeration floor (-25.0°C deep freeze, -2.0°C chilled)
+        t_soak_max = min(42.0, t_ambient + 3.5)
+        t_next = max(-25.0, min(t_soak_max, t_next))
 
         return {
             "t_next": round(t_next, 4),

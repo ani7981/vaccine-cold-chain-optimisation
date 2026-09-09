@@ -54,9 +54,33 @@ def get_shipment_ai_insights(shipment_id: str, db: Session = Depends(get_db)):
         first = latest_readings[0]
         ambient = first.ambient_temperature if first.ambient_temperature is not None else 32.0
         humidity = first.humidity if first.humidity is not None else 65.0
-        if len(latest_readings) > 1:
-            delta_1h = round(first.temperature - latest_readings[1].temperature, 3)
-            
+        if len(latest_readings) > 1 and latest_readings[0].timestamp and latest_readings[-1].timestamp:
+            temps_win = [r.temperature for r in latest_readings]
+            temp_range = max(temps_win) - min(temps_win)
+            if temp_range <= 0.35 and 2.0 <= temp <= 6.5:
+                # Normal thermostat cycling around setpoint - rate of change is effectively zero
+                delta_1h = 0.0
+            else:
+                dt_mins = max(0.1, abs((latest_readings[0].timestamp - latest_readings[-1].timestamp).total_seconds()) / 60.0)
+                if dt_mins >= 0.5:
+                    rate_per_hour = (latest_readings[0].temperature - latest_readings[-1].temperature) / (dt_mins / 60.0)
+                    # Physical constraint for insulated containers: max passive rise is ~1.8°C/h, active pulldown ~-2.5°C/h
+                    delta_1h = max(-2.5, min(1.8, round(rate_per_hour, 2)))
+                else:
+                    delta_1h = max(-2.5, min(1.8, round(first.temperature - latest_readings[1].temperature, 2)))
+
+    # Check active problem evidence for confirmed thermal trajectory
+    if shipment.current_problem_id:
+        prob = db.query(Problem).filter(Problem.id == shipment.current_problem_id).first()
+        if prob and prob.status in ["OPEN", "IN_PROGRESS", "ACTION_REQUIRED", "ACKNOWLEDGED", "INVESTIGATING"]:
+            ev = prob.evidence or {}
+            if "rate_of_rise" in ev and delta_1h <= 0.0:
+                try:
+                    ror_val = str(ev["rate_of_rise"]).replace("°C/min", "").replace("°C/h", "").replace("+", "").strip()
+                    delta_1h = max(0.1, min(1.8, round(float(ror_val), 2)))
+                except Exception:
+                    pass
+
     # Calculate cumulative OOB hours
     oob_count = sum(1 for r in latest_readings if r.temperature > shipment.temperature_max or r.temperature < shipment.temperature_min)
     oob_hours = round(oob_count * 0.25, 2)
