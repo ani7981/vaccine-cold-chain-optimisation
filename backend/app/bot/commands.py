@@ -12,7 +12,7 @@ import logging
 import httpx
 import os
 
-from telegram import Update
+from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import (
     ContextTypes,
     CommandHandler,
