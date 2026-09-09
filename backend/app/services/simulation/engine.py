@@ -206,24 +206,35 @@ class SimulationEngine:
                     probe_drift = overrides["probe_drift_delta"]
                     heatwave_active = overrides["heatwave_active"]
 
-                    # Check DB for active unresolved problem affecting refrigeration
-                    if chiller_state == "NORMAL" and shipment.current_problem_id:
-                        active_prob = db.query(Problem).filter(
-                            Problem.id == shipment.current_problem_id,
-                            Problem.status.in_(["OPEN", "IN_PROGRESS", "ACTION_REQUIRED", "ACKNOWLEDGED", "INVESTIGATING"])
-                        ).first()
-                        if active_prob:
-                            prob_type = (active_prob.problem_type or "").upper()
-                            if prob_type in ["TEMPERATURE_EXCURSION", "REFRIGERATION_FAILURE", "COMPRESSOR_FAILURE"]:
-                                chiller_state = "FAILED"
-                            elif prob_type in ["PREDICTIVE_THERMAL_DRIFT"]:
-                                chiller_state = "DEGRADED"
-                            elif prob_type in ["DOOR_AJAR", "DOOR_SEAL_COMPROMISED"]:
-                                door_state = "OPEN"
-
                     # 1. Update Vehicle Position & Spatial Progress
                     nav = self.navigators[s_id]
                     vehicle = db.query(Vehicle).filter(Vehicle.id == shipment.vehicle_id).first() if shipment.vehicle_id else None
+
+                    # Check DB for active unresolved problem or vehicle hardware fault affecting refrigeration
+                    if chiller_state == "NORMAL":
+                        active_prob = None
+                        if shipment.current_problem_id:
+                            active_prob = db.query(Problem).filter(
+                                Problem.id == shipment.current_problem_id,
+                                Problem.status.in_(["OPEN", "IN_PROGRESS", "ACTION_REQUIRED", "ACKNOWLEDGED", "INVESTIGATING"])
+                            ).first()
+                        if not active_prob:
+                            active_prob = db.query(Problem).filter(
+                                Problem.shipment_id == s_id,
+                                Problem.status.in_(["OPEN", "IN_PROGRESS", "ACTION_REQUIRED", "ACKNOWLEDGED", "INVESTIGATING"])
+                            ).first()
+
+                        if active_prob:
+                            prob_type = (active_prob.problem_type or "").upper()
+                            if any(k in prob_type for k in ["TEMPERATURE", "EXCURSION", "COMPRESSOR", "REFRIGERATION"]):
+                                chiller_state = "FAILED"
+                            elif any(k in prob_type for k in ["DRIFT", "PREDICTIVE"]):
+                                chiller_state = "DEGRADED"
+                            elif any(k in prob_type for k in ["DOOR"]):
+                                door_state = "OPEN"
+
+                        if vehicle and vehicle.refrigeration_status in ["CHILLER_FAULT", "FAULT", "FAILED"]:
+                            chiller_state = "FAILED"
                     corridor_code = (vehicle.corridor if vehicle and vehicle.corridor else "NH-48").upper()
                     if corridor_code not in CORRIDORS:
                         corridor_code = "NH-48"

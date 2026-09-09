@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.models.all import Problem, Shipment, Recommendation, AuditEvent
+from app.models.all import Problem, Shipment, Recommendation, AuditEvent, Vehicle
 from app.schemas import OperationalActionRequest, IncidentResolutionRequest, IncidentTransitionRequest
 from app.services.audit.audit_chain import append_audit_event
 from app.websocket.manager import manager
@@ -179,8 +179,14 @@ async def resolve_problem(problem_id: str, body: IncidentResolutionRequest, db: 
     problem.evidence = evidence
 
     shipment = db.query(Shipment).filter(Shipment.id == problem.shipment_id).first()
-    if shipment and shipment.current_problem_id == problem.id:
-        shipment.current_problem_id = None
+    if shipment:
+        if shipment.current_problem_id == problem.id:
+            shipment.current_problem_id = None
+        if shipment.vehicle_id:
+            veh = db.query(Vehicle).filter(Vehicle.id == shipment.vehicle_id).first()
+            if veh:
+                veh.refrigeration_status = "NORMAL"
+                veh.status = "HEALTHY"
 
     append_audit_event(
         db,

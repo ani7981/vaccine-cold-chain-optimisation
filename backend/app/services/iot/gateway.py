@@ -306,18 +306,33 @@ class IoTTelemetryGateway:
         created_problem = None
         # Handle problem creation or escalation
         if eval_result["has_problem"]:
-            active_prob = db.query(Problem).filter(
-                Problem.id == shipment.current_problem_id,
-                Problem.status.in_(["OPEN", "ACKNOWLEDGED"])
-            ).first() if shipment.current_problem_id else None
+            active_prob = None
+            if shipment.current_problem_id:
+                active_prob = db.query(Problem).filter(
+                    Problem.id == shipment.current_problem_id,
+                    Problem.status.in_(["OPEN", "ACKNOWLEDGED", "ACTION_REQUIRED", "INVESTIGATING", "IN_PROGRESS"])
+                ).first()
+            if not active_prob:
+                active_prob = db.query(Problem).filter(
+                    Problem.shipment_id == shipment.id,
+                    Problem.status.in_(["OPEN", "ACKNOWLEDGED", "ACTION_REQUIRED", "INVESTIGATING", "IN_PROGRESS"])
+                ).order_by(Problem.detected_at.desc()).first()
+                if active_prob:
+                    shipment.current_problem_id = active_prob.id
 
             if not active_prob:
+                raw_pt = eval_result["problem_type"]
+                canon_pt = "TEMPERATURE_EXCURSION" if "temperature" in raw_pt.lower() else (
+                    "REFRIGERATION_FAILURE" if "refrigeration" in raw_pt.lower() else (
+                        "DOOR_AJAR" if "door" in raw_pt.lower() else raw_pt.upper()
+                    )
+                )
                 prob_code = f"PR-{shipment.shipment_code.split('-')[-1] if '-' in shipment.shipment_code else '1001'}"
                 new_prob = Problem(
                     id=f"prob_{uuid.uuid4().hex[:8]}",
                     problem_code=prob_code,
                     shipment_id=shipment.id,
-                    problem_type=eval_result["problem_type"],
+                    problem_type=canon_pt,
                     severity=eval_result["severity"],
                     status="OPEN",
                     detected_at=dt,
