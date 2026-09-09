@@ -114,7 +114,7 @@
 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pt-2">
 <div class="md:col-span-6 flex flex-col">
 <div class="flex items-baseline gap-3">
-<span class="font-headline-xl text-[64px] leading-none tracking-tight text-[#F4EFE6] font-medium"><span class="dyn-temp">9.4°C</span></span>
+<span class="font-headline-xl text-[64px] leading-none tracking-tight text-[#F4EFE6] font-medium"><span id="shipment-hero-temp">9.4°C</span></span>
 <span id="ship-temp-drift" class="text-body-md font-body-md text-[#d99b9b] flex items-center gap-0.5">
 <span class="material-symbols-outlined text-[16px]">arrow_upward</span>
   +1.4°C drift
@@ -140,7 +140,7 @@
 <div class="flex items-center justify-between text-label-sm font-label-sm text-[#8b909a]">
 <span>0°C (Freezing limit)</span>
 <span class="text-[#9bb89b]">Validated Cold Zone (2.0°C – 8.0°C)</span>
-<span class="text-[#d99b9b]">Current: <span class="dyn-temp">9.4°C</span></span>
+<span class="text-[#d99b9b]">Current: <span id="shipment-current-temp-label">9.4°C</span></span>
 <span>12°C</span>
 </div>
 <div class="h-2 w-full rounded-full bg-[#1a1e26] relative overflow-hidden">
@@ -405,7 +405,7 @@
                 - 14:15 (6.2°C => Y=100): x=500, y=100
                 - 14:20 (8.0°C => Y=64):  x=590, y=64
                 - 14:25 (8.8°C => Y=48):  x=680, y=48
-                - 14:31 (<span class="dyn-temp">9.4°C</span> => Y=36):  x=760, y=36
+                - 14:31 (9.4°C => Y=36):  x=760, y=36
               -->
 <path d="M 50 132 
                        C 140 132, 170 141, 230 139 
@@ -415,13 +415,13 @@
                        C 700 42, 725 38, 760 36" fill="none" stroke="url(#traceGrad)" stroke-linecap="round" stroke-width="2.5"></path>
 <!-- Breach intersection highlight ring -->
 <circle cx="616" cy="64" fill="#14171d" r="4" stroke="#d99b9b" stroke-width="2"></circle>
-<!-- Current End Point marker at <span class="dyn-temp">9.4°C</span> -->
+<!-- Current End Point marker at 9.4°C -->
 <circle cx="760" cy="36" fill="#F4EFE6" r="5" stroke="#14171d" stroke-width="2"></circle>
 </svg>
 <!-- Floating Current Stat Badge inside graph -->
 <div class="absolute right-6 top-3 px-3 py-1.5 rounded-lg bg-[#1a1e26]/90 backdrop-blur-md shadow-md flex items-center gap-2">
 <span class="w-2 h-2 rounded-full bg-[#F4EFE6]"></span>
-<span class="text-label-caps font-label-caps text-[#F4EFE6]">14:31 IST · <span class="dyn-temp">9.4°C</span></span>
+<span class="text-label-caps font-label-caps text-[#F4EFE6]">14:31 IST · <span id="shipment-spark-end-temp">9.4°C</span></span>
 <span class="text-body-sm font-body-sm text-[#d99b9b]">(Breached 14:20)</span>
 </div>
 </div>
@@ -645,7 +645,7 @@
 <div class="flex items-start gap-3">
 <span class="text-label-caps font-label-caps text-[#8b909a] mt-0.5 w-10 shrink-0">14:31</span>
 <div class="flex flex-col">
-<span class="text-body-sm font-body-sm text-[#F4EFE6] leading-tight">Temperature confirmed at <span class="dyn-temp">9.4°C</span></span>
+<span class="text-body-sm font-body-sm text-[#F4EFE6] leading-tight">Temperature confirmed at <span id="shipment-audit-temp">9.4°C</span></span>
 <span class="text-[11px] text-[#d99b9b]">+1.4°C excursion over safety ceiling</span>
 </div>
 </div>

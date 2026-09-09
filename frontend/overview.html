@@ -214,7 +214,7 @@
   </section>
 
   <!-- 2. CRITICAL EXCURSION & AI PROGNOSTICS COCKPIT -->
-  <section class="excursion-alert-banner rounded-2xl p-6 relative overflow-hidden">
+  <section id="overview-excursion-banner" class="excursion-alert-banner rounded-2xl p-6 relative overflow-hidden">
     <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
       <div class="space-y-4 max-w-3xl flex-1">
         <!-- Badge row -->
@@ -227,23 +227,23 @@
             <span class="material-symbols-outlined text-[14px] mr-1">psychology</span>
             AI Spoilage Risk: <span id="ai-risk-badge" class="ml-1 font-bold text-[#F87171]">CRITICAL (89.2%)</span>
           </span>
-          <span class="text-base font-semibold" style="color: var(--vk-cream, #F4EFE6);">Shipment <span class="dyn-shipment-code">VK-1042</span></span>
+          <span class="text-base font-semibold" style="color: var(--vk-cream, #F4EFE6);">Shipment <span id="overview-excursion-code">VK-1042</span></span>
           <span style="color: var(--vk-text-muted, #8C8E99);">·</span>
-          <span class="text-xs" style="color: var(--vk-text-muted, #8C8E99);">Chennai Regional Store → Vellore District Hospital</span>
+          <span id="overview-excursion-route" class="text-xs" style="color: var(--vk-text-muted, #8C8E99);">Chennai Regional Store → Vellore District Hospital</span>
         </div>
 
         <!-- Telemetry Stats Grid -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 py-1">
           <div>
             <div class="text-[11px] uppercase tracking-wider" style="color: var(--vk-text-muted, #8C8E99);">Current Status</div>
-            <div class="text-sm font-medium mt-1 flex items-center space-x-1.5" style="color: #E27373;">
+            <div id="overview-excursion-status" class="text-sm font-medium mt-1 flex items-center space-x-1.5" style="color: #E27373;">
               <span class="w-2 h-2 rounded-full" style="background-color: #E27373;"></span>
               <span>Above Ceiling</span>
             </div>
           </div>
           <div>
             <div class="text-[11px] uppercase tracking-wider" style="color: var(--vk-text-muted, #8C8E99);">Chamber Temp</div>
-            <div class="text-2xl font-bold mt-0.5" style="color: var(--vk-cream, #F4EFE6);"><span class="dyn-temp">9.4°C</span></div>
+            <div class="text-2xl font-bold mt-0.5" style="color: var(--vk-cream, #F4EFE6);"><span id="overview-excursion-temp" data-shipment-temp="VK-1042">9.4°C</span></div>
           </div>
           <div>
             <div class="text-[11px] uppercase tracking-wider" style="color: var(--vk-text-muted, #8C8E99);">Safe Range</div>
@@ -251,7 +251,7 @@
           </div>
           <div>
             <div class="text-[11px] uppercase tracking-wider" style="color: var(--vk-text-muted, #8C8E99);">Duration</div>
-            <div class="text-sm font-medium mt-1" style="color: var(--vk-cream, #F4EFE6);">11 min above ceiling</div>
+            <div id="overview-excursion-duration" class="text-sm font-medium mt-1" style="color: var(--vk-cream, #F4EFE6);">11 min above ceiling</div>
           </div>
         </div>
 
@@ -323,120 +323,11 @@
           <span class="text-xs font-medium px-2.5 py-1 rounded-lg" style="color: var(--vk-text-muted, #8C8E99); background-color: #1E2027; border: 1px solid #2A2C35;">Showing 5 of 12</span>
         </div>
 
-        <div class="mt-2 divide-y" style="border-color: #22242C;">
-          <!-- Row 1: VK-1042 -->
-          <div onclick="location.href='/problem.html?id=VK-1042'" class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer hover:bg-[#1E2027]" style="border-color: #22242C;">
-            <div class="flex items-center space-x-3 min-w-[120px]">
-              <div class="w-2 h-2 rounded-full shrink-0" style="background-color: #E27373;"></div>
-              <div>
-                <div class="text-xs font-bold" style="color: var(--vk-cream, #F4EFE6);"><span class="dyn-shipment-code">VK-1042</span></div>
-                <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">Tata Ultra Reefer</div>
-              </div>
-            </div>
-            <div class="flex-1 min-w-[150px]">
-              <div class="text-xs font-medium" style="color: var(--vk-cream, #F4EFE6);">Chennai → Vellore</div>
-              <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">Near Sriperumbudur (Km 38)</div>
-            </div>
-            <div class="text-right min-w-[80px]">
-              <div class="text-xs font-bold" style="color: #E27373;"><span class="dyn-temp">9.4°C</span></div>
-              <div class="text-[10px]" style="color: var(--vk-text-muted, #8C8E99);">Ceiling 8.0°C</div>
-            </div>
-            <div class="min-w-[100px] text-center">
-              <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: rgba(143, 96, 90, 0.2); color: #E27373; border: 1px solid rgba(143, 96, 90, 0.4);">Problem</span>
-            </div>
-            <div class="text-right min-w-[65px] text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">14:31</div>
-          </div>
-
-          <!-- Row 2: VK-1039 -->
-          <div onclick="location.href='/shipment.html?id=VK-1039'" class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer hover:bg-[#1E2027]" style="border-color: #22242C;">
-            <div class="flex items-center space-x-3 min-w-[120px]">
-              <div class="w-2 h-2 rounded-full shrink-0" style="background-color: #6BBF89;"></div>
-              <div>
-                <div class="text-xs font-bold" style="color: var(--vk-cream, #F4EFE6);">VK-1039</div>
-                <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">Eicher Pro 3015</div>
-              </div>
-            </div>
-            <div class="flex-1 min-w-[150px]">
-              <div class="text-xs font-medium" style="color: var(--vk-cream, #F4EFE6);">Bengaluru → Hyderabad</div>
-              <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">Hosur Gateway</div>
-            </div>
-            <div class="text-right min-w-[80px]">
-              <div class="text-xs font-semibold" style="color: var(--vk-cream, #F4EFE6);">5.1°C</div>
-              <div class="text-[10px]" style="color: #6BBF89;">Optimal</div>
-            </div>
-            <div class="min-w-[100px] text-center">
-              <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: rgba(111, 127, 109, 0.2); color: #6BBF89; border: 1px solid rgba(111, 127, 109, 0.4);">Healthy</span>
-            </div>
-            <div class="text-right min-w-[65px] text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">14:30</div>
-          </div>
-
-          <!-- Row 3: VK-1045 -->
-          <div class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer hover:bg-[#1E2027]" style="border-color: #22242C;">
-            <div class="flex items-center space-x-3 min-w-[120px]">
-              <div class="w-2 h-2 rounded-full shrink-0" style="background-color: #6BBF89;"></div>
-              <div>
-                <div class="text-xs font-bold" style="color: var(--vk-cream, #F4EFE6);">VK-1045</div>
-                <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">Ashok Leyland Reefer</div>
-              </div>
-            </div>
-            <div class="flex-1 min-w-[150px]">
-              <div class="text-xs font-medium" style="color: var(--vk-cream, #F4EFE6);">Mumbai → Ahmedabad</div>
-              <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">Surat South Bypass</div>
-            </div>
-            <div class="text-right min-w-[80px]">
-              <div class="text-xs font-semibold" style="color: var(--vk-cream, #F4EFE6);">4.8°C</div>
-              <div class="text-[10px]" style="color: #6BBF89;">Optimal</div>
-            </div>
-            <div class="min-w-[100px] text-center">
-              <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: rgba(111, 127, 109, 0.2); color: #6BBF89; border: 1px solid rgba(111, 127, 109, 0.4);">Healthy</span>
-            </div>
-            <div class="text-right min-w-[65px] text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">14:29</div>
-          </div>
-
-          <!-- Row 4: VK-1047 -->
-          <div class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer hover:bg-[#1E2027]" style="border-color: #22242C;">
-            <div class="flex items-center space-x-3 min-w-[120px]">
-              <div class="w-2 h-2 rounded-full shrink-0" style="background-color: #E5B869;"></div>
-              <div>
-                <div class="text-xs font-bold" style="color: var(--vk-cream, #F4EFE6);">VK-1047</div>
-                <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">BharatBenz 1217C</div>
-              </div>
-            </div>
-            <div class="flex-1 min-w-[150px]">
-              <div class="text-xs font-medium" style="color: var(--vk-cream, #F4EFE6);">Delhi → Patna</div>
-              <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">Agra Expressway Toll</div>
-            </div>
-            <div class="text-right min-w-[80px]">
-              <div class="text-xs font-semibold" style="color: var(--vk-cream, #F4EFE6);">7.2°C</div>
-              <div class="text-[10px]" style="color: #E5B869;">Approaching 8°C</div>
-            </div>
-            <div class="min-w-[100px] text-center">
-              <span class="inline-block px-2 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: rgba(152, 126, 85, 0.2); color: #E5B869; border: 1px solid rgba(152, 126, 85, 0.4);">Attention</span>
-            </div>
-            <div class="text-right min-w-[65px] text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">14:27</div>
-          </div>
-
-          <!-- Row 5: VK-1051 -->
-          <div class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer hover:bg-[#1E2027]" style="border-color: #22242C;">
-            <div class="flex items-center space-x-3 min-w-[120px]">
-              <div class="w-2 h-2 rounded-full shrink-0" style="background-color: #6BBF89;"></div>
-              <div>
-                <div class="text-xs font-bold" style="color: var(--vk-cream, #F4EFE6);">VK-1051</div>
-                <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">Tata 407 Insulated</div>
-              </div>
-            </div>
-            <div class="flex-1 min-w-[150px]">
-              <div class="text-xs font-medium" style="color: var(--vk-cream, #F4EFE6);">Kolkata → Patna</div>
-              <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">Durgapur Industrial Belt</div>
-            </div>
-            <div class="text-right min-w-[80px]">
-              <div class="text-xs font-semibold" style="color: var(--vk-cream, #F4EFE6);">5.7°C</div>
-              <div class="text-[10px]" style="color: #6BBF89;">Optimal</div>
-            </div>
-            <div class="min-w-[100px] text-center">
-              <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: rgba(111, 127, 109, 0.2); color: #6BBF89; border: 1px solid rgba(111, 127, 109, 0.4);">Healthy</span>
-            </div>
-            <div class="text-right min-w-[65px] text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">14:26</div>
+        <div id="overview-corridors-container" class="mt-2 divide-y" style="border-color: #22242C;">
+          <!-- Dynamically populated from live shipment telemetry -->
+          <div class="py-8 text-center text-xs text-[#8C8E99] flex items-center justify-center space-x-2">
+            <span class="material-symbols-outlined text-sm animate-spin">sync</span>
+            <span>Syncing live active corridor telemetry…</span>
           </div>
         </div>
       </div>
@@ -506,7 +397,7 @@
             <text fill="#8C8E99" font-size="8" x="145" y="210">Vellore</text>
             <circle cx="192" cy="196" fill="#E27373" fill-opacity="0.2" r="6"></circle>
             <circle cx="192" cy="196" fill="#E27373" r="4" stroke="#E6E2DA" stroke-width="1.5"></circle>
-            <text fill="#E27373" font-family="Plus Jakarta Sans" font-size="9" font-weight="600" x="170" y="185"><span class="dyn-shipment-code">VK-1042</span> (<span class="dyn-temp">9.4°C</span>)</text>
+            <text id="overview-map-marker-text" fill="#E27373" font-family="Plus Jakarta Sans" font-size="9" font-weight="600" x="170" y="185">VK-1042 (<tspan id="overview-map-temp">9.4°C</tspan>)</text>
           </svg>
 
           <!-- Map Legend -->
@@ -532,14 +423,14 @@
           <div class="flex items-start space-x-3">
             <span class="text-[11px] font-mono font-medium shrink-0 pt-0.5" style="color: var(--vk-text-muted, #8C8E99);">14:31</span>
             <div class="flex-1">
-              <p class="leading-snug" style="color: var(--vk-cream, #F4EFE6);"><span class="font-semibold" style="color: #E27373;"><span class="dyn-shipment-code">VK-1042</span></span> temperature remains above 8°C ceiling.</p>
-              <p class="text-[11px] mt-0.5" style="color: var(--vk-text-muted, #8C8E99);">Reading logged at <span class="dyn-temp">9.4°C</span> (Sriperumbudur sensor ping)</p>
+              <p class="leading-snug" style="color: var(--vk-cream, #F4EFE6);"><span class="font-semibold" style="color: #E27373;">VK-1042</span> temperature remains above 8°C ceiling.</p>
+              <p class="text-[11px] mt-0.5" style="color: var(--vk-text-muted, #8C8E99);">Reading logged at <span id="overview-activity-temp" data-shipment-temp="VK-1042">9.4°C</span> (Sriperumbudur sensor ping)</p>
             </div>
           </div>
           <div class="flex items-start space-x-3">
             <span class="text-[11px] font-mono font-medium shrink-0 pt-0.5" style="color: var(--vk-text-muted, #8C8E99);">14:30</span>
             <div class="flex-1">
-              <p class="leading-snug" style="color: var(--vk-cream, #F4EFE6);">Recommended action generated for <span class="font-semibold" style="color: var(--vk-cream, #F4EFE6);"><span class="dyn-shipment-code">VK-1042</span></span>.</p>
+              <p class="leading-snug" style="color: var(--vk-cream, #F4EFE6);">Recommended action generated for <span class="font-semibold" style="color: var(--vk-cream, #F4EFE6);">VK-1042</span>.</p>
               <p class="text-[11px] mt-0.5" style="color: var(--vk-text-muted, #8C8E99);">Vellore Sub-District Depot ILR pre-chill protocol queued</p>
             </div>
           </div>

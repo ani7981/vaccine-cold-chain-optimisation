@@ -256,6 +256,18 @@ async def override_problem(problem_id: str, body: OperationalActionRequest, db: 
         shipment = db.query(Shipment).filter(Shipment.id == problem.shipment_id).first()
         if shipment:
             shipment.current_problem_id = None
+            shipment.current_temperature = 4.0
+            shipment.current_mkt = 4.0
+            if shipment.vehicle_id:
+                veh = db.query(Vehicle).filter(Vehicle.id == shipment.vehicle_id).first()
+                if veh:
+                    veh.refrigeration_status = "NORMAL"
+                    veh.status = "HEALTHY"
+            try:
+                from app.services.simulation.engine import simulation_engine
+                simulation_engine.convoy_temperatures[shipment.id] = 4.0
+            except Exception:
+                pass
         append_audit_event(db, "PROBLEM_OVERRIDDEN", "PROBLEM", problem.id, "DEMO_OPERATOR", {"note": body.note or ""})
         db.commit()
     serialized = serialize_problem(problem, db)

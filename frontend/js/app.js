@@ -573,6 +573,71 @@ async function initOverview() {
         if (aVal) aVal.textContent = attention;
         if (pVal) pVal.textContent = problem;
       }
+
+      // Populate Active Corridors container dynamically
+      const corridorsContainer = document.getElementById('overview-corridors-container');
+      if (corridorsContainer) {
+        corridorsContainer.innerHTML = shipments.slice(0, 5).map(s => {
+          const t = s.current_temperature != null ? s.current_temperature : 4.0;
+          const isProb = t > 8.0 || t < 2.0 || s.current_problem_id;
+          const isAttn = !isProb && (t >= 6.8 || t <= 3.0);
+          const dotColor = isProb ? '#E27373' : (isAttn ? '#E5B869' : '#6BBF89');
+          const tagBg = isProb ? 'rgba(143, 96, 90, 0.2)' : (isAttn ? 'rgba(152, 126, 85, 0.2)' : 'rgba(111, 127, 109, 0.2)');
+          const tagBorder = isProb ? 'rgba(143, 96, 90, 0.4)' : (isAttn ? 'rgba(152, 126, 85, 0.4)' : 'rgba(111, 127, 109, 0.4)');
+          const tagText = isProb ? '#E27373' : (isAttn ? '#E5B869' : '#6BBF89');
+          const tagLabel = isProb ? 'Problem' : (isAttn ? 'Attention' : 'Healthy');
+          const tempColor = isProb ? '#E27373' : (isAttn ? '#E5B869' : 'var(--vk-cream, #F4EFE6)');
+          const subNote = isProb ? 'Ceiling 8.0°C' : (isAttn ? 'Approaching 8°C' : 'Optimal');
+          const routeStr = `${s.origin?.city || 'Origin'} → ${s.destination?.city || 'Dest'}`;
+          const locStr = s.vehicle?.corridor || 'National Logistics Corridor';
+          const link = s.current_problem_id ? `/problem.html?id=${s.current_problem_id}` : `/shipment.html?id=${s.shipment_code}`;
+
+          return `
+            <div onclick="location.href='${link}'" class="py-3.5 flex items-center justify-between gap-4 px-2 rounded-xl transition-colors cursor-pointer hover:bg-[#1E2027]" style="border-color: #22242C;">
+              <div class="flex items-center space-x-3 min-w-[120px]">
+                <div class="w-2 h-2 rounded-full shrink-0" style="background-color: ${dotColor};"></div>
+                <div>
+                  <div class="text-xs font-bold" style="color: var(--vk-cream, #F4EFE6);">${s.shipment_code}</div>
+                  <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">${s.vehicle?.model || 'Reefer'}</div>
+                </div>
+              </div>
+              <div class="flex-1 min-w-[150px]">
+                <div class="text-xs font-medium" style="color: var(--vk-cream, #F4EFE6);">${routeStr}</div>
+                <div class="text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">${locStr}</div>
+              </div>
+              <div class="text-right min-w-[80px]">
+                <div class="text-xs font-bold" style="color: ${tempColor};"><span data-corridor-temp="${s.shipment_code}">${t.toFixed(1)}°C</span></div>
+                <div class="text-[10px]" style="color: var(--vk-text-muted, #8C8E99);">${subNote}</div>
+              </div>
+              <div class="min-w-[100px] text-center">
+                <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase" style="background-color: ${tagBg}; color: ${tagText}; border: 1px solid ${tagBorder};">${tagLabel}</span>
+              </div>
+              <div class="text-right min-w-[65px] text-[11px]" style="color: var(--vk-text-muted, #8C8E99);">14:31</div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Dynamically Bind Excursion Banner
+      const excursionShipment = shipments.find(s => (s.current_temperature && s.current_temperature > 8.0) || s.current_problem_id) || shipments.find(s => s.shipment_code === 'VK-1042');
+      if (excursionShipment) {
+        window.activeExcursionShipmentCode = excursionShipment.shipment_code;
+        const codeEl = document.getElementById('overview-excursion-code');
+        if (codeEl) codeEl.textContent = excursionShipment.shipment_code;
+        const routeEl = document.getElementById('overview-excursion-route');
+        if (routeEl) routeEl.textContent = `${excursionShipment.origin?.name || 'Origin'} → ${excursionShipment.destination?.name || 'Destination'}`;
+        const tempEl = document.getElementById('overview-excursion-temp');
+        if (tempEl) tempEl.textContent = `${(excursionShipment.current_temperature || 9.4).toFixed(1)}°C`;
+        const durEl = document.getElementById('overview-excursion-duration');
+        if (durEl) durEl.textContent = `${excursionShipment.temperature_stats?.excursions_duration_minutes || 14} min above ceiling`;
+        const resBtn = document.getElementById('rescue-btn');
+        if (resBtn) {
+          resBtn.onclick = (e) => {
+            e.preventDefault();
+            openDiversionApprovalModal(excursionShipment.id);
+          };
+        }
+      }
     }
   } catch (err) {
     console.warn('Overview live sync note:', err);
@@ -619,13 +684,6 @@ async function initOverview() {
     console.warn('Overview live AI sync note:', aiErr);
   }
 
-  const corridorRows = document.querySelectorAll('main section div.divide-y > div');
-  const codeMap = ['VK-1042', 'VK-1039', 'VK-1045', 'VK-1047', 'VK-1051'];
-  corridorRows.forEach((row, idx) => {
-    const c = codeMap[idx] || 'VK-1042';
-    row.style.cursor = 'pointer';
-    row.onclick = () => go(`/shipment.html?id=${c}`);
-  });
 }
 
 // ============================================================================
@@ -882,8 +940,9 @@ async function initShipments() {
       }
     }
 
+    window.selectedShipmentCode = s.shipment_code;
     if (inspectorId) {
-      inspectorId.innerHTML = `<span class="dyn-shipment-code">${s.shipment_code}</span>`;
+      inspectorId.textContent = s.shipment_code;
     }
     if (inspectorConsignment) {
       inspectorConsignment.textContent = `Consignment ${s.batch_number || 'BATCH-IND-VR-2026-09'}`;
@@ -958,7 +1017,7 @@ async function initShipments() {
       if (sparkDot) { sparkDot.setAttribute('cy', '4'); sparkDot.setAttribute('fill', '#EDE5D8'); }
       if (sparkStart) sparkStart.textContent = '13:30 (5.2°C)';
       if (sparkMid) sparkMid.textContent = '14:00 (6.8°C)';
-      if (sparkEnd) { sparkEnd.innerHTML = `14:31 (<span class="dyn-temp" style="color:#B8756C">${tempVal.toFixed(1)}°C</span>)`; sparkEnd.className = 'text-[#B8756C]'; }
+      if (sparkEnd) { sparkEnd.innerHTML = `14:31 (<span style="color:#B8756C">${tempVal.toFixed(1)}°C</span>)`; sparkEnd.className = 'text-[#B8756C]'; }
     } else if (isAttention) {
       if (sparkAreaPath) sparkAreaPath.setAttribute('d', 'M 0 32 L 60 29 L 120 26 L 180 22 L 240 18 L 300 15 L 380 13 L 380 40 L 0 40 Z');
       if (sparkLinePath) {
@@ -968,7 +1027,7 @@ async function initShipments() {
       if (sparkDot) { sparkDot.setAttribute('cy', '13'); sparkDot.setAttribute('fill', '#EDE5D8'); }
       if (sparkStart) sparkStart.textContent = '13:30 (4.5°C)';
       if (sparkMid) sparkMid.textContent = '14:00 (6.2°C)';
-      if (sparkEnd) { sparkEnd.innerHTML = `14:31 (<span class="dyn-temp" style="color:#E5B869">${tempVal.toFixed(1)}°C</span>)`; sparkEnd.className = 'text-[#E5B869]'; }
+      if (sparkEnd) { sparkEnd.innerHTML = `14:31 (<span style="color:#E5B869">${tempVal.toFixed(1)}°C</span>)`; sparkEnd.className = 'text-[#E5B869]'; }
     } else if (isResolved) {
       if (sparkAreaPath) sparkAreaPath.setAttribute('d', 'M 0 14 L 60 16 L 120 20 L 180 25 L 240 28 L 300 29 L 380 30 L 380 40 L 0 40 Z');
       if (sparkLinePath) {
@@ -978,7 +1037,7 @@ async function initShipments() {
       if (sparkDot) { sparkDot.setAttribute('cy', '30'); sparkDot.setAttribute('fill', '#EDE5D8'); }
       if (sparkStart) sparkStart.textContent = '13:00 (7.1°C)';
       if (sparkMid) sparkMid.textContent = '13:45 (5.6°C)';
-      if (sparkEnd) { sparkEnd.innerHTML = `14:31 (<span class="dyn-temp" style="color:#829A80">${tempVal.toFixed(1)}°C</span>)`; sparkEnd.className = 'text-[#829A80]'; }
+      if (sparkEnd) { sparkEnd.innerHTML = `14:31 (<span style="color:#829A80">${tempVal.toFixed(1)}°C</span>)`; sparkEnd.className = 'text-[#829A80]'; }
     } else {
       if (sparkAreaPath) sparkAreaPath.setAttribute('d', 'M 0 30 L 60 31 L 120 29 L 180 30 L 240 31 L 300 30 L 380 30 L 380 40 L 0 40 Z');
       if (sparkLinePath) {
@@ -988,7 +1047,7 @@ async function initShipments() {
       if (sparkDot) { sparkDot.setAttribute('cy', '30'); sparkDot.setAttribute('fill', '#EDE5D8'); }
       if (sparkStart) sparkStart.textContent = `13:30 (${(tempVal - 0.1).toFixed(1)}°C)`;
       if (sparkMid) sparkMid.textContent = `14:00 (${(tempVal + 0.1).toFixed(1)}°C)`;
-      if (sparkEnd) { sparkEnd.innerHTML = `14:31 (<span class="dyn-temp" style="color:#829A80">${tempVal.toFixed(1)}°C</span>)`; sparkEnd.className = 'text-[#829A80]'; }
+      if (sparkEnd) { sparkEnd.innerHTML = `14:31 (<span style="color:#829A80">${tempVal.toFixed(1)}°C</span>)`; sparkEnd.className = 'text-[#829A80]'; }
     }
 
     // 4. Vaccine Payload & Specification
@@ -1270,7 +1329,7 @@ async function initShipments() {
           <!-- Thermal Telemetry -->
           <div class="flex flex-col items-end shrink-0 min-w-[70px]">
             <div class="flex items-center gap-0.5">
-              <span class="font-mono text-base font-bold ${tempColor}"><span class="dyn-temp">${tempVal.toFixed(1)}°C</span></span>
+              <span class="font-mono text-base font-bold ${tempColor}"><span data-shipment-temp="${s.shipment_code}">${tempVal.toFixed(1)}°C</span></span>
               ${isProblem ? '<svg class="w-3.5 h-3.5 text-[#B8756C]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>' : isAttention ? '<svg class="w-3.5 h-3.5 text-[#E5B869]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>' : '<svg class="w-3.5 h-3.5 text-[#829A80]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>'}
             </div>
             <span class="text-[9px] font-mono ${driftColor} uppercase tracking-wider">${driftLabel}</span>
@@ -1506,7 +1565,9 @@ async function initProblems() {
 // ============================================================================
 
 async function initProblemDetail() {
-  const probId = id || 'prob_1';
+  const urlParams = new URLSearchParams(window.location.search);
+  const probId = urlParams.get('id') || 'prob_1';
+  window.currentViewingProblemId = probId;
   let probData = null;
   try {
     probData = await fetchProblem(probId);
@@ -1515,10 +1576,15 @@ async function initProblemDetail() {
   }
 
   if (probData) {
+    window.currentViewingProblemCode = probData.problem_code;
+    window.currentViewingProblemShipment = probData.shipment_code || (probId.startsWith('VK-') ? probId : 'VK-1042');
     document.querySelectorAll('.dyn-problem-code').forEach(el => el.textContent = probData.problem_code);
     if (probData.shipment_code) {
       document.querySelectorAll('.dyn-shipment-code').forEach(el => el.textContent = probData.shipment_code);
     }
+  } else {
+    window.currentViewingProblemCode = 'PR-1042';
+    window.currentViewingProblemShipment = probId.startsWith('VK-') ? probId : 'VK-1042';
   }
 
   document.querySelectorAll('button').forEach(btn => {
@@ -1578,10 +1644,22 @@ async function initProblemDetail() {
               primary: true,
               onClick: async () => {
                 try {
-                  await overrideProblem(probId, 'Operator verified payload recovery at Vellore Depot.');
+                  await resolveProblem(probId, {
+                    reason: 'Operator verified payload recovery at Vellore Depot.',
+                    corrective_action: 'Depot transfer and bay cooling completed.',
+                    notes: 'WHO PQS integrity preserved.'
+                  });
                   toast('Incident marked as RESOLVED and sealed in ledger.', 'success');
                   btn.textContent = 'Resolved ✓';
                   btn.disabled = true;
+                  const heroTemp = document.getElementById('problem-hero-temp');
+                  if (heroTemp) heroTemp.textContent = '4.0°C';
+                  const metricTemp = document.getElementById('problem-metric-temp');
+                  if (metricTemp) metricTemp.textContent = '4.0°C';
+                  const cardTemp = document.getElementById('problem-card-temp');
+                  if (cardTemp) cardTemp.textContent = '4.0°C';
+                  const miniTemp = document.getElementById('problem-mini-temp');
+                  if (miniTemp) miniTemp.textContent = '4.0°C';
                 } catch (err) {
                   toast(err.message, 'error');
                 }
@@ -1610,7 +1688,9 @@ async function initProblemDetail() {
 // ============================================================================
 
 async function initShipmentDetail() {
-  const shipId = id || 'VK-1042';
+  const urlParams = new URLSearchParams(window.location.search);
+  const shipId = urlParams.get('id') || 'VK-1042';
+  window.currentViewingShipmentId = shipId;
   let shipmentData = null;
   try {
     shipmentData = await fetchShipment(shipId);
@@ -1622,7 +1702,15 @@ async function initShipmentDetail() {
     // 1. Shipment ID & Basic Labels
     document.querySelectorAll('.dyn-shipment-code').forEach(el => el.textContent = shipmentData.shipment_code);
     const curTemp = shipmentData.current_temperature != null ? shipmentData.current_temperature : 4.2;
-    document.querySelectorAll('.dyn-temp').forEach(el => el.textContent = `${curTemp.toFixed(1)}°C`);
+    const heroTemp = document.getElementById('shipment-hero-temp');
+    if (heroTemp) heroTemp.textContent = `${curTemp.toFixed(1)}°C`;
+    const curLabel = document.getElementById('shipment-current-temp-label');
+    if (curLabel) curLabel.textContent = `${curTemp.toFixed(1)}°C`;
+    const sparkEnd = document.getElementById('shipment-spark-end-temp');
+    if (sparkEnd) sparkEnd.textContent = `${curTemp.toFixed(1)}°C`;
+    const auditTemp = document.getElementById('shipment-audit-temp');
+    if (auditTemp) auditTemp.textContent = `${curTemp.toFixed(1)}°C`;
+
     if (shipmentData.current_mkt != null) {
       document.querySelectorAll('.dyn-mkt').forEach(el => el.textContent = `${shipmentData.current_mkt.toFixed(1)}°C`);
     }
@@ -3996,21 +4084,104 @@ async function boot() {
   connectWebSocket(msg => {
     if (msg.type === 'TELEMETRY_UPDATE' && msg.payload) {
       const p = msg.payload;
-      if (p.temperature != null) {
-        document.querySelectorAll('.dyn-temp').forEach(el => {
-          el.textContent = `${p.temperature.toFixed(1)}°C`;
-        });
+      const shipCode = p.shipment_code;
+      const tempVal = p.temperature;
+      if (tempVal == null || !shipCode) return;
+
+      // 1. Scoped updates for any element explicitly bound to this specific shipment's temperature
+      document.querySelectorAll(`[data-shipment-temp="${shipCode}"]`).forEach(el => {
+        el.textContent = `${tempVal.toFixed(1)}°C`;
+      });
+
+      // 2. Page: shipments.html (Directory & Inspector Drawer)
+      if (cleanPage === 'shipments') {
+        const rowTemp = document.querySelector(`#shipment-row-${shipCode.toLowerCase().replace(/[^a-z0-9]/g, '')} [data-shipment-temp]`);
+        if (rowTemp) rowTemp.textContent = `${tempVal.toFixed(1)}°C`;
+
+        // Update inspector drawer ONLY IF currently inspecting this shipment
+        if (window.selectedShipmentCode === shipCode) {
+          const inspTemp = document.getElementById('inspector-temp-display');
+          if (inspTemp) {
+            inspTemp.textContent = `${tempVal.toFixed(1)}°C`;
+            inspTemp.style.color = tempVal > 8.0 ? '#B8756C' : (tempVal >= 6.8 ? '#E5B869' : '#829A80');
+          }
+          const inspSparkEnd = document.getElementById('inspector-spark-end');
+          if (inspSparkEnd) {
+            const tempColor = tempVal > 8.0 ? '#B8756C' : (tempVal >= 6.8 ? '#E5B869' : '#829A80');
+            inspSparkEnd.innerHTML = `14:31 (<span style="color:${tempColor}">${tempVal.toFixed(1)}°C</span>)`;
+          }
+        }
       }
-      if (p.mkt != null) {
-        document.querySelectorAll('.dyn-mkt').forEach(el => {
-          el.textContent = `${p.mkt.toFixed(1)}°C`;
-        });
+
+      // 3. Page: overview.html (Active Corridors & Excursion Cockpit)
+      if (cleanPage === 'overview' || cleanPage === 'index') {
+        const corrTemp = document.querySelector(`[data-corridor-temp="${shipCode}"]`);
+        if (corrTemp) {
+          corrTemp.textContent = `${tempVal.toFixed(1)}°C`;
+          const isProb = tempVal > 8.0 || tempVal < 2.0;
+          const isAttn = !isProb && (tempVal >= 6.8 || tempVal <= 3.0);
+          corrTemp.style.color = isProb ? '#E27373' : (isAttn ? '#E5B869' : 'var(--vk-cream, #F4EFE6)');
+        }
+
+        if (window.activeExcursionShipmentCode === shipCode) {
+          const banTemp = document.getElementById('overview-excursion-temp');
+          if (banTemp) banTemp.textContent = `${tempVal.toFixed(1)}°C`;
+        }
+
+        if (shipCode === 'VK-1042') {
+          const mapTemp = document.getElementById('overview-map-temp');
+          if (mapTemp) mapTemp.textContent = `${tempVal.toFixed(1)}°C`;
+          const actTemp = document.getElementById('overview-activity-temp');
+          if (actTemp) actTemp.textContent = `${tempVal.toFixed(1)}°C`;
+        }
       }
-      if (p.shipment_code) {
-        document.querySelectorAll('.dyn-shipment-code').forEach(el => {
-          el.textContent = p.shipment_code;
-        });
+
+      // 4. Page: shipment.html (Detail Deep Dive)
+      if (cleanPage === 'shipment' || cleanPage === 'shipment-detail') {
+        if (window.currentViewingShipmentId === shipCode || window.currentViewingShipmentId === p.shipment_id) {
+          const heroTemp = document.getElementById('shipment-hero-temp');
+          if (heroTemp) heroTemp.textContent = `${tempVal.toFixed(1)}°C`;
+          const curLabel = document.getElementById('shipment-current-temp-label');
+          if (curLabel) curLabel.textContent = `${tempVal.toFixed(1)}°C`;
+          const sparkEndTemp = document.getElementById('shipment-spark-end-temp');
+          if (sparkEndTemp) sparkEndTemp.textContent = `${tempVal.toFixed(1)}°C`;
+
+          const driftEl = document.getElementById('ship-temp-drift');
+          if (driftEl) {
+            const drift = tempVal - 5.0;
+            const sign = drift > 0 ? '+' : '';
+            driftEl.innerHTML = `<span class="material-symbols-outlined text-[16px]">${drift > 0 ? 'arrow_upward' : 'arrow_downward'}</span> ${sign}${drift.toFixed(1)}°C drift`;
+            driftEl.style.color = tempVal > 8.0 ? '#d99b9b' : (tempVal >= 6.8 ? '#d9be8b' : '#9bb89b');
+          }
+        }
       }
+
+      // 5. Page: problem.html (Incident Investigation)
+      if (cleanPage === 'problem' || cleanPage === 'problem-detail') {
+        if (window.currentViewingProblemShipment === shipCode || window.currentViewingProblemCode === p.problem_code) {
+          const probHeroTemp = document.getElementById('problem-hero-temp');
+          if (probHeroTemp) probHeroTemp.textContent = `${tempVal.toFixed(1)}°C`;
+          const probCardTemp = document.getElementById('problem-card-temp');
+          if (probCardTemp) probCardTemp.textContent = `${tempVal.toFixed(1)}°C`;
+          const probMetricTemp = document.getElementById('problem-metric-temp');
+          if (probMetricTemp) probMetricTemp.textContent = `${tempVal.toFixed(1)}°C`;
+          const probMiniTemp = document.getElementById('problem-mini-temp');
+          if (probMiniTemp) probMiniTemp.textContent = `${tempVal.toFixed(1)}°C`;
+        }
+      }
+
+      // 6. Page: problems.html (Queue)
+      if (cleanPage === 'problems') {
+        const probCardTemp = document.querySelector(`[data-problem-temp="${p.problem_code}"]`) || document.querySelector(`[data-shipment-temp="${shipCode}"]`);
+        if (probCardTemp) probCardTemp.textContent = `${tempVal.toFixed(1)}°C`;
+      }
+
+      // 7. Page: fleet.html (Grid)
+      if (cleanPage === 'fleet') {
+        const vehTemp = document.querySelector(`[data-vehicle-temp="${shipCode}"]`);
+        if (vehTemp) vehTemp.textContent = `${tempVal.toFixed(1)}°C`;
+      }
+
       if (window.vaxkavachUpdateReefer) {
         window.vaxkavachUpdateReefer(p);
       }
