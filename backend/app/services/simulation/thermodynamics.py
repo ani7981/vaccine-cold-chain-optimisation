@@ -76,8 +76,11 @@ class ReeferThermodynamicModel:
             proportional_cooling = q_ingress + (300.0 * temp_error)
             q_cooling = min(self.rated_chiller_power, max(0.0, proportional_cooling))
         elif chiller_state.upper() == "DEGRADED":
-            # Compressor loss of refrigerant / thermal throttling (capped at 30% power)
-            q_cooling = min(1100.0, max(0.0, q_ingress * 0.45))
+            # Degraded compressor (reduced RPM / low refrigerant)
+            # Regulates around target setpoint (e.g. 9.4°C excursion) with proportional control
+            temp_error = t_current - target_setpoint
+            proportional_cooling = q_ingress + (200.0 * temp_error)
+            q_cooling = min(self.rated_chiller_power, max(0.0, proportional_cooling))
         elif chiller_state.upper() in ["FAILED", "OFF"]:
             # Total refrigeration failure - zero cooling
             q_cooling = 0.0

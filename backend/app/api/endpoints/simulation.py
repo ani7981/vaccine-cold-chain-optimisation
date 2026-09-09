@@ -38,6 +38,7 @@ async def stop_simulation(db: Session = Depends(get_db)):
 @router.post("/reset")
 def reset_simulation(db: Session = Depends(get_db)):
     simulation_engine.stop(db)
+    db.close()
     from seed import seed_db
     seed_db()
     return {"status": "reset_completed", "message": "Simulation halted and operational dataset restored to initial seed state"}

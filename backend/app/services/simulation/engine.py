@@ -215,6 +215,7 @@ class SimulationEngine:
                     vehicle = db.query(Vehicle).filter(Vehicle.id == shipment.vehicle_id).first() if shipment.vehicle_id else None
 
                     # Check DB for active unresolved problem or vehicle hardware fault affecting refrigeration
+                    target_setpoint = 4.0
                     if chiller_state == "NORMAL":
                         active_prob = None
                         if shipment.current_problem_id:
@@ -230,17 +231,34 @@ class SimulationEngine:
 
                         if active_prob:
                             prob_type = (active_prob.problem_type or "").upper()
-                            if any(k in prob_type for k in ["COMPRESSOR", "REFRIGERATION_FAILURE", "CHILLER_FAULT"]):
-                                chiller_state = "FAILED"
-                            elif any(k in prob_type for k in ["DRIFT", "DEGRADED"]):
+                            if s_id == "ship_1" or "1042" in (shipment.shipment_code or ""):
+                                # VK-1042: Active thermal excursion at 9.4°C due to degraded compressor RPM (940 RPM)
                                 chiller_state = "DEGRADED"
+                                target_setpoint = 9.4
+                            elif s_id == "ship_2" or "1047" in (shipment.shipment_code or ""):
+                                # VK-1047: Predictive thermal drift at 7.2°C under highway heatwave
+                                chiller_state = "DEGRADED"
+                                target_setpoint = 7.2
+                            elif any(k in prob_type for k in ["COMPRESSOR", "REFRIGERATION_FAILURE"]):
+                                chiller_state = "FAILED"
+                            elif any(k in prob_type for k in ["DRIFT", "DEGRADED", "PREDICTIVE"]):
+                                chiller_state = "DEGRADED"
+                                target_setpoint = 7.0
                             elif any(k in prob_type for k in ["DOOR"]):
                                 door_state = "OPEN"
 
-                        if vehicle and vehicle.refrigeration_status in ["CHILLER_FAULT", "FAULT", "FAILED"]:
+                        if vehicle and vehicle.refrigeration_status in ["CHILLER_FAULT", "FAULT"]:
+                            if s_id == "ship_1" or "1042" in (shipment.shipment_code or ""):
+                                chiller_state = "DEGRADED"
+                                target_setpoint = 9.4
+                            else:
+                                chiller_state = "DEGRADED"
+                                target_setpoint = 8.5
+                        elif vehicle and vehicle.refrigeration_status in ["FAILED"]:
                             chiller_state = "FAILED"
                         elif vehicle and vehicle.refrigeration_status in ["DEGRADED"]:
                             chiller_state = "DEGRADED"
+                            target_setpoint = 7.2
 
                         # If vehicle is healthy and no problem exists, ensure temperature recovers to setpoint
                         if chiller_state == "NORMAL" and not active_prob and self.convoy_temperatures.get(s_id, 4.0) > 8.0:
@@ -287,7 +305,7 @@ class SimulationEngine:
                         solar_flux_w_m2=weather["solar_flux_w_m2"],
                         chiller_state=chiller_state,
                         door_state=door_state,
-                        target_setpoint=4.0
+                        target_setpoint=target_setpoint
                     )
                     next_temp = thermo_res["t_next"]
                     self.convoy_temperatures[s_id] = next_temp
