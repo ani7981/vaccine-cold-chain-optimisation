@@ -16,7 +16,7 @@ from alembic import context
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option("sqlalchemy.url", os.getenv("DATABASE_URL", "postgresql://vaxkavach:vaxpassword@localhost:5432/vaxkavach_db"))
+config.set_main_option("sqlalchemy.url", os.getenv("DATABASE_URL", "postgresql://vaxkavach:vaxpassword@127.0.0.1:5432/vaxkavach_db"))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

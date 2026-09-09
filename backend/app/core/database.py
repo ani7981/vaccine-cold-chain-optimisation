@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://vaxkavach:vaxpassword@localhost:5432/vaxkavach_db")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://vaxkavach:vaxpassword@127.0.0.1:5432/vaxkavach_db")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

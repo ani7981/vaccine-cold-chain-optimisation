@@ -55,7 +55,7 @@ async def notify_critical_alert(problem: dict[str, Any]) -> None:
             await bot_app.bot.send_message(
                 chat_id=chat_id,
                 text=text,
-                parse_mode="Markdown",
+                parse_mode="HTML",
                 reply_markup=keyboard,
             )
             logger.info("Critical alert card delivered to chat_id=%s for problem=%s", chat_id, code)
@@ -86,7 +86,7 @@ async def notify_warning_alert(problem: dict[str, Any]) -> None:
             await bot_app.bot.send_message(
                 chat_id=chat_id,
                 text=text,
-                parse_mode="Markdown",
+                parse_mode="HTML",
                 reply_markup=keyboard,
             )
         except Exception as exc:
@@ -97,6 +97,7 @@ async def notify_incident_resolved(problem: dict[str, Any]) -> None:
     """
     Send a high-craft resolution receipt when an incident is marked RESOLVED.
     """
+    import html
     from app.bot.bot import get_bot_app
 
     bot_app = get_bot_app()
@@ -107,28 +108,29 @@ async def notify_incident_resolved(problem: dict[str, Any]) -> None:
     if not chat_ids:
         return
 
-    code = problem.get("problem_code") or problem.get("id") or "?"
-    ship_code = problem.get("shipment_code") or problem.get("shipment_id") or "?"
-    resolved_by = problem.get("resolved_by_user") or "Authorized Operator"
-    reason = problem.get("resolution_reason") or "Cold chain re-stabilization"
-    notes = problem.get("resolution_notes") or "Temperature restored to safe 2.0°C-8.0°C envelope."
+    code = html.escape(str(problem.get("problem_code") or problem.get("id") or "?"))
+    ship_code = html.escape(str(problem.get("shipment_code") or problem.get("shipment_id") or "?"))
+    raw_ship_code = str(problem.get("shipment_code") or problem.get("shipment_id") or "?")
+    resolved_by = html.escape(str(problem.get("resolved_by_user") or "Authorized Operator"))
+    reason = html.escape(str(problem.get("resolution_reason") or "Cold chain re-stabilization"))
+    notes = html.escape(str(problem.get("resolution_notes") or "Temperature restored to safe 2.0°C-8.0°C envelope."))
 
     text = (
-        f"✅ [INCIDENT RESOLVED — COMPLIANCE RESTORED]\n"
+        f"✅ <b>INCIDENT RESOLVED — COMPLIANCE RESTORED</b>\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"🎯 Incident Code: `{code}`\n"
-        f"📦 Shipment: `{ship_code}`\n"
-        f"👤 Resolved by: *{resolved_by}*\n"
-        f"📋 Corrective Reason: _{reason}_\n"
-        f"📝 Field Notes: _{notes}_\n"
+        f"🎯 Incident Code: <code>{code}</code>\n"
+        f"📦 Shipment: <code>{ship_code}</code>\n"
+        f"👤 Resolved by: <b>{resolved_by}</b>\n"
+        f"📋 Corrective Reason: <i>{reason}</i>\n"
+        f"📝 Field Notes: <i>{notes}</i>\n"
         f"🛡 Standard: WHO-PQS Verification Active\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━"
     )
 
     from telegram import InlineKeyboardButton, InlineKeyboardMarkup
     kb = InlineKeyboardMarkup([[
-        InlineKeyboardButton("📦 INSPECT SHIPMENT", callback_data=f"shipment:{ship_code}"),
-        InlineKeyboardButton("🌐 DASHBOARD", url=f"http://127.0.0.1:5173/shipment.html?id={ship_code}"),
+        InlineKeyboardButton("📦 INSPECT SHIPMENT", callback_data=f"shipment:{raw_ship_code}"),
+        InlineKeyboardButton("🌐 DASHBOARD", url=f"http://127.0.0.1:5173/shipment.html?id={raw_ship_code}"),
     ]])
 
     for chat_id in chat_ids:
@@ -136,8 +138,9 @@ async def notify_incident_resolved(problem: dict[str, Any]) -> None:
             await bot_app.bot.send_message(
                 chat_id=chat_id,
                 text=text,
-                parse_mode="Markdown",
+                parse_mode="HTML",
                 reply_markup=kb,
             )
         except Exception as exc:
             logger.error("Failed to send resolution notice to chat_id=%s: %s", chat_id, exc)
+

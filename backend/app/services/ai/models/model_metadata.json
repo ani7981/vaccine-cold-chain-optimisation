@@ -1,0 +1,122 @@
+{
+  "version": "2.0.0-leakage-free-production",
+  "formulation": "Dual-Probe Consensus + 4h Forward Lookahead Risk + TreeExplainer SHAP",
+  "dataset_records_raw": 26674,
+  "dataset_hourly_consensus": 13337,
+  "features": [
+    "temp_mean",
+    "probe_discrepancy",
+    "room_temp",
+    "room_humidity",
+    "thermal_gradient",
+    "temp_delta_1h",
+    "temp_delta_3h",
+    "temp_accel",
+    "temp_rolling_mean_3h",
+    "temp_rolling_std_3h",
+    "is_frozen_regime"
+  ],
+  "chronological_split": {
+    "train_batches": [
+      "batch001",
+      "batch002",
+      "batch003",
+      "batch004",
+      "batch005",
+      "batch006",
+      "batch007",
+      "batch008",
+      "batch009",
+      "batch010",
+      "batch011",
+      "batch012",
+      "batch013",
+      "batch014",
+      "batch015",
+      "batch016",
+      "batch017",
+      "batch018",
+      "batch019",
+      "batch020"
+    ],
+    "test_batches": [
+      "batch021",
+      "batch022",
+      "batch023",
+      "batch024",
+      "batch025",
+      "batch026",
+      "batch027",
+      "batch028",
+      "batch029",
+      "batch030"
+    ]
+  },
+  "classifier_metrics": {
+    "accuracy": 0.9984571302622879,
+    "roc_auc": 0.9996948118006104,
+    "precision": 1.0,
+    "recall": 0.9884297520661157,
+    "f1": 0.9941812136325852
+  },
+  "forecaster_metrics": {
+    "ahead_1h": {
+      "mae": 1.008,
+      "rmse": 2.053
+    },
+    "ahead_2h": {
+      "mae": 1.149,
+      "rmse": 3.165
+    },
+    "ahead_4h": {
+      "mae": 1.472,
+      "rmse": 4.844
+    }
+  },
+  "shap_feature_importance": [
+    {
+      "feature": "temp_mean",
+      "mean_abs_shap": 4.6348772048950195
+    },
+    {
+      "feature": "temp_rolling_mean_3h",
+      "mean_abs_shap": 1.1892913579940796
+    },
+    {
+      "feature": "room_humidity",
+      "mean_abs_shap": 0.2675250470638275
+    },
+    {
+      "feature": "thermal_gradient",
+      "mean_abs_shap": 0.22697211802005768
+    },
+    {
+      "feature": "temp_rolling_std_3h",
+      "mean_abs_shap": 0.1407727301120758
+    },
+    {
+      "feature": "is_frozen_regime",
+      "mean_abs_shap": 0.04794314503669739
+    },
+    {
+      "feature": "temp_delta_3h",
+      "mean_abs_shap": 0.03917565941810608
+    },
+    {
+      "feature": "probe_discrepancy",
+      "mean_abs_shap": 0.03899472579360008
+    },
+    {
+      "feature": "temp_accel",
+      "mean_abs_shap": 0.03646088391542435
+    },
+    {
+      "feature": "room_temp",
+      "mean_abs_shap": 0.03428256884217262
+    },
+    {
+      "feature": "temp_delta_1h",
+      "mean_abs_shap": 0.02751367725431919
+    }
+  ]
+}

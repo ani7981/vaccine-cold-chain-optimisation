@@ -8,4 +8,13 @@ router = APIRouter()
 @router.get("/")
 def get_depots(db: Session = Depends(get_db)):
     depots = db.query(Depot).all()
-    return [{"id": d.id, "name": d.name, "lat": d.latitude, "lon": d.longitude, "services": d.services} for d in depots]
+    return [{
+        "id": d.id,
+        "name": d.name,
+        "lat": d.latitude,
+        "lon": d.longitude,
+        "services": d.services or [],
+        "availability": d.availability,
+        "certification_status": d.certification_status
+    } for d in depots]
+

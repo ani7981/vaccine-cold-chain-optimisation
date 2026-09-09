@@ -902,33 +902,38 @@ select[class*='bg-surface-container-highest'] {
 /* ==========================================================================
    LIGHT MODE DESIGN SYSTEM TOKENS & ACCESSIBILITY OVERRIDES
    Compliant with WCAG AAA/AA Contrast (>= 4.5:1)
+   Charcoal (#0D0E11) + Cream (#F4EFE6) + Pastel semantic accents
+   Zero brown, zero bright blue artifacts, high-contrast crisp text
    ========================================================================== */
 
 html.light {
   --vk-bg: #F8F6F0;
   --vk-surface: #FFFFFF;
-  --vk-surface-2: #F4EFE6;
-  --vk-surface-3: #E6E0D4;
-  --vk-surface-4: #DCD6C8;
+  --vk-surface-2: #F3EFE8;
+  --vk-surface-3: #EAE4D8;
+  --vk-surface-4: #DED7CB;
 
   --vk-cream: #0D0E11;
-  --vk-cream-soft: #2D2A26;
-  --vk-cream-muted: #57534E;
-  --vk-text-muted: #645F56;
-  --vk-subtle: #8A857B;
+  --vk-cream-soft: #1E2027;
+  --vk-cream-muted: #3F434C;
+  --vk-text-muted: #474A54;
+  --vk-subtle: #686D7A;
 
   --vk-border: #DCD6CA;
   --vk-border-soft: #E8E3D8;
 
-  --vk-healthy: #236B48;
-  --vk-attention: #8C5508;
-  --vk-problem: #A13030;
-  --vk-info: #1B5E6B;
+  --vk-healthy: #1E6B45;
+  --vk-attention: #8C5808;
+  --vk-problem: #A82E2E;
+  --vk-info: #235467;
 
   --vk-primary: #0D0E11;
   --vk-primary-text: #F8F6F0;
   --vk-secondary: #EAE5DA;
   --vk-secondary-text: #0D0E11;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html.light, html.light body {
@@ -941,22 +946,49 @@ html.light aside {
   border-color: #DCD6CA !important;
 }
 
+html.light header,
+html.light footer {
+  background-color: #FFFFFF !important;
+  border-color: #DCD6CA !important;
+}
+
 html.light main,
 html.light section,
 html.light article,
+html.light div[class*="bg-[#0D0E11]"],
+html.light div[class*="bg-[#111215]"],
 html.light div[class*="bg-[#111317]"],
-html.light div[class*="bg-[#14171d]"],
-html.light div[class*="bg-[#1a1c20]"],
-html.light div[class*="bg-[#1e2024]"],
+html.light div[class*="bg-[#131518]"],
 html.light div[class*="bg-[#14161a]"],
+html.light div[class*="bg-[#14171d]"],
+html.light div[class*="bg-[#16171D]"],
+html.light div[class*="bg-[#16181d]"],
 html.light div[class*="bg-[#16181e]"],
 html.light div[class*="bg-[#171a22]"],
-html.light div[class*="bg-[#1a1e26]"],
-html.light div[class*="bg-[#0f1217]"],
-html.light div[class*="bg-[#0c0e12]"],
+html.light div[class*="bg-[#1a1c20]"],
 html.light div[class*="bg-[#1a1c22]"],
-html.light div[class*="bg-[#101216]"],
-html.light footer {
+html.light div[class*="bg-[#1a1d24]"],
+html.light div[class*="bg-[#1a1e26]"],
+html.light div[class*="bg-[#1e2024]"],
+html.light div[class*="bg-[#1e2027]"],
+html.light div[class*="bg-[#1e222b]"],
+html.light div[class*="bg-[#20232b]"],
+html.light div[class*="bg-[#22242C]"],
+html.light div[class*="bg-[#252831]"],
+html.light div[class*="bg-[#252933]"],
+html.light div[class*="bg-[#262832]"],
+html.light div[class*="bg-[#282c34]"],
+html.light div[class*="bg-[#282d37]"],
+html.light [style*="background-color: #0D0E11"],
+html.light [style*="background-color: #111215"],
+html.light [style*="background-color: #111317"],
+html.light [style*="background-color: #131518"],
+html.light [style*="background-color: #16171D"],
+html.light [style*="background-color: #16181e"],
+html.light [style*="background-color: #1a1c20"],
+html.light [style*="background-color: #1e2024"],
+html.light [style*="background-color: #1e2027"],
+html.light [style*="background-color: #14171d"] {
   background-color: #FFFFFF !important;
   color: #0D0E11 !important;
   border-color: #DCD6CA !important;
@@ -965,10 +997,21 @@ html.light footer {
 html.light .bg-surface-container-lowest,
 html.light .bg-surface-container-low,
 html.light main[class*='bg-surface-container-lowest'],
-html.light main[class*='bg-[#111317]'] {
+html.light main[class*='bg-[#111317]'],
+html.light main[class*='bg-[#131518]'] {
   background-color: #F8F6F0 !important;
 }
 
+html.light .bg-surface-container,
+html.light .bg-surface-container-high,
+html.light .bg-surface-container-highest,
+html.light .bg-surface-variant {
+  background-color: #FFFFFF !important;
+  border-color: #DCD6CA !important;
+}
+
+html.light .surface-card,
+html.light .surface-card-subtle,
 html.light article[class*="bg-[#1a1c20]"],
 html.light article[class*="bg-[#1e2024]"],
 html.light .vehicle-card,
@@ -978,35 +1021,171 @@ html.light .shipment-card {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
 }
 
+html.light .surface-card:hover,
+html.light .surface-card-subtle:hover,
 html.light article[class*="bg-[#1a1c20]"]:hover,
 html.light .vehicle-card:hover,
 html.light .shipment-card:hover {
-  border-color: #8C8E99 !important;
-  background-color: #FAFAF7 !important;
+  border-color: #B0AAA0 !important;
+  background-color: #F4EFE6 !important;
 }
 
-html.light span[class*="text-[#F4EFE6]"],
-html.light span[class*="text-[#F4EFE6]"],
-html.light span[class*="text-[#F4EFE6]"],
-html.light span[class*="text-[#ede5cf]"],
-html.light span[class*="text-white"],
-html.light strong[class*="text-[#F4EFE6]"],
-html.light strong[class*="text-[#F4EFE6]"],
-html.light strong[class*="text-white"],
-html.light h1, html.light h2, html.light h3, html.light h4 {
+/* ==========================================================================
+   PRIMARY HIGH-CONTRAST TEXT (Eliminate light/faint/washed-out fonts)
+   ========================================================================== */
+
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light h6,
+html.light .text-primary,
+html.light .text-primary-fixed,
+html.light .text-on-primary-container,
+html.light .text-on-surface,
+html.light .text-on-background,
+html.light .text-cream-100,
+html.light .text-cream-200,
+html.light .text-cream-300,
+html.light .text-cream-50,
+html.light .text-vk-cream,
+html.light [class*="text-[#F4EFE6]"],
+html.light [class*="text-[#f4efe6]"],
+html.light [class*="text-[#EDE5CF]"],
+html.light [class*="text-[#ede5cf]"],
+html.light [class*="text-[#f3f4f6]"],
+html.light [class*="text-[#F3F4F6]"],
+html.light [class*="text-[#e5e7eb]"],
+html.light [class*="text-[#d1d5db]"],
+html.light [class*="text-[#e2e2e8]"],
+html.light [class*="text-[#faf8f4]"],
+html.light [class*="text-[#f4f1ea]"],
+html.light [class*="text-white"],
+html.light [style*="color: #F4EFE6"],
+html.light [style*="color: #f4efe6"],
+html.light [style*="color: #EDE5CF"],
+html.light [style*="color: #ede5cf"],
+html.light [style*="color: white"],
+html.light [style*="color: #FFF"],
+html.light [style*="color: #fff"],
+html.light [style*="color: #FFFFFF"],
+html.light [style*="color: #ffffff"],
+html.light [style*="color: #F3F4F6"],
+html.light [style*="color: #f3f4f6"],
+html.light [style*="color: var(--vk-cream)"] {
   color: #0D0E11 !important;
 }
 
-html.light span[class*="text-[#9A9890]"],
-html.light span[class*="text-[#8b909a]"],
-html.light span[class*="text-[#a0a5ad]"],
-html.light span[class*="text-[#848995]"],
-html.light span[class*="text-[#9ca3af]"],
-html.light p[class*="text-[#9A9890]"],
-html.light p[class*="text-[#8b909a]"],
-html.light p[class*="text-[#a0a5ad]"] {
-  color: #57534E !important;
+/* ==========================================================================
+   SECONDARY & MUTED TEXT (Deep slate charcoal with WCAG AAA/AA >= 5.8:1)
+   ========================================================================== */
+
+html.light .text-on-surface-variant,
+html.light .text-cream-muted,
+html.light .text-vk-text-muted,
+html.light .text-vk-cream-muted,
+html.light .text-vk-subtle,
+html.light [class*="text-[#8C8E99]"],
+html.light [class*="text-[#8c8e99]"],
+html.light [class*="text-[#9ca3af]"],
+html.light [class*="text-[#9CA3AF]"],
+html.light [class*="text-[#8b909a]"],
+html.light [class*="text-[#8B909A]"],
+html.light [class*="text-[#8b92a1]"],
+html.light [class*="text-[#8B92A1]"],
+html.light [class*="text-[#a0a5ad]"],
+html.light [class*="text-[#A0A5AD]"],
+html.light [class*="text-[#848995]"],
+html.light [class*="text-[#9A9890]"],
+html.light [class*="text-[#9a9890]"],
+html.light [class*="text-[#8E8A80]"],
+html.light [class*="text-[#8e8a80]"],
+html.light [class*="text-[#A8A398]"],
+html.light [class*="text-[#a8a398]"],
+html.light [class*="text-[#A69F94]"],
+html.light [class*="text-[#a69f94]"],
+html.light [class*="text-[#6b7280]"],
+html.light [class*="text-[#4b5563]"],
+html.light [class*="text-[#645F56]"],
+html.light [style*="color: #8C8E99"],
+html.light [style*="color: #8c8e99"],
+html.light [style*="color: #9CA3AF"],
+html.light [style*="color: #9ca3af"],
+html.light [style*="color: #848995"],
+html.light [style*="color: #8b92a1"],
+html.light [style*="color: #8E8A80"],
+html.light [style*="color: #8e8a80"],
+html.light [style*="color: #A8A398"],
+html.light [style*="color: #a8a398"],
+html.light [style*="color: #9A9890"],
+html.light [style*="color: #9a9890"],
+html.light [style*="color: #b8afa0"],
+html.light [style*="color: var(--vk-text-muted)"],
+html.light [style*="color: var(--vk-cream-muted)"] {
+  color: #474A54 !important;
 }
+
+/* ==========================================================================
+   BLUE AREA SUPPRESSION (Eliminates jarring dark-blue boxes & electric blues)
+   ========================================================================== */
+
+html.light [class*="text-[#38BDF8]"],
+html.light [class*="text-[#38bdf8]"],
+html.light [class*="text-[#60A5FA]"],
+html.light [class*="text-[#60a5fa]"],
+html.light [class*="text-[#7BD0FF]"],
+html.light [class*="text-[#7bd0ff]"],
+html.light [class*="text-[#93c5fd]"],
+html.light [class*="text-[#00a6e0]"],
+html.light .text-tertiary {
+  color: #235467 !important;
+}
+
+html.light [class*="bg-[#38BDF8]"],
+html.light [class*="bg-[#38bdf8]"],
+html.light [class*="bg-[#60A5FA]"],
+html.light [class*="bg-[#60a5fa]"],
+html.light [class*="bg-[#7BD0FF]"],
+html.light [class*="bg-[#7bd0ff]"],
+html.light [class*="bg-[#00a6e0]"] {
+  background-color: #235467 !important;
+  color: #FFFFFF !important;
+}
+
+html.light [class*="bg-[#16202E]"],
+html.light [class*="bg-[#16202e]"],
+html.light [class*="bg-[#1e293b]"],
+html.light [class*="bg-[#1E293B]"],
+html.light [class*="bg-[#161922]"],
+html.light [class*="bg-[#202530]"],
+html.light [style*="background-color: #16202E"],
+html.light [style*="background-color: #16202e"],
+html.light [style*="background-color: #1E293B"],
+html.light [style*="background-color: #161922"] {
+  background-color: #F4EFE6 !important;
+  border-color: #DCD6CA !important;
+}
+
+html.light [class*="border-[#264A6E]"],
+html.light [class*="border-[#264a6e]"],
+html.light [class*="border-[#334155]"],
+html.light [class*="border-[#2B3245]"],
+html.light [class*="border-[#2b3245]"],
+html.light [style*="border: 1px solid #264A6E"],
+html.light [style*="border: 1px solid #264a6e"] {
+  border-color: #DCD6CA !important;
+}
+
+html.light [class*="bg-[rgba(56,189,248"],
+html.light [class*="border-[rgba(56,189,248"] {
+  background-color: rgba(35, 84, 103, 0.12) !important;
+  border-color: rgba(35, 84, 103, 0.35) !important;
+}
+
+/* ==========================================================================
+   INPUTS & FORM CONTROLS
+   ========================================================================== */
 
 html.light input,
 html.light select,
@@ -1017,87 +1196,170 @@ html.light textarea {
 }
 
 html.light input::placeholder {
-  color: #8A857B !important;
+  color: #686D7A !important;
 }
+
+/* ==========================================================================
+   BUTTONS (Charcoal black & Cream tokens with high contrast)
+   ========================================================================== */
 
 html.light button {
   border-color: #DCD6CA !important;
 }
 
+/* Secondary / muted buttons */
 html.light button[class*="bg-[#1a1c20]"],
 html.light button[class*="bg-[#1e2024]"],
+html.light button[class*="bg-[#1e2027]"],
 html.light button[class*="bg-[#1f232c]"],
 html.light button[class*="bg-[#282a2e]"],
-html.light button[class*="bg-[#232731]"] {
+html.light button[class*="bg-[#232731]"],
+html.light button[class*="bg-[#262832]"],
+html.light [style*="background-color: #1E2027"] button {
   background-color: #F4EFE6 !important;
   color: #0D0E11 !important;
 }
 
 html.light button[class*="bg-[#1a1c20]"]:hover,
-html.light button[class*="bg-[#1e2024]"]:hover {
+html.light button[class*="bg-[#1e2024]"]:hover,
+html.light button[class*="bg-[#1e2027]"]:hover {
   background-color: #E6E0D4 !important;
 }
 
-html.light button[class*="bg-[#F4EFE6]"],
+/* Theme toggle & tour buttons */
+html.light .btn-theme-toggle,
+html.light #btn-walkthrough-tour,
+html.light #vk-theme-toggle {
+  background-color: #F4EFE6 !important;
+  color: #0D0E11 !important;
+  border-color: #DCD6CA !important;
+}
+html.light .btn-theme-toggle:hover,
+html.light #btn-walkthrough-tour:hover,
+html.light #vk-theme-toggle:hover {
+  background-color: #E6E0D4 !important;
+  color: #0D0E11 !important;
+}
+
+/* Primary buttons in light mode (crisp Charcoal with Cream text) */
 html.light button[class*="bg-[#F4EFE6]"],
 html.light button[class*="bg-[#ede5cf]"],
 html.light a[class*="bg-[#F4EFE6]"],
 html.light a[class*="bg-[#ede5cf]"] {
   background-color: #0D0E11 !important;
-  color: #FFFFFF !important;
+  color: #F4EFE6 !important;
+  border-color: #0D0E11 !important;
 }
 
-html.light button[class*="bg-[#F4EFE6]"] span,
 html.light button[class*="bg-[#F4EFE6]"] span,
 html.light button[class*="bg-[#ede5cf]"] span,
 html.light a[class*="bg-[#F4EFE6]"] span,
-html.light a[class*="bg-[#ede5cf]"] span {
+html.light a[class*="bg-[#ede5cf]"] span,
+html.light button[class*="bg-[#F4EFE6]"] strong,
+html.light button[class*="bg-[#ede5cf]"] strong {
+  color: #F4EFE6 !important;
+}
+
+html.light button[class*="bg-[#F4EFE6]"]:hover,
+html.light button[class*="bg-[#ede5cf]"]:hover,
+html.light a[class*="bg-[#F4EFE6]"]:hover,
+html.light a[class*="bg-[#ede5cf]"]:hover {
+  background-color: #1E2027 !important;
   color: #FFFFFF !important;
 }
 
-/* Light mode semantic clinical badges */
+/* ==========================================================================
+   EXCURSION & RESOLUTION MODALS
+   ========================================================================== */
+
+.excursion-alert-banner {
+  background-color: #16171D;
+  border-width: 1px 1px 1px 4px;
+  border-style: solid;
+  border-color: #2A2C35 #2A2C35 #2A2C35 #E27373;
+}
+
+html.light .excursion-alert-banner {
+  background-color: #FFF8F8 !important;
+  border-color: #FED7D7 #FED7D7 #FED7D7 #DC2626 !important;
+  border-left-width: 4px !important;
+}
+
+.btn-resolve-incident {
+  background-color: #F4EFE6;
+  color: #111214;
+}
+
+.btn-resolve-incident:hover {
+  background-color: #FFFFFF;
+}
+
+html.light .btn-resolve-incident {
+  background-color: #0D0E11 !important;
+  color: #F4EFE6 !important;
+  border-color: #0D0E11 !important;
+}
+
+html.light .btn-resolve-incident:hover {
+  background-color: #1E2027 !important;
+  color: #FFFFFF !important;
+}
+
+/* ==========================================================================
+   SEMANTIC PASTEL BADGES (WCAG Compliant in Light Mode)
+   ========================================================================== */
+
 html.light .badge-healthy,
 html.light [class*="text-[#6BBF89]"],
 html.light [class*="text-[#829A80]"],
 html.light [class*="text-[#9bb89b]"],
-html.light [class*="text-[#4ade80]"] {
-  color: #236B48 !important;
+html.light [class*="text-[#4ade80]"],
+html.light [style*="color: #6BBF89"] {
+  color: #1E6B45 !important;
 }
 
 html.light [class*="bg-[#6BBF89]"],
 html.light [class*="bg-[#829A80]"],
-html.light [class*="bg-[#9bb89b]"] {
-  background-color: #236B48 !important;
+html.light [class*="bg-[#9bb89b]"],
+html.light [style*="background-color: #6BBF89"] {
+  background-color: #1E6B45 !important;
 }
 
 html.light .badge-warning,
 html.light [class*="text-[#E5B869]"],
-html.light [class*="text-[#E5B869]"],
 html.light [class*="text-[#d9be8b]"],
 html.light [class*="text-[#f59e0b]"],
-html.light [class*="text-[#e5a93c]"] {
-  color: #8C5508 !important;
+html.light [class*="text-[#e5a93c]"],
+html.light [style*="color: #E5B869"] {
+  color: #8C5808 !important;
 }
 
 html.light [class*="bg-[#E5B869]"],
-html.light [class*="bg-[#E5B869]"],
-html.light [class*="bg-[#d9be8b]"] {
-  background-color: #8C5508 !important;
+html.light [class*="bg-[#d9be8b]"],
+html.light [style*="background-color: #E5B869"] {
+  background-color: #8C5808 !important;
 }
 
 html.light .badge-critical,
 html.light [class*="text-[#B8756C]"],
 html.light [class*="text-[#d99b9b]"],
-html.light [class*="text-[#f87171]"] {
-  color: #A13030 !important;
+html.light [class*="text-[#f87171]"],
+html.light [class*="text-[#E27373]"],
+html.light [style*="color: #E27373"] {
+  color: #A82E2E !important;
 }
 
 html.light [class*="bg-[#B8756C]"],
-html.light [class*="bg-[#d99b9b]"] {
-  background-color: #A13030 !important;
+html.light [class*="bg-[#d99b9b]"],
+html.light [class*="bg-[#E27373]"],
+html.light [style*="background-color: #E27373"] {
+  background-color: #A82E2E !important;
 }
 
-/* Topology node styles in light mode */
+/* ==========================================================================
+   TOPOLOGY & MODALS
+   ========================================================================== */
+
 html.light .topology-node {
   background-color: #F8F6F0 !important;
   border-color: #DCD6CA !important;
@@ -1111,15 +1373,61 @@ html.light .topology-line {
   stroke: #C0BAAD !important;
 }
 
-/* Incident resolution modal */
 html.light .modal-card {
   background-color: #FFFFFF !important;
   border-color: #DCD6CA !important;
   color: #0D0E11 !important;
 }
 
+/* ==========================================================================
+   LEAFLET MAP CONTROLS & POPUPS IN LIGHT MODE
+   ========================================================================== */
+
+html.light .leaflet-container {
+  background: #F8F6F0 !important;
+}
+
+html.light .leaflet-bar,
+html.light .leaflet-bar a {
+  background-color: #FFFFFF !important;
+  color: #0D0E11 !important;
+  border-color: #DCD6CA !important;
+}
+
+html.light .leaflet-bar a:hover {
+  background-color: #F4EFE6 !important;
+  color: #0D0E11 !important;
+}
+
+html.light .leaflet-container a {
+  color: #1E6B45 !important;
+}
+
+html.light .leaflet-bar a:focus {
+  outline-color: #0D0E11 !important;
+}
+
 /* Visibility utility guarantee */
 .hidden {
   display: none !important;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.pulse-marker {
+  animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
 

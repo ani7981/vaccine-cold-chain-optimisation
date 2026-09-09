@@ -90,6 +90,10 @@ class TelemetryReading(Base):
     shipment_id = Column(String, ForeignKey("shipments.id"), index=True)
     timestamp = Column(DateTime(timezone=True), index=True)
     temperature = Column(Float)
+    probe_1_temperature = Column(Float, nullable=True)
+    probe_2_temperature = Column(Float, nullable=True)
+    probe_discrepancy = Column(Float, nullable=True)
+    sequence_number = Column(Integer, nullable=True)
     humidity = Column(Float)
     latitude = Column(Float)
     longitude = Column(Float)
@@ -97,6 +101,10 @@ class TelemetryReading(Base):
     door_state = Column(String)
     ambient_temperature = Column(Float)
     refrigeration_state = Column(String)
+    battery_level = Column(Float, nullable=True)
+    signal_strength_dbm = Column(Integer, nullable=True)
+    sensor_fault_flags = Column(JSON, default=[])
+    is_valid = Column(Boolean, default=True)
 
 class TransitEvent(Base):
     __tablename__ = "transit_events"
@@ -171,3 +179,42 @@ class Simulation(Base):
     speed_multiplier = Column(Float, default=1.0)
     started_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+
+class AuditBlock(Base):
+    __tablename__ = "audit_blocks"
+    id = Column(String, primary_key=True, index=True)
+    block_index = Column(Integer, unique=True, index=True, nullable=False)
+    merkle_root = Column(String, index=True, nullable=False)
+    event_count = Column(Integer, nullable=False)
+    start_time = Column(DateTime(timezone=True), nullable=False)
+    end_time = Column(DateTime(timezone=True), nullable=False)
+    previous_block_hash = Column(String, nullable=False)
+    block_hash = Column(String, nullable=False)
+    sealed_at = Column(DateTime(timezone=True), nullable=False)
+    signer_identity = Column(String, nullable=False)
+
+class ComplianceCertificate(Base):
+    __tablename__ = "compliance_certificates"
+    id = Column(String, primary_key=True, index=True)
+    certificate_id = Column(String, unique=True, index=True, nullable=False)
+    shipment_id = Column(String, ForeignKey("shipments.id"), index=True, nullable=False)
+    batch_number = Column(String, nullable=False)
+    vaccine_name = Column(String, nullable=False)
+    manufacturer = Column(String, nullable=False)
+    doses_count = Column(Integer, nullable=False)
+    departure_depot = Column(String, nullable=False)
+    destination_depot = Column(String, nullable=False)
+    dispatched_at = Column(DateTime(timezone=True), nullable=True)
+    arrived_at = Column(DateTime(timezone=True), nullable=True)
+    total_transit_hours = Column(Float, nullable=True)
+    mean_kinetic_temperature_c = Column(Float, nullable=False)
+    mkt_allowable_limit_c = Column(Float, nullable=False)
+    thermal_compliance_status = Column(String, nullable=False)
+    excursion_duration_minutes = Column(Integer, nullable=False)
+    sensor_probe_fault_count = Column(Integer, nullable=False)
+    merkle_root_seal = Column(String, nullable=False)
+    verified_by_role = Column(String, nullable=False)
+    regulatory_standard = Column(String, nullable=False)
+    generated_at = Column(DateTime(timezone=True), nullable=False)
+    dossier_json = Column(JSON, nullable=True)
+

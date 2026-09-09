@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), '.')))
 
+from sqlalchemy import text
 from app.core.database import SessionLocal
 from app.models.all import Location, Product, Vehicle, Sensor, Shipment, TelemetryReading, Problem, Recommendation, Depot, AuditEvent, TransitEvent, Simulation
 from app.services.audit.audit_chain import append_audit_event
@@ -11,57 +12,94 @@ from app.services.audit.audit_chain import append_audit_event
 def seed_db():
     db = SessionLocal()
     
-    # Clean old records
-    db.query(Simulation).delete()
-    db.query(AuditEvent).delete()
-    db.query(Recommendation).delete()
-    db.query(Problem).delete()
-    db.query(TelemetryReading).delete()
-    db.query(TransitEvent).delete()
-    db.query(Shipment).delete()
-    db.query(Vehicle).delete()
-    db.query(Sensor).delete()
-    db.query(Depot).delete()
-    db.query(Product).delete()
-    db.query(Location).delete()
-    db.commit()
+    # Clean old records cleanly with CASCADE
+    try:
+        db.execute(text("TRUNCATE TABLE telemetry_readings, transit_events, problems, recommendations, audit_events, simulations, shipments, vehicles, sensors, depots, products, locations CASCADE;"))
+        db.commit()
+    except Exception:
+        db.rollback()
+        for model in [Simulation, AuditEvent, Recommendation, Problem, TelemetryReading, TransitEvent, Sensor, Shipment, Vehicle, Depot, Product, Location]:
+            try:
+                db.query(model).delete(synchronize_session=False)
+                db.commit()
+            except Exception:
+                db.rollback()
 
     now = datetime.now(timezone.utc)
 
     # 1. Locations
-    locations = [
-        Location(id="loc_chennai", name="Chennai Regional Vaccine Store", city="Chennai", state="Tamil Nadu", latitude=13.0827, longitude=80.2707, location_type="REGIONAL_STORE"),
-        Location(id="loc_vellore", name="Vellore District Hospital Depot", city="Vellore", state="Tamil Nadu", latitude=12.9202, longitude=79.1325, location_type="DISTRICT_STORE"),
-        Location(id="loc_delhi", name="National Central Store Delhi (GMSD)", city="Delhi", state="Delhi", latitude=28.6139, longitude=77.2090, location_type="NATIONAL_STORE"),
-        Location(id="loc_patna", name="Patna State Medical Store", city="Patna", state="Bihar", latitude=25.5941, longitude=85.1376, location_type="STATE_STORE"),
-        Location(id="loc_bengaluru", name="Bengaluru Central Facility", city="Bengaluru", state="Karnataka", latitude=12.9716, longitude=77.5946, location_type="REGIONAL_STORE"),
-        Location(id="loc_hyderabad", name="Hyderabad State Cold Store", city="Hyderabad", state="Telangana", latitude=17.3850, longitude=78.4867, location_type="STATE_STORE"),
-        Location(id="loc_mumbai", name="Mumbai Western Logistics Hub", city="Mumbai", state="Maharashtra", latitude=19.0760, longitude=72.8777, location_type="REGIONAL_STORE"),
-        Location(id="loc_ahmedabad", name="Ahmedabad Civil Store", city="Ahmedabad", state="Gujarat", latitude=23.0225, longitude=72.5714, location_type="DISTRICT_STORE"),
-        Location(id="loc_pune", name="Pune Zonal Cold Storage", city="Pune", state="Maharashtra", latitude=18.5204, longitude=73.8567, location_type="DISTRICT_STORE"),
-        Location(id="loc_kolkata", name="Kolkata Eastern Depot", city="Kolkata", state="West Bengal", latitude=22.5726, longitude=88.3639, location_type="REGIONAL_STORE"),
-        Location(id="loc_guwahati", name="Guwahati Regional Hub", city="Guwahati", state="Assam", latitude=26.1445, longitude=91.7362, location_type="REGIONAL_STORE"),
-        Location(id="loc_shillong", name="Shillong Civil Hospital", city="Shillong", state="Meghalaya", latitude=25.5788, longitude=91.8933, location_type="CLINIC"),
-        Location(id="loc_agra", name="Agra District Health Warehouse", city="Agra", state="Uttar Pradesh", latitude=27.1767, longitude=78.0081, location_type="DISTRICT_STORE"),
-        Location(id="loc_kanpur", name="Kanpur Divisional Vaccine Store", city="Kanpur", state="Uttar Pradesh", latitude=26.4499, longitude=80.3319, location_type="DISTRICT_STORE"),
-        Location(id="loc_lucknow", name="Lucknow State Vaccine Depot", city="Lucknow", state="Uttar Pradesh", latitude=26.8467, longitude=80.9462, location_type="STATE_STORE"),
-        Location(id="loc_anantapur", name="Anantapur District ILR Point", city="Anantapur", state="Andhra Pradesh", latitude=14.6819, longitude=77.6006, location_type="DISTRICT_STORE"),
-        Location(id="loc_kurnool", name="Kurnool Medical Depot", city="Kurnool", state="Andhra Pradesh", latitude=15.8281, longitude=78.0373, location_type="DISTRICT_STORE"),
-        Location(id="loc_satara", name="Satara District Cold Storage", city="Satara", state="Maharashtra", latitude=17.6805, longitude=74.0183, location_type="DISTRICT_STORE"),
-        Location(id="loc_kolhapur", name="Kolhapur Regional Health Store", city="Kolhapur", state="Maharashtra", latitude=16.7050, longitude=74.2433, location_type="DISTRICT_STORE"),
-        Location(id="loc_malda", name="Malda Sub-Divisional Store", city="Malda", state="West Bengal", latitude=25.0108, longitude=88.1411, location_type="DISTRICT_STORE"),
+    locations_data = [
+        ("loc_chennai", "Chennai Regional Vaccine Store", "Chennai", "Tamil Nadu", 13.0827, 80.2707, "REGIONAL_STORE"),
+        ("loc_vellore", "Vellore District Hospital Depot", "Vellore", "Tamil Nadu", 12.9202, 79.1325, "DISTRICT_STORE"),
+        ("loc_delhi", "National Central Store Delhi (GMSD)", "Delhi", "Delhi", 28.6139, 77.2090, "NATIONAL_STORE"),
+        ("loc_patna", "Patna State Medical Store", "Patna", "Bihar", 25.5941, 85.1376, "STATE_STORE"),
+        ("loc_bengaluru", "Bengaluru Central Facility", "Bengaluru", "Karnataka", 12.9716, 77.5946, "REGIONAL_STORE"),
+        ("loc_hyderabad", "Hyderabad State Cold Store", "Hyderabad", "Telangana", 17.3850, 78.4867, "STATE_STORE"),
+        ("loc_mumbai", "Mumbai Western Logistics Hub", "Mumbai", "Maharashtra", 19.0760, 72.8777, "REGIONAL_STORE"),
+        ("loc_ahmedabad", "Ahmedabad Civil Store", "Ahmedabad", "Gujarat", 23.0225, 72.5714, "DISTRICT_STORE"),
+        ("loc_pune", "Pune Zonal Cold Storage", "Pune", "Maharashtra", 18.5204, 73.8567, "DISTRICT_STORE"),
+        ("loc_kolkata", "Kolkata Eastern Depot", "Kolkata", "West Bengal", 22.5726, 88.3639, "REGIONAL_STORE"),
+        ("loc_guwahati", "Guwahati Regional Hub", "Guwahati", "Assam", 26.1445, 91.7362, "REGIONAL_STORE"),
+        ("loc_shillong", "Shillong Civil Hospital", "Shillong", "Meghalaya", 25.5788, 91.8933, "CLINIC"),
+        ("loc_agra", "Agra District Health Warehouse", "Agra", "Uttar Pradesh", 27.1767, 78.0081, "DISTRICT_STORE"),
+        ("loc_kanpur", "Kanpur Divisional Vaccine Store", "Kanpur", "Uttar Pradesh", 26.4499, 80.3319, "DISTRICT_STORE"),
+        ("loc_lucknow", "Lucknow State Vaccine Depot", "Lucknow", "Uttar Pradesh", 26.8467, 80.9462, "STATE_STORE"),
+        ("loc_anantapur", "Anantapur District ILR Point", "Anantapur", "Andhra Pradesh", 14.6819, 77.6006, "DISTRICT_STORE"),
+        ("loc_kurnool", "Kurnool Medical Depot", "Kurnool", "Andhra Pradesh", 15.8281, 78.0373, "DISTRICT_STORE"),
+        ("loc_satara", "Satara District Cold Storage", "Satara", "Maharashtra", 17.6805, 74.0183, "DISTRICT_STORE"),
+        ("loc_kolhapur", "Kolhapur Regional Health Store", "Kolhapur", "Maharashtra", 16.7050, 74.2433, "DISTRICT_STORE"),
+        ("loc_malda", "Malda Sub-Divisional Store", "Malda", "West Bengal", 25.0108, 88.1411, "DISTRICT_STORE"),
     ]
-    for loc in locations: db.add(loc)
+    for lid, name, city, st, lat, lon, ltype in locations_data:
+        loc = Location(
+            id=lid, name=name, city=city, state=st, latitude=lat, longitude=lon, location_type=ltype,
+            geom=f"SRID=4326;POINT({lon} {lat})"
+        )
+        db.add(loc)
 
-    # 2. Depots (Backup & Regional Transshipment Hubs)
-    depots = [
-        Depot(id="depot_kanchi", name="Kanchipuram Backup Store", latitude=12.8341, longitude=79.7036, services=["REFRIGERATION", "VEHICLE_SWAP", "ILR_BUFFER"], availability="HIGH", certification_status="VERIFIED"),
-        Depot(id="depot_sriperum", name="Sriperumbudur Medical Hub", latitude=12.9716, longitude=79.9406, services=["REFRIGERATION"], availability="MEDIUM", certification_status="VERIFIED"),
-        Depot(id="depot_vellore_sub", name="Vellore Sub-District Depot ILR Room", latitude=12.9165, longitude=79.1320, services=["REFRIGERATION", "DEEP_FREEZE"], availability="HIGH", certification_status="VERIFIED"),
-        Depot(id="depot_agra", name="Agra Expressway Emergency ILR Bay", latitude=27.1800, longitude=78.0200, services=["REFRIGERATION", "CROSS_DOCKING"], availability="HIGH", certification_status="VERIFIED"),
-        Depot(id="depot_hosur", name="Hosur Inter-State Cross-Dock", latitude=12.7409, longitude=77.8253, services=["REFRIGERATION", "VEHICLE_SWAP"], availability="HIGH", certification_status="VERIFIED"),
+    # 2. Depots (Backup & Regional Transshipment Hubs across National Corridors)
+    depots_data = [
+        # NH-48 Southern Corridor (Chennai -> Bengaluru)
+        ("depot_sriperum", "Sriperumbudur Medical Hub", 12.9716, 79.9406, ["REFRIGERATION", "ILR_BUFFER"], "HIGH", "VERIFIED"),
+        ("depot_kanchi", "Kanchipuram Backup Store", 12.8341, 79.7036, ["REFRIGERATION", "VEHICLE_SWAP", "ILR_BUFFER"], "HIGH", "VERIFIED"),
+        ("depot_ranipet", "Ranipet Intermediate Cold Depot", 12.9272, 79.3330, ["REFRIGERATION", "ILR_BUFFER"], "HIGH", "VERIFIED"),
+        ("depot_vellore_sub", "Vellore Sub-District Depot ILR Room", 12.9165, 79.1320, ["REFRIGERATION", "DEEP_FREEZE"], "HIGH", "VERIFIED"),
+        ("depot_ambur", "Ambur Civil Cold Chain Point", 12.7904, 78.7166, ["REFRIGERATION"], "HIGH", "VERIFIED"),
+        ("depot_vaniyambadi", "Vaniyambadi Sub-Depot", 12.6322, 78.4983, ["REFRIGERATION"], "MEDIUM", "VERIFIED"),
+        ("depot_krishnagiri", "Krishnagiri District ILR Center", 12.5186, 78.2137, ["REFRIGERATION", "CROSS_DOCKING"], "HIGH", "VERIFIED"),
+        ("depot_hosur", "Hosur Inter-State Cross-Dock", 12.7409, 77.8253, ["REFRIGERATION", "VEHICLE_SWAP"], "HIGH", "VERIFIED"),
+        ("depot_blr_central", "Bengaluru Central Apex Depot", 12.9716, 77.5946, ["REFRIGERATION", "DEEP_FREEZE", "VEHICLE_SWAP"], "HIGH", "VERIFIED"),
+        
+        # NH-44 Central Spine (Bengaluru -> Hyderabad)
+        ("depot_anantapur", "Anantapur District Health Store", 14.6819, 77.6006, ["REFRIGERATION", "ILR_BUFFER"], "HIGH", "VERIFIED"),
+        ("depot_kurnool", "Kurnool Emergency Medical Depot", 15.8281, 78.0373, ["REFRIGERATION", "CROSS_DOCKING"], "HIGH", "VERIFIED"),
+        ("depot_hyd_state", "Hyderabad State Apex Cold Facility", 17.3850, 78.4867, ["REFRIGERATION", "DEEP_FREEZE"], "HIGH", "VERIFIED"),
+
+        # NH-19 Northern Arterial (Delhi -> Lucknow)
+        ("depot_delhi_apex", "Delhi GMSD National Vaccine Store", 28.6139, 77.2090, ["REFRIGERATION", "DEEP_FREEZE", "VEHICLE_SWAP"], "HIGH", "VERIFIED"),
+        ("depot_mathura", "Mathura Highway Emergency ILR", 27.8974, 77.6744, ["REFRIGERATION"], "HIGH", "VERIFIED"),
+        ("depot_agra", "Agra Expressway Emergency ILR Bay", 27.1800, 78.0200, ["REFRIGERATION", "CROSS_DOCKING"], "HIGH", "VERIFIED"),
+        ("depot_kanpur", "Kanpur Divisional Vaccine Facility", 26.4499, 80.3319, ["REFRIGERATION"], "HIGH", "VERIFIED"),
+        ("depot_lucknow_state", "Lucknow Apex State Depot", 26.8467, 80.9462, ["REFRIGERATION", "DEEP_FREEZE"], "HIGH", "VERIFIED"),
+
+        # NH-48 Western Trunk (Mumbai -> Kolhapur)
+        ("depot_mum_zonal", "Mumbai Western Zonal Depot", 19.0760, 72.8777, ["REFRIGERATION", "DEEP_FREEZE", "VEHICLE_SWAP"], "HIGH", "VERIFIED"),
+        ("depot_lonavala", "Lonavala Expressway Response Point", 18.7546, 73.4062, ["REFRIGERATION"], "HIGH", "VERIFIED"),
+        ("depot_pune_zonal", "Pune Zonal Cold Storage", 18.5204, 73.8567, ["REFRIGERATION", "VEHICLE_SWAP"], "HIGH", "VERIFIED"),
+        ("depot_satara", "Satara District Health ILR Point", 17.6805, 74.0183, ["REFRIGERATION"], "HIGH", "VERIFIED"),
+        ("depot_kolhapur", "Kolhapur Regional Health Facility", 16.7050, 74.2433, ["REFRIGERATION"], "HIGH", "VERIFIED"),
+
+        # NH-106 Northeast Mountain Corridor (Guwahati -> Shillong)
+        ("depot_guwahati_hub", "Guwahati Regional Cold Chain Hub", 26.1445, 91.7362, ["REFRIGERATION", "DEEP_FREEZE"], "HIGH", "VERIFIED"),
+        ("depot_nongpoh", "Nongpoh Hill Transit Emergency Post", 25.9010, 91.8800, ["REFRIGERATION", "ILR_BUFFER"], "HIGH", "VERIFIED"),
+        ("depot_shillong_civ", "Shillong Civil Hospital Cold Room", 25.5788, 91.8933, ["REFRIGERATION"], "HIGH", "VERIFIED"),
     ]
-    for d in depots: db.add(d)
+    for did, name, lat, lon, srv, avail, cert in depots_data:
+        d = Depot(
+            id=did, name=name, latitude=lat, longitude=lon, services=srv, availability=avail,
+            certification_status=cert, geom=f"SRID=4326;POINT({lon} {lat})"
+        )
+        db.add(d)
 
     # 3. Products (With authentic manufacturers & monographs)
     products = [
