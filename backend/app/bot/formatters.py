@@ -103,8 +103,10 @@ def format_shipment_card(data: dict) -> str:
     calibration = esc(sensor.get("calibration_status") or "NABL Certified")
 
     # Status Badge
-    if risk_level == "CRITICAL" or (temp is not None and temp > t_max):
-        status_badge = "🚨 <b>CRITICAL (THERMAL EXCURSION)</b>"
+    if temp is not None and (temp > t_max or temp < t_min):
+        status_badge = f"🚨 <b>CRITICAL (THERMAL EXCURSION: {temp:.1f}°C)</b>"
+    elif risk_level == "CRITICAL":
+        status_badge = "🚨 <b>CRITICAL (HARDWARE FAULT / ATTENTION REQUIRED)</b>"
     elif risk_level == "WARNING" or (temp is not None and temp >= 6.8):
         status_badge = "⚠️ <b>PREDICTIVE WARNING (THERMAL DRIFT)</b>"
     elif status == "RESOLVED":

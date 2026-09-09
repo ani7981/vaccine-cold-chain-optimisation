@@ -85,25 +85,25 @@ def evaluate_signals(
         problem_type = "door_event"
         severity = "HIGH" if ambient_temp > 35.0 else "MEDIUM"
         recommended_action = "Container door open under adverse ambient conditions. Command driver to verify seal closure immediately."
-    elif roc_status == "CRITICAL":
-        problem_type = "temperature_problem"
+    elif roc_status == "CRITICAL" and current_temp >= (temp_max - 1.0):
+        problem_type = "predictive_excursion"
         severity = "HIGH"
-        recommended_action = "Rapid thermal rate-of-change detected. Check insulation barrier integrity."
-    elif projected_breach_hrs is not None and projected_breach_hrs <= 2:
-        # Proactive AI early intervention: container is currently safe but predicted to breach within 2 hours
+        recommended_action = "Rapid thermal rate-of-change approaching breach ceiling. Check insulation barrier integrity."
+    elif projected_breach_hrs is not None and projected_breach_hrs <= 2 and current_temp >= (temp_max - 1.5):
+        # Proactive AI early intervention: container is nearing breach zone within 2 hours
         problem_type = "predictive_excursion"
         severity = "HIGH" if spoilage_prob >= 0.60 else "MEDIUM"
         recommended_action = f"PREDICTIVE INTERVENTION: Temperature breach projected within {projected_breach_hrs} hour(s). Expedite route or prep cold storage transfer."
-    elif spoilage_prob >= 0.65:
+    elif spoilage_prob >= 0.65 and current_temp >= (temp_max - 1.5):
         problem_type = "predictive_spoilage_risk"
         severity = "MEDIUM"
         recommended_action = "Machine learning indicates high spoilage risk trajectory. Monitor telemetry at heightened 1-minute sampling frequency."
-    elif roc_status == "WARNING" or evidence["ambient_heat"] == "HIGH":
+    elif roc_status in ["WARNING", "CRITICAL"] or evidence["ambient_heat"] == "HIGH":
         problem_type = "system_warning"
         severity = "LOW"
         recommended_action = "Adverse ambient conditions observed. Ensure thermal shipper stays shaded and enclosed."
         
-    has_problem = severity != "NONE" and severity != "LOW"
+    has_problem = severity not in ["NONE", "LOW"]
     
     return {
         "has_problem": has_problem,

@@ -254,9 +254,22 @@ class IoTTelemetryGateway:
 
         # Temperature rate of change (°C/min)
         if prev_reading and prev_reading.timestamp:
-            time_delta_mins = max(0.1, (dt - prev_reading.timestamp).total_seconds() / 60.0)
-            roc = (eff_temp - prev_reading.temperature) / time_delta_mins
-            roc_status = "CRITICAL" if roc > 0.8 else ("WARNING" if roc > 0.3 else "NORMAL")
+            t_now = dt.replace(tzinfo=None) if dt.tzinfo else dt
+            t_prev = prev_reading.timestamp.replace(tzinfo=None) if prev_reading.timestamp.tzinfo else prev_reading.timestamp
+            delta_sec = (t_now - t_prev).total_seconds()
+            
+            if delta_sec >= 15.0:
+                time_delta_mins = delta_sec / 60.0
+                roc = (eff_temp - prev_reading.temperature) / time_delta_mins
+                t_max = shipment.temperature_max or 8.0
+                if roc > 0.8 and eff_temp >= (t_max - 1.5):
+                    roc_status = "CRITICAL"
+                elif roc > 0.4:
+                    roc_status = "WARNING"
+                else:
+                    roc_status = "NORMAL"
+            else:
+                roc_status = "NORMAL"
         else:
             roc_status = "NORMAL"
 

@@ -139,6 +139,10 @@ class SimulationEngine:
 
         self.is_running = True
         self.current_tick = 0
+        self.convoy_temperatures.clear()
+        self.convoy_progress.clear()
+        self.thermo_models.clear()
+        self.sequence_counters.clear()
         self.sim_start_time = datetime.now(timezone.utc)
         self.task = asyncio.create_task(self._simulation_loop())
         logger.info(f"Simulation Engine launched in background (scenario: {scenario})")
@@ -226,15 +230,22 @@ class SimulationEngine:
 
                         if active_prob:
                             prob_type = (active_prob.problem_type or "").upper()
-                            if any(k in prob_type for k in ["TEMPERATURE", "EXCURSION", "COMPRESSOR", "REFRIGERATION"]):
+                            if any(k in prob_type for k in ["COMPRESSOR", "REFRIGERATION_FAILURE", "CHILLER_FAULT"]):
                                 chiller_state = "FAILED"
-                            elif any(k in prob_type for k in ["DRIFT", "PREDICTIVE"]):
+                            elif any(k in prob_type for k in ["DRIFT", "DEGRADED"]):
                                 chiller_state = "DEGRADED"
                             elif any(k in prob_type for k in ["DOOR"]):
                                 door_state = "OPEN"
 
                         if vehicle and vehicle.refrigeration_status in ["CHILLER_FAULT", "FAULT", "FAILED"]:
                             chiller_state = "FAILED"
+                        elif vehicle and vehicle.refrigeration_status in ["DEGRADED"]:
+                            chiller_state = "DEGRADED"
+
+                        # If vehicle is healthy and no problem exists, ensure temperature recovers to setpoint
+                        if chiller_state == "NORMAL" and not active_prob and self.convoy_temperatures.get(s_id, 4.0) > 8.0:
+                            # Rapid post-resolution refrigeration cool down
+                            self.convoy_temperatures[s_id] = 4.0
                     corridor_code = (vehicle.corridor if vehicle and vehicle.corridor else "NH-48").upper()
                     if corridor_code not in CORRIDORS:
                         corridor_code = "NH-48"
